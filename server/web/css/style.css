@@ -12,3 +12,10 @@ body{
     margin-left: 20px;
 }
 
+.card_signup{
+    margin-top: 12em;
+}
+
+.btn-signup{
+    background-image: url("../img/background_signup.png");
+}
