@@ -209,6 +209,45 @@ CREATE TABLE Offre(
   PRIMARY KEY (id_Offre)
 )ENGINE=InnoDB;
 
+#____________________________________________________________
+# Table: OffreMap
+#____________________________________________________________
+CREATE TABLE OffreMap (
+    id_Offre int NOT NULL,
+    id_SkinMap int NOT NULL,
+    PRIMARY KEY (id_Offre,id_SkinMap)
+)ENGINE=InnoDB;
+
+
+#____________________________________________________________
+# Table: OffreCartonCarte
+#____________________________________________________________
+CREATE TABLE OffreCartonCarte (
+    id_Offre int NOT NULL,
+    id_SkinCartonCarte int NOT NULL,
+    PRIMARY KEY (id_Offre,id_SkinCartonCarte)
+)ENGINE=InnoDB;
+
+
+#____________________________________________________________
+# Table: OffreBoost
+#____________________________________________________________
+CREATE TABLE OffreBoost (
+    id_Offre int NOT NULL,
+    id_Boost int NOT NULL,
+    PRIMARY KEY (id_Offre,id_Boost)
+)ENGINE=InnoDB;
+
+#____________________________________________________________
+# Table: OffreIcone
+#____________________________________________________________
+CREATE TABLE OffreIcone (
+    id_Offre int NOT NULL,
+    id_IconeJoueur int NOT NULL,
+    PRIMARY KEY (id_Offre,id_IconeJoueur)
+)ENGINE=InnoDB;
+
+
 #_____________________________________________________________
 # Table: Pack
 #_____________________________________________________________
@@ -321,6 +360,18 @@ ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_
 
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
+
+ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
+ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
+
+ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
+ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
+
+ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
+ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Boost FOREIGN KEY (id_Boost) REFERENCES Boost(id_Boost);
+
+ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
+ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 
 
 #Faire tout les insert de base (les Cartes, les Skins, etc)
