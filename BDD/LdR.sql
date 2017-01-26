@@ -64,6 +64,12 @@ WHERE Pseudo = $pseudo;
 #2.1 : CompteJoueur
 INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, niveauJoueur, nom_guilde, id_Division) VALUES ($pseudo, $mailCompte, $mdpCompte, 1, 0, NULL, NULL/*|| id_divisionDeBase*/);
 
+#2.1.1 : Deck
+INSERT INTO Deck VALUES (CONCAT($pseudo,0));
+INSERT INTO Deck VALUES (CONCAT($pseudo,1));
+INSERT INTO Deck VALUES (CONCAT($pseudo,2));
+INSERT INTO Deck VALUES (CONCAT($pseudo,3));
+
 #2.2 : Icones fournies à la création
 INSERT INTO posséderIconeJoueur (Pseudo, id_IconeJoueur, activer) VALUES ($pseudo, id_IconeDeBase, 1);
 INSERT INTO posséderIconeJoueur (Pseudo, id_IconeJoueur, activer) VALUES ($pseudo, id_IconeDeBase1, 0);
@@ -124,4 +130,3 @@ CALL init_carte();
 #___________________________________________________________
 # A
 #___________________________________________________________
-
