@@ -11,10 +11,51 @@
     <title>DropDaBomb</title>
   </head>
   <body>
-    <header>
+    <div class="container">
+      <div class="col s12 m7">
+        <div class="card horizontal card_signup">
+          <div class="card-image">
+            <img src="../img/signup.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <h1 class="center-align" >Create Account</h1>
+              <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s8 offset-s2">
+                      <input placeholder="Pseudo" id="pseudo" type="text" class="validate">
+                      <label for="pseudo"></label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s8 offset-s2">
+                      <input placeholder="password" id="password" type="password" class="validate">
+                      <label for="password"></label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s8 offset-s2">
+                      <input placeholder="Confirm password" id="password_confirm" type="password" class="validate">
+                      <label for="password_confirm"></label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s8 offset-s2">
+                      <input placeholder="Email" id="email" type="email" class="validate">
+                      <label for="email"></label>
+                    </div>
+                  </div>
 
-    </header>
-      <h1 class="center-align">Bienvenu sur la page de création de compte de DropDaBomb</h1>
-
+                </form>
+              </div>
+            </div>
+            <div class="card-action">
+              <a class="btn-large center-align btn-signup" href="#">Create</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
