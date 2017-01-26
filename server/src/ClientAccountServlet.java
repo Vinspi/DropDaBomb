@@ -11,7 +11,16 @@ import java.sql.*;
  */
 public class ClientAccountServlet extends HttpServlet {
 
-
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        /* chargement du driver mysql */
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,14 +28,9 @@ public class ClientAccountServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
 
-        /* chargement du driver mysql */
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-        }catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
 
-        String urlBDD = "jdbc:mysql://176.132.21.198:9091/DropDaBomb";
+
+        String urlBDD = "jdbc:mysql://109.7.220.208:3306/DropDaBomb";
 
         String user = "vinspi";
         String mdp = "vinspi13";
