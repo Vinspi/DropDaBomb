@@ -9,16 +9,13 @@
 
 CREATE TABLE CompteJoueur(
   Pseudo                          Varchar (20) NOT NULL ,
-  mailCompte                      Varchar (50) ,
+  mailCompte                      Varchar (50) UNIQUE ,
   mdpCompte                       Varchar (25) ,
   niveauJoueur                    Int ,
-  nom_guilde                      Varchar (25) NOT NULL ,
-  #activer                         Bool ,
-  #id_SkinMap                      Int NOT NULL ,
-  #activer_possederSkinCartonCarte Bool ,
-  #id_SkinCartonCarte              Int ,
-  #activer_possederIconeJoueur     Bool ,
-  #id_IconeJoueur                  Int ,
+  nom_guilde                      Varchar (25) ,
+  id_SkinMap                      Int NOT NULL ,
+  id_SkinCartonCarte              Int NOT NULL,
+  id_IconeJoueur                  Int NOT NULL,
   id_Division                     Int ,
   PRIMARY KEY (Pseudo )
 )ENGINE=InnoDB;
@@ -257,7 +254,6 @@ CREATE TABLE HistoriqueAchat(
 CREATE TABLE posséderSkinMap (
   Pseudo varchar(20) NOT NULL ,
   id_SkinMap int NOT NULL ,
-  activer BOOL ,
   PRIMARY KEY (Pseudo,id_SkinMap)
 )ENGINE=InnoDB;
 
@@ -267,7 +263,6 @@ CREATE TABLE posséderSkinMap (
 CREATE TABLE posséderSkinCartonCarte (
   Pseudo VARCHAR(20) NOT NULL ,
   id_SkinCartonCarte INT NOT NULL ,
-  activer BOOL ,
   PRIMARY KEY (Pseudo,id_SkinCartonCarte)
 )ENGINE=InnoDB;
 
@@ -278,7 +273,6 @@ CREATE TABLE posséderSkinCartonCarte (
 CREATE TABLE posséderIconeJoueur(
   Pseudo VARCHAR(20) NOT NULL ,
   id_IconeJoueur INT NOT NULL ,
-  activer BOOL ,
   PRIMARY KEY (Pseudo,id_IconeJoueur)
 )ENGINE=InnoDB;
 
@@ -295,7 +289,7 @@ ALTER TABLE Matchs ADD CONSTRAINT FK_Matchs_id_Pseudo2 FOREIGN KEY  (Pseudo2) RE
 
 
 ALTER TABLE Amis ADD CONSTRAINT FK_Amis_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
-ALTER TABLE Amis ADD CONSTRAINT FK_Amis_Pseudo_CompteJoueur FOREIGN KEY (Pseudo_CompteJoueur) REFERENCES CompteJoueur(Pseudo);
+ALTER TABLE Amis ADD CONSTRAINT FK_Amis_Pseudo_Amis FOREIGN KEY (Amis) REFERENCES CompteJoueur(Pseudo);
 
 ALTER TABLE JoueurCarteDeck ADD CONSTRAINT FK_JoueurCarteDeck_id_deck FOREIGN KEY (id_deck) REFERENCES Deck(id_deck);
 ALTER TABLE JoueurCarteDeck ADD CONSTRAINT FK_JoueurCarteDeck_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
@@ -309,16 +303,14 @@ ALTER TABLE activer ADD CONSTRAINT FK_activer_Pseudo FOREIGN KEY (Pseudo) REFERE
 
 ALTER TABLE Offres ADD CONSTRAINT FK_Offres_id_pack FOREIGN KEY (id_pack) REFERENCES Pack(id_pack);
 
-ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_achat) REFERENCES  Achat(id_achat);
+ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_achat) REFERENCES AchatMonnaieIRL(id_achat);
 ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 
 ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
-ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_id_SkinCartonCarte FOREIGN KEY (Pseudo) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
+ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
 
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
-
-
