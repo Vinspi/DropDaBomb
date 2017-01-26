@@ -14,6 +14,47 @@
     <div class="container">
       <%
 
+        String reponseSuccesNavigateur = "<div class=\"col s12 m7\">\n" +
+                "      <div class=\"card horizontal card_signup\">\n" +
+                "        <div class=\"card-image\">\n" +
+                "          <img src=\"../img/signup_succes.png\">\n" +
+                "        </div>\n" +
+                "        <div class=\"card-stacked\">\n" +
+                "          <div class=\"card-content\">\n" +
+                "             <h1 class=\"midnight-blue center-align\">Bravo</h1>" +
+                "               <p>Compte créé avec succès.</p>" +
+                "          </div>\n" +
+                "        </div>\n" +
+                "      </div>\n" +
+                "    </div>";
+
+        String reponseFailPseudoNavigateur = "<div class=\"col s12 m7\">\n" +
+                "      <div class=\"card horizontal card_signup\">\n" +
+                "        <div class=\"card-image\">\n" +
+                "          <img src=\"../img/signup_fail.png\">\n" +
+                "        </div>\n" +
+                "        <div class=\"card-stacked\">\n" +
+                "          <div class=\"card-content\">\n" +
+                "             <h1 class=\"midnight-blue center-align\">Désolé</h1>" +
+                "               <p>Désolé ce pseudo existe deja.</p>" +
+                "          </div>\n" +
+                "        </div>\n" +
+                "      </div>\n" +
+                "    </div>";
+
+        String reponseFailEmailNavigateur = "<div class=\"col s12 m7\">\n" +
+                "      <div class=\"card horizontal card_signup\">\n" +
+                "        <div class=\"card-image\">\n" +
+                "          <img src=\"../img/signup_fail.png\">\n" +
+                "        </div>\n" +
+                "        <div class=\"card-stacked\">\n" +
+                "          <div class=\"card-content\">\n" +
+                "             <h1 class=\"midnight-blue center-align\">Désolé</h1>" +
+                "               <p>Désolé cet email existe deja.</p>" +
+                "          </div>\n" +
+                "        </div>\n" +
+                "      </div>\n" +
+                "    </div>";
 
         /* chargement du driver mysql */
         try{
@@ -36,58 +77,26 @@
           String pseudo = request.getParameter("pseudo");
           String email = request.getParameter("email");
           String password = request.getParameter("password");
+          String traitement = request.getParameter("traitement");
+          String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
+                  "mailCompte LIKE \""+email+"\");";
 
-          ResultSet resultSet = statement.executeQuery("SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
-                  "mailCompte LIKE \""+email+"\");");
+          String queryInsertion = "INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nom_guilde, id_Division) " +
+                  "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);";
+
+          ResultSet resultSet = statement.executeQuery(query);
           if(!resultSet.next()){
-            statement.executeUpdate("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, niveauJoueur, expJoueur, monnaieIG, monnaieIRL,nom_guilde, id_Division) " +
-                    "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", 1, 0, 0, 0, NULL, NULL);");
-            out.print("<div class=\"col s12 m7\">\n" +
-                    "      <div class=\"card horizontal card_signup\">\n" +
-                    "        <div class=\"card-image\">\n" +
-                    "          <img src=\"../img/signup.png\">\n" +
-                    "        </div>\n" +
-                    "        <div class=\"card-stacked\">\n" +
-                    "          <div class=\"card-content\">\n" +
-                    "             <h1 class=\"midnight-blue center-align\">Bravo</h1>" +
-                    "               <p>Compte créé avec succès.</p>" +
-                    "          </div>\n" +
-                    "        </div>\n" +
-                    "      </div>\n" +
-                    "    </div>");
-
+            statement.executeUpdate(queryInsertion);
+            out.print(reponseSuccesNavigateur);
           }
           else {
-              /* sinon on test si c'est le mail qui a match ou le pseudo */
+            /* sinon on test si c'est le mail qui a match ou le pseudo */
             if (resultSet.getString("Pseudo").equalsIgnoreCase(pseudo)) {
-              out.print("<div class=\"col s12 m7\">\n" +
-                      "      <div class=\"card horizontal card_signup\">\n" +
-                      "        <div class=\"card-image\">\n" +
-                      "          <img src=\"../img/signup.png\">\n" +
-                      "        </div>\n" +
-                      "        <div class=\"card-stacked\">\n" +
-                      "          <div class=\"card-content\">\n" +
-                      "             <h1 class=\"midnight-blue center-align\">Désolé</h1>" +
-                      "               <p>Désolé ce pseudo existe deja.</p>" +
-                      "          </div>\n" +
-                      "        </div>\n" +
-                      "      </div>\n" +
-                      "    </div>");
+              out.print(reponseFailPseudoNavigateur);
             }
-            else { /* si le pseudo a pas match c'est forcément l'email (ou les deux au quel cas on a deja traité l'erreur */
-              out.print("<div class=\"col s12 m7\">\n" +
-                      "      <div class=\"card horizontal card_signup\">\n" +
-                      "        <div class=\"card-image\">\n" +
-                      "          <img src=\"../img/signup.png\">\n" +
-                      "        </div>\n" +
-                      "        <div class=\"card-stacked\">\n" +
-                      "          <div class=\"card-content\">\n" +
-                      "             <h1 class=\"midnight-blue center-align\">Désolé</h1>" +
-                      "               <p>Désolé cet email existe deja.</p>" +
-                      "          </div>\n" +
-                      "        </div>\n" +
-                      "      </div>\n" +
-                      "    </div>");
+            /* si le pseudo a pas match c'est forcément l'email (ou les deux au quel cas on a deja traité l'erreur */
+            else {
+              out.print(reponseFailEmailNavigateur);
             }
 
           }
