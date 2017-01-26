@@ -77,7 +77,7 @@
           String pseudo = request.getParameter("pseudo");
           String email = request.getParameter("email");
           String password = request.getParameter("password");
-          String traitement = request.getParameter("traitement");
+
           String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
                   "mailCompte LIKE \""+email+"\");";
 
