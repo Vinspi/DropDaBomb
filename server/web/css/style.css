@@ -1,0 +1,14 @@
+@font-face {font-family: 'edosz';font-style: normal;font-weight: normal;src: local('edosz'), url('../fonts/edosz.ttf') format('truetype');}
+
+body{
+    background-image: url("../img/background_create_account.png");
+    background-position: right top;
+    background-attachment: fixed;
+}
+
+.brand-logo{
+    font-family: "edosz";
+    text-shadow: 2px 2px #000000;
+    margin-left: 20px;
+}
+
