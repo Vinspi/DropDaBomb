@@ -30,16 +30,14 @@ public class CreateAccountServletAndroid extends HttpServlet {
         Connection connection = null;
         PrintWriter out = resp.getWriter();
 
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
 
-            String pseudo = req.getParameter("pseudo");
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
+        String pseudo = req.getParameter("pseudo");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
-            out.print(accountManager.createAccount(pseudo,email,password));
-
-        
+        out.print(accountManager.createAccount(pseudo,email,password));
     }
 
 }

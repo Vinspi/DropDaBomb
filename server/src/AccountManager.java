@@ -5,8 +5,11 @@ import java.sql.SQLException;
 /**
  * Created by vinspi on 27/01/17.
  */
-public class AccountManager extends Manager{
+public class AccountManager {
     Connection connection = null;
+
+
+
     public int createAccount(String pseudo,String email,String password){
         int r = RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO;
         String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
@@ -14,12 +17,12 @@ public class AccountManager extends Manager{
         String queryInsertion = "INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nom_guilde, id_Division) " +
                 "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);";
 
-        ResultSet resultSet = sendRequestQuery(query,connection);
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
 
             if (!resultSet.next()) {
             /* on ajoute le compte */
-                sendRequestUpdate(queryInsertion, connection);
+                Manager.getManager().sendRequestUpdate(queryInsertion, connection);
                 r = RequestStatus.CREATE_ACCOUNT_SUCCES;
             } else {
             /* sinon on test si c'est le mail qui a match ou le pseudo */
