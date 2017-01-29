@@ -1,7 +1,5 @@
 package View;
 
-import View.ItemView;
-
 /**
  * Created by vinspi on 27/01/17.
  */
@@ -13,4 +11,7 @@ public class PackView extends ItemView {
         this.image = image;
         this.description  = description;
     }
+
+
+
 }
