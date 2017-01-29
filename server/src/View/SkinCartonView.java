@@ -3,7 +3,7 @@ package View;
 /**
  * Created by vinspi on 27/01/17.
  */
-public class SkinCartonView extends ItemView {
+public class SkinCartonView extends ShopItem {
     public SkinCartonView(int monnaieIRL, int monnaieIG, int id_element, String image, String description) {
         this.monnaieIRL = monnaieIRL;
         this.monnaieIG = monnaieIG;
