@@ -1,6 +1,6 @@
 package Manager;
 
-import Manager.*;
+
 import View.*;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class ShopManager {
     /* coucou ceci est un test */
     Connection connection = null;
-    LinkedList<ItemView> listItem;
+    LinkedList<ShopItem> listItem;
 
     public LinkedList<PackView> getAllPackOffer(){
 
