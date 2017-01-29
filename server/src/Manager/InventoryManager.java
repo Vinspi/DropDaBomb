@@ -24,33 +24,61 @@ public class InventoryManager {
         DeckView deck1;
         DeckView deck2;
 
-        ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.*\n" +
-                "FROM CompteJoueur\n" +
-                "JOIN JoueurCarteDeck USING ("+pseudo+")\n" +
-                "JOIN Deck USING (id_Deck)\n" +
-                "JOIN Carte USING (id_Carte)\n" +
-                "WHERE (Pseudo = "+pseudo+" AND id_Deck LIKE "+pseudo+"1);",connection);
+        deck1 = getDeck(pseudo,1);
+        deck2 = getDeck(pseudo, 2);
+        playerCards = getPlayerCards(pseudo);
 
-        try {
-            while (resultSet.next()) {
-
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return null;
+        return new InventoryView(playerCards,deck1,deck2);
     }
 
-    private DeckView getDeck1(String pseudo){
+    private DeckView getDeck(String pseudo,int num_deck){
         DeckView deck1 = null;
+        LinkedList<CardView> cards = new LinkedList<>();
+        /*ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.* \n" +
+                "FROM CompteJoueur\n" +
+                "JOIN JoueurCarteDeck USING (pseudo)\n" +
+                "JOIN Deck USING (id_Deck)\n" +
+                "JOIN Carte USING (id_Carte)\n" +
+                "WHERE (Pseudo LIKE \""+pseudo+"\" AND id_Deck LIKE \""+pseudo+""+num_deck+"\");",connection);*/
+        ResultSet resultSet = null;
+        try {
+            System.out.println("coucou1");
+
+            while (resultSet.next()) {
+                System.out.println("coucou2");
+                cards.add(new CardView(resultSet.getString("imageCarte"),
+                        resultSet.getString("descriptionCarte"),
+                        resultSet.getInt("id_carte"),
+                        resultSet.getString("nomCarte"),
+                        resultSet.getString("rareteCarte"),
+                        resultSet.getString("typeCarte"),
+                        resultSet.getString("coutCarte")));
+            }
+            deck1 = new DeckView("imageDeck1","Deck "+num_deck,pseudo+"1",cards);
+      //      deck1 = new DeckView(null,null,null,null);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            }catch (SQLException e){
+                /* ignore */
+            }
+        }
+
+        return deck1;
+    }
+
+    private LinkedList<CardView> getPlayerCards(String pseudo){
+
         LinkedList<CardView> cards = new LinkedList<>();
         ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.* \n" +
                 "FROM CompteJoueur\n" +
-                "JOIN JoueurCarteDeck USING ("+pseudo+")\n" +
+                "JOIN JoueurCarteDeck USING (pseudo)\n" +
                 "JOIN Deck USING (id_Deck)\n" +
                 "JOIN Carte USING (id_Carte)\n" +
-                "WHERE (Pseudo = "+pseudo+" AND id_Deck LIKE "+pseudo+"1);",connection);
+                "WHERE (Pseudo LIKE \""+pseudo+"\" AND id_Deck LIKE \""+pseudo+"0\");",connection);
         try {
             while (resultSet.next()) {
                 cards.add(new CardView(resultSet.getString("imageCarte"),
@@ -61,7 +89,6 @@ public class InventoryManager {
                         resultSet.getString("typeCarte"),
                         resultSet.getString("coutCarte")));
             }
-            deck1 = new DeckView("imageDeck1","Deck 1",pseudo+"1",cards);
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -71,7 +98,9 @@ public class InventoryManager {
                 /* ignore */
             }
         }
-        return deck1;
+        return cards;
     }
+
+
 
 }

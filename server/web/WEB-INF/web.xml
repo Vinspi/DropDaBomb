@@ -13,5 +13,13 @@
         <servlet-name>CreateAccountServletAndroid</servlet-name>
         <url-pattern>/CreateAccountAndroid</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>InventoryViewServlet</servlet-name>
+        <servlet-class>InventoryServlets.InventoryViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InventoryViewServlet</servlet-name>
+        <url-pattern>/Inventory</url-pattern>
+    </servlet-mapping>
     
 </web-app>
