@@ -15,18 +15,7 @@ import View.ShopView;
  */
 public class ShopViewServletAndroid extends HttpServlet {
 
-    ShopManager shopManager;
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        /* chargement du driver mysql */
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-        }catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
-        shopManager = new ShopManager();
-    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
