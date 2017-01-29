@@ -1,4 +1,7 @@
-import java.util.Arrays;
+package View;
+
+import View.BoostView;
+
 import java.util.LinkedList;
 import java.util.List;
 

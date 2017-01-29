@@ -1,3 +1,5 @@
+package ShopServlets;
+
 import javax.servlet.http.HttpServlet;
 
 /**

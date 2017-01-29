@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>CreateAccountServletAndroid</servlet-name>
-        <servlet-class>CreateAccountServletAndroid</servlet-class>
+        <servlet-class>AccountServlets.CreateAccountServletAndroid</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateAccountServletAndroid</servlet-name>
