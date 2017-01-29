@@ -11,4 +11,7 @@ public class PackView extends ShopItem {
         this.image = image;
         this.description  = description;
     }
+
+
+
 }

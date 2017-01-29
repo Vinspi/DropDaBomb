@@ -21,5 +21,12 @@
         <servlet-name>InventoryViewServlet</servlet-name>
         <url-pattern>/Inventory</url-pattern>
     </servlet-mapping>
-    
+    <servlet>
+        <servlet-name>Shop</servlet-name>
+        <servlet-class>ShopServlets.ShopViewServletAndroid</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Shop</servlet-name>
+        <url-pattern>/Shop</url-pattern>
+    </servlet-mapping>
 </web-app>
