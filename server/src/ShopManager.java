@@ -20,8 +20,7 @@ public class ShopManager {
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-
-                listItem.add(new PackView(resultSet.getInt("monnaieIRL"),resultSet.getString("monnaieIG"),resultSet.getInt("id_Pack")));
+               // listItem.add(new PackView(resultSet.getInt("monnaieIRL"),resultSet.getString("monnaieIG"),resultSet.getInt("id_Pack")));
             }
         }catch (SQLException e){
             e.printStackTrace();
