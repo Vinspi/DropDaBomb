@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import Manager.*;
 import View.ShopView;
+import com.google.gson.Gson;
 
 /**
  * Created by vinspi on 27/01/17.
@@ -19,6 +20,9 @@ public class ShopViewServletAndroid extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Gson gson = new Gson();
+
         Connection connection = null;
         PrintWriter out = resp.getWriter();
 
@@ -28,7 +32,7 @@ public class ShopViewServletAndroid extends HttpServlet {
         ShopView shopView = new ShopView();
         shopView.getAllOffers(); //Mets tout les Offres dans les attributs de shopView.
 
-        //Faire un JSON et l'envoyer.
+        out.print(gson.toJson(shopView));
 
 
     }

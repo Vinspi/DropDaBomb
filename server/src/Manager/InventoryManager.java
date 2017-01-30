@@ -34,18 +34,18 @@ public class InventoryManager {
     private DeckView getDeck(String pseudo,int num_deck){
         DeckView deck1 = null;
         LinkedList<CardView> cards = new LinkedList<>();
-        /*ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.* \n" +
+        ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.* \n" +
                 "FROM CompteJoueur\n" +
                 "JOIN JoueurCarteDeck USING (pseudo)\n" +
                 "JOIN Deck USING (id_Deck)\n" +
                 "JOIN Carte USING (id_Carte)\n" +
-                "WHERE (Pseudo LIKE \""+pseudo+"\" AND id_Deck LIKE \""+pseudo+""+num_deck+"\");",connection);*/
-        ResultSet resultSet = null;
+                "WHERE (Pseudo LIKE \""+pseudo+"\" AND id_Deck LIKE \""+pseudo+""+num_deck+"\");",connection);
+        //ResultSet resultSet = null;
         try {
             System.out.println("coucou1");
 
             while (resultSet.next()) {
-                System.out.println("coucou2");
+
                 cards.add(new CardView(resultSet.getString("imageCarte"),
                         resultSet.getString("descriptionCarte"),
                         resultSet.getInt("id_carte"),
@@ -54,6 +54,7 @@ public class InventoryManager {
                         resultSet.getString("typeCarte"),
                         resultSet.getString("coutCarte")));
             }
+
             deck1 = new DeckView("imageDeck1","Deck "+num_deck,pseudo+"1",cards);
       //      deck1 = new DeckView(null,null,null,null);
 
@@ -61,7 +62,10 @@ public class InventoryManager {
             e.printStackTrace();
         }finally {
             try {
-                connection.close();
+
+                if(connection != null)
+                    connection.close();
+
             }catch (SQLException e){
                 /* ignore */
             }
@@ -93,7 +97,8 @@ public class InventoryManager {
             e.printStackTrace();
         }finally {
             try {
-                connection.close();
+                if(connection != null)
+                    connection.close();
             }catch (SQLException e){
                 /* ignore */
             }
