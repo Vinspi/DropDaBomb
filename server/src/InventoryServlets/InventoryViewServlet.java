@@ -16,7 +16,7 @@ import java.io.Writer;
  * Created by vinspi on 29/01/17.
  */
 public class InventoryViewServlet extends HttpServlet {
-    /*
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -31,7 +31,7 @@ public class InventoryViewServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(inventoryView));
 
-    }*/
+    }
 
 
 }

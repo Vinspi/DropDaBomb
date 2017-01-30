@@ -18,6 +18,7 @@ public class AccountManager {
                 "mailCompte LIKE \""+email+"\");";
         String queryInsertion = "INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nom_guilde, id_Division) " +
                 "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);";
+        //Ajouter les decks toussa
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
