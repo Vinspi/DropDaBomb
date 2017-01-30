@@ -68,7 +68,7 @@ public class ShopManager {
         //IMAGEPACK/DESCRIPTION PACK A RAJOUTER DANS LA DB !!!
 
         String query = "SELECT prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageMiniaturePack FROM Offre" +
-                "JOIN Pack USING(id_pack);";
+                " JOIN Pack USING(id_pack);";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
@@ -78,6 +78,13 @@ public class ShopManager {
             }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }catch (SQLException e){
+
+            }
         }
 
         return listItem;
@@ -88,7 +95,7 @@ public class ShopManager {
 
         String query = "SELECT prixMonnaieIRL, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
                 "JOIN OffreBoost USING (id_Offre)" +
-                "JOIN Boost USING(id_Boost);";
+                " JOIN Boost USING(id_Boost);";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
@@ -98,6 +105,13 @@ public class ShopManager {
             }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }catch (SQLException e){
+
+            }
         }
 
         return listItem;
@@ -107,7 +121,7 @@ public class ShopManager {
         LinkedList<SkinCartonView> listItem = new LinkedList<>();
 
         String query =  "SELECT prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageMiniatureCarton, descriptionCarton FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
-                "JOIN SkinCartonCarte USING (id_SkinCartonCarte);";
+                " JOIN SkinCartonCarte USING (id_SkinCartonCarte);";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
@@ -115,6 +129,13 @@ public class ShopManager {
             }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }catch (SQLException e){
+
+            }
         }
         return listItem;
     }
@@ -130,6 +151,13 @@ public class ShopManager {
             }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }catch (SQLException e){
+
+            }
         }
         return listItem;
     }
