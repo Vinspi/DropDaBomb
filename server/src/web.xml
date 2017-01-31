@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
+           version="2.5">
+
+    <servlet>
+        <servlet-name>CreateAccountServletAndroid</servlet-name>
+        <servlet-class>AccountServlets.CreateAccountServletAndroid</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateAccountServletAndroid</servlet-name>
+        <url-pattern>/CreateAccountAndroid</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InventoryViewServlet</servlet-name>
+        <servlet-class>InventoryServlets.InventoryViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InventoryViewServlet</servlet-name>
+        <url-pattern>/Inventory</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Shop</servlet-name>
+        <servlet-class>ShopServlets.ShopViewServletAndroid</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Shop</servlet-name>
+        <url-pattern>/Shop</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShopAchat</servlet-name>
+        <servlet-class>ShopServlets.ShopAchatServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShopAchat</servlet-name>
+        <url-pattern>/ShopAchat</url-pattern>
+
+    <servlet>
+        <servlet-name>Auth</servlet-name>
+        <servlet-class>AccountServlets.AuthentificationAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Auth</servlet-name>
+        <url-pattern>/Auth</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeckSwap</servlet-name>
+        <servlet-class>InventoryServlets.DeckSwapServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeckSwap</servlet-name>
+        <url-pattern>/DeckSwap</url-pattern>
+    </servlet-mapping>
+</web-app>
