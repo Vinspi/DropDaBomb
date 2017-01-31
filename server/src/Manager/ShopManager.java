@@ -93,7 +93,7 @@ public class ShopManager {
 
         LinkedList<BoostView> listItem = new LinkedList<>();
 
-        String query = "SELECT prixMonnaieIRL, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
+        String query = "SELECT prixMonnaieIG, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
                 "JOIN OffreBoost USING (id_Offre)" +
                 " JOIN Boost USING(id_Boost);";
 

@@ -20,7 +20,7 @@ public class InventoryManager {
 
     public InventoryView createInventoryView(String pseudo){
 
-        LinkedList<CardView> playerCards = new LinkedList<>();
+        LinkedList<CardView> playerCards;
         DeckView deck1;
         DeckView deck2;
 
@@ -42,7 +42,7 @@ public class InventoryManager {
                 "WHERE (Pseudo LIKE \""+pseudo+"\" AND id_Deck LIKE \""+pseudo+""+num_deck+"\");",connection);
         //ResultSet resultSet = null;
         try {
-            System.out.println("coucou1");
+
 
             while (resultSet.next()) {
 

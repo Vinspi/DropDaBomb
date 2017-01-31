@@ -16,17 +16,7 @@ public class CreateAccountServletAndroid extends HttpServlet {
 
     AccountManager accountManager;
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        /* chargement du driver mysql */
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-        }catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
-        accountManager = new AccountManager();
-    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
