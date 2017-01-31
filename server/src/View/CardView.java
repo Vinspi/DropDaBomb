@@ -19,4 +19,6 @@ public class CardView extends InventoryItem {
         this.typeCarte = typeCarte;
         this.coutCarte = coutCarte;
     }
+
+
 }

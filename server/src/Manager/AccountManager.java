@@ -19,6 +19,7 @@ public class AccountManager {
         String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
                 "mailCompte LIKE \""+email+"\");";
 
+
         LinkedList<String> queryInsertion = new LinkedList<>();
         queryInsertion.add("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nom_guilde, id_Division) " +
                     "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);");
@@ -54,6 +55,7 @@ public class AccountManager {
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 5);");
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 6);");
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 7);");
+
 
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
