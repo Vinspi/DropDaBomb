@@ -184,7 +184,7 @@ public class ShopManager {
                 "JOIN JoueurCarteDeck USING (id_Carte) " +
                 "WHERE id_Offre = "+id_Offre+" AND Pseudo LIKE '"+pseudo+"';";
 
-        //String queryMinus = "";
+
 
         String queryUpdate = "UPDATE JoueurCarteDeck SET qteCarteDeck = qteCarteDeck+";
         String queryInsert = "INSERT INTO JoueurCarteDeck (id_Deck,Pseudo,id_Carte,qteCarteDeck) VALUES ('"+pseudo+"0','"+pseudo+"',";
@@ -220,6 +220,19 @@ public class ShopManager {
         }catch (SQLException e){
             e.printStackTrace();
         }
+
+        return 0;
+    }
+
+    public int gererAchatPackRandom(String pseudo, int id_Offre) {
+
+
+        return 0;
+    }
+
+    public int gererAjoutMap(String pseudo, int id_Offre){
+
+
 
         return 0;
     }
@@ -268,6 +281,10 @@ public class ShopManager {
                 case    "Pack" : {
                     if(gererAjoutCarte(pseudo,id_Offre) == 0) break;
                     else return -1;         //Erreur JeSaisPasTropQuoiMaisL'AjoutDesCartesAPlanté
+                }
+                case    "Map" : {
+                    if(gererAjoutMap(pseudo,id_Offre) == 0) break;
+                    else return -1;
                 }
 
             }

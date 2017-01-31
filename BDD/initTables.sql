@@ -35,7 +35,7 @@ CREATE TABLE Carte(
   typeCarte          Varchar (25) ,
   descriptionCarte   Varchar (200) ,
   imageCarte         Varchar (25) ,
-  ratioPopApresMatch int DEFAULT 0,
+  dropRateCarte int DEFAULT 0,
   coutCarte          Int ,
   PRIMARY KEY (id_Carte )
 )ENGINE=InnoDB;
@@ -61,6 +61,8 @@ CREATE TABLE Map(
   id_SkinMap Int NOT NULL ,
   imageFond  Varchar (100) ,
   imageTable Varchar (100) ,
+  imageMiniatureMap VARCHAR (100) ,
+  descriptionMap VARCHAR (200) ,
   PRIMARY KEY (id_SkinMap )
 )ENGINE=InnoDB;
 
@@ -107,9 +109,11 @@ CREATE TABLE Deck(
 #------------------------------------------------------------
 
 CREATE TABLE SkinCartonCarte(
-  id_SkinCartonCarte Int NOT NULL ,
-  imageVerso         Varchar (100) ,
-  imageContour       Varchar (100) ,
+  id_SkinCartonCarte       Int NOT NULL ,
+  imageVerso               Varchar (100) ,
+  imageContour             Varchar (100) ,
+  imageMiniatureCarton     VARCHAR (100) ,
+  descritiptionCarton      VARCHAR (200) ,
   PRIMARY KEY (id_SkinCartonCarte )
 )ENGINE=InnoDB;
 
@@ -121,6 +125,8 @@ CREATE TABLE SkinCartonCarte(
 CREATE TABLE IconeJoueur(
   id_IconeJoueur Int NOT NULL ,
   imageIcone     Varchar (100) ,
+  imageMiniatureIcone VARCHAR (100) ,
+  descriptionIcone    VARCHAR (200) ,
   PRIMARY KEY (id_IconeJoueur )
 )ENGINE=InnoDB;
 
@@ -132,6 +138,8 @@ CREATE TABLE IconeJoueur(
 CREATE TABLE Boost(
   id_Boost  Int NOT NULL ,
   typeBoost Varchar (100) ,
+  imageMiniatureBoost VARCHAR (100) ,
+  descriptionBoost    VARCHAR (200) ,
   PRIMARY KEY (id_Boost )
 )ENGINE=InnoDB;
 
@@ -254,22 +262,52 @@ CREATE TABLE OffreIcone (
 
 CREATE TABLE Pack(
   id_Pack int NOT NULL,
-  nomCarte varchar(20),
-  descriptionPack varchar(20),
+  nomPack varchar(20),
+  imageMiniaturePack VARCHAR (100),
+  descriptionPack varchar(200),
   PRIMARY KEY (id_Pack)
 )ENGINE=InnoDB;
 
 
 #_____________________________________________________________
-# Table: CartePack
+# Table: LootPack
 #_____________________________________________________________
 
-CREATE TABLE CartePack (
-  id_Carte int NOT NULL,
+CREATE TABLE LootPack (
+  id_LootPack int NOT NULL,
   id_Pack int NOT NULL,
-  ratioPopCarteDansPack int DEFAULT 0,
   qteCarte int DEFAULT 1,
-  PRIMARY KEY (id_Carte,id_pack)
+  PRIMARY KEY (id_LootPack)
+)ENGINE=InnoDB;
+
+#_____________________________________________________________
+# Table: LootPackEnsemble
+#_____________________________________________________________
+CREATE TABLE LootPackEnsemble (
+  id_LootPack int NOT NULL,
+  id_Ensemble int NOT NULL,
+  PRIMARY KEY (id_LootPack,id_Ensemble)
+)ENGINE=InnoDB;
+
+
+#_____________________________________________________________
+# Table: Ensemble
+#_____________________________________________________________
+
+CREATE TABLE Ensemble (
+  id_Ensemble int NOT NULL,
+  dropRatePack int DEFAULT 1,
+  PRIMARY KEY (id_Ensemble)
+)ENGINE=InnoDB;
+
+#_____________________________________________________________
+# Table: EnsembleCarte
+#_____________________________________________________________
+
+CREATE TABLE EnsembleCarte (
+  id_Ensemble int NOT NULL,
+  id_Carte int NOT NULL,
+  PRIMARY KEY (id_Ensemble,id_Carte)
 )ENGINE=InnoDB;
 
 #_____________________________________________________________
@@ -372,6 +410,14 @@ ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Boost FOREIGN KEY (id_Boo
 
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
+
+ALTER TABLE LootPack ADD CONSTRAINT FK_LootPack_id_Pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack);
+
+ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES Ensemble(id_Ensemble);
+ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPack(id_LootPack);
+
+ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Carte FOREIGN KEY (id_Carte) REFERENCES Carte(id_Carte);
+ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES Ensemble(id_Ensemble);
 
 
 #Faire tout les insert de base (les Cartes, les Skins, etc)

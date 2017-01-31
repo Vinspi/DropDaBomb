@@ -17,6 +17,7 @@ import java.sql.Connection;
 public class ShopAchatServlet extends HttpServlet {
 
 
+    ShopManager shopManager;
     //Pour tester :
     //localhost:8080/ShopAchat?pseudo=moktar&password=yolo&id_Offre=0&monnaie=monnaieIG
 
@@ -34,7 +35,6 @@ public class ShopAchatServlet extends HttpServlet {
         int id_Offre = Integer.parseInt(req.getParameter("id_Offre"));
         String money = req.getParameter("monnaie");     //Savoir si on a choisi la monnaie IG ou IRL à l'achat.
 
-        ShopManager shopManager = new ShopManager();
         out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
 
 

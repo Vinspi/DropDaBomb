@@ -15,6 +15,8 @@ import Manager.*;
  */
 public class ShopView {
 
+    private ShopManager shopManager;
+
     private List<PackView> listPackView = new LinkedList<>();
     private List<BoostView> listBoostView = new LinkedList<>();
     private List<SkinMapView> listSkinMapView = new LinkedList<>();
@@ -65,7 +67,6 @@ public class ShopView {
     }
 
     public void getAllOffers(){
-        ShopManager shopManager = new ShopManager();
         setListPackView(shopManager.getAllPackOffers());
         setListBoostView(shopManager.getAllBoostOffers());
         setListSkinCartonView(shopManager.getAllCartonOffers());
