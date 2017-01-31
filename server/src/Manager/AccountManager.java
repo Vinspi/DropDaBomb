@@ -13,6 +13,33 @@ public class AccountManager {
 
 
 
+    public int authentification(String pseudo, String password) {
+
+        String query = "SELECT Pseudo, mdpCompte FROM CompteJoueur";
+        int status = RequestStatus.AUTH_FAILED;
+
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query, connection);
+
+        try {
+            if (!resultSet.next()) {
+                status = RequestStatus.AUTH_SUCCES;
+            } else status = RequestStatus.AUTH_FAILED;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                /* ignore */
+            }
+        }
+
+        return status;
+    }
+
+
     public int createAccount(String pseudo,String email,String password){
 
         int r = RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO;
@@ -21,6 +48,7 @@ public class AccountManager {
 
 
         LinkedList<String> queryInsertion = new LinkedList<>();
+
         queryInsertion.add("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nom_guilde, id_Division) " +
                     "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);");
         queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"0');");
@@ -63,7 +91,7 @@ public class AccountManager {
 
             if (!resultSet.next()) {
             /* on ajoute le compte */
-                System.out.println("query = "+queryInsertion);
+
                 Manager.getManager().sendMultipleRequestUpdate(queryInsertion, connection);
 
                 r = RequestStatus.CREATE_ACCOUNT_SUCCES;

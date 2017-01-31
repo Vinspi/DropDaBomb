@@ -15,4 +15,8 @@ public class RequestStatus {
     public static final String URL_BDD = "jdbc:mysql://109.7.220.208:3306/DropDaBomb";
     public static final String BDD_USER = "vinspi";
     public static final String BDD_PASSWORD = "vinspi13";
+    public static final int AUTH_FAILED = 6;
+    public static final int AUTH_SUCCES = 7;
+    public static final int SWAP_FAILED = 8;
+    public static final int SWAP_SUCCES = 9;
 }

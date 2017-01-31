@@ -18,6 +18,17 @@ public class InventoryManager {
     private Connection connection = null;
     private LinkedList<InventoryItem> items;
 
+
+    public int swapCardsIntoDeck(String id_deck, String id_carte, String id_carteDeck){
+
+        String query = "UPDATE JoueurCarteDeck SET id_Carte = "+id_carte+" WHERE (id_Carte = "+id_carteDeck+" AND id_deck LIKE '"+id_deck+"');";
+
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            return RequestStatus.SWAP_SUCCES;
+        }else return RequestStatus.SWAP_FAILED;
+
+    }
+
     public InventoryView createInventoryView(String pseudo){
 
         LinkedList<CardView> playerCards;

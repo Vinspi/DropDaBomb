@@ -45,16 +45,18 @@ public class Manager {
         return resultSet;
     }
 
-    public void sendRequestUpdate(String query,Connection connection){
+    public Boolean sendRequestUpdate(String query,Connection connection){
 
 
         try {
             connection = DriverManager.getConnection(RequestStatus.URL_BDD, RequestStatus.BDD_USER, RequestStatus.BDD_PASSWORD);
             statement = connection.createStatement();
             statement.executeUpdate(query);
+            return true;
 
         }catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
 
     }
