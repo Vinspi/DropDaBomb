@@ -29,8 +29,11 @@ public class ShopViewServletAndroid extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
+        //Récupérer le pseudo pour n'afficher que les SKinMap/SkinCarton qu'il ne possède pas.
+        String pseudo = req.getParameter("pseudo");
+
         ShopView shopView = new ShopView();
-        shopView.getAllOffers(); //Mets tout les Offres dans les attributs de shopView.
+        shopView.getAllOffers(pseudo); //Mets tout les Offres dans les attributs de shopView (toutes, même celles que le Joueur possède déjà /!\)
 
         out.print(gson.toJson(shopView));
 

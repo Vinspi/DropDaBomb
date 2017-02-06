@@ -19,7 +19,7 @@ public class ShopAchatServlet extends HttpServlet {
 
     private ShopManager shopManager = new ShopManager();
     //Pour tester :
-    //localhost:8080/ShopAchat?pseudo=moktar&password=yolo&id_Offre=0&monnaie=monnaieIG
+    //localhost:8080/ShopAchat?pseudo=AA&password=bb&id_Offre=0&monnaie=monnaieIG
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,11 +32,15 @@ public class ShopAchatServlet extends HttpServlet {
 
         String pseudo = req.getParameter("pseudo");
         String password = req.getParameter("password");
+<<<<<<< HEAD
         String id_Offre = req.getParameter("id_Offre");
+=======
+        String id_Offre = (req.getParameter("id_Offre"));
+>>>>>>> 4f37a1498d85fc08399c3b458a0fd9ec08007fe9
         String money = req.getParameter("monnaie");     //Savoir si on a choisi la monnaie IG ou IRL à l'achat.
 
         out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
-
+        //Possibilité d'envoyer un JSON avec l(es/') élément(s) achetés (et ouais mgl).
 
     }
 }
