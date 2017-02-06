@@ -15,7 +15,7 @@ import Manager.*;
  */
 public class ShopView {
 
-    private ShopManager shopManager;
+    private ShopManager shopManager = new ShopManager();
 
     private List<PackView> listPackView = new LinkedList<>();
     private List<BoostView> listBoostView = new LinkedList<>();

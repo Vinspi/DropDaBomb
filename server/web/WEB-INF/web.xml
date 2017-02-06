@@ -37,7 +37,7 @@
     <servlet-mapping>
         <servlet-name>ShopAchat</servlet-name>
         <url-pattern>/ShopAchat</url-pattern>
-
+    </servlet-mapping>
     <servlet>
         <servlet-name>Auth</servlet-name>
         <servlet-class>AccountServlets.AuthentificationAccountServlet</servlet-class>

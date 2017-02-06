@@ -1,9 +1,10 @@
 package Manager;
 
 
-import View.*;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-import sun.awt.image.ImageWatched;
+import View.BoostView;
+import View.PackView;
+import View.SkinCartonView;
+import View.SkinMapView;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringJoiner;
 
 /*
  * Created by vinspi on 27/01/17.
@@ -166,7 +166,7 @@ public class ShopManager {
         return listItem;
     }
 
-    private int gererAjoutCarte(String pseudo, int id_Offre){
+    private int gererAjoutCarte(String pseudo, String id_Offre){
 
         ArrayList<Integer> cartesPack = new ArrayList<>();
         ArrayList<Integer> qteCarte = new ArrayList<>();
@@ -224,13 +224,13 @@ public class ShopManager {
         return 0;
     }
 
-    public int gererAchatPackRandom(String pseudo, int id_Offre) {
+    public int gererAchatPackRandom(String pseudo, String id_Offre) {
 
 
         return 0;
     }
 
-    public int gererAjoutMap(String pseudo, int id_Offre){
+    public int gererAjoutMap(String pseudo, String id_Offre){
 
 
 
@@ -238,7 +238,7 @@ public class ShopManager {
     }
 
 
-    public int doAchat(String pseudo, String mdp, int id_Offre, String money){
+    public int doAchat(String pseudo, String mdp, String id_Offre, String money){
 
 
 
