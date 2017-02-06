@@ -21,6 +21,7 @@ public class ShopView {
     private List<BoostView> listBoostView = new LinkedList<>();
     private List<SkinMapView> listSkinMapView = new LinkedList<>();
     private List<SkinCartonView> listSkinCartonView = new LinkedList<>();
+    private List<IconeView> listIconeView = new LinkedList<>();
 
     public void addPackView(PackView packView){
         listPackView.add(packView);
@@ -65,11 +66,18 @@ public class ShopView {
     public void setListSkinCartonView(List<SkinCartonView> listSkinCartonView) {
         this.listSkinCartonView = listSkinCartonView;
     }
+    public List<IconeView> getListIconeView() {
+        return listIconeView;
+    }
+    public void setListIconeView(List<IconeView> listIconeView) {
+        this.listIconeView = listIconeView;
+    }
 
     public void getAllOffers(String pseudo){
         setListPackView(shopManager.getAllPackOffers());
         setListBoostView(shopManager.getAllBoostOffers());
         setListSkinCartonView(shopManager.getAllCartonOffers(pseudo));
         setListSkinMapView(shopManager.getAllMapOffers(pseudo));
+        setListIconeView(shopManager.getAllIconeOffers(pseudo));
     }
 }

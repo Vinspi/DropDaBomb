@@ -18,6 +18,9 @@ import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 
+import javax.swing.*;
+import javax.xml.transform.Result;
+
 
 /*
  * Created by vinspi on 27/01/17.
@@ -208,6 +211,29 @@ public class ShopManager {
             }
         }
         return listItem;
+    }
+    public LinkedList<IconeView> getAllIconeOffers(String pseudo){
+        LinkedList<IconeView> listIcone = new LinkedList<>();
+        String query = "SELECT prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageMiniatureIcone, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
+                " JOIN IconeJoueur USING (id_IconeJoueur) WHERE id_IconeJoueur NOT IN (SELECT id_IconeJoueur FROM posséderIconeJoueur WHERE Pseudo LIKE '"+pseudo+"');";
+
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
+        try {
+            while (resultSet.next()){
+                listIcone.add((new IconeView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("imageMiniatureIcone"),resultSet.getString("descriptionIcone"))));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null) connection.close();
+            }catch (SQLException e){
+                //Ignorer
+            }
+        }
+
+        return listIcone;
     }
 
     //Tout les fonctions de gestion d'achat retournent des ArrayList de Doublet (id, value) où id sont les id des achats et value la quantité. Le but étant de renvoyer cette AL pour faciliter un potentiel affichage.
