@@ -15,13 +15,13 @@ public class AccountManager {
 
     public int authentification(String pseudo, String password) {
 
-        String query = "SELECT Pseudo, mdpCompte FROM CompteJoueur";
+        String query = "SELECT Pseudo, mdpCompte FROM CompteJoueur WHERE (Pseudo LIKE '"+pseudo+"' AND mdpCompte LIKE '"+password+"')";
         int status = RequestStatus.AUTH_FAILED;
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query, connection);
 
         try {
-            if (!resultSet.next()) {
+            if (resultSet.next()) {
                 status = RequestStatus.AUTH_SUCCES;
             } else status = RequestStatus.AUTH_FAILED;
         } catch (SQLException e) {

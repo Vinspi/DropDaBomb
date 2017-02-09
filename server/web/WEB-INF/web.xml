@@ -54,4 +54,12 @@
         <servlet-name>DeckSwap</servlet-name>
         <url-pattern>/DeckSwap</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateAccountServletNavigator</servlet-name>
+        <servlet-class>AccountServlets.CreateAccountServletNavigator</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateAccountServletNavigator</servlet-name>
+        <url-pattern>/CreateAccountNavigator</url-pattern>
+    </servlet-mapping>
 </web-app>

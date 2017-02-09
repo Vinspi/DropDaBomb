@@ -1,17 +1,7 @@
 package Manager;
 
 
-<<<<<<< HEAD
-import View.BoostView;
-import View.PackView;
-import View.SkinCartonView;
-import View.SkinMapView;
-=======
 import View.*;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-import sun.awt.image.ImageWatched;
->>>>>>> 4f37a1498d85fc08399c3b458a0fd9ec08007fe9
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,29 +9,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-<<<<<<< HEAD
-=======
-import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.gson.Gson;
-
-import javax.swing.*;
-import javax.xml.transform.Result;
-
->>>>>>> 4f37a1498d85fc08399c3b458a0fd9ec08007fe9
 
 /*
  * Created by vinspi on 27/01/17.
  */
+
 public class ShopManager {
 
     public class TripletEnsemble
     {
         int id_Ensemble;
         float dropRate;
-        ArrayList<Integer> Cartes = new ArrayList<>();
+        ArrayList<Integer> Cartes = new ArrayList<Integer>();
 
 
         public TripletEnsemble(int id, float value, ArrayList<Integer> Cartes)
@@ -227,15 +209,11 @@ public class ShopManager {
         String query = "SELECT prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageMiniatureIcone, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
                 " JOIN IconeJoueur USING (id_IconeJoueur) WHERE id_IconeJoueur NOT IN (SELECT id_IconeJoueur FROM posséderIconeJoueur WHERE Pseudo LIKE '"+pseudo+"');";
 
-<<<<<<< HEAD
-    private int gererAjoutCarte(String pseudo, String id_Offre){
-=======
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
                 listIcone.add((new IconeView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("imageMiniatureIcone"),resultSet.getString("descriptionIcone"))));
             }
->>>>>>> 4f37a1498d85fc08399c3b458a0fd9ec08007fe9
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -448,9 +426,6 @@ public class ShopManager {
         }
 
 
-<<<<<<< HEAD
-    public int gererAchatPackRandom(String pseudo, String id_Offre) {
-=======
         return s;
     }
     public ArrayList<Doublet> gererAjoutCartonCarte(String pseudo, String id_Offre) {
@@ -469,7 +444,6 @@ public class ShopManager {
                 s.add(new Doublet(id_Carton,1));
             }
             Manager.getManager().sendMultipleRequestUpdate(queryInsert,connection);
->>>>>>> 4f37a1498d85fc08399c3b458a0fd9ec08007fe9
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -509,14 +483,10 @@ public class ShopManager {
                 boostActif.add(setActifs.getInt("id_Boost"));
             }
 
-<<<<<<< HEAD
-    public int gererAjoutMap(String pseudo, String id_Offre){
-=======
             ResultSet setBoost = Manager.getManager().sendRequestQuery(queryBoost,connection);
             while (setBoost.next()){
                 id_Boost = setBoost.getInt("id_Boost");
                 typeBoost = setBoost.getString("typeBoost");
->>>>>>> 4f37a1498d85fc08399c3b458a0fd9ec08007fe9
 
                 patternMatchs = Pattern.compile("(\\d+)\\s(Matchs)");
                 matcherMatchs = patternMatchs.matcher(typeBoost);

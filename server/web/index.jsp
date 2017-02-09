@@ -24,8 +24,14 @@
             <a href="#" class="brand-logo">DropDaBomb</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="shop.jsp">Boutique</a></li>
-                <li><a href="account.html">Inscription</a></li>
-                <li><a href="log.jsp">Connexion</a></li>
+                <li><a href="account.jsp">Inscription</a></li>
+                <%
+                    System.out.println("pseudo = "+session.getAttribute("pseudo"));
+                    if(session.getAttribute("pseudo") == null)
+                        out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
+                    else out.print("<li><a href=\"compte.jsp\">Mon compte</a></li>");
+
+                %>
             </ul>
         </div>
     </nav>
