@@ -38,7 +38,6 @@
         <servlet-name>ShopAchat</servlet-name>
         <url-pattern>/ShopAchat</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>Auth</servlet-name>
         <servlet-class>AccountServlets.AuthentificationAccountServlet</servlet-class>
@@ -54,5 +53,13 @@
     <servlet-mapping>
         <servlet-name>DeckSwap</servlet-name>
         <url-pattern>/DeckSwap</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateAccountServletNavigator</servlet-name>
+        <servlet-class>AccountServlets.CreateAccountServletNavigator</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateAccountServletNavigator</servlet-name>
+        <url-pattern>/CreateAccountNavigator</url-pattern>
     </servlet-mapping>
 </web-app>

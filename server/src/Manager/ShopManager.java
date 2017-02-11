@@ -16,13 +16,14 @@ import java.util.regex.Pattern;
 /*
  * Created by vinspi on 27/01/17.
  */
+
 public class ShopManager {
 
     public class TripletEnsemble
     {
         int id_Ensemble;
         float dropRate;
-        ArrayList<Integer> Cartes = new ArrayList<>();
+        ArrayList<Integer> Cartes = new ArrayList<Integer>();
 
 
         public TripletEnsemble(int id, float value, ArrayList<Integer> Cartes)

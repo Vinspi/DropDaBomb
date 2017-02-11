@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <%@ page import="java.sql.*" %><%-- Created by IntelliJ IDEA. --%>
+=======
+<%@ page import="java.sql.*" %>
+<%@ page import="Manager.AccountManager" %>
+<%@ page import="Manager.RequestStatus" %><%-- Created by IntelliJ IDEA. --%>
+>>>>>>> 8734fcb48bd80fa82ac86f096f67c8332f216fe6
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -56,6 +62,7 @@
                 "      </div>\n" +
                 "    </div>";
 
+<<<<<<< HEAD
         /* chargement du driver mysql */
         try{
           Class.forName("com.mysql.jdbc.Driver");
@@ -74,10 +81,14 @@
         try {
           connection = DriverManager.getConnection(urlBDD, user, mdp);
           Statement statement = connection.createStatement();
+=======
+
+>>>>>>> 8734fcb48bd80fa82ac86f096f67c8332f216fe6
           String pseudo = request.getParameter("pseudo");
           String email = request.getParameter("email");
           String password = request.getParameter("password");
 
+<<<<<<< HEAD
           String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
                   "mailCompte LIKE \""+email+"\");";
 
@@ -116,6 +127,17 @@
           }
 
         }
+=======
+
+        Manager.AccountManager accountManager = new Manager.AccountManager();
+        int result = accountManager.createAccount(pseudo,email,password);
+
+        if (result == RequestStatus.CREATE_ACCOUNT_SUCCES){
+            out.print(reponseSuccesNavigateur);
+        }else if (result == RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO){
+            out.print(reponseFailPseudoNavigateur);
+        }else out.print(reponseFailEmailNavigateur);
+>>>>>>> 8734fcb48bd80fa82ac86f096f67c8332f216fe6
 
       %>
     </div>

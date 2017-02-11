@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#f5f5f5" >
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <ViewFlipper
+        android:id="@+id/viewflipper"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_menu"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:alwaysDrawnWithCache="true"
+            android:alpha="1"
+            android:background="@mipmap/background">
+
+
+            <Button
+                android:text="SE CONNECTER"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:id="@+id/btn_login"
+                android:theme="@style/button_connect_signin"
+                android:contextClickable="?android:attr/windowFullscreen"
+                android:layout_marginTop="46dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:text="CREER UN COMPTE"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_signin"
+                android:layout_width="200dp"
+                android:theme="@style/button_connect_signup"
+                android:layout_below="@+id/btn_login"
+                android:layout_alignStart="@+id/btn_login"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:text="OU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_below="@+id/btn_login"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_menu_signin"
+            android:background="@mipmap/background_connexion">
+
+            <!--<TextView-->
+                <!--android:text="Entrez votre pseudo"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="53dp"-->
+                <!--android:id="@+id/textView2" />-->
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:hint="PSEUDO"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="55dp"
+                android:id="@+id/form_connexion_login"
+                android:theme="@style/Widget.AppCompat.EditText" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="MOT DE PASSE"
+                android:layout_below="@id/form_connexion_login"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="28dp"
+                android:id="@+id/form_connexion_paswd"
+                android:theme="@style/Widget.AppCompat.EditText" />
+
+            <Button
+                android:text="SE CONNECTER"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:id="@+id/form_connexion_submit"
+                android:layout_below="@id/form_connexion_paswd"
+                android:layout_marginTop="28dp"
+                android:theme="@style/button_connect_signin"
+                android:contextClickable="?android:attr/windowFullscreen"
+                android:layout_centerHorizontal="true" />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_menu_signup"
+            android:background="@mipmap/background_creation">
+
+            <!--<TextView-->
+            <!--android:text="Entrez votre pseudo"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="53dp"-->
+            <!--android:id="@+id/textView2" />-->
+
+            <EditText
+                android:id="@+id/form_creation_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:hint="PSEUDO"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:theme="@style/Widget.AppCompat.EditText" />
+
+            <EditText
+                android:id="@+id/form_creation_paswd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="MOT DE PASSE"
+                android:layout_below="@id/form_creation_login"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:theme="@style/Widget.AppCompat.EditText" />
+
+            <EditText
+                android:id="@+id/form_creation_confirm_paswd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="CONFIRMEZ M.D.P"
+                android:layout_below="@id/form_creation_paswd"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:theme="@style/Widget.AppCompat.EditText" />
+
+            <EditText
+                android:id="@+id/form_creation_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:hint="EMAIL"
+                android:layout_below="@id/form_creation_confirm_paswd"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:theme="@style/Widget.AppCompat.EditText" />
+
+
+            <DatePicker
+                android:id="@+id/form_creation_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:endYear="2017"
+                android:startYear="1920"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/form_creation_email"
+               />
+
+
+            <Button
+                android:id="@+id/form_creation_submit"
+                android:text="CREER MON COMPTE"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/form_creation_age"
+                android:layout_marginTop="28dp"
+                android:theme="@style/button_submit_creation"
+                android:contextClickable="?android:attr/windowFullscreen"
+                android:layout_centerHorizontal="true" />
+
+
+
+        </RelativeLayout>
+
+
+
+    </ViewFlipper>
+</LinearLayout>

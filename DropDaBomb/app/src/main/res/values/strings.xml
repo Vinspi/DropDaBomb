@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DropDaBomb</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="URL">http://192.168.43.7:8080</string>
+    <string name="URL_CREATE_ACC">http://192.168.43.7:8080/CreateAccountAndroid</string>
+
+
+</resources>
