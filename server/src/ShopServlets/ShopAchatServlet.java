@@ -34,9 +34,30 @@ public class ShopAchatServlet extends HttpServlet {
         String password = req.getParameter("password");
         String id_Offre = (req.getParameter("id_Offre"));
         String money = req.getParameter("monnaie");     //Savoir si on a choisi la monnaie IG ou IRL à l'achat.
+        System.out.println(pseudo+" / "+password+" / "+id_Offre+" / "+money);
 
-        out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
+        //out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
         //Possibilité d'envoyer un JSON avec l(es/') élément(s) achetés (et ouais mgl).
+
+
+    }
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
+
+
+        Connection connection = null;
+        PrintWriter out = resp.getWriter();
+
+
+        String pseudo = req.getParameter("pseudo");
+        String password = req.getParameter("password");
+        String id_Offre = (req.getParameter("id_Offre"));
+        String money = req.getParameter("monnaie");     //Savoir si on a choisi la monnaie IG ou IRL à l'achat.
+        System.out.println(pseudo+" / "+password+" / "+id_Offre+" / "+money);
+        System.out.println(req.getRequestURL());
+        //out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
+        //Possibilité d'envoyer un JSON avec l(es/') élément(s) achetés (et ouais mgl).
+
 
     }
 }

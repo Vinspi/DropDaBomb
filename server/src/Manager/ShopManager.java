@@ -2,9 +2,6 @@ package Manager;
 
 
 import View.*;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-import sun.awt.image.ImageWatched;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,14 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.gson.Gson;
-
-import javax.swing.*;
-import javax.xml.transform.Result;
 
 
 /*
@@ -116,14 +107,14 @@ public class ShopManager {
 
 
 
-        String query = "SELECT prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageMiniaturePack FROM Offre" +
+        String query = "SELECT nomPack,prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageMiniaturePack FROM Offre" +
                 " JOIN Pack USING(id_pack);";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
 
-                listItem.add((new PackView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Pack"),resultSet.getString("imageMiniaturePack"),resultSet.getString("descriptionPack"))));
+                listItem.add((new PackView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imageMiniaturePack"),resultSet.getString("descriptionPack"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -143,7 +134,7 @@ public class ShopManager {
         LinkedList<BoostView> listItem = new LinkedList<>();
 
 
-        String query = "SELECT prixMonnaieIG, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
+        String query = "SELECT nomBoost,prixMonnaieIG, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
 
                 "JOIN OffreBoost USING (id_Offre)" +
                 " JOIN Boost USING(id_Boost);";
@@ -152,7 +143,7 @@ public class ShopManager {
         try {
             while (resultSet.next()){
 
-                listItem.add((new BoostView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Boost"),resultSet.getString("imageMiniatureBoost"),resultSet.getString("descriptionBoost"))));
+                listItem.add((new BoostView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Boost"),resultSet.getString("nomBoost"),resultSet.getString("imageMiniatureBoost"),resultSet.getString("descriptionBoost"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -171,12 +162,12 @@ public class ShopManager {
 
         LinkedList<SkinCartonView> listItem = new LinkedList<>();
 
-        String query =  "SELECT prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageMiniatureCarton, descriptionCarton FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
+        String query =  "SELECT nomCarton,prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageMiniatureCarton, descriptionCarton FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
                 " JOIN SkinCartonCarte USING (id_SkinCartonCarte) WHERE id_SkinCartonCarte NOT IN (SELECT id_SkinCartonCarte FROM posséderSkinCartonCarte WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listItem.add((new SkinCartonView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinCartonCarte"),resultSet.getString("imageMiniatureCarton"),resultSet.getString("descriptionCarton"))));
+                listItem.add((new SkinCartonView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinCartonCarte"),resultSet.getString("nomCarton"),resultSet.getString("imageMiniatureCarton"),resultSet.getString("descriptionCarton"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -194,11 +185,11 @@ public class ShopManager {
 
         LinkedList<SkinMapView> listItem = new LinkedList<>();
 
-        String query =  "SELECT prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN Map USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
+        String query =  "SELECT nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN Map USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listItem.add((new SkinMapView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinMap"),resultSet.getString("imageMiniatureMap"),resultSet.getString("descriptionMap"))));
+                listItem.add((new SkinMapView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinMap"),resultSet.getString("nomMap"),resultSet.getString("imageMiniatureMap"),resultSet.getString("descriptionMap"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -214,13 +205,13 @@ public class ShopManager {
     }
     public LinkedList<IconeView> getAllIconeOffers(String pseudo){
         LinkedList<IconeView> listIcone = new LinkedList<>();
-        String query = "SELECT prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageMiniatureIcone, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
+        String query = "SELECT nomIcone, prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageMiniatureIcone, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
                 " JOIN IconeJoueur USING (id_IconeJoueur) WHERE id_IconeJoueur NOT IN (SELECT id_IconeJoueur FROM posséderIconeJoueur WHERE Pseudo LIKE '"+pseudo+"');";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listIcone.add((new IconeView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("imageMiniatureIcone"),resultSet.getString("descriptionIcone"))));
+                listIcone.add((new IconeView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("nomIcone"),resultSet.getString("imageMiniatureIcone"),resultSet.getString("descriptionIcone"))));
             }
 
         }catch (SQLException e){
@@ -633,6 +624,87 @@ public class ShopManager {
                 /* ignore */
         }
     }
+
+
+
+
+        return RequestStatus.ACHAT_SUCCESS;
+    }
+    public int doAchatDoublet(String pseudo, String mdp, String id_Offre, String money){
+
+
+
+        String queryMdp = "SELECT mdpCompte " +
+                "FROM CompteJoueur " +
+                "WHERE Pseudo LIKE '"+pseudo+"';";
+        ResultSet testMdp = Manager.getManager().sendRequestQuery(queryMdp,connection);
+        try {
+            testMdp.next();
+            String mdpCompte = testMdp.getString("mdpCompte");
+            if (!(mdpCompte.equals(mdp))) {
+                return RequestStatus.ACHAT_FAILED_MDP;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+        String queryMoney = "SELECT "+money+
+                " FROM CompteJoueur " +
+                "WHERE Pseudo LIKE '"+pseudo+"';";
+        String queryPrix = "SELECT prix"+money+", typeOffre" +
+                " FROM Offre" +
+                " WHERE id_Offre = "+id_Offre+" ;";
+        ArrayList<Doublet> s = new ArrayList<>();
+
+        ResultSet testMoney = Manager.getManager().sendRequestQuery(queryMoney,connection);
+
+        try {
+            testMoney.next();
+            int moneyCompte = testMoney.getInt(money);
+            ResultSet testPrix = Manager.getManager().sendRequestQuery(queryPrix,connection);
+            testPrix.next();
+            int prixOffre = testPrix.getInt("prix"+money);
+            if (moneyCompte < prixOffre){
+                return RequestStatus.ACHAT_FAILED_MONEY;
+            }
+            String typeOffre = testPrix.getString("typeOffre");
+            switch (typeOffre){
+                case    "Pack" : {
+                    if (!(gererAchatPackRandomFullOpti(pseudo, id_Offre).isEmpty())) break;
+                    else return -1;         //Erreur JeSaisPasTropQuoiMaisL'AjoutDesCartesAPlanté
+                }
+                case    "Map" : {
+                    if (!(gererAjoutMap(pseudo,id_Offre).isEmpty())) break;
+                    else return -1;
+                }
+                case    "Carton" : {
+                    if (!(gererAjoutCartonCarte(pseudo,id_Offre).isEmpty())) break;
+                    else return -1;
+                }
+                case    "Boost" : {
+                    if (!(gererAjoutBoost(pseudo,id_Offre).isEmpty())) break;
+                    else return -1;
+                }
+                case    "Icone" : {
+                    if (!(gererAjoutIcone(pseudo, id_Offre).isEmpty())) break;
+                    else return -1;
+                }
+
+            }
+            String queryRendLArgentAuxAbonnes = "UPDATE CompteJoueur SET "+money+"="+(moneyCompte-prixOffre)+" WHERE Pseudo='"+pseudo+"';";
+            Manager.getManager().sendRequestUpdate(queryRendLArgentAuxAbonnes,connection);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }catch (SQLException e){
+                /* ignore */
+            }
+        }
 
 
 
