@@ -10,6 +10,26 @@ public class CardView extends InventoryItem {
     private String coutCarte;
     private int id_carte;
 
+    public String getImageCarte(){
+        return this.image;
+    }
+
+    public String getRareteCarte() {
+        return rareteCarte;
+    }
+
+    public String getTypeCarte() {
+        return typeCarte;
+    }
+
+    public String getCoutCarte() {
+        return coutCarte;
+    }
+
+    public int getId_carte() {
+        return id_carte;
+    }
+
     public CardView(String image, String description, int id_carte, String name, String rareteCarte, String typeCarte, String coutCarte) {
         this.image = image;
         this.description = description;

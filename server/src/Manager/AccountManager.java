@@ -1,5 +1,6 @@
 package Manager;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,6 +40,34 @@ public class AccountManager {
         return status;
     }
 
+    public String getPlayerIcon(String pseudo){
+
+
+        String query = "SELECT imageIcone \n" +
+                "FROM CompteJoueur\n" +
+                "JOIN IconeJoueur USING(id_IconeJoueur)\n" +
+                "WHERE (Pseudo LIKE 'lucaslefou')";
+
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
+        String retour = "";
+        try{
+            if(resultSet.next()){
+                retour = resultSet.getString("imageIcone");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null)
+                    connection.close();
+
+            }catch (SQLException e){
+                /* ignore */
+            }
+        }
+
+        return retour;
+    }
 
     public int createAccount(String pseudo,String email,String password){
 
@@ -83,6 +112,8 @@ public class AccountManager {
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 5);");
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 6);");
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 7);");
+
+        queryInsertion.add("INSERT INTO posséderIconeJoueur(Pseudo,id_IconeJoueur) VALUES (\""+pseudo+"\",\""+1+"\")");
 
 
 

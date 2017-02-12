@@ -62,4 +62,12 @@
         <servlet-name>CreateAccountServletNavigator</servlet-name>
         <url-pattern>/CreateAccountNavigator</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>InventoryViewServletAndroid</servlet-name>
+        <servlet-class>InventoryServlets.InventoryViewServletAndroid</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InventoryViewServletAndroid</servlet-name>
+        <url-pattern>/InventoryAndroid</url-pattern>
+    </servlet-mapping>
 </web-app>

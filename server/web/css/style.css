@@ -1,5 +1,8 @@
 
-
+body{
+    background-image: url("../img/BG5_SITE.jpg");
+    background-attachment: fixed;
+}
 
 .brand-logo{
     text-shadow: 2px 2px #000000;
@@ -8,6 +11,15 @@
 
 .card_signup{
     margin-top: 12em;
+}
+
+.deck-container{
+
+}
+
+.carte-deck{
+    margin-left:2em;
+    margin-right:2em;
 }
 
 .card .title-card{
@@ -65,12 +77,16 @@
     margin-top: 20em;
 }
 
+.log-card{
+    margin-top: 10em;
+}
+
 .btn-index{
     margin: 2em;
 }
 
 nav{
-    opacity: 0.8;
+    opacity: 1;
 }
 
 
@@ -101,10 +117,23 @@ nav{
     left: 47%;
 }
 
+.bottom-arrow-log{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 15px solid transparent;
+    border-top: 15px solid #ffc107;
+    left: 47%;
+}
+
 #btn-download{
     position: relative;
     padding-bottom: 2em;
     bot: 0px;
+}
+
+nav li{
+    margin-right: 1em;
 }
 
 .content-connexion{
@@ -117,6 +146,10 @@ nav{
 
 .card-download{
     padding: 2.5em;
+}
+
+#iconeJoueur{
+    width: 4rem;
 }
 
 ::-webkit-input-placeholder { /* Chrome */

@@ -8,37 +8,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 
 /**
- * Created by vinspi on 29/01/17.
+ * Created by vinspi on 10/02/17.
  */
-public class InventoryViewServlet extends HttpServlet {
-
+public class InventoryViewServletAndroid extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Gson gson = new Gson();
 
         String pseudo = req.getParameter("pseudo");
-
-        HttpSession session = req.getSession();
-
-        if(session.getAttribute("pseudo") == null)
-            this.getServletContext().getRequestDispatcher("/log.jsp").forward(req,resp);
-        else this.getServletContext().getRequestDispatcher("/compte.jsp").forward(req,resp);
-
         InventoryManager inventoryManager = new InventoryManager();
         InventoryView inventoryView = inventoryManager.createInventoryView(pseudo);
 
         resp.setCharacterEncoding("utf-8");
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(inventoryView));
 
     }
-
-
 }

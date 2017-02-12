@@ -49,6 +49,7 @@ public class AuthentificationAccountServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_SUCCES){
+            session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
             session.setAttribute("pseudo",pseudo);
             session.setAttribute("password",password);
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);

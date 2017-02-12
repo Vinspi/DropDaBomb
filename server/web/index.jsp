@@ -14,7 +14,8 @@
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
 
-    <script type="application/javascript" src="materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
 
     <title>DropDaBomb</title>
 </head>
@@ -26,10 +27,18 @@
                 <li><a href="shop.jsp">Boutique</a></li>
                 <li><a href="account.jsp">Inscription</a></li>
                 <%
+
                     System.out.println("pseudo = "+session.getAttribute("pseudo"));
-                    if(session.getAttribute("pseudo") == null)
+                    String icone = (String) request.getSession().getAttribute("iconeJoueur");
+                    String pseudo = (String) request.getSession().getAttribute("pseudo");
+                    System.out.println("icone = "+icone);
+                    if(session.getAttribute("pseudo") == null) {
                         out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
-                    else out.print("<li><a href=\"compte.jsp\">Mon compte</a></li>");
+                    }
+                    else {
+                        out.print("<li><a href=\"compte.jsp\">" + pseudo + "</a></li>" +
+                                "<li><img src=\"../img/iconeJoueur/"+icone+"\" alt=\"\" class=\"circle\" id=\"iconeJoueur\"></li>");
+                    }
 
                 %>
             </ul>
