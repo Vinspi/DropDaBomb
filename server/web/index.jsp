@@ -21,7 +21,7 @@
 </head>
 <body class="grey lighten-3">
     <nav>
-        <div class="nav-wrapper blue darken-3">
+        <div class="nav-wrapper nav-perso">
             <a href="#" class="brand-logo">DropDaBomb</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="shop.jsp">Boutique</a></li>

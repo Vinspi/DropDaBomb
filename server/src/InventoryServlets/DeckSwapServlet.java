@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -21,11 +22,17 @@ public class DeckSwapServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
+        HttpSession session = req.getSession();
+
+
         String id_deck = req.getParameter("id_deck");
         String id_carte = req.getParameter("id_carte");
         String id_carteDeck = req.getParameter("id_carteDeck");
 
-        out.print(inventoryManager.swapCardsIntoDeck(id_deck,id_carte,id_carteDeck));
+        System.out.println("id_deck = "+id_deck+" id_carte = "+id_carte+" id_carteDeck = "+id_carteDeck);
+
+        System.out.println(inventoryManager.swapCardsIntoDeck(session.getAttribute("pseudo")+id_deck,id_carte,id_carteDeck));
+        out.print(inventoryManager.swapCardsIntoDeck(session.getAttribute("pseudo")+id_deck,id_carte,id_carteDeck));
 
 
     }
