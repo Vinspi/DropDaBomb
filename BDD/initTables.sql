@@ -61,6 +61,7 @@ CREATE TABLE ModeDeJeu(
 
 CREATE TABLE SkinMap(
   id_SkinMap Int NOT NULL ,
+  nomMap        varchar (50) ,
   imageFondMap  Varchar (100) ,
   imageTableMap Varchar (100) ,
   imageMiniatureMap VARCHAR (100) ,
@@ -113,6 +114,7 @@ CREATE TABLE Deck(
 
 CREATE TABLE SkinCartonCarte(
   id_SkinCartonCarte       Int NOT NULL ,
+  nomCarton           varchar (50) ,
   imageVersoCarte          Varchar (100) ,
   imageContourCarte        Varchar (100) ,
   imageMiniatureCarton     VARCHAR (100) ,
@@ -127,6 +129,7 @@ CREATE TABLE SkinCartonCarte(
 
 CREATE TABLE IconeJoueur(
   id_IconeJoueur Int NOT NULL ,
+  nomIcone       varchar (50) ,
   imageIcone     Varchar (100) ,
   imageMiniatureIcone VARCHAR (100) ,
   descriptionIcone    VARCHAR (200) ,
@@ -221,6 +224,7 @@ CREATE TABLE Offre(
   prixMonnaieIRL int,
   id_Pack int,
   typeOffre varchar(50),
+  nomOffre  varchar(50),
   imageOffre varchar(50),
   PRIMARY KEY (id_Offre)
 )ENGINE=InnoDB;
@@ -278,8 +282,7 @@ CREATE TABLE Pack(
 
 
 #_____________________________________________________________
-# Table: LootPack   //Faire une autre table ?
-#_____________________________________________________________
+# Table: LootPack  #_____________________________________________________________
 
 CREATE TABLE LootPack (
   id_LootPack int NOT NULL,
@@ -323,18 +326,18 @@ CREATE TABLE EnsembleCarte (
 #_____________________________________________________________
 
 CREATE TABLE AchatMonnaieIRL(
-  id_Achat int NOT NULL,
+  id_AchatIRL int NOT NULL Auto_increment,
   prixEuros int,
   gainMonnaie int,
   PRIMARY KEY (id_Achat)
 )ENGINE=InnoDB;
 
 #_____________________________________________________________
-# Table: (Historique)Achat
+# Table: (Historique)AchatIRL
 #_____________________________________________________________
-CREATE TABLE HistoriqueAchat(
-
-  id_Achat int NOT NULL ,
+CREATE TABLE HistoriqueAchatIRL(
+  dateAchatIRL  date ,
+  id_AchatIRL int NOT NULL ,
   Pseudo varchar(50) ,
   PRIMARY KEY (id_Achat,Pseudo)
 )ENGINE=InnoDB;
