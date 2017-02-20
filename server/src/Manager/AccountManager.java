@@ -152,39 +152,167 @@ public class AccountManager {
         return r;
     }
 
-    public void changerMotDePasse(String pseudo, String newPassword){
-        String query = "UPDATE CompteJoueur SET mdpCompte ='"+newPassword+"' WHERE Pseudo LIKE '"+pseudo+"';";
-        Manager.getManager().sendRequestUpdate(query,connection);
-    }
 
-    public void changerEmail(String pseudo, String newEmail){
+
+    public int changerEmail(String pseudo, String newEmail){
         String query = "UPDATE CompteJoueur SET mailCompte ='"+newEmail+"' WHERE Pseudo LIKE '"+pseudo+"';";
-        Manager.getManager().sendRequestUpdate(query,connection);
+
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_EMAIL_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_EMAIL_FAILED;
+        }
+
     }
 
-    public void changerIcone(String pseudo, String newIcone){
-        String query = "UPDATE CompteJoueur SET id_IconeJoueur ='"+newIcone+"' WHERE Pseudo LIKE '"+pseudo+"';";
-        Manager.getManager().sendRequestUpdate(query,connection);
-    }
 
-    public void changerSkinMap(String pseudo, String newMap){
+
+    public int changerSkinMap(String pseudo, String newMap){
         String query = "UPDATE CompteJoueur SET id_SkinMap ='"+newMap+"' WHERE Pseudo LIKE '"+pseudo+"';";
-        Manager.getManager().sendRequestUpdate(query,connection);
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_MAP_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_MAP_FAILED;
+        }
     }
 
-    public void changerSkinCarton(String pseudo, String newCarton){
+    public int changerSkinCarton(String pseudo, String newCarton){
         String query = "UPDATE CompteJoueur SET id_SkinCartonCarte ='"+newCarton+"' WHERE Pseudo LIKE '"+pseudo+"';";
-        Manager.getManager().sendRequestUpdate(query,connection);
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_CARTON_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_CARTON_FAILED;
+        }
     }
 
     //Pour l'instant, c'est gratuit !
-    public void acheterMonnaieIRL(String pseudo, String quantite){
+    public int acheterMonnaieIRL(String pseudo, String quantite){
         String query = "UPDATE CompteJoueur SET monnaieIRL=monnaieIRL+"+quantite+" WHERE Pseudo LIKE '"+pseudo+"';";
-        Manager.getManager().sendRequestUpdate(query,connection);
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.ACHAT_MONNAIE_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.ACHAT_MONNAIE_FAILED;
+        }
 
     }
 
 
+    public int changeIcon(String pseudo, String id_newIcon){
 
+        String query = "UPDATE CompteJoueur SET id_IconeJoueur=\'"+id_newIcon+"\' WHERE (Pseudo LIKE \'"+pseudo+"\')";
+
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_ICON_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_ICON_FAILED;
+        }
+    }
+
+    public int changePassword(String pseudo, String newPassword){
+
+        /* le pseudo sera passé en param par la servlet de controle ce qui garanti que le pseudo se trouve
+            dans la variable de session et par conséquent que celui existe (verifié par la servlet de connexion)
+         */
+
+        String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\')";
+
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_MDP_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.UPDATE_MDP_FAILED;
+        }
+
+
+    }
 
 }

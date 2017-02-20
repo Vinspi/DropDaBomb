@@ -4,6 +4,7 @@ import View.CardView;
 import View.DeckView;
 import View.InventoryItem;
 import View.InventoryView;
+import sun.awt.geom.AreaOp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,8 +25,24 @@ public class InventoryManager {
         String query = "UPDATE JoueurCarteDeck SET id_Carte = "+id_carte+" WHERE (id_Carte = "+id_carteDeck+" AND id_deck LIKE '"+id_deck+"');";
 
         if(Manager.getManager().sendRequestUpdate(query,connection)){
-            return RequestStatus.SWAP_SUCCES;
-        }else return RequestStatus.SWAP_FAILED;
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.SWAP_SUCCESS;
+        }else {
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.SWAP_FAILED;
+        }
 
     }
 
@@ -117,17 +134,6 @@ public class InventoryManager {
         return cards;
     }
 
-    public void changePassword(String newPassword, String pseudo){
 
-        /* le pseudo sera passé en param par la servlet de controle ce qui garanti que le pseudo se trouve
-            dans la variable de session et par conséquent que celui existe (verifié par la servlet de connexion)
-         */
-
-        String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\')";
-
-        Manager.getManager().sendRequestUpdate(query,connection);
-
-
-    }
 
 }
