@@ -4,6 +4,7 @@ package View;
  * Created by vinspi on 27/01/17.
  */
 public abstract class ShopItem {
+    protected int id_Offre;
     protected int monnaieIG;
     protected int monnaieIRL;
     protected int id_element;
@@ -21,6 +22,10 @@ public abstract class ShopItem {
 
     public int getId_element() {
         return id_element;
+    }
+
+    public int getId_Offre(){
+        return id_Offre;
     }
 
     public String getNom(){

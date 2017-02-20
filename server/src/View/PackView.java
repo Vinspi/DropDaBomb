@@ -5,7 +5,8 @@ package View;
  */
 public class PackView extends ShopItem {
 
-    public PackView(int monnaieIRL, int monnaieIG, int id_element,String nom, String image, String description) {
+    public PackView(int id_Offre, int monnaieIRL, int monnaieIG, int id_element,String nom, String image, String description) {
+        this.id_Offre = id_Offre;
         this.monnaieIRL = monnaieIRL;
         this.monnaieIG = monnaieIG;
         this.id_element = id_element;

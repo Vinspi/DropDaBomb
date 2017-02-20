@@ -13,6 +13,7 @@ CREATE TABLE CompteJoueur(
   mdpCompte                       Varchar (25) ,
   niveauJoueur                    Int DEFAULT 1,
   expJoueur                       Int DEFAULT 0,
+  ptsDivision                     Int DEFAULT 0,
   monnaieIG                       Int DEFAULT 0,
   monnaieIRL                      Int DEFAULT 0,
   nom_guilde                      Varchar (25) DEFAULT NULL,
@@ -35,8 +36,9 @@ CREATE TABLE Carte(
   typeCarte          Varchar (25) ,
   descriptionCarte   Varchar (200) ,
   imageCarte         Varchar (25) ,
-  dropRateCarte int DEFAULT 0,
+  dropRateCarte      int DEFAULT 0,
   coutCarte          Int ,
+  estAmeliorable     boolean DEFAULT 0,
   PRIMARY KEY (id_Carte )
 )ENGINE=InnoDB;
 
@@ -54,13 +56,13 @@ CREATE TABLE ModeDeJeu(
 
 
 #------------------------------------------------------------
-# Table: Map
+# Table: SkinMap
 #------------------------------------------------------------
 
-CREATE TABLE Map(
+CREATE TABLE SkinMap(
   id_SkinMap Int NOT NULL ,
-  imageFond  Varchar (100) ,
-  imageTable Varchar (100) ,
+  imageFondMap  Varchar (100) ,
+  imageTableMap Varchar (100) ,
   imageMiniatureMap VARCHAR (100) ,
   descriptionMap VARCHAR (200) ,
   PRIMARY KEY (id_SkinMap )
@@ -72,8 +74,9 @@ CREATE TABLE Map(
 #------------------------------------------------------------
 
 CREATE TABLE Guilde(
-  nom_Guilde   Varchar (25) NOT NULL ,
+  nomGuilde   Varchar (25) NOT NULL ,
   niveauGuilde Int DEFAULT 1,
+  expGuilde    Int DEFAULT 0,
   nbPlacesMax  Int DEFAULT 50,
   PRIMARY KEY (nom_Guilde )
 )ENGINE=InnoDB;
@@ -110,8 +113,8 @@ CREATE TABLE Deck(
 
 CREATE TABLE SkinCartonCarte(
   id_SkinCartonCarte       Int NOT NULL ,
-  imageVerso               Varchar (100) ,
-  imageContour             Varchar (100) ,
+  imageVersoCarte          Varchar (100) ,
+  imageContourCarte        Varchar (100) ,
   imageMiniatureCarton     VARCHAR (100) ,
   descritiptionCarton      VARCHAR (200) ,
   PRIMARY KEY (id_SkinCartonCarte )
@@ -137,10 +140,23 @@ CREATE TABLE IconeJoueur(
 
 CREATE TABLE Boost(
   id_Boost  Int NOT NULL ,
+  nomBoost  Varchar (50),
   typeBoost Varchar (100) ,
   imageMiniatureBoost VARCHAR (100) ,
   descriptionBoost    VARCHAR (200) ,
   PRIMARY KEY (id_Boost )
+)ENGINE=InnoDB;
+
+#------------------------------------------------------------
+# Table: activer
+#------------------------------------------------------------
+
+CREATE TABLE activer(
+  HeuresFin  time ,
+  nbMatchsFin int,
+  id_Boost Int NOT NULL ,
+  Pseudo   Varchar (20) NOT NULL ,
+  PRIMARY KEY (id_Boost ,Pseudo )
 )ENGINE=InnoDB;
 
 
@@ -193,16 +209,6 @@ CREATE TABLE Historique(
 )ENGINE=InnoDB;
 
 
-#------------------------------------------------------------
-# Table: activer
-#------------------------------------------------------------
-
-CREATE TABLE activer(
-  dateFin  Datetime ,
-  id_Boost Int NOT NULL ,
-  Pseudo   Varchar (20) NOT NULL ,
-  PRIMARY KEY (id_Boost ,Pseudo )
-)ENGINE=InnoDB;
 
 
 #____________________________________________________________
@@ -214,6 +220,8 @@ CREATE TABLE Offre(
   prixMonnaieIG int,
   prixMonnaieIRL int,
   id_Pack int,
+  typeOffre varchar(50),
+  imageOffre varchar(50),
   PRIMARY KEY (id_Offre)
 )ENGINE=InnoDB;
 
@@ -270,7 +278,7 @@ CREATE TABLE Pack(
 
 
 #_____________________________________________________________
-# Table: LootPack
+# Table: LootPack   //Faire une autre table ?
 #_____________________________________________________________
 
 CREATE TABLE LootPack (

@@ -121,6 +121,37 @@ public class AccountManager {
         return r;
     }
 
+    public void changerMotDePasse(String pseudo, String newPassword){
+        String query = "UPDATE CompteJoueur SET mdpCompte ='"+newPassword+"' WHERE Pseudo LIKE '"+pseudo+"';";
+        Manager.getManager().sendRequestUpdate(query,connection);
+    }
+
+    public void changerEmail(String pseudo, String newEmail){
+        String query = "UPDATE CompteJoueur SET mailCompte ='"+newEmail+"' WHERE Pseudo LIKE '"+pseudo+"';";
+        Manager.getManager().sendRequestUpdate(query,connection);
+    }
+
+    public void changerIcone(String pseudo, String newIcone){
+        String query = "UPDATE CompteJoueur SET id_IconeJoueur ='"+newIcone+"' WHERE Pseudo LIKE '"+pseudo+"';";
+        Manager.getManager().sendRequestUpdate(query,connection);
+    }
+
+    public void changerSkinMap(String pseudo, String newMap){
+        String query = "UPDATE CompteJoueur SET id_SkinMap ='"+newMap+"' WHERE Pseudo LIKE '"+pseudo+"';";
+        Manager.getManager().sendRequestUpdate(query,connection);
+    }
+
+    public void changerSkinCarton(String pseudo, String newCarton){
+        String query = "UPDATE CompteJoueur SET id_SkinCartonCarte ='"+newCarton+"' WHERE Pseudo LIKE '"+pseudo+"';";
+        Manager.getManager().sendRequestUpdate(query,connection);
+    }
+
+    //Pour l'instant, c'est gratuit !
+    public void acheterMonnaieIRL(String pseudo, String quantite){
+        String query = "UPDATE CompteJoueur SET monnaieIRL=monnaieIRL+"+quantite+" WHERE Pseudo LIKE '"+pseudo+"';";
+        Manager.getManager().sendRequestUpdate(query,connection);
+
+    }
 
 
 

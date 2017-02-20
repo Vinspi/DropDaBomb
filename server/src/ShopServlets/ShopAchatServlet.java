@@ -1,6 +1,7 @@
 package ShopServlets;
 
 import Manager.ShopManager;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,7 @@ public class ShopAchatServlet extends HttpServlet {
 
         Connection connection = null;
         PrintWriter out = resp.getWriter();
+        Gson gson = new Gson();
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -38,6 +40,12 @@ public class ShopAchatServlet extends HttpServlet {
         String money = req.getParameter("monnaie");     //Savoir si on a choisi la monnaie IG ou IRL à l'achat.
         System.out.println(pseudo+" / "+password+" / "+id_Offre+" / "+money);
 
+        ShopManager.Doublet s = shopManager.doAchatDoublet(pseudo,password,id_Offre,money);
+        System.out.println("s = "+s);
+        System.out.println(gson.toJson(s));
+        out.print(gson.toJson(s));
+        //req.setAttribute("achat",gson);
+        //this.getServletContext().getRequestDispatcher( "/ShopView.jsp" ).forward( req, resp );
         //out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
         //Possibilité d'envoyer un JSON avec l(es/') élément(s) achetés (et ouais mgl).
 
@@ -49,7 +57,7 @@ public class ShopAchatServlet extends HttpServlet {
 
         Connection connection = null;
         PrintWriter out = resp.getWriter();
-
+        Gson gson = new Gson();
 
         String pseudo = req.getParameter("pseudo");
         String password = req.getParameter("password");
@@ -59,6 +67,11 @@ public class ShopAchatServlet extends HttpServlet {
         System.out.println(req.getRequestURL());
         //out.print(shopManager.doAchat(pseudo,password,id_Offre,money));
         //Possibilité d'envoyer un JSON avec l(es/') élément(s) achetés (et ouais mgl).
+        ShopManager.Doublet s = shopManager.doAchatDoublet(pseudo,password,id_Offre,money);
+        String json = gson.toJson(s);
+        out.print(json);
+        //req.setAttribute("achat",json);
+        //this.getServletContext().getRequestDispatcher( "/ShopView.jsp" ).forward( req, resp );
 
 
     }

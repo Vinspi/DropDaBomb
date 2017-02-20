@@ -19,28 +19,58 @@ import java.util.regex.Pattern;
 
 public class ShopManager {
 
+
+
+
     public class TripletEnsemble
     {
         int id_Ensemble;
         float dropRate;
         ArrayList<Integer> Cartes = new ArrayList<Integer>();
+        ArrayList<String> img = new ArrayList<>();
 
-
-        public TripletEnsemble(int id, float value, ArrayList<Integer> Cartes)
+        public TripletEnsemble(int id, float value, ArrayList<Integer> Cartes, ArrayList<String> img)
         {
             this.id_Ensemble = id;
             this.dropRate = value;
             this.Cartes = Cartes;
+            this.img = img;
         }
 
+    }
+    public class Triplet{
+        int id;
+        int value;
+        String img;
+
+        public Triplet(int id, int value, String img) {
+            this.id = id;
+            this.value = value;
+            this.img = img;
+        }
     }
     public class Doublet
     {
         int id;
-        int value;
+        Object value;
+
+        public Doublet(){
+            this.id = 0;
+            this.value = null;
+        }
 
         public Doublet(int id, int value)
         {
+            this.id = id;
+            this.value = value;
+        }
+        public Doublet(int id, ArrayList<Doublet> value){
+
+            this.id = id;
+            this.value = value;
+        }
+
+        public Doublet(int id, String value) {
             this.id = id;
             this.value = value;
         }
@@ -108,14 +138,14 @@ public class ShopManager {
 
 
 
-        String query = "SELECT nomPack,prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageMiniaturePack FROM Offre" +
+        String query = "SELECT id_Offre,nomPack,prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageMiniaturePack FROM Offre" +
                 " JOIN Pack USING(id_pack);";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
 
-                listItem.add((new PackView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imageMiniaturePack"),resultSet.getString("descriptionPack"))));
+                listItem.add((new PackView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imageMiniaturePack"),resultSet.getString("descriptionPack"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -135,7 +165,7 @@ public class ShopManager {
         LinkedList<BoostView> listItem = new LinkedList<>();
 
 
-        String query = "SELECT nomBoost,prixMonnaieIG, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
+        String query = "SELECT id_Offre,nomBoost,prixMonnaieIG, prixMonnaieIRL, id_Boost, imageMiniatureBoost, descriptionBoost FROM Offre " +
 
                 "JOIN OffreBoost USING (id_Offre)" +
                 " JOIN Boost USING(id_Boost);";
@@ -144,7 +174,7 @@ public class ShopManager {
         try {
             while (resultSet.next()){
 
-                listItem.add((new BoostView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Boost"),resultSet.getString("nomBoost"),resultSet.getString("imageMiniatureBoost"),resultSet.getString("descriptionBoost"))));
+                listItem.add((new BoostView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Boost"),resultSet.getString("nomBoost"),resultSet.getString("imageMiniatureBoost"),resultSet.getString("descriptionBoost"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -163,12 +193,12 @@ public class ShopManager {
 
         LinkedList<SkinCartonView> listItem = new LinkedList<>();
 
-        String query =  "SELECT nomCarton,prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageMiniatureCarton, descriptionCarton FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
+        String query =  "SELECT id_Offre,nomCarton,prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageMiniatureCarton, descriptionCarton FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
                 " JOIN SkinCartonCarte USING (id_SkinCartonCarte) WHERE id_SkinCartonCarte NOT IN (SELECT id_SkinCartonCarte FROM posséderSkinCartonCarte WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listItem.add((new SkinCartonView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinCartonCarte"),resultSet.getString("nomCarton"),resultSet.getString("imageMiniatureCarton"),resultSet.getString("descriptionCarton"))));
+                listItem.add((new SkinCartonView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinCartonCarte"),resultSet.getString("nomCarton"),resultSet.getString("imageMiniatureCarton"),resultSet.getString("descriptionCarton"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -186,11 +216,11 @@ public class ShopManager {
 
         LinkedList<SkinMapView> listItem = new LinkedList<>();
 
-        String query =  "SELECT nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN Map USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
+        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN Map USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listItem.add((new SkinMapView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinMap"),resultSet.getString("nomMap"),resultSet.getString("imageMiniatureMap"),resultSet.getString("descriptionMap"))));
+                listItem.add((new SkinMapView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinMap"),resultSet.getString("nomMap"),resultSet.getString("imageMiniatureMap"),resultSet.getString("descriptionMap"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -206,13 +236,13 @@ public class ShopManager {
     }
     public LinkedList<IconeView> getAllIconeOffers(String pseudo){
         LinkedList<IconeView> listIcone = new LinkedList<>();
-        String query = "SELECT nomIcone, prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageMiniatureIcone, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
+        String query = "SELECT id_Offre, nomIcone, prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageMiniatureIcone, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
                 " JOIN IconeJoueur USING (id_IconeJoueur) WHERE id_IconeJoueur NOT IN (SELECT id_IconeJoueur FROM posséderIconeJoueur WHERE Pseudo LIKE '"+pseudo+"');";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listIcone.add((new IconeView(resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("nomIcone"),resultSet.getString("imageMiniatureIcone"),resultSet.getString("descriptionIcone"))));
+                listIcone.add((new IconeView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("nomIcone"),resultSet.getString("imageMiniatureIcone"),resultSet.getString("descriptionIcone"))));
             }
 
         }catch (SQLException e){
@@ -231,7 +261,7 @@ public class ShopManager {
     //Tout les fonctions de gestion d'achat retournent des ArrayList de Doublet (id, value) où id sont les id des achats et value la quantité. Le but étant de renvoyer cette AL pour faciliter un potentiel affichage.
 
     //Autre point de vue :  on renvoie chaque carte une par une pour faire un affichage et faire "patienter" le client pendant les animations.
-    public ArrayList<Doublet> gererAchatPackRandomFullOpti(String pseudo, String id_Offre) {
+    public ArrayList<Triplet> gererAchatPackRandomFullOpti(String pseudo, String id_Offre) {
 
 
         long deb = System.nanoTime();
@@ -241,7 +271,7 @@ public class ShopManager {
         float rand;
 
         String queryEnsemble;
-        String queryListLoot = "SELECT id_LootPack, qteCarte, id_Ensemble, dropRatePack, id_Carte" +     //Récupère TOUT
+        String queryListLoot = "SELECT id_LootPack, qteCarte, id_Ensemble, dropRatePack, id_Carte, imageCarte" +     //Récupère TOUT
                 " FROM EnsembleCarte" +
                 " JOIN Ensemble USING (id_Ensemble)" +
                 " JOIN LootPackEnsemble USING (id_Ensemble)" +
@@ -259,11 +289,13 @@ public class ShopManager {
         ArrayList<String> queryInsertions = new ArrayList<>();          //Liste des query d'insertions
         ArrayList<Integer> ListCartesPossedees = new ArrayList<>();     //Liste des cartes possédées par le joueur.
         ArrayList<Doublet> ListLoot = new ArrayList<>();                //Liste des doublets (id_LootPack,qteCarte), càd le nombre de cartes à drop dans chaque LootPack.
-        ArrayList<Integer> ListCartesObtenus = new ArrayList<>();       //Liste des (id_Carte). Arrangement de la liste en fin de fonction de façon à renvoyer une liste s.
-        ArrayList<Integer> ListCopiesCartes = new ArrayList<>();        //Trouver un autre moyen si besoin d'optimisation.
+        ArrayList<Doublet> ListCartesObtenus = new ArrayList<>();       //Liste des (id_Carte,imageCarte). Arrangement de la liste en fin de fonction de façon à renvoyer une liste s.
+        ArrayList<Doublet> ListCopiesCartes = new ArrayList<>();        //Trouver un autre moyen si besoin d'optimisation.
 //        ArrayList<Couple> ListEnsemble = new ArrayList<>();                                 //Liste des couples (id_Ensemble,dropRatePack), càd la liste des Ensembles associés à chaque LootPack ainsi que la probabilité qu'on rand dans cet ensemble.
-        ArrayList<Doublet> s = new ArrayList<>();                       //Résultat : liste de doublets (id_Carte,qteCarte).
+        ArrayList<Triplet> s = new ArrayList<>();                       //Résultat : liste de doublets (id_Carte,qteCarte).
 
+
+        ArrayList<String> ListImgCartes = new ArrayList<>();
         ArrayList<Integer> ListCartes = new ArrayList<>();              //Liste de cartes composant un Ensemble.
         ArrayList<TripletEnsemble> tmpListSet = new ArrayList<>();
         ArrayList<ListEnsemble> ListSet = new ArrayList<>();
@@ -281,13 +313,15 @@ public class ShopManager {
 
                     ListLoot.add(new Doublet(i,setPack.getInt("qteCarte")));
                     if (!(tmpListSet.isEmpty())) {
-                        tmpListSet.add(new TripletEnsemble(b,d,ListCartes));
+                        tmpListSet.add(new TripletEnsemble(b,d,ListCartes,ListImgCartes));
                         ListSet.add(new ListEnsemble(y,tmpListSet));
                     }
 
                     tmpListSet = new ArrayList<>();
                     ListCartes = new ArrayList<>();
+                    ListImgCartes = new ArrayList<>();
                     ListCartes.add(setPack.getInt("id_Carte"));
+                    ListImgCartes.add(setPack.getString("imageCarte"));
 
                 }
                 else {
@@ -301,19 +335,21 @@ public class ShopManager {
                             b = setPack.getInt("id_Ensemble"); d = setPack.getFloat("dropRatePack");
                         }
                         ListCartes.add(setPack.getInt("id_Carte"));
-
+                        ListImgCartes.add(setPack.getString("imageCarte"));
                     }
                     else {
                         a = setPack.getInt("id_Ensemble"); c = setPack.getFloat("dropRatePack") ;
-                        tmpListSet.add(new TripletEnsemble(b,d,ListCartes));
+                        tmpListSet.add(new TripletEnsemble(b,d,ListCartes,ListImgCartes));
                         ListCartes = new ArrayList<>();
+                        ListImgCartes = new ArrayList<>();
                         ListCartes.add(setPack.getInt("id_Carte"));
+                        ListImgCartes.add(setPack.getString("imageCarte"));
                     }
 
                 }
 
             }
-            tmpListSet.add(new TripletEnsemble(a,c,ListCartes));
+            tmpListSet.add(new TripletEnsemble(a,c,ListCartes,ListImgCartes));
             ListSet.add(new ListEnsemble(i,tmpListSet));
             System.out.println("set = "+(System.nanoTime()-set)/Math.pow(10,9));
 
@@ -341,41 +377,53 @@ public class ShopManager {
 
             long loop = System.nanoTime();
             for(Doublet doubletLoot : ListLoot){                     //On choisit un LootPack coupleLoot (càd une partie du Pack)
-                for(int q = 0; q < doubletLoot.value; q++) {
+                for(int q = 0; q < (int) doubletLoot.value; q++) {
                     r = 0;
-                    int id_Carte;
+                    int id_Carte; String imageCarte;
+                    int randCarte;
                     rand = (float) Math.random();
-
                     for (TripletEnsemble coupleEnsemble : ListSet.get(doubletLoot.id).ensembles) {
+                        System.out.println("Cartes :"+coupleEnsemble.Cartes);
+                        System.out.println("Images :"+coupleEnsemble.img);
                         r += coupleEnsemble.dropRate;
                         if (rand < r) {
-                            id_Carte = coupleEnsemble.Cartes.get((int) (Math.random() * coupleEnsemble.Cartes.size()));
+                            randCarte = (int) (Math.random() * coupleEnsemble.Cartes.size());
+                            id_Carte = coupleEnsemble.Cartes.get(randCarte);
+                            imageCarte = coupleEnsemble.img.get(randCarte);
                             //for(int q = 0; q < doubletLoot.value; q++){
-                            ListCartesObtenus.add(id_Carte);
-                            ListCopiesCartes.add(id_Carte);
+                            System.out.println("Carte drop : "+id_Carte+"/"+imageCarte);
+                            ListCartesObtenus.add(new Doublet(id_Carte,imageCarte));
+                            ListCopiesCartes.add(new Doublet(id_Carte,imageCarte));
                             //}
                             break;
                         }
                     }
                 }
             }
+
+
             System.out.println("loop = "+(System.nanoTime()-loop)/Math.pow(10,9));
             //Arrangement de la liste : regroupement des doublons.
             //s = new ArrayList<>();
             long doublons = System.nanoTime();
-            for(int p : ListCartesObtenus){
+
+            int j;
+            for(Doublet dab : ListCartesObtenus){
                 x = 0;
-                while(ListCopiesCartes.remove((Object) p)){
-                    x++;
+                j = 0;
+                while(j < ListCopiesCartes.size()){
+                    if(dab.id == ListCopiesCartes.get(j).id && dab.value == ListCopiesCartes.get(j).value)  x++;
+                    j++;
                 }
-                if (x > 0) s.add(new Doublet(p,x));
+                if(x > 0) s.add(new Triplet(dab.id,x,(String) dab.value));
             }
+
             System.out.println("doublons = "+(System.nanoTime()-doublons)/Math.pow(10,9));
             long insert = System.nanoTime();
             //INSERT dans la table JoueurCarteDeck
-            for(Doublet doublet : s){
-                if (ListCartesPossedees.contains(doublet.id)) queryInsertions.add("UPDATE JoueurCarteDeck SET qteCarteDeck=qteCarteDeck+"+doublet.value+" WHERE (id_Deck LIKE '"+pseudo+"0' AND id_Carte ="+doublet.id+");");
-                else queryInsertions.add("INSERT INTO JoueurCarteDeck (Pseudo,id_Deck,id_Carte,qteCarteDeck) VALUES ('"+pseudo+"','"+pseudo+"0',"+doublet.id+","+doublet.value+");");
+            for(Triplet triplet : s){
+                if (ListCartesPossedees.contains(triplet.id)) queryInsertions.add("UPDATE JoueurCarteDeck SET qteCarteDeck=qteCarteDeck+"+triplet.value+" WHERE (id_Deck LIKE '"+pseudo+"0' AND id_Carte ="+triplet.id+");");
+                else queryInsertions.add("INSERT INTO JoueurCarteDeck (Pseudo,id_Deck,id_Carte,qteCarteDeck) VALUES ('"+pseudo+"','"+pseudo+"0',"+triplet.id+","+triplet.value+");");
             }
             Manager.getManager().sendMultipleRequestUpdate(queryInsertions,connection);
 
@@ -393,7 +441,7 @@ public class ShopManager {
             }
         }
         System.out.println((System.nanoTime()- deb)/Math.pow(10,9));
-        System.out.println(ListCartesObtenus);
+        System.out.println("s = "+s);
         return s;
     }
     public ArrayList<Doublet> gererAjoutMap(String pseudo, String id_Offre){
@@ -631,10 +679,11 @@ public class ShopManager {
 
         return RequestStatus.ACHAT_SUCCESS;
     }
-    public int doAchatDoublet(String pseudo, String mdp, String id_Offre, String money){
+    public Doublet doAchatDoublet(String pseudo, String mdp, String id_Offre, String money){
 
 
 
+        Doublet s = new Doublet();
         String queryMdp = "SELECT mdpCompte " +
                 "FROM CompteJoueur " +
                 "WHERE Pseudo LIKE '"+pseudo+"';";
@@ -643,7 +692,7 @@ public class ShopManager {
             testMdp.next();
             String mdpCompte = testMdp.getString("mdpCompte");
             if (!(mdpCompte.equals(mdp))) {
-                return RequestStatus.ACHAT_FAILED_MDP;
+                return new Doublet(RequestStatus.ACHAT_FAILED_MDP,new ArrayList<Doublet>());
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -656,7 +705,6 @@ public class ShopManager {
         String queryPrix = "SELECT prix"+money+", typeOffre" +
                 " FROM Offre" +
                 " WHERE id_Offre = "+id_Offre+" ;";
-        ArrayList<Doublet> s = new ArrayList<>();
 
         ResultSet testMoney = Manager.getManager().sendRequestQuery(queryMoney,connection);
 
@@ -667,29 +715,53 @@ public class ShopManager {
             testPrix.next();
             int prixOffre = testPrix.getInt("prix"+money);
             if (moneyCompte < prixOffre){
-                return RequestStatus.ACHAT_FAILED_MONEY;
+                return new Doublet(RequestStatus.ACHAT_FAILED_MONEY,new ArrayList<Doublet>());
             }
             String typeOffre = testPrix.getString("typeOffre");
             switch (typeOffre){
                 case    "Pack" : {
-                    if (!(gererAchatPackRandomFullOpti(pseudo, id_Offre).isEmpty())) break;
-                    else return -1;         //Erreur JeSaisPasTropQuoiMaisL'AjoutDesCartesAPlanté
+                    s.value = gererAchatPackRandomFullOpti(pseudo,id_Offre);
+                    if (!(((ArrayList<Doublet>)s.value).isEmpty())){
+                        System.out.println("it works");
+                        s.id = 5;
+                        break;
+                    }
+                    else {
+                        System.out.println("Je suis une erreur de fdp");
+                        return new Doublet(-1,new ArrayList<Doublet>());         //Erreur JeSaisPasTropQuoiMaisL'AjoutDesCartesAPlanté
+                    }
                 }
                 case    "Map" : {
-                    if (!(gererAjoutMap(pseudo,id_Offre).isEmpty())) break;
-                    else return -1;
+                    s.value = gererAjoutMap(pseudo,id_Offre);
+                    if (!(((ArrayList<Doublet>)s.value).isEmpty())){
+                        s.id = 5;
+                        break;
+                    }
+                    else return new Doublet(-1,new ArrayList<Doublet>());
                 }
                 case    "Carton" : {
-                    if (!(gererAjoutCartonCarte(pseudo,id_Offre).isEmpty())) break;
-                    else return -1;
+                    s.value = gererAjoutCartonCarte(pseudo,id_Offre);
+                    if (!(((ArrayList<Doublet>)s.value).isEmpty())){
+                        s.id = 5;
+                        break;
+                    }
+                    else return new Doublet(-1,new ArrayList<Doublet>());
                 }
                 case    "Boost" : {
-                    if (!(gererAjoutBoost(pseudo,id_Offre).isEmpty())) break;
-                    else return -1;
+                    s.value = gererAjoutBoost(pseudo,id_Offre);
+                    if (!(((ArrayList<Doublet>)s.value).isEmpty())){
+                        s.id = 5;
+                        break;
+                    }
+                    else return new Doublet(-1,new ArrayList<Doublet>());
                 }
                 case    "Icone" : {
-                    if (!(gererAjoutIcone(pseudo, id_Offre).isEmpty())) break;
-                    else return -1;
+                    s.value = gererAjoutIcone(pseudo,id_Offre);
+                    if (!(((ArrayList<Doublet>)s.value).isEmpty())){
+                        s.id = 5;
+                        break;
+                    }
+                    else return new Doublet(-1,new ArrayList<Doublet>());
                 }
 
             }
@@ -707,10 +779,7 @@ public class ShopManager {
             }
         }
 
-
-
-
-        return RequestStatus.ACHAT_SUCCESS;
+        return s;
     }
 
 
