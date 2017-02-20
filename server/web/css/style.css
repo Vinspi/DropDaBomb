@@ -1,7 +1,11 @@
 
 body{
+<<<<<<< HEAD
     background-image: url("../img/background_create_account.png");
     background-position: right top;
+=======
+    background-image: url("../img/BG5_SITE.jpg");
+>>>>>>> 15cd5a4e376561b128961d724f849a28784bebaf
     background-attachment: fixed;
 }
 
@@ -12,6 +16,97 @@ body{
 
 .card_signup{
     margin-top: 12em;
+}
+
+.deck-container{
+    margin-top: 1.2em;
+}
+
+.midnight-blue{
+    background-color: #2c3e50;
+}
+
+.belize-hole{
+    background-color: #2980b9;
+}
+
+.text-neon-blue{
+    color: #42b6f4;
+}
+
+.mesdecks {
+    margin-top: 1em;
+    margin-bottom: 0;
+    background: #00729a;
+    padding: 0.5em;
+}
+
+
+.grow{
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    transition: all 0.3s ease;
+}
+
+.grow:hover
+{
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: all 0.3s ease;
+}
+
+
+@-webkit-keyframes shaker{
+    50%{
+        rotateZ(-5deg);
+    }
+    100%{
+        rotateZ(5deg);
+    }
+}
+
+@-ms-keyframes  shaker{
+    50%{
+    rotateZ(-50deg);
+    }
+    100%{
+    rotateZ(50deg);
+    }
+}
+
+@keyframes  shaker{
+    50%{
+    transform: rotate(-3deg);
+    }
+    100%{
+    transform: rotate(3deg);
+    }
+}
+
+.shake
+{
+
+    animation: shaker 0.3s infinite;
+
+}
+
+
+
+.bottom-arrow-mesdecks{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 15px solid transparent;
+    border-top: 15px solid #ffa000;
+    left: 50%;
+    margin-bottom: 1em;
+}
+
+.carte-deck{
+    margin-left:2em;
+    margin-right:2em;
 }
 
 .card .title-card{
@@ -69,14 +164,21 @@ body{
     margin-top: 20em;
 }
 
+.log-card{
+    margin-top: 10em;
+}
+
 .btn-index{
     margin: 2em;
 }
 
 nav{
-    opacity: 0.8;
+    opacity: 1;
 }
 
+.nav-perso {
+    background: linear-gradient(10deg,#4b6572,#2c3e50);
+}
 
 .bottom-arrow-creation-compte{
     position: absolute;
@@ -85,6 +187,7 @@ nav{
     border: 15px solid transparent;
     border-top: 15px solid #8bc34a;
     left: 47%;
+
 }
 
 .bottom-arrow-telechargement{
@@ -105,10 +208,23 @@ nav{
     left: 47%;
 }
 
+.bottom-arrow-log{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 15px solid transparent;
+    border-top: 15px solid #ffc107;
+    left: 47%;
+}
+
 #btn-download{
     position: relative;
     padding-bottom: 2em;
     bot: 0px;
+}
+
+nav li{
+    margin-right: 1em;
 }
 
 .content-connexion{
@@ -121,6 +237,10 @@ nav{
 
 .card-download{
     padding: 2.5em;
+}
+
+#iconeJoueur{
+    width: 4rem;
 }
 
 ::-webkit-input-placeholder { /* Chrome */

@@ -88,7 +88,7 @@ public class ShopManager {
     }
 
     Connection connection = null;
-    private List<PackView> listPackView = new LinkedList<>();
+    private List<PackView> listPackView = new LinkedList<>() ;
     private List<BoostView> listBoostView = new LinkedList<>();
     private List<SkinMapView> listSkinMapView = new LinkedList<>();
     private List<SkinCartonView> listSkinCartonView = new LinkedList<>();

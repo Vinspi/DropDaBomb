@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
 
-    <script type="application/javascript" src="materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
 
     <title>DropDaBomb</title>
 </head>
@@ -36,18 +36,19 @@
     <div class="container">
         <div class="row">
             <div class="col s4 m4 l4 offset-l4 offset-m4 offset-s4">
-                <div class="card card-index center-align">
+                <div class="card log-card center-align">
                     <div class="card-content title-card">
-                        <div class="center-align amber">
+                        <div class="center-align amber title-connexion">
                             <span class="card-title white-text">Connectez vous</span>
+                            <div class="bottom-arrow-log"></div>
                         </div>
                         <div class="row content-connexion">
                             <div class="col s8 m8 l8 offset-l2 offset-m2 offset-s2">
                                 <% System.out.println(request.getParameter("AUTH_STATUS"));
-
-                                if(session.getAttribute("STATUS") != null){
-                                    out.print("<h8 class='red-text'>Mauvais identifiants</h8>");
-                                }%>
+                                    if(session.getAttribute("STATUS") != null){
+                                        out.print("<h8 class='red-text'>Mauvais identifiants</h8>");
+                                    }
+                                %>
                                 <form action="Auth" method="post">
                                     <input placeholder="pseudo" id="pseudo" name ="pseudo" type="text" class="validate">
 
