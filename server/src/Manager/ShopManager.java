@@ -522,6 +522,7 @@ public class ShopManager {
         }
         return s;
     }
+
     public  ArrayList<Doublet> gererAjoutIcone(String pseudo, String id_Offre){
         ArrayList<Doublet> s = new ArrayList<>();
 

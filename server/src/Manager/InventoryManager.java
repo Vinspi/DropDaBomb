@@ -117,6 +117,17 @@ public class InventoryManager {
         return cards;
     }
 
+    public void changePassword(String newPassword, String pseudo){
 
+        /* le pseudo sera passé en param par la servlet de controle ce qui garanti que le pseudo se trouve
+            dans la variable de session et par conséquent que celui existe (verifié par la servlet de connexion)
+         */
+
+        String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\')";
+
+        Manager.getManager().sendRequestUpdate(query,connection);
+
+
+    }
 
 }
