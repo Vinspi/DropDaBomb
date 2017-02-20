@@ -35,7 +35,9 @@ public class ShopViewServletAndroid extends HttpServlet {
         ShopView shopView = new ShopView();
         shopView.getAllOffers(pseudo); //Mets tout les Offres dans les attributs de shopView (toutes, même celles que le Joueur possède déjà /!\)
 
-        out.print(gson.toJson(shopView));
+
+        //out.print(gson.toJson(shopView));
+
 
 
     }
