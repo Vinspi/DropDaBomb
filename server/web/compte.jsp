@@ -40,13 +40,13 @@
         <a href="#" class="brand-logo">DropDaBomb</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="shop.jsp">Boutique</a></li>
-            <li><a href="account.jsp">Inscription</a></li>
             <%
 
                 System.out.println("pseudo = "+session.getAttribute("pseudo"));
                 String icone = (String) request.getSession().getAttribute("iconeJoueur");
                 System.out.println("icone = "+icone);
                 if(session.getAttribute("pseudo") == null) {
+                    out.print("<li><a href=\"account.jsp\">Inscription</a></li>");
                     out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
                 }
                 else {
@@ -61,18 +61,18 @@
 
 <div class="container">
     <div>
-        <h5 class="center-align mesdecks white-text amber darken-2">Mes decks</h5>
-        <div class="bottom-arrow-mesdecks"></div>
+        <%--<h5 class="center-align mesdecks white-text amber darken-2 luna">Mes decks</h5>--%>
+        <%--<div class="bottom-arrow-mesdecks"></div>--%>
     </div>
     <div class="card deck-container">
 
         <div class="card-tabs">
-            <ul class="tabs tabs-fixed-width midnight-blue">
-                <li class="tab"><a class="active text-neon-blue" onclick="swapCardsView()" href="#deck1">Deck 1</a></li>
-                <li class="tab"><a class="text-neon-blue" onclick="swapCardsView()" href="#deck2">Deck 2</a></li>
+            <ul class="tabs tabs-fixed-width wooden-bg">
+                <li class="tab"><a class="active text-neon-blue white-text luna" onclick="swapCardsView()" href="#deck1">Deck 1</a></li>
+                <li class="tab"><a class="text-neon-blue white-text luna " onclick="swapCardsView()" href="#deck2">Deck 2</a></li>
             </ul>
         </div>
-        <div class="card-content midnight-blue">
+        <div class="card-content wooden-bg">
             <div id="deck1">
                 <div class="center-align">
                     <div class="row">
@@ -137,7 +137,7 @@
     </div>
     <div class="section-carte-compte">
         <div>
-            <h5 class="center-align mesdecks white-text amber darken-2">Mes cartes</h5>
+            <h5 class="center-align mesdecks white-text amber darken-2 luna">Mes cartes</h5>
             <div class="bottom-arrow-mesdecks"></div>
         </div>
         <div id="section-carte-compte-1">
@@ -191,7 +191,6 @@
 
                     ArrayList<CardView> difference2 = new ArrayList<CardView>();
 
-
                     trouve = false;
                     for (CardView card:inventoryView.getPlayerCards()){
                         trouve = false;
@@ -227,6 +226,8 @@
     var deckVisible = 1;
     var lastCardSelected = -1;
     var lastCardDeckSelected = -1;
+    var lastSwitched1;
+    var lastSwitched2;
 
     $(document).ready(function () {
         $('#section-carte-compte-2').hide();
@@ -253,8 +254,33 @@
         /* selection de la carte pour la premiere fois */
         if(lastCardSelected == -1){
             lastCardSelected = value;
+
             $('#'+value).addClass("shake");
+            $('#'+value).removeClass("grow");
             if(lastCardDeckSelected != -1){
+                console.log($('#'+lastCardSelected).children().attr('src'));
+
+                var attrLastCardSelected = $('#'+lastCardSelected).children().attr('src');
+                var attrLastCardDeckSelected = $('#'+lastCardDeckSelected).children().attr('src');
+
+                /* swap cards images */
+
+                $('#'+lastCardDeckSelected).addClass('tmpClass1');
+                $('#'+lastCardSelected).addClass('tmpClass2');
+
+                $('#'+lastCardSelected).children().attr('src',attrLastCardDeckSelected);
+                $('#'+lastCardDeckSelected).children().attr('src',attrLastCardSelected);
+
+                $('.tmpClass2').attr('id',lastCardDeckSelected);
+                $('.tmpClass1').attr('id',lastCardSelected);
+
+
+                $('#'+lastCardSelected).removeClass("tmpClass1");
+                $('#'+lastCardDeckSelected).removeClass("tmpClass2");
+
+
+                /* end swap */
+
                 /* envoyer la requete vive l'ajax */
                 $.ajax({
 
@@ -266,6 +292,8 @@
 
                     succes: function (code_html,status) {
                         console.log("succes "+status);
+                        alert("coucou");
+
                     },
 
                     error: function (code_html,status) {
@@ -275,15 +303,40 @@
                 });
                 $('#'+lastCardSelected).removeClass("shake");
                 $('#'+lastCardDeckSelected).removeClass("shake");
-                lastCardDeckSelected = -1;
+                $('#'+lastCardSelected).addClass("grow");
+                $('#'+lastCardDeckSelected).addClass("grow");
+
+
+                $("#"+lastCardSelected).bind('oanimationend animationend webkitAnimationEnd', function() {
+                    $('#'+lastSwitched1).removeClass("switch");
+                });
+
+                $("#"+lastCardDeckSelected).bind('oanimationend animationend webkitAnimationEnd', function() {
+
+                    $('#'+lastSwitched2).removeClass("switch");
+                });
+
+
+                lastSwitched1 = lastCardSelected;
+                lastSwitched2 = lastCardDeckSelected;
+
+
+                $('#'+lastCardSelected).addClass("switch");
+                $('#'+lastCardDeckSelected).addClass("switch");
+
+
                 lastCardSelected = -1;
+                lastCardDeckSelected = -1;
+
 
             }
         }
         else {
             $('#'+lastCardSelected).removeClass("shake");
+            $('#'+lastCardSelected).addClass("grow");
             lastCardSelected = value;
             $('#'+value).addClass("shake");
+            $('#'+value).removeClass("grow");
         }
 
 
@@ -296,8 +349,34 @@
         if(lastCardDeckSelected == -1){
             lastCardDeckSelected = value;
             console.log('#'+value);
+
             $('#'+value).addClass("shake");
+            $('#'+value).removeClass("grow");
             if(lastCardSelected != -1){
+
+                var attrLastCardSelected = $('#'+lastCardSelected).children().attr('src');
+                var attrLastCardDeckSelected = $('#'+lastCardDeckSelected).children().attr('src');
+
+                /* swap cards images */
+
+                $('#'+lastCardDeckSelected).addClass('tmpClass1');
+                $('#'+lastCardSelected).addClass('tmpClass2');
+
+                $('#'+lastCardSelected).children().attr('src',attrLastCardDeckSelected);
+                $('#'+lastCardDeckSelected).children().attr('src',attrLastCardSelected);
+
+                $('.tmpClass2').attr('id',lastCardDeckSelected);
+                $('.tmpClass1').attr('id',lastCardSelected);
+
+
+                $('#'+lastCardSelected).removeClass("tmpClass1");
+                $('#'+lastCardDeckSelected).removeClass("tmpClass2");
+
+
+
+                /* end swap */
+
+
                 /* envoyer la requete vive l'ajax */
                 $.ajax({
 
@@ -309,6 +388,7 @@
 
                     succes: function (code_html,status) {
                         console.log("succes "+status);
+                        alert("coucou");
                     },
 
                     error: function (code_html,status) {
@@ -318,16 +398,37 @@
                 });
                 $('#'+lastCardSelected).removeClass("shake");
                 $('#'+lastCardDeckSelected).removeClass("shake");
-                lastCardDeckSelected = -1;
+                $('#'+lastCardSelected).addClass("grow");
+                $('#'+lastCardDeckSelected).addClass("grow");
+
+                $("#"+lastCardSelected).bind('oanimationend animationend webkitAnimationEnd', function() {
+                    $('#'+lastSwitched1).removeClass("switch");
+                });
+
+                $("#"+lastCardDeckSelected).bind('oanimationend animationend webkitAnimationEnd', function() {
+
+                    $('#'+lastSwitched2).removeClass("switch");
+                });
+
+
+                lastSwitched1 = lastCardSelected;
+                lastSwitched2 = lastCardDeckSelected;
+
+                $('#'+lastCardSelected).addClass("switch");
+                $('#'+lastCardDeckSelected).addClass("switch");
+
                 lastCardSelected = -1;
+                lastCardDeckSelected = -1;
 
             }
 
         }
         else {
             $('#'+lastCardDeckSelected).removeClass("shake");
+            $('#'+lastCardDeckSelected).addClass("grow");
             lastCardDeckSelected = value;
             $('#'+value).addClass("shake");
+            $('#'+value).removeClass("grow");
         }
 
     }

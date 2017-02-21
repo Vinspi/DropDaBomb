@@ -4,6 +4,7 @@ import View.CardView;
 import View.DeckView;
 import View.InventoryItem;
 import View.InventoryView;
+import sun.awt.geom.AreaOp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,8 +25,24 @@ public class InventoryManager {
         String query = "UPDATE JoueurCarteDeck SET id_Carte = "+id_carte+" WHERE (id_Carte = "+id_carteDeck+" AND id_deck LIKE '"+id_deck+"');";
 
         if(Manager.getManager().sendRequestUpdate(query,connection)){
-            return RequestStatus.SWAP_SUCCES;
-        }else return RequestStatus.SWAP_FAILED;
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.SWAP_SUCCESS;
+        }else {
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.SWAP_FAILED;
+        }
 
     }
 

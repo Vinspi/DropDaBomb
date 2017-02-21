@@ -70,4 +70,12 @@
         <servlet-name>InventoryViewServletAndroid</servlet-name>
         <url-pattern>/InventoryAndroid</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AccountUpdaterServlet</servlet-name>
+        <servlet-class>AccountServlets.AccountUpdaterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountUpdaterServlet</servlet-name>
+        <url-pattern>/AccountUpdater</url-pattern>
+    </servlet-mapping>
 </web-app>
