@@ -51,7 +51,8 @@
                 }
                 else {
                     out.print("<li><a href=\"compte.jsp\">" + pseudo + "</a></li>" +
-                            "<li><img src=\"../img/iconeJoueur/"+icone+"\" alt=\"\" class=\"circle\" id=\"iconeJoueur\"></li>");
+                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                            "<li><img src=\"../img/iconeJoueur/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                 }
 
             %>

@@ -1,6 +1,5 @@
 package Manager;
 
-import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import java.util.LinkedList;
  */
 public class AccountManager {
     Connection connection = null;
-
 
 
     public int authentification(String pseudo, String password) {
@@ -40,13 +38,97 @@ public class AccountManager {
         return status;
     }
 
+    public String getplayerEmail(String pseudo){
+        String query = "SELECT mailCompte \n" +
+                "FROM CompteJoueur\n" +
+                "WHERE (Pseudo LIKE \'"+pseudo+"\')";
+
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
+        String retour = "";
+        try{
+            if(resultSet.next()){
+                retour = resultSet.getString("mailCompte");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null)
+                    connection.close();
+
+            }catch (SQLException e){
+                /* ignore */
+            }
+        }
+
+        return retour;
+    }
+
+    public String getPlayerSkinMap(String pseudo){
+
+
+        String query = "SELECT imageMiniatureMap \n" +
+                "FROM CompteJoueur\n" +
+                "JOIN Map USING(id_SkinMap)\n" +
+                "WHERE (Pseudo LIKE \'"+pseudo+"\')";
+
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
+        String retour = "";
+        try{
+            if(resultSet.next()){
+                retour = resultSet.getString("imageMiniatureMap");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null)
+                    connection.close();
+
+            }catch (SQLException e){
+                /* ignore */
+            }
+        }
+
+        return retour;
+    }
+
+    public String getPlayerSkinCarton(String pseudo){
+
+
+        String query = "SELECT imageMiniatureCarton \n" +
+                "FROM CompteJoueur\n" +
+                "JOIN SkinCartonCarte USING(id_SkinCartonCarte)\n" +
+                "WHERE (Pseudo LIKE \'"+pseudo+"\')";
+
+        ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
+        String retour = "";
+        try{
+            if(resultSet.next()){
+                retour = resultSet.getString("imageMiniatureCarton");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null)
+                    connection.close();
+
+            }catch (SQLException e){
+                /* ignore */
+            }
+        }
+
+        return retour;
+    }
+
     public String getPlayerIcon(String pseudo){
 
 
         String query = "SELECT imageIcone \n" +
                 "FROM CompteJoueur\n" +
                 "JOIN IconeJoueur USING(id_IconeJoueur)\n" +
-                "WHERE (Pseudo LIKE 'lucaslefou')";
+                "WHERE (Pseudo LIKE \'"+pseudo+"\')";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         String retour = "";

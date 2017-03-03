@@ -11,6 +11,7 @@ body{
     background-attachment: fixed;
 }
 
+
 .brand-logo{
     text-shadow: 2px 2px #000000;
     margin-left: 20px;
@@ -25,7 +26,6 @@ body{
 }
 
 .deck-container{
-
     margin-top: 3em;
     /*border: 3px solid black;*/
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -244,6 +244,7 @@ nav{
 
 }
 
+
 .bottom-arrow-telechargement{
     position: absolute;
     height: 0px;
@@ -293,7 +294,7 @@ nav li{
     padding: 2.5em;
 }
 
-#iconeJoueur{
+.iconeJoueur{
     width: 4rem;
 }
 
