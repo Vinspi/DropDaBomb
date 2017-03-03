@@ -3,7 +3,9 @@ package Manager;
 import View.PackView;
 
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.util.LinkedList;
@@ -257,6 +259,7 @@ public class PackManager {
             }
 
         }
+        //ResultSet setPack = Manager.getManager().sendRequestQuery(query,connection);
 
         Manager.getManager().sendRequestUpdate(queryPack,connection);
         Manager.getManager().sendRequestUpdate(queryOffre,connection);

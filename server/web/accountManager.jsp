@@ -27,7 +27,7 @@
     String icone = (String) session.getAttribute("iconeJoueur");
     String skinCarton = (String) session.getAttribute("skinCartonJoueur");
     String skinMap = (String) session.getAttribute("skinMapJoueur");
-    String srcImageIcone = "\"../img/iconeJoueur/"+icone+"\"";
+    String srcImageIcone = "\"../img/ICONES/"+icone+"\"";
     String srcImageSkinCarton = "\"../img/"+skinCarton+"\"";
     String srcImageSkinMap = "\"../img/"+skinMap+"\"";
 
@@ -49,7 +49,7 @@
                     else {
                         out.print("<li><a href=\"compte.jsp\">" + pseudo + "</a></li>" +
                                 "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                                "<li><img src=\"../img/iconeJoueur/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                                "<li><img src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
 
                 %>

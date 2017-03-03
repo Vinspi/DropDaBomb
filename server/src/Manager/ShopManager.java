@@ -271,10 +271,11 @@ public class ShopManager {
         float rand;
 
         String queryEnsemble;
-        String queryListLoot = "SELECT id_LootPack, qteCartePack, id_Ensemble, dropRatePack, id_Carte" +     //Récupère TOUT
+        String queryListLoot = "SELECT id_LootPack, qteCartePack, id_Ensemble, dropRatePack, id_Carte, imageCarte" +     //Récupère TOUT
                 " FROM EnsembleCarte" +
                 " JOIN LootPackEnsemble USING (id_Ensemble)" +
                 " JOIN LootPackPack USING (id_LootPack)" +
+                " JOIN Carte USING (id_Carte) "+
                 " JOIN Pack USING (id_Pack)" +
                 " JOIN Offre USING (id_Pack)" +
                 " WHERE id_Offre = "+id_Offre +
@@ -310,7 +311,7 @@ public class ShopManager {
                     a = setPack.getInt("id_Ensemble");
                     c = setPack.getFloat("dropRatePack");
 
-                    ListLoot.add(new Doublet(i,setPack.getInt("qteCarte")));
+                    ListLoot.add(new Doublet(i,setPack.getInt("qteCartePack")));
                     if (!(tmpListSet.isEmpty())) {
                         tmpListSet.add(new TripletEnsemble(b,d,ListCartes,ListImgCartes));
                         ListSet.add(new ListEnsemble(y,tmpListSet));

@@ -52,7 +52,7 @@
                 else {
                     out.print("<li><a href=\"compte.jsp\">" + pseudo + "</a></li>" +
                             "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                            "<li><img src=\"../img/iconeJoueur/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                            "<li><img src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                 }
 
             %>
@@ -82,7 +82,7 @@
                             out.print("<div class=\"col s3 m3 l3\">" +
                                     "                        <div class=\"card carte-deck\">" +
                                     "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\" id=\"a" + inventoryView.getDeck1().getCards().get(i).getId_carte() + "\"> " +
-                                    "                               <img src=\"../img/img-carte/"+inventoryView.getDeck1().getCards().get(i).getImageCarte()+"\">" +
+                                    "                               <img src=\"../img/CARDS/"+inventoryView.getDeck1().getCards().get(i).getImageCarte()+"\">" +
                                     "                              </div>" +
                                     "                           </div>" +
                                     "   </div>");
@@ -95,7 +95,7 @@
                                 out.print("<div class=\"col s3 m3 l3\">" +
                                         "                        <div class=\"card carte-deck\">" +
                                         "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\"  id=\"a" + inventoryView.getDeck1().getCards().get(i).getId_carte() + "\"> " +
-                                        "                               <img src=\"../img/img-carte/"+inventoryView.getDeck1().getCards().get(i).getImageCarte()+"\">" +
+                                        "                               <img src=\"../img/CARDS/"+inventoryView.getDeck1().getCards().get(i).getImageCarte()+"\">" +
                                         "                              </div>" +
                                         "                           </div>" +
                                         "   </div>");
@@ -112,7 +112,7 @@
                                 out.print("<div class=\"col s3 m3 l3\">" +
                                         "                        <div class=\"card carte-deck\">" +
                                         "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\" id=\"b" + inventoryView.getDeck2().getCards().get(i).getId_carte() + "\"> " +
-                                        "                               <img src=\"../img/img-carte/"+inventoryView.getDeck2().getCards().get(i).getImageCarte()+"\">" +
+                                        "                               <img src=\"../img/CARDS/"+inventoryView.getDeck2().getCards().get(i).getImageCarte()+"\">" +
                                         "                              </div>" +
                                         "                           </div>" +
                                         "   </div>");
@@ -125,7 +125,7 @@
                                 out.print("<div class=\"col s3 m3 l3\">" +
                                         "                        <div class=\"card carte-deck\">" +
                                         "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\" id=\"b" + inventoryView.getDeck2().getCards().get(i).getId_carte() + "\"> " +
-                                        "                               <img src=\"../img/img-carte/"+inventoryView.getDeck2().getCards().get(i).getImageCarte()+"\">" +
+                                        "                               <img src=\"../img/CARDS/"+inventoryView.getDeck2().getCards().get(i).getImageCarte()+"\">" +
                                         "                              </div>" +
                                         "                           </div>" +
                                         "   </div>");
@@ -171,7 +171,7 @@
                     out.print("<div class=\"col s3 m3 l3\">");
                     out.print("<div class=\"card carte-deck\">" +
                             "       <div class=\"card-image grow\" onclick=\"selectCard($(this).attr('id'))\" id=\"a" + difference1.get(i-1).getId_carte() + "\">" +
-                            "           <img src=\"../img/img-carte/"+difference1.get(i-1).getImageCarte()+"\">" +
+                            "           <img src=\"../img/CARDS/"+difference1.get(i-1).getImageCarte()+"\">" +
                             "       </div>" +
                             "   </div>");
                     out.print("</div>");
@@ -210,7 +210,7 @@
                         out.print("<div class=\"col s3 m3 l3\">");
                         out.print("<div class=\"card carte-deck\">" +
                                 "       <div class=\"card-image grow\" onclick=\"selectCard($(this).attr('id'))\" id=\"b" + difference2.get(i-1).getId_carte() + "\">" +
-                                "           <img src=\"../img/img-carte/"+difference2.get(i-1).getImageCarte()+"\">" +
+                                "           <img src=\"../img/CARDS/"+difference2.get(i-1).getImageCarte()+"\">" +
                                 "       </div>" +
                                 "   </div>");
                         out.print("</div>");
