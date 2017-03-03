@@ -2,6 +2,9 @@ package Manager;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
+
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.util.function.LongToDoubleFunction;
@@ -50,6 +53,12 @@ public class PackManager {
         currentEnsemble.cartes.add(id_Carte);
     }
 
+
+    public void createEnsemble(){
+
+
+    }
+
     public void addEnsembleToLootPack(String nom,int drop){
         currentEnsemble.id = current_idEnsemble;
         currentEnsemble.dropRate = drop;
@@ -67,6 +76,12 @@ public class PackManager {
         currentLootPack = new LootPack();
         current_idLootPack++;
     }
+
+    public void getAllLootPack(){
+
+
+    }
+
 
     public int createPack(String nom,String description, int prixIG, int prixIRL, String image, int id_Offre){
         String queryPack = "INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES ("+current_idPack+",'"+nom+"','"+description+"','"+image+"');";
@@ -99,6 +114,15 @@ public class PackManager {
 
         }
         //ResultSet setPack = Manager.getManager().sendRequestQuery(query,connection);
+
+        Manager.getManager().sendRequestUpdate(queryPack,connection);
+        Manager.getManager().sendRequestUpdate(queryOffre,connection);
+        Manager.getManager().sendMultipleRequestUpdate(queryLootPack,connection);
+        Manager.getManager().sendMultipleRequestUpdate(queryEnsemble,connection);
+        Manager.getManager().sendMultipleRequestUpdate(queryLPE,connection);
+        Manager.getManager().sendMultipleRequestUpdate(queryEC,connection);
+
+        if (connection != null) connection = null;
 
 
         return 0;
