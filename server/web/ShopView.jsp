@@ -20,6 +20,7 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/shop.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection"/>
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
     <script>
         $(document).ready(function(){
@@ -89,11 +90,42 @@
 </head>
 <body>
 
+<%
+
+    String pseudo = (String) session.getAttribute("pseudo");
+    String icone = (String) session.getAttribute("iconeJoueur");
+
+%>
+
+<nav>
+    <div class="nav-wrapper nav-perso">
+        <a href="#" class="brand-logo">DropDaBomb</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="shop.jsp">Boutique</a></li>
+            <%
+
+                System.out.println("pseudo = "+pseudo);
+                System.out.println("icone = "+icone);
+                if(session.getAttribute("pseudo") == null) {
+                    out.print("<li><a href=\"account.jsp\">Inscription</a></li>");
+                    out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
+                }
+                else {
+                    out.print("<li><a href=\"compte.jsp\">" + pseudo + "</a></li>" +
+                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                            "<li><img src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                }
+
+            %>
+        </ul>
+    </div>
+</nav>
+
 <div id="container">
     <h1 class="center-align" id="h1_boutique">La Boutique</h1><p>
 
     <%
-        String pseudo = "aa";
+
         ShopView shopView = new ShopView();
         shopView.getAllOffers(pseudo);
         int i = 0,m = 0;

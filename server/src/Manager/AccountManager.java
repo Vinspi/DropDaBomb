@@ -69,7 +69,7 @@ public class AccountManager {
 
         String query = "SELECT imageMiniatureMap \n" +
                 "FROM CompteJoueur\n" +
-                "JOIN Map USING(id_SkinMap)\n" +
+                "JOIN SkinMap USING(id_SkinMap)\n" +
                 "WHERE (Pseudo LIKE \'"+pseudo+"\')";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
@@ -160,42 +160,46 @@ public class AccountManager {
 
         LinkedList<String> queryInsertion = new LinkedList<>();
 
-        queryInsertion.add("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nom_guilde, id_Division) " +
+        queryInsertion.add("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nomGuilde, id_Division) " +
                     "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);");
         queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"0');");
         queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"1');");
         queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"2');");
 
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 0);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 1);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 2);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 3);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 4);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 5);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 6);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 7);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 0);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 1);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 2);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 3);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 4);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 5);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 6);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 7);");
 
 
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 0);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 1);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 2);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 3);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 4);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 5);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 6);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 7);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 0);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 1);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 2);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 3);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 4);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 5);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 6);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"1', '"+pseudo+"', 7);");
 
 
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 0);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 1);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 2);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 3);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 4);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 5);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 6);");
-        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 7);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 0);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 1);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 2);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 3);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 4);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 5);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 6);");
+        queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarte, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"2', '"+pseudo+"', 7);");
 
-        queryInsertion.add("INSERT INTO posséderIconeJoueur(Pseudo,id_IconeJoueur) VALUES (\""+pseudo+"\",\""+1+"\")");
+        queryInsertion.add("INSERT INTO posséderIconeJoueur(Pseudo,id_IconeJoueur) VALUES (\""+pseudo+"\",\""+0+"\")");
+
+        queryInsertion.add("INSERT INTO posséderSkinMap(Pseudo,id_SkinMap) VALUES (\""+pseudo+"\",\""+0+"\")");
+
+        queryInsertion.add("INSERT INTO posséderSkinCartonCarte(Pseudo,id_SkinCartonCarte) VALUES (\""+pseudo+"\",\""+0+"\")");
 
 
 

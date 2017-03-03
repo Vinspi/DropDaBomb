@@ -1,6 +1,9 @@
 package Manager;
 
+import java.lang.reflect.Array;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.Connection;
 import java.util.function.LongToDoubleFunction;
 
 /**
@@ -8,6 +11,7 @@ import java.util.function.LongToDoubleFunction;
  */
 public class PackManager {
 
+    Connection connection = null;
     Pack currentPack = new Pack();
     LootPack currentLootPack = new LootPack();
     Ensemble currentEnsemble = new Ensemble();
@@ -26,14 +30,6 @@ public class PackManager {
         String nom;
         float dropRate;
         ArrayList<Integer> cartes;
-
-        /*public Ensemble(String nom, float dropRate){
-            this.id = current_idEnsemble;
-            current_idEnsemble++;
-            this.nom = nom;
-            this.dropRate = dropRate;
-            this.cartes = new ArrayList<>();
-        }*/
     }
 
     public class LootPack{
@@ -41,24 +37,11 @@ public class PackManager {
         String nom;
         int qte;
         ArrayList<Ensemble> ensembles = new ArrayList<Ensemble>();
-
-        /*public LootPack(String nom, int qte) {
-            this.id = current_idLootPack;
-            current_idLootPack++;
-            this.nom = nom;
-            this.qte = qte;
-            this.ensembles = new ArrayList<>();
-        }*/
     }
 
     public class Pack {
         int id;
         ArrayList<LootPack> lootPacks = new ArrayList<LootPack>();
-
-        /*public Pack(){
-            this.id = current_idPack;
-            this.lootPacks = new ArrayList<>();
-        }*/
     }
 
 
@@ -91,14 +74,31 @@ public class PackManager {
 
         ArrayList<String> queryLootPack = new ArrayList<>();
         ArrayList<String> queryEnsemble = new ArrayList<>();
-        String tmpLootPack;
-
+        ArrayList<String> queryLPE = new ArrayList<>();
+        ArrayList<String> queryEC = new ArrayList<>();
+        String tmp;
 
 
         for(LootPack lp : currentPack.lootPacks){
-            tmpLootPack = "INSERT INTO LootPack (id_LootPack, id_Pack, qteCarte ) VALUES ("+lp.id+","+currentPack.id+","+lp.qte+");";
+            tmp = "INSERT INTO LootPack (id_LootPack, id_Pack, qteCarte ) VALUES ("+lp.id+","+currentPack.id+","+lp.qte+");";
+            queryLootPack.add(tmp);
+
+            for(Ensemble e : lp.ensembles){
+                tmp = "INSERT INTO Ensemble (id_Ensemble, dropRatePack) VALUES ("+e.id+","+e.dropRate+");";
+                queryEnsemble.add(tmp);
+                tmp = "INSERT INTO LootPackEnsemble (id_LootPack,id_Ensemble) VALUES ("+lp.id+","+e.id+");";
+                queryLPE.add(tmp);
+
+                for(Integer c : e.cartes){
+                    tmp = "INSERT INTO EnsembleCarte (id_Ensemble, id_cartes) VALUES ("+e.id+","+c+")";
+                    queryEC.add(tmp);
+
+                }
+
+            }
 
         }
+        //ResultSet setPack = Manager.getManager().sendRequestQuery(query,connection);
 
 
         return 0;

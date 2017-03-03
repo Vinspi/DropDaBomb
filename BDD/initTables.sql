@@ -16,7 +16,7 @@ CREATE TABLE CompteJoueur(
   ptsDivision                     Int DEFAULT 0,
   monnaieIG                       Int DEFAULT 0,
   monnaieIRL                      Int DEFAULT 0,
-  nom_guilde                      Varchar (25) DEFAULT NULL,
+  nomGuilde                      Varchar (25) DEFAULT NULL,
   id_SkinMap                      Int NOT NULL DEFAULT 0,
   id_SkinCartonCarte              Int NOT NULL DEFAULT 0,
   id_IconeJoueur                  Int NOT NULL DEFAULT 0,
@@ -79,7 +79,7 @@ CREATE TABLE Guilde(
   niveauGuilde Int DEFAULT 1,
   expGuilde    Int DEFAULT 0,
   nbPlacesMax  Int DEFAULT 50,
-  PRIMARY KEY (nom_Guilde )
+  PRIMARY KEY (nomGuilde )
 )ENGINE=InnoDB;
 
 
@@ -329,7 +329,7 @@ CREATE TABLE AchatMonnaieIRL(
   id_AchatIRL int NOT NULL Auto_increment,
   prixEuros int,
   gainMonnaie int,
-  PRIMARY KEY (id_Achat)
+  PRIMARY KEY (id_AchatIRL)
 )ENGINE=InnoDB;
 
 #_____________________________________________________________
@@ -339,7 +339,7 @@ CREATE TABLE HistoriqueAchatIRL(
   dateAchatIRL  date ,
   id_AchatIRL int NOT NULL ,
   Pseudo varchar(50) ,
-  PRIMARY KEY (id_Achat,Pseudo)
+  PRIMARY KEY (id_AchatIRL,Pseudo)
 )ENGINE=InnoDB;
 
 
@@ -372,10 +372,10 @@ CREATE TABLE posséderIconeJoueur(
 )ENGINE=InnoDB;
 
 
-ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_nom_guilde FOREIGN KEY (nom_Guilde) REFERENCES Guilde(nom_Guilde);
-#ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
-#ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
-#ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_nom_guilde FOREIGN KEY (nomGuilde) REFERENCES Guilde(nomGuilde);
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_Division FOREIGN KEY (id_Division) REFERENCES Division(id_Division);
 
 ALTER TABLE Matchs ADD CONSTRAINT FK_Matchs_id_mdj FOREIGN KEY (id_ModeDeJeu) REFERENCES ModeDeJeu(id_ModeDeJeu);
@@ -398,8 +398,8 @@ ALTER TABLE activer ADD CONSTRAINT FK_activer_Pseudo FOREIGN KEY (Pseudo) REFERE
 
 ALTER TABLE Offre ADD CONSTRAINT FK_Offres_id_pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack);
 
-ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_Achat) REFERENCES AchatMonnaieIRL(id_Achat);
-ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
+ALTER TABLE HistoriqueAchatIRL ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_AchatIRL) REFERENCES AchatMonnaieIRL(id_AchatIRL);
+ALTER TABLE HistoriqueAchatIRL ADD CONSTRAINT FK_HistoriqueAchat_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
@@ -408,10 +408,10 @@ ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_
 ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
 
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
-ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
+ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
 
 ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
-ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
+ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
 
 ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
 ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
@@ -429,6 +429,3 @@ ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_LootPack FORE
 
 ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Carte FOREIGN KEY (id_Carte) REFERENCES Carte(id_Carte);
 ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES Ensemble(id_Ensemble);
-
-
-#Faire tout les insert de base (les Cartes, les Skins, etc)

@@ -21,6 +21,7 @@ public class CreateAccountServletNavigator extends HttpServlet {
         String password = req.getParameter("password");
 
         HttpSession session = req.getSession();
+        System.out.println("je suis le navigator");
 
         Manager.AccountManager accountManager = new Manager.AccountManager();
         int result = accountManager.createAccount(pseudo,email,password);

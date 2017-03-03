@@ -216,7 +216,7 @@ public class ShopManager {
 
         LinkedList<SkinMapView> listItem = new LinkedList<>();
 
-        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN Map USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
+        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN SkinMap USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
