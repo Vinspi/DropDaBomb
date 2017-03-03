@@ -216,7 +216,7 @@ public class ShopManager {
 
         LinkedList<SkinMapView> listItem = new LinkedList<>();
 
-        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN Map USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
+        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageMiniatureMap, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN SkinMap USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
@@ -271,11 +271,10 @@ public class ShopManager {
         float rand;
 
         String queryEnsemble;
-        String queryListLoot = "SELECT id_LootPack, qteCarte, id_Ensemble, dropRatePack, id_Carte, imageCarte" +     //Récupère TOUT
+        String queryListLoot = "SELECT id_LootPack, qteCartePack, id_Ensemble, dropRatePack, id_Carte" +     //Récupère TOUT
                 " FROM EnsembleCarte" +
-                " JOIN Ensemble USING (id_Ensemble)" +
                 " JOIN LootPackEnsemble USING (id_Ensemble)" +
-                " JOIN LootPack USING (id_LootPack)" +
+                " JOIN LootPackPack USING (id_LootPack)" +
                 " JOIN Pack USING (id_Pack)" +
                 " JOIN Offre USING (id_Pack)" +
                 " WHERE id_Offre = "+id_Offre +
