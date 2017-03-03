@@ -69,6 +69,7 @@ public class ShopAchatServlet extends HttpServlet {
         //Possibilité d'envoyer un JSON avec l(es/') élément(s) achetés (et ouais mgl).
         ShopManager.Doublet s = shopManager.doAchatDoublet(pseudo,password,id_Offre,money);
         String json = gson.toJson(s);
+        System.out.println(json);
         out.print(json);
         //req.setAttribute("achat",json);
         //this.getServletContext().getRequestDispatcher( "/ShopView.jsp" ).forward( req, resp );
