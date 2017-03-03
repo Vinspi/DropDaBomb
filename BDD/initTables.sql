@@ -13,10 +13,9 @@ CREATE TABLE CompteJoueur(
   mdpCompte                       Varchar (25) ,
   niveauJoueur                    Int DEFAULT 1,
   expJoueur                       Int DEFAULT 0,
-  ptsDivision                     Int DEFAULT 0,
   monnaieIG                       Int DEFAULT 0,
   monnaieIRL                      Int DEFAULT 0,
-  nomGuilde                      Varchar (25) DEFAULT NULL,
+  nom_guilde                      Varchar (25) DEFAULT NULL,
   id_SkinMap                      Int NOT NULL DEFAULT 0,
   id_SkinCartonCarte              Int NOT NULL DEFAULT 0,
   id_IconeJoueur                  Int NOT NULL DEFAULT 0,
@@ -36,9 +35,8 @@ CREATE TABLE Carte(
   typeCarte          Varchar (25) ,
   descriptionCarte   Varchar (200) ,
   imageCarte         Varchar (25) ,
-  dropRateCarte      int DEFAULT 0,
+  dropRateCarte FLOAT DEFAULT 0,
   coutCarte          Int ,
-  estAmeliorable     boolean DEFAULT 0,
   PRIMARY KEY (id_Carte )
 )ENGINE=InnoDB;
 
@@ -56,14 +54,13 @@ CREATE TABLE ModeDeJeu(
 
 
 #------------------------------------------------------------
-# Table: SkinMap
+# Table: Map
 #------------------------------------------------------------
 
-CREATE TABLE SkinMap(
+CREATE TABLE Map(
   id_SkinMap Int NOT NULL ,
-  nomMap        varchar (50) ,
-  imageFondMap  Varchar (100) ,
-  imageTableMap Varchar (100) ,
+  imageFond  Varchar (100) ,
+  imageTable Varchar (100) ,
   imageMiniatureMap VARCHAR (100) ,
   descriptionMap VARCHAR (200) ,
   PRIMARY KEY (id_SkinMap )
@@ -75,11 +72,10 @@ CREATE TABLE SkinMap(
 #------------------------------------------------------------
 
 CREATE TABLE Guilde(
-  nomGuilde   Varchar (25) NOT NULL ,
+  nom_Guilde   Varchar (25) NOT NULL ,
   niveauGuilde Int DEFAULT 1,
-  expGuilde    Int DEFAULT 0,
   nbPlacesMax  Int DEFAULT 50,
-  PRIMARY KEY (nomGuilde )
+  PRIMARY KEY (nom_Guilde )
 )ENGINE=InnoDB;
 
 
@@ -114,11 +110,10 @@ CREATE TABLE Deck(
 
 CREATE TABLE SkinCartonCarte(
   id_SkinCartonCarte       Int NOT NULL ,
-  nomCarton           varchar (50) ,
-  imageVersoCarte          Varchar (100) ,
-  imageContourCarte        Varchar (100) ,
+  imageVerso               Varchar (100) ,
+  imageContour             Varchar (100) ,
   imageMiniatureCarton     VARCHAR (100) ,
-  descriptionCarton      VARCHAR (200) ,
+  descritiptionCarton      VARCHAR (200) ,
   PRIMARY KEY (id_SkinCartonCarte )
 )ENGINE=InnoDB;
 
@@ -129,7 +124,6 @@ CREATE TABLE SkinCartonCarte(
 
 CREATE TABLE IconeJoueur(
   id_IconeJoueur Int NOT NULL ,
-  nomIcone       varchar (50) ,
   imageIcone     Varchar (100) ,
   imageMiniatureIcone VARCHAR (100) ,
   descriptionIcone    VARCHAR (200) ,
@@ -143,23 +137,10 @@ CREATE TABLE IconeJoueur(
 
 CREATE TABLE Boost(
   id_Boost  Int NOT NULL ,
-  nomBoost  Varchar (50),
   typeBoost Varchar (100) ,
   imageMiniatureBoost VARCHAR (100) ,
   descriptionBoost    VARCHAR (200) ,
   PRIMARY KEY (id_Boost )
-)ENGINE=InnoDB;
-
-#------------------------------------------------------------
-# Table: activer
-#------------------------------------------------------------
-
-CREATE TABLE activer(
-  HeuresFin  time ,
-  nbMatchsFin int,
-  id_Boost Int NOT NULL ,
-  Pseudo   Varchar (20) NOT NULL ,
-  PRIMARY KEY (id_Boost ,Pseudo )
 )ENGINE=InnoDB;
 
 
@@ -212,6 +193,16 @@ CREATE TABLE Historique(
 )ENGINE=InnoDB;
 
 
+#------------------------------------------------------------
+# Table: activer
+#------------------------------------------------------------
+
+CREATE TABLE activer(
+  dateFin  Datetime ,
+  id_Boost Int NOT NULL ,
+  Pseudo   Varchar (20) NOT NULL ,
+  PRIMARY KEY (id_Boost ,Pseudo )
+)ENGINE=InnoDB;
 
 
 #____________________________________________________________
@@ -223,9 +214,6 @@ CREATE TABLE Offre(
   prixMonnaieIG int,
   prixMonnaieIRL int,
   id_Pack int,
-  typeOffre varchar(50),
-  nomOffre  varchar(50),
-  imageOffre varchar(50),
   PRIMARY KEY (id_Offre)
 )ENGINE=InnoDB;
 
@@ -282,27 +270,34 @@ CREATE TABLE Pack(
 
 
 #_____________________________________________________________
+# Table: LootPack
+#_____________________________________________________________
+
+CREATE TABLE LootPack (
+  id_LootPack int NOT NULL,
+  id_Pack int NOT NULL,
+  qteCarte int DEFAULT 1,
+  PRIMARY KEY (id_LootPack)
+)ENGINE=InnoDB;
+
+#_____________________________________________________________
 # Table: LootPackEnsemble
 #_____________________________________________________________
 CREATE TABLE LootPackEnsemble (
   id_LootPack int NOT NULL,
   id_Ensemble int NOT NULL,
-  nomEnsemble VARCHAR,
-  dropRatePack int DEFAULT 100,
   PRIMARY KEY (id_LootPack,id_Ensemble)
 )ENGINE=InnoDB;
 
 
 #_____________________________________________________________
-# Table: LootPackPack
+# Table: Ensemble
 #_____________________________________________________________
 
-CREATE TABLE LootPackPack (
-  id_LootPack int NOT NULL,
-  id_Pack int NOT NULL,
-  nomLootPack VARCHAR,
-  qteCartePack int DEFAULT 1,
-  PRIMARY KEY (id_LootPack,id_Pack)
+CREATE TABLE Ensemble (
+  id_Ensemble int NOT NULL,
+  dropRatePack FLOAT DEFAULT 1,
+  PRIMARY KEY (id_Ensemble)
 )ENGINE=InnoDB;
 
 #_____________________________________________________________
@@ -320,20 +315,20 @@ CREATE TABLE EnsembleCarte (
 #_____________________________________________________________
 
 CREATE TABLE AchatMonnaieIRL(
-  id_AchatIRL int NOT NULL Auto_increment,
+  id_Achat int NOT NULL,
   prixEuros int,
   gainMonnaie int,
-  PRIMARY KEY (id_AchatIRL)
+  PRIMARY KEY (id_Achat)
 )ENGINE=InnoDB;
 
 #_____________________________________________________________
-# Table: (Historique)AchatIRL
+# Table: (Historique)Achat
 #_____________________________________________________________
-CREATE TABLE HistoriqueAchatIRL(
-  dateAchatIRL  date ,
-  id_AchatIRL int NOT NULL ,
+CREATE TABLE HistoriqueAchat(
+
+  id_Achat int NOT NULL ,
   Pseudo varchar(50) ,
-  PRIMARY KEY (id_AchatIRL,Pseudo)
+  PRIMARY KEY (id_Achat,Pseudo)
 )ENGINE=InnoDB;
 
 
@@ -366,8 +361,8 @@ CREATE TABLE posséderIconeJoueur(
 )ENGINE=InnoDB;
 
 
-ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_nom_guilde FOREIGN KEY (nomGuilde) REFERENCES Guilde(nomGuilde);
-ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_nom_guilde FOREIGN KEY (nom_Guilde) REFERENCES Guilde(nom_Guilde);
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_Division FOREIGN KEY (id_Division) REFERENCES Division(id_Division);
@@ -392,8 +387,8 @@ ALTER TABLE activer ADD CONSTRAINT FK_activer_Pseudo FOREIGN KEY (Pseudo) REFERE
 
 ALTER TABLE Offre ADD CONSTRAINT FK_Offres_id_pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack);
 
-ALTER TABLE HistoriqueAchatIRL ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_AchatIRL) REFERENCES AchatMonnaieIRL(id_AchatIRL);
-ALTER TABLE HistoriqueAchatIRL ADD CONSTRAINT FK_HistoriqueAchat_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
+ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_Achat) REFERENCES AchatMonnaieIRL(id_Achat);
+ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
@@ -402,10 +397,10 @@ ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_
 ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
 
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo);
-ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
+ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
 
 ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
-ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
+ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES Map(id_SkinMap);
 
 ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
 ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
@@ -416,9 +411,10 @@ ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Boost FOREIGN KEY (id_Boo
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre);
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 
-ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPack_id_Pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack);
+ALTER TABLE LootPack ADD CONSTRAINT FK_LootPack_id_Pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack);
 
-ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPackPack(id_LootPack);
-ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES EnsembleCarte(id_Ensemble);
+ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES Ensemble(id_Ensemble);
+ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPack(id_LootPack);
 
 ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Carte FOREIGN KEY (id_Carte) REFERENCES Carte(id_Carte);
+ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES Ensemble(id_Ensemble);
