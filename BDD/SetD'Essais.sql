@@ -12,11 +12,33 @@ INSERT INTO Matchs (id_ModeDeJeu,finMatch,Pseudo1,Pseudo2) VALUES (0,NULL,'mokta
 INSERT INTO Matchs (id_ModeDeJeu,finMatch,Pseudo1,Pseudo2) VALUES (0,NULL,'morray','moktar');
 
 
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (8,'Dick Out For Harambe','Sort','Harambe est toujours dans nos coeurs. +25 mana',0);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (9,'YasuoPogChamp','Combattant','2items100%ccNarmol',5);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (10,'WhereIsMyTeam?','Sort','Vous n\'avez pas de team ? Pas de problème, on vous fournit ça',20);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (11,'JféDéRouAriairDanLeQDeTaMer','Sort','VroumVroum',5);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (12,'Victoire Dou Blazil','Sort','Vous invoquez Leonardo l\'interdit, qui invoque le carnaval Dou Blazil.',100);
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (0,'BOMB 25','normal','Degat','inflige 25 pts de degats à votre adversaire','BOMB_25.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (1,'BOMB 50','normal','Degat','inflige 50 pts de degats à votre adversaire','BOMB_50.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (2,'BOMB 50 retardement','normal','Degat','inflige 50 pts de degats à votre adversaire après deux tours','BOMB_50_2TOURS.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (3,'BOMB 100 retardement','normal','Degat','inflige 100 pts de degats à votre adversaire après deux tours','BOMB_25.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (4,'BOUCLIER 15','normal','Bouclier','absorbe 15 pts de degat','BOUCLIER_15.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (5,'BOUCLIER 45','rare','Bouclier','absorbe 45 pts de degat','BOUCLIER_45.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (6,'BOUCLIER GENERATEUR DE MANA','epique','Sort','convertit 20% des degat subit en poudre','BOUCLIER_GEN_MANA.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (7,'Echange forcé','rare','Sort','echange une carte de votre main avec une de celle de votre adversaire','EXCHANGE_CARD.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (8,'Desenvoutement','rare','Sort','désenvoute votre adversaire','SPELL_SUPPR.png',3,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (9,'Melange','rare','Sort','mélange votre deck avec votre main','SWAP_CARDS_DECK.png',3,0);
+
+
+
+INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (10,'Dick Out For Harambe','Sort','Harambe est toujours dans nos coeurs. +25 mana',0);
+INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (11,'YasuoPogChamp','Combattant','2items100%ccNarmol',5);
+INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (12,'WhereIsMyTeam?','Sort','Vous n\'avez pas de team ? Pas de problème, on vous fournit ça',20);
+INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (13,'JféDéRouAriairDanLeQDeTaMer','Sort','VroumVroum',5);
+INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (14,'Victoire Dou Blazil','Sort','Vous invoquez Leonardo l\'interdit, qui invoque le carnaval Dou Blazil.',100);
 
 
 INSERT INTO Deck () VALUES ('morray0');

@@ -101,7 +101,6 @@ public class InventoryManager {
 
         return deck1;
     }
-
     private LinkedList<CardView> getPlayerCards(String pseudo){
 
         LinkedList<CardView> cards = new LinkedList<>();
