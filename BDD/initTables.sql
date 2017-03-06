@@ -37,7 +37,7 @@ CREATE TABLE Carte(
   imageCarte         Varchar (25) ,
   dropRateCarte      FLOAT DEFAULT 0,
   coutCarte          Int ,
-  estAmeliorable     Int ,
+  estAmeliorable     Int DEFAULT 0,
   PRIMARY KEY (id_Carte )
 )ENGINE=InnoDB;
 
@@ -60,6 +60,7 @@ CREATE TABLE ModeDeJeu(
 
 CREATE TABLE SkinMap(
   id_SkinMap Int NOT NULL ,
+  nomMap     VARCHAR (50) ,
   imageFond  Varchar (100) ,
   imageTable Varchar (100) ,
   imageMiniatureMap VARCHAR (100) ,
@@ -115,7 +116,7 @@ CREATE TABLE SkinCartonCarte(
   imageVerso               Varchar (100) ,
   imageContour             Varchar (100) ,
   imageMiniatureCarton     VARCHAR (100) ,
-  descritiptionCarton      VARCHAR (200) ,
+  descriptionCarton      VARCHAR (200) ,
   PRIMARY KEY (id_SkinCartonCarte )
 )ENGINE=InnoDB;
 
@@ -216,8 +217,10 @@ CREATE TABLE activer(
 
 CREATE TABLE Offre(
   id_Offre int NOT NULL,
+  nomPack  VARCHAR (50) ,
   prixMonnaieIG int,
   prixMonnaieIRL int,
+  typeOffre VARCHAR (50) ,
   id_Pack int,
   PRIMARY KEY (id_Offre)
 )ENGINE=InnoDB;
@@ -281,6 +284,7 @@ CREATE TABLE Pack(
 CREATE TABLE LootPackPack (
   id_LootPack int NOT NULL,
   id_Pack int NOT NULL,
+  nomLootPack VARCHAR (50) ,
   qteCartePack int DEFAULT 0,
   PRIMARY KEY (id_LootPack,id_Pack)
 )ENGINE=InnoDB;
@@ -293,6 +297,7 @@ CREATE TABLE LootPackPack (
 CREATE TABLE LootPackEnsemble (
   id_LootPack int NOT NULL ,
   id_Ensemble int NOT NULL ,
+  nomEnsemble VARCHAR (50) ,
   dropRatePack FLOAT DEFAULT 1,
   PRIMARY KEY (id_LootPack,id_Ensemble)
 )ENGINE=InnoDB;
