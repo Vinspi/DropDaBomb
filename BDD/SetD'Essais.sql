@@ -96,6 +96,5 @@ INSERT INTO EnsembleCarte(id_Ensemble,id_Carte) VALUES (3,10);
 INSERT INTO EnsembleCarte(id_Ensemble,id_Carte) VALUES (3,11);
 
 
-INSERT INTO posséderSkinMap (Pseudo,id_SkinMap) VALUES ('michel',1);
 
 
