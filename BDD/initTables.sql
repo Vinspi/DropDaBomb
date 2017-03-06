@@ -284,7 +284,6 @@ CREATE TABLE Pack(
 CREATE TABLE LootPackPack (
   id_LootPack int NOT NULL,
   id_Pack int NOT NULL,
-  nomLootPack VARCHAR (50) ,
   qteCartePack int DEFAULT 0,
   PRIMARY KEY (id_LootPack,id_Pack)
 )ENGINE=InnoDB;
@@ -297,7 +296,7 @@ CREATE TABLE LootPackPack (
 CREATE TABLE LootPackEnsemble (
   id_LootPack int NOT NULL ,
   id_Ensemble int NOT NULL ,
-  nomEnsemble VARCHAR (50) ,
+  nomLootPack VARCHAR (50) ,
   dropRatePack FLOAT DEFAULT 1,
   PRIMARY KEY (id_LootPack,id_Ensemble)
 )ENGINE=InnoDB;
@@ -312,6 +311,7 @@ CREATE TABLE LootPackEnsemble (
 CREATE TABLE EnsembleCarte (
   id_Ensemble int NOT NULL,
   id_Carte int NOT NULL,
+  nomEnsemble VARCHAR (50),
   PRIMARY KEY (id_Ensemble,id_Carte)
 )ENGINE=InnoDB;
 

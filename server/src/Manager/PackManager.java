@@ -17,15 +17,15 @@ public class PackManager {
 
     Connection connection = null;
     Pack currentPack = new Pack();
-    LootPack currentLootPack = new LootPack();
-    Ensemble currentEnsemble = new Ensemble();
+    public LootPack currentLootPack = new LootPack();
+    public Ensemble currentEnsemble = new Ensemble();
 
 
-    ArrayList<Ensemble> listEnsembles = new ArrayList<>();
-    ArrayList<LootPack> listLootPacks = new ArrayList<>();
-    ArrayList<Pack> listPacks = new ArrayList<>();
+    public ArrayList<Ensemble> listEnsembles = new ArrayList<>();
+    public ArrayList<LootPack> listLootPacks = new ArrayList<>();
+    public ArrayList<Pack> listPacks = new ArrayList<>();
 
-    int current_idEnsemble, current_idLootPack, current_idPack;
+    public int current_idEnsemble, current_idLootPack, current_idPack;
 
 
 
@@ -104,12 +104,7 @@ public class PackManager {
         currentEnsemble.cartes.add(id_Carte);
     }
 
-
-    public void createEnsemble(){
-
-
-    }
-
+    //A refaire
     public void addEnsembleToLootPack(String nom,int drop){
         currentEnsemble.id = current_idEnsemble;
         currentEnsemble.dropRate = drop;
@@ -119,6 +114,7 @@ public class PackManager {
         current_idEnsemble++;
     }
 
+    //A refaire
     public void addLootPackToPack(String nom,int qte){
         currentLootPack.id = current_idLootPack;
         currentLootPack.qte = qte;
@@ -128,7 +124,7 @@ public class PackManager {
         current_idLootPack++;
     }
 
-
+    //Remplis listEnsembles, listLootPacks, listPacks, contenant tout les Ensembles, LootPacks et Packs.
     public void getEvthgAlrdCreated(){
         listPacks = new ArrayList<>();
         String queryPacks = "SELECT id_Pack, nomPack, id_Ensemble, nomEnsemble, id_LootPack, nomLootPack, id_Carte" +
@@ -139,7 +135,7 @@ public class PackManager {
                 " ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte";
 
 
-        int id_Pack = -1, id_LootPack = -1, id_Ensemble = -1;
+        int id_Pack = -1, id_LootPack = -1, id_Ensemble = -1, maxLootPack = -1, maxEnsemble = -1;
         String nomPack = "", nomLootPack = "", nomEnsemble = "";
 
         ArrayList<LootPack> tmpLootPack = new ArrayList();
@@ -167,10 +163,14 @@ public class PackManager {
 
                    id_Pack = resultSet.getInt("id_Pack");
                    nomPack = resultSet.getString("nomPack");
+
                    id_LootPack = resultSet.getInt("id_LootPack");
                    nomLootPack = resultSet.getString("nomLootPack");
+                   if(maxLootPack < id_LootPack) maxLootPack = id_LootPack;
+
                    id_Ensemble = resultSet.getInt("id_Ensemble");
                    nomEnsemble = resultSet.getString("nomEnsemble");
+                   if(maxEnsemble < id_Ensemble) maxEnsemble = id_Ensemble;
                }
                else {
                     if(id_LootPack != resultSet.getInt("id_LootPack")){
@@ -185,9 +185,14 @@ public class PackManager {
                         tmpCarte.add(resultSet.getInt("id_Carte"));
 
                         id_LootPack = resultSet.getInt("id_LootPack");
+                        nomLootPack = resultSet.getString("nomLootPack");
+                        if(maxLootPack < id_LootPack) maxLootPack = id_LootPack;
+
+
                         id_Ensemble = resultSet.getInt("id_Ensemble");
-                        nomPack = resultSet.getString("nomPack");
                         nomEnsemble = resultSet.getString("nomEnsemble");
+                        if(maxEnsemble < id_Ensemble) maxEnsemble = id_Ensemble;
+
                     }
                     else {
                         if (id_Ensemble != resultSet.getInt("id_Ensemble")){
@@ -200,6 +205,7 @@ public class PackManager {
 
                             id_Ensemble = resultSet.getInt("id_Ensemble");
                             nomEnsemble = resultSet.getString("nomEnsemble");
+                            if(maxEnsemble < id_Ensemble) maxEnsemble = id_Ensemble;
                         }
                         else {
                             tmpCarte.add(resultSet.getInt("id_Carte"));
@@ -213,6 +219,11 @@ public class PackManager {
             listLootPacks.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
             listPacks.add(new Pack(id_Pack,nomPack,tmpLootPack));
 
+            current_idPack = id_Pack;
+            current_idLootPack = maxLootPack;
+            current_idEnsemble = maxEnsemble;
+
+
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -224,48 +235,24 @@ public class PackManager {
 
 
 
-    public void getCurrentPack(){
 
-
-    }
-
-
-
+    // /!\INJ
+    //Créer un pack dans la base de données, reliant ainsi les LootPacks à ce même Pack.
     public int createPack(String nom,String description, int prixIG, int prixIRL, String image, int id_Offre){
         String queryPack = "INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES ("+current_idPack+",'"+nom+"','"+description+"','"+image+"');";
         String queryOffre = "INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre ) VALUES ("+id_Offre+","+prixIG+","+prixIRL+","+current_idPack+",'Pack');";
 
-        ArrayList<String> queryLootPack = new ArrayList<>();
-        ArrayList<String> queryEnsemble = new ArrayList<>();
-        ArrayList<String> queryLPE = new ArrayList<>();
-        ArrayList<String> queryEC = new ArrayList<>();
+        ArrayList<String> queryLootPackPack = new ArrayList<>();
         String tmp;
 
 
         for(LootPack lp : currentPack.lootPacks){
             tmp = "INSERT INTO LootPackPack (id_LootPack, id_Pack, qteCartePack ) VALUES ("+lp.id+","+currentPack.id+","+lp.qte+");";
-            queryLootPack.add(tmp);
-
-            for(Ensemble e : lp.ensembles){
-                tmp = "INSERT INTO LootPackEnsemble (id_Pack, id_Ensemble, dropRatePack) VALUES ("+e.id+","+e.dropRate+");";
-                queryEnsemble.add(tmp);
-
-                for(Integer c : e.cartes){
-                    tmp = "INSERT INTO EnsembleCarte (id_Ensemble, id_cartes) VALUES ("+e.id+","+c+")";
-                    queryEC.add(tmp);
-                }
-
-            }
-
+            queryLootPackPack.add(tmp);
         }
-        //ResultSet setPack = Manager.getManager().sendRequestQuery(query,connection);
-
         Manager.getManager().sendRequestUpdate(queryPack,connection);
         Manager.getManager().sendRequestUpdate(queryOffre,connection);
-        Manager.getManager().sendMultipleRequestUpdate(queryLootPack,connection);
-        Manager.getManager().sendMultipleRequestUpdate(queryEnsemble,connection);
-        Manager.getManager().sendMultipleRequestUpdate(queryLPE,connection);
-        Manager.getManager().sendMultipleRequestUpdate(queryEC,connection);
+        Manager.getManager().sendMultipleRequestUpdate(queryLootPackPack,connection);
 
         try {
             if (connection != null) connection.close();
@@ -275,4 +262,40 @@ public class PackManager {
 
         return 0;
     }
+
+    // /!\INJ
+    public int createLootPack(String nom){
+
+        ArrayList<String> queryLootPack = new ArrayList<>();
+
+        for(Ensemble e : currentLootPack.ensembles){
+            queryLootPack.add("INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble, nomEnsemble, dropRatePack) VALUES ("+current_idLootPack+","+e.id+","+ nom +","+e.dropRate+");");
+        }
+        Manager.getManager().sendMultipleRequestUpdate(queryLootPack,connection);
+        try {
+            if (connection != null) connection.close();
+        }catch (SQLException e){
+
+        }
+
+        return 0;
+    }
+    // /!\INJ
+    public int createEnsemble(String nom){
+
+        ArrayList<String> queryEnsemble = new ArrayList<>();
+
+        for(Integer i : currentEnsemble.cartes){
+            queryEnsemble.add("INSERT INTO EnsembleCarte (id_Ensemble, id_Carte, nomEnsemble) VALUES ("+current_idEnsemble+","+i+","+nom+");");
+        }
+        Manager.getManager().sendMultipleRequestUpdate(queryEnsemble,connection);
+        try {
+            if (connection != null) connection.close();
+        }catch (SQLException e){
+
+        }
+
+        return 0;
+    }
+
 }
