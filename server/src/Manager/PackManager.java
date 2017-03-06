@@ -253,7 +253,6 @@ public class PackManager {
                 for(Integer c : e.cartes){
                     tmp = "INSERT INTO EnsembleCarte (id_Ensemble, id_cartes) VALUES ("+e.id+","+c+")";
                     queryEC.add(tmp);
-
                 }
 
             }
