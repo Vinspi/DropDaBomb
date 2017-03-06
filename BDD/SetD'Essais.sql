@@ -96,4 +96,8 @@ INSERT INTO EnsembleCarte(id_Ensemble,id_Carte) VALUES (3,10);
 INSERT INTO EnsembleCarte(id_Ensemble,id_Carte) VALUES (3,11);
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> aeedfe74e148f75bbe3ae6c3db1d9be2da01b29d
 
