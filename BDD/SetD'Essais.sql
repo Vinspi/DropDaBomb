@@ -44,9 +44,9 @@ INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUE
 
 
 
-INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES (0,'Pack 0','Le premier pack','/pack1.png');
-INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES (1,'Pack 1','Le deuxième pack','/pack2.png');
-INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES (2,'Pack 2','Le troisième pack','/ipack3.png');
+INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack,misEnVentePack) VALUES (0,'Pack 0','Le premier pack','/pack1.png',1);
+INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack,misEnVentePack) VALUES (1,'Pack 1','Le deuxième pack','/pack2.png',1);
+INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack,misEnVentePack) VALUES (2,'Pack 2','Le troisième pack','/ipack3.png',1);
 
 INSERT INTO Boost (id_Boost,typeBoost,imageMiniatureBoost,descriptionBoost) VALUES (0,'Boost0','Boost0','/iboost1.png');
 INSERT INTO Boost (id_Boost,typeBoost,imageMiniatureBoost,descriptionBoost) VALUES (1,'Boost1','Boost1','/boost2.png');

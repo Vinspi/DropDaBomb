@@ -49,8 +49,7 @@ public class ShopManager {
             this.img = img;
         }
     }
-    public class Doublet
-    {
+    public class Doublet {
         int id;
         Object value;
 
