@@ -36,7 +36,7 @@
                         out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
                     }
                     else {
-                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + "</a></li>" +
+                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
                                 "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }

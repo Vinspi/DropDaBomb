@@ -7,8 +7,8 @@ $(document).ready(function () {
    $('.modal').modal({
        dismissible: true
    });
-
-   $('#erreurMdp').hide();
+    $('#erreur-email').hide();
+    $('#erreurMdp').hide();
 });
 
 function changeEmail() {
@@ -16,6 +16,17 @@ function changeEmail() {
 }
 
 function validationChangeEmail() {
+
+    var email = $('#new-email').val();
+
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    $('#erreur-email').hide();
+
+    if(!re.test(email)){
+        $('#erreur-email').show();
+        return;
+    }
+
     $.ajax({
 
         url : '/AccountUpdater',
@@ -37,6 +48,7 @@ function validationChangeEmail() {
 
     $('.mail').html($('#new-email').val());
     $('#new-email').val("");
+    $('#modalEmail').modal('close');
 
 
 }
@@ -54,7 +66,7 @@ function validationChangeMdp() {
 
     console.log(mdp1+' : '+mdp2);
 
-    if(mdp1 == mdp2) {
+    if(mdp1 == mdp2 && mdp1.length >= 6) {
         $('#erreurMdp').hide();
         $.ajax({
 

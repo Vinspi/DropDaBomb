@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by vinspi on 27/01/17.
@@ -164,6 +166,15 @@ public class AccountManager {
 
     public int createAccount(String pseudo,String email,String password){
 
+        Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+
+        if(password.length() < RequestStatus.MIN_SIZE_PASSWORD) return RequestStatus.ERR_MDP;
+
+        if(!matcher.matches()){
+            return RequestStatus.CREATE_ACCOUNT_FAILED_EMAIL;
+        }
+
         int r = RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO;
         String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
                 "mailCompte LIKE \""+email+"\");";
@@ -252,6 +263,14 @@ public class AccountManager {
 
 
     public int changerEmail(String pseudo, String newEmail){
+
+        Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(newEmail);
+
+        if(!matcher.matches()){
+            return RequestStatus.UPDATE_EMAIL_FAILED;
+        }
+
         String query = "UPDATE CompteJoueur SET mailCompte ='"+newEmail+"' WHERE Pseudo LIKE '"+pseudo+"';";
 
         if(Manager.getManager().sendRequestUpdate(query,connection)){
@@ -387,29 +406,28 @@ public class AccountManager {
          */
 
         String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\');";
-
-        if(Manager.getManager().sendRequestUpdate(query,connection)){
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
+        if(newPassword.length() >= RequestStatus.MIN_SIZE_PASSWORD) {
+            if (Manager.getManager().sendRequestUpdate(query, connection)) {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            return RequestStatus.UPDATE_MDP_SUCCESS;
-        }
-        else{
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
+                return RequestStatus.UPDATE_MDP_SUCCESS;
+            } else {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
+                return RequestStatus.UPDATE_MDP_FAILED;
             }
-            return RequestStatus.UPDATE_MDP_FAILED;
         }
-
-
+        return RequestStatus.UPDATE_MDP_FAILED;
     }
 
     public ArrayList<Doublet> getPlayerIcons(String pseudo){
@@ -481,5 +499,32 @@ public class AccountManager {
 
         return array;
     }
+
+    public int getPlayerMoney(String pseudo){
+
+        String queryMoney = "SELECT monnaieIG" +
+                " FROM CompteJoueur " +
+                "WHERE (Pseudo LIKE '"+pseudo+"');";
+
+        ResultSet monnaie = Manager.getManager().sendRequestQuery(queryMoney,connection);
+        int money = 0;
+        try {
+            if(monnaie.next()) {
+                money = monnaie.getInt("monnaieIG");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            } catch (SQLException e){
+
+            }
+        }
+
+        return money;
+    }
+
+
 
 }

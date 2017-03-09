@@ -55,6 +55,7 @@ public class AuthentificationAccountServlet extends HttpServlet {
             session.setAttribute("skinMapJoueur",accountManager.getPlayerSkinMap(pseudo));
             session.setAttribute("pseudo",pseudo);
             session.setAttribute("password",password);
+            session.setAttribute("money",accountManager.getPlayerMoney(pseudo));
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
         }
         else{
