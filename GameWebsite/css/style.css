@@ -1,0 +1,95 @@
+#zone{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#zone_adv{
+   height: 25%;
+}
+
+#zone_jeu{
+    height: 50%;
+}
+
+#zone_deck{
+    height: 35%;
+}   
+
+#zone_deck_container{
+    display: flex;
+    height: 100%;
+}
+
+#zone_deck_infos{
+    width: 25%;
+    height: 100%;
+}
+
+
+/*----------------------------------------------*/
+/*----------------------------------------------*/
+
+#zone_deck_cards{
+    width: 75%;
+    height: 100%;
+}
+
+/*---------------------------------------*/
+
+#zone_deck_cards_container{
+   padding-top: 7vh;
+    display: flex;
+    height: 100%;
+}
+
+#zone_deck_cards_card1{
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 20%;
+    height: 60%;
+}
+
+#zone_deck_cards_card2{
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 20%;
+    height: 60%;
+}
+
+#zone_deck_cards_card3{
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 20%;
+    height: 60%;
+}
+
+#zone_deck_cards_card4{
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 20%;
+    height: 60%;
+}
+
+/*---------------------------------------*/
+
+#zone_deck_infos_container{
+    display: flex;
+}
+
+#zone_deck_infos_chat{
+    width: 50%;
+    height: 20%;
+}
+
+#zone_deck_infos_settings{
+    width: 50%;
+    height: 20%;
+}
+
+#zone_deck_infos_powder{
+    width: 100%;
+    height: 80;
+}
