@@ -37,7 +37,7 @@
 
 <nav>
     <div class="nav-wrapper nav-perso">
-        <a href="#" class="brand-logo">DropDaBomb</a>
+        <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="shop.jsp">Boutique</a></li>
             <%
@@ -80,11 +80,9 @@
                         <%
                          for(int i=0;i<4;i++){
                             out.print("<div class=\"col s3 m3 l3\">" +
-                                    "                        <div class=\"card carte-deck\">" +
                                     "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\" id=\"a" + inventoryView.getDeck1().getCards().get(i).getId_carte() + "\"> " +
                                     "                               <img src=\"../img/CARDS/"+inventoryView.getDeck1().getCards().get(i).getImageCarte()+"\">" +
                                     "                              </div>" +
-                                    "                           </div>" +
                                     "   </div>");
                          }
                         %>
@@ -93,11 +91,9 @@
                         <%
                             for(int i=4;i<8;i++){
                                 out.print("<div class=\"col s3 m3 l3\">" +
-                                        "                        <div class=\"card carte-deck\">" +
                                         "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\"  id=\"a" + inventoryView.getDeck1().getCards().get(i).getId_carte() + "\"> " +
                                         "                               <img src=\"../img/CARDS/"+inventoryView.getDeck1().getCards().get(i).getImageCarte()+"\">" +
                                         "                              </div>" +
-                                        "                           </div>" +
                                         "   </div>");
                             }
                         %>
@@ -110,11 +106,9 @@
                         <%
                             for(int i=0;i<4;i++){
                                 out.print("<div class=\"col s3 m3 l3\">" +
-                                        "                        <div class=\"card carte-deck\">" +
                                         "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\" id=\"b" + inventoryView.getDeck2().getCards().get(i).getId_carte() + "\"> " +
                                         "                               <img src=\"../img/CARDS/"+inventoryView.getDeck2().getCards().get(i).getImageCarte()+"\">" +
                                         "                              </div>" +
-                                        "                           </div>" +
                                         "   </div>");
                             }
                         %>
@@ -123,11 +117,9 @@
                         <%
                             for(int i=4;i<8;i++){
                                 out.print("<div class=\"col s3 m3 l3\">" +
-                                        "                        <div class=\"card carte-deck\">" +
                                         "                            <div class=\"card-image grow\" onclick=\"selectCardDeck($(this).attr('id'))\" id=\"b" + inventoryView.getDeck2().getCards().get(i).getId_carte() + "\"> " +
                                         "                               <img src=\"../img/CARDS/"+inventoryView.getDeck2().getCards().get(i).getImageCarte()+"\">" +
                                         "                              </div>" +
-                                        "                           </div>" +
                                         "   </div>");
                             }
                         %>

@@ -17,8 +17,9 @@ import java.io.PrintWriter;
  */
 public class AccountUpdaterServlet extends HttpServlet{
 
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         PrintWriter printWriter = resp.getWriter();
         AccountManager accountManager = new AccountManager();
@@ -29,21 +30,31 @@ public class AccountUpdaterServlet extends HttpServlet{
 
         String update = req.getParameter("update");
 
+        String option = req.getParameter("option");
+
         switch (Integer.parseInt(typeRequest)){
             case RequestStatus.UPDATE_CARTON:
                 printWriter.print(accountManager.changerSkinCarton(pseudo,update));
                 break;
 
             case RequestStatus.UPDATE_ICON:
+                System.out.println("j'ai changé l'icone par "+update);
                 printWriter.print(accountManager.changeIcon(pseudo,update));
+                session.setAttribute("iconeJoueur",option);
                 break;
 
             case RequestStatus.UPDATE_EMAIL:
                 printWriter.print(accountManager.changerEmail(pseudo,update));
+                session.setAttribute("mailJoueur",update);
                 break;
 
             case RequestStatus.UPDATE_MDP:
-                printWriter.print(accountManager.changePassword(pseudo,update));
+                String mdp = (String) req.getParameter("password");
+                System.out.println(mdp+" == "+session.getAttribute("password"));
+                if(mdp.equals(session.getAttribute("password"))) {
+                    printWriter.print(accountManager.changePassword(pseudo, update));
+                    session.setAttribute("password", update);
+                }
                 break;
 
             case RequestStatus.UPDATE_MAP:
@@ -57,4 +68,7 @@ public class AccountUpdaterServlet extends HttpServlet{
         }
 
     }
+
+
+
 }

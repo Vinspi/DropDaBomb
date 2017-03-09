@@ -1,0 +1,84 @@
+.nav-perso {
+    background: linear-gradient(10deg,#4b6572,#2c3e50);
+}
+
+nav li{
+    margin-right: 1em;
+}
+
+.iconeJoueur{
+    width: 4rem;
+}
+
+@font-face {
+    font-family: Luna;
+    src: url("../fonts/Luna.ttf");
+}
+
+body{
+
+    background-image: url("../img/BG6.jpg");
+
+    background-attachment: fixed;
+}
+
+.luna{
+    font-family: Luna;
+}
+
+.brand-logo{
+    text-shadow: 2px 2px #000000;
+    margin-left: 20px;
+}
+
+.titre-modif-email{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-bottom: 3em;
+    background: repeating-linear-gradient(
+            45deg,
+            #1e88e5,
+            #1e88e5 6px,
+            #1976d2 6px,
+            #1976d2 12px
+    );
+
+}
+
+.titre-mon-compte{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #ffb300,
+            #ffb300 6px,
+            #ffa000 6px,
+            #ffa000 12px
+    );
+}
+
+.modal .modal-content{
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: #b0bec5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #b0bec5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #b0bec5;
+    opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: #b0bec5;
+    opacity: 1;
+}
+
+.section-mon-compte{
+    padding-top: 5em;
+}

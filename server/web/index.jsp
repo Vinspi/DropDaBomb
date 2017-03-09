@@ -22,9 +22,9 @@
 <body class="grey lighten-3">
     <nav>
         <div class="nav-wrapper nav-perso">
-            <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="circle iconeJoueur"></a>
+            <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="Shop.jsp">Boutique</a></li>
+                <li><a href="shop.jsp">Boutique</a></li>
                 <li><a href="account.jsp">Inscription</a></li>
                 <%
 

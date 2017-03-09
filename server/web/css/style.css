@@ -35,7 +35,7 @@ body{
 }
 
 .wooden-bg{
-    background-image: url("../img/wooden_bg1.png");
+    background-image: url("../img/wooden_bg.jpg");
 }
 
 .belize-hole{
@@ -69,6 +69,9 @@ body{
     transition: all 0.3s ease;
 }
 
+.titre-modif-email{
+    margin-bottom: 2em;
+}
 
 @-webkit-keyframes shaker{
     50%{
@@ -147,6 +150,7 @@ body{
 
 }
 
+
 .bottom-arrow-mesdecks{
     position: absolute;
     height: 0px;
@@ -178,7 +182,6 @@ body{
 .titre-creation-compte{
 
     padding-top: 1em;
-    padding-bot: 2em;
     background: repeating-linear-gradient(
             45deg,
             #689f38,
@@ -191,7 +194,20 @@ body{
 .titre-telechargement{
 
     padding-top: 1em;
-    padding-bot: 2em;
+    background: repeating-linear-gradient(
+            45deg,
+            #ffb300,
+            #ffb300 6px,
+            #ffa000 6px,
+            #ffa000 12px
+    );
+}
+
+
+.titre-mon-compte{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
     background: repeating-linear-gradient(
             45deg,
             #ffb300,
@@ -204,7 +220,6 @@ body{
 .titre-connexion{
 
     padding-top: 1em;
-    padding-bot: 2em;
     background: repeating-linear-gradient(
             45deg,
             #1e88e5,
@@ -313,3 +328,6 @@ nav li{
     opacity: 1;
 }
 
+.section-mon-compte{
+    padding-top: 5em;
+}

@@ -3,6 +3,7 @@ package Manager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -11,6 +12,16 @@ import java.util.LinkedList;
 public class AccountManager {
     Connection connection = null;
 
+
+    public class Doublet{
+        public int id;
+        public String image;
+
+        public Doublet(int id, String image) {
+            this.id = id;
+            this.image = image;
+        }
+    }
 
     public int authentification(String pseudo, String password) {
 
@@ -375,7 +386,7 @@ public class AccountManager {
             dans la variable de session et par conséquent que celui existe (verifié par la servlet de connexion)
          */
 
-        String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\')";
+        String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\');";
 
         if(Manager.getManager().sendRequestUpdate(query,connection)){
             if(connection != null){
@@ -399,6 +410,76 @@ public class AccountManager {
         }
 
 
+    }
+
+    public ArrayList<Doublet> getPlayerIcons(String pseudo){
+
+        ArrayList<Doublet> array = new ArrayList<Doublet>();
+
+        String queryIcons = "SELECT id_IconeJoueur, imageIcone FROM IconeJoueur JOIN posséderIconeJoueur USING (id_IconeJoueur) WHERE (Pseudo LIKE \'"+pseudo+"\');";
+        ResultSet setIcons = Manager.getManager().sendRequestQuery(queryIcons,connection);
+        try {
+            while(setIcons.next()){
+                System.out.println(setIcons.getString("imageIcone"));
+                array.add(new Doublet(setIcons.getInt("id_IconeJoueur"),setIcons.getString("imageIcone")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            }catch (SQLException e){
+                /* do nothing */
+            }
+        }
+
+        return array;
+    }
+
+    public ArrayList<Doublet> getPlayerMaps(String pseudo){
+
+        ArrayList<Doublet> array = new ArrayList<Doublet>();
+
+        String query = "SELECT id_SkinMap, imageMiniatureMap FROM SkinMap JOIN posséderSkinMap USING (id_SkinMap) WHERE (Pseudo LIKE \'"+pseudo+"\');";
+        ResultSet setMap = Manager.getManager().sendRequestQuery(query,connection);
+        try {
+            while(setMap.next()){
+                array.add(new Doublet(setMap.getInt("id_SkinMap"),setMap.getString("imageMiniatureMap")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            }catch (SQLException e){
+                /* do nothing */
+            }
+        }
+
+        return array;
+    }
+
+    public ArrayList<Doublet> getPlayerCartons(String pseudo){
+
+        ArrayList<Doublet> array = new ArrayList<Doublet>();
+
+        String query = "SELECT id_SkinCartonCarte, imageMiniatureCarton FROM SkinCartonCarte JOIN posséderSkinCartonCarte USING (id_SkinCartonCarte) WHERE (Pseudo LIKE \'"+pseudo+"\');";
+        ResultSet setCarton = Manager.getManager().sendRequestQuery(query,connection);
+        try {
+            while(setCarton.next()){
+                array.add(new Doublet(setCarton.getInt("id_SkinCartonCarte"),setCarton.getString("imageMiniatureCarton")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            }catch (SQLException e){
+                /* do nothing */
+            }
+        }
+
+        return array;
     }
 
 }
