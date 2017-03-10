@@ -20,6 +20,7 @@ CREATE TABLE CompteJoueur(
   id_SkinCartonCarte              Int NOT NULL DEFAULT 0,
   id_IconeJoueur                  Int NOT NULL DEFAULT 0,
   id_Division                     Int ,
+  estAdmin                        Int DEFAULT 0 ,
   PRIMARY KEY (Pseudo )
 )ENGINE=InnoDB;
 
@@ -102,6 +103,7 @@ CREATE TABLE Matchs(
 
 CREATE TABLE Deck(
   id_Deck varchar(21)  NOT NULL ,
+  estDeckActif TINYINT NOT NULL,
   PRIMARY KEY (id_Deck )
 )ENGINE=InnoDB;
 

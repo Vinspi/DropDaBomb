@@ -27,13 +27,16 @@ public class AccountManager {
 
     public int authentification(String pseudo, String password) {
 
-        String query = "SELECT Pseudo, mdpCompte FROM CompteJoueur WHERE (Pseudo LIKE '"+pseudo+"' AND mdpCompte LIKE '"+password+"')";
+        String query = "SELECT Pseudo, mdpCompte, estAdmin FROM CompteJoueur WHERE (Pseudo LIKE '"+pseudo+"' AND mdpCompte LIKE '"+password+"')";
         int status = RequestStatus.AUTH_FAILED;
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query, connection);
 
         try {
             if (resultSet.next()) {
+                if(resultSet.getInt("estAdmin") == 1){
+                    status = RequestStatus.AUTH_ADMIN;
+                }
                 status = RequestStatus.AUTH_SUCCES;
             } else status = RequestStatus.AUTH_FAILED;
         } catch (SQLException e) {
@@ -184,9 +187,9 @@ public class AccountManager {
 
         queryInsertion.add("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nomGuilde, id_Division) " +
                     "VALUES (\""+pseudo+"\", \""+email+"\", \""+password+"\", NULL, NULL);");
-        queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"0');");
-        queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"1');");
-        queryInsertion.add("INSERT INTO Deck(id_Deck) VALUES ('"+pseudo+"2');");
+        queryInsertion.add("INSERT INTO Deck(id_Deck,estDeckActif) VALUES ('"+pseudo+"0',0);");
+        queryInsertion.add("INSERT INTO Deck(id_Deck,estDeckActif) VALUES ('"+pseudo+"1',1);");
+        queryInsertion.add("INSERT INTO Deck(id_Deck,estDeckActif) VALUES ('"+pseudo+"2',0);");
 
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 0);");
         queryInsertion.add("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, '"+pseudo+"0', '"+pseudo+"', 1);");

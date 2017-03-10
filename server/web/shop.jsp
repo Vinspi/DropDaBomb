@@ -104,16 +104,20 @@
             <li><a href="shop.jsp">Boutique</a></li>
             <%
 
-                System.out.println("pseudo = "+pseudo);
-                System.out.println("icone = "+icone);
                 if(session.getAttribute("pseudo") == null) {
-                    out.print("<li><a href=\"account.jsp\">Inscription</a></li>");
                     out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
                 }
-                else {
-                    out.print("<li><a href=\"compte.jsp\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                else if((int) session.getAttribute("estAdmin") == 1) {
+                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                            "<li><a href=\"admin.jsp\" id=\"admin\"></a>Admin</li>" +
                             "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                            "<li><img src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                            "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+
+                }
+                else {
+                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                            "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                 }
 
             %>
