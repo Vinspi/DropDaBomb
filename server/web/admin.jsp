@@ -1,4 +1,10 @@
-<%@ page import="View.AdminPackView" %><%--
+<%@ page import="View.AdminPackView" %>
+<%@ page import="View.MiniatureCarte" %>
+<%@ page import="View.Ensemble" %>
+<%@ page import="View.LootPack" %>
+<%@ page import="View.Pack" %>
+
+<%--
   Created by IntelliJ IDEA.
   User: deutsch
   Date: 09/03/17
@@ -21,7 +27,38 @@
     <title>DropDaBomb</title>
 </head>
 <body class="center-align">
+<%
+    String pseudo = (String) session.getAttribute("pseudo");
+    String icone = (String) request.getSession().getAttribute("iconeJoueur");
+%>
 
+<nav>
+    <div class="nav-wrapper nav-perso">
+        <a href="#" class="brand-logo">DropDaBomb</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="shop.jsp">Boutique</a></li>
+            <%
+
+                if(session.getAttribute("pseudo") == null) {
+                    out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
+                }
+                else if((int) session.getAttribute("estAdmin") == 1) {
+                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                            "<li><a href=\"admin.jsp\" id=\"admin\"></a>Admin</li>" +
+                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                            "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+
+                }
+                else {
+                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                            "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                }
+
+            %>
+        </ul>
+    </div>
+</nav>
 <%
     AdminPackView apv = new AdminPackView();
 
@@ -49,14 +86,32 @@
                                                     <div id="listEnsembles" class="row">
                                                         <%
                                                             for(int i = 0; i < apv.getListEnsembles().size();i++){
-
+                                                                out.print("<div class=\"col s2 m2 l2\">");
+                                                                out.print("<div id=\"ensemble"+apv.getListEnsembles().get(i).getId()+"\"><p>Ensemble "+apv.getListEnsembles().get(i).getId()+"</p>");
+                                                                out.print("</div>");
+                                                                if(i%6 == 0) out.print("</div><div class=\"row\">");
                                                             }
                                                         %>
                                                     </div>
                                                     <div id="btnEnsemble"><a class="waves-effect waves-light btn">Add</a><a class="waves-effect waves-light btn">Remove</a></div>
                                                     <p>Ensemble courant</p>
                                                     <div id="currentEnsemble" class="row">
-
+                                                        <%
+                                                            int j = 0;
+                                                            for(MiniatureCarte c : apv.getCurrentEnsemble().getCartes()){
+                                                                j++;
+                                                                out.print("<div class=\"col s2 m2 l2\">");
+                                                                out.print("<div id=\"cartesEns"+c.getId()+"\">" +
+                                                                        "     <div class=\"card-image grow\" id=\"cardCartesEns" + c.getId() + "\">" +
+                                                                        "       <img src=\"../img/CARDS/" + c.getImg() + "\">" +
+                                                                        "     </div>");
+                                                                out.print("</div>");
+                                                                if(j%6 == 0){
+                                                                    j = 0;
+                                                                    out.print("</div><div class=\"row\">");
+                                                                }
+                                                            }
+                                                        %>
                                                     </div>
                                                 </div>
                                                 <div class="card-action">
@@ -72,11 +127,30 @@
                                     <div class="card-content white-text">
                                         <p>Gestion des Ensembles</p>
                                         <div id="listLP" class="row">
-
+                                            <%
+                                                for(int i = 0; i < apv.getListLootPacks().size();i++){
+                                                    out.print("<div class=\"col s2 m2 l2\">");
+                                                    out.print("<div id=\"lootpack"+i+"\"><p>LootPack "+i+"</p>");
+                                                    out.print("</div>");
+                                                    if(i%6 == 0) out.print("</div><div class=\"row\">");
+                                                }
+                                            %>
                                         </div>
                                         <div id="btnLP"><a class="waves-effect waves-light btn">Add</a><a class="waves-effect waves-light btn">Remove</a></div>
                                         <div id="currentLP" class="row">
-
+                                            <%
+                                                int j = 0;
+                                                for(Ensemble e : apv.getCurrentLootPack().getEnsembles()){
+                                                    j++;
+                                                    out.print("<div class=\"col s2 m2 l2\">");
+                                                    out.print("<div id=\"Ens"+e.getId()+"\"><p></p>" );
+                                                    out.print("</div>");
+                                                    if(j%6 == 0){
+                                                        j = 0;
+                                                        out.print("</div><div class=\"row\">");
+                                                    }
+                                                }
+                                            %>
                                         </div>
                                     </div>
                                     <div class="card-action">

@@ -56,7 +56,20 @@ public class AuthentificationAccountServlet extends HttpServlet {
             session.setAttribute("pseudo",pseudo);
             session.setAttribute("password",password);
             session.setAttribute("money",accountManager.getPlayerMoney(pseudo));
+            session.setAttribute("estAdmin",false);
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
+        }
+        else if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_ADMIN){
+            session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
+            session.setAttribute("mailJoueur",accountManager.getplayerEmail(pseudo));
+            session.setAttribute("skinCartonJoueur",accountManager.getPlayerSkinCarton(pseudo));
+            session.setAttribute("skinMapJoueur",accountManager.getPlayerSkinMap(pseudo));
+            session.setAttribute("pseudo",pseudo);
+            session.setAttribute("password",password);
+            session.setAttribute("money",accountManager.getPlayerMoney(pseudo));
+            session.setAttribute("estAdmin",true);
+            this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
+
         }
         else{
             //sinon rediriger vers une page d'erreur
