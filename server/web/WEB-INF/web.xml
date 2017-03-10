@@ -78,4 +78,12 @@
         <servlet-name>AccountUpdaterServlet</servlet-name>
         <url-pattern>/AccountUpdater</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Admin</servlet-name>
+        <servlet-class></servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name></servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
 </web-app>
