@@ -33,12 +33,15 @@ var express = require("express");
 
 
 var mysql = require('mysql');
+
 var connection = mysql.createConnection({
   host : '217.182.69.175',
   user : 'Vinspi',
   password : 'vinspi13',
   database : 'DropDaBomb',
 });
+
+connection.connect();
 
 /* ******************************************************************* */
 
@@ -53,10 +56,10 @@ function insereSalon(room){
     if(listSalons[i] == "LIBRE"){
       listSalons[i] = room;
       /* insertion réussie */
-      return true;
+      return i;
     }
   }
-  return false;
+  return -1;
 }
 
 /* ******************************************************************* */
@@ -66,7 +69,7 @@ function etatJoueur(pseudo,deck){
   this.bouclier = 0;
   this.poudre = 25;
   this.main = [];
-  this.deck = [];
+  this.deck = deck;
   this.cActives = [];
   this.cActivesNonRetournees = [];
   /* les point du j1 sont MAX_PDV - j2.pdv */
@@ -74,10 +77,10 @@ function etatJoueur(pseudo,deck){
 }
 
 function etatMatch(pseudo1,pseudo2,deck1,deck2) {
+  this.tour = 1;
   this.joueur1 = new etatJoueur(pseudo1,deck1);
   this.joueur2 = new etatJoueur(pseudo2,deck2);
-  this.barreDeVie  = 0;
-  //this.room = "";
+  this.nameRoom = "";
 }
 
 function Room(name, pseudo1, pseudo2){
@@ -87,51 +90,59 @@ function Room(name, pseudo1, pseudo2){
 }
 
 function fournirSalons(){
-  var index = listSalons.length
-  while (fifoJoueurs.length >= 2){
-    var nameRoom = 'room'+index;
-    var room = new Room(nameRoom, fifoJoueurs[0].pseudo, fifoJoueurs[1].pseudo);
-    insereSalon(room);
-    index++;
-    (fifoJoueurs[0].socket).join(nameRoom);
-    (fifoJoueurs[1].socket).join(nameRoom);
-    fifoJoueurs.shift();
-    fifoJoueurs.shift();
-    console.log('Salon '+room.name+' créé avec '+room.pseudo1+' et '+room.pseudo2+'.');
-    initMatch(room);
+
+  if (fifoJoueurs.length >= 2){
+
+    initMatch(fifoJoueurs[0].pseudo,fifoJoueurs[1].pseudo);
+
    }
 }
 
-function initMatch(room){
+function initMatch(pseudo1, pseudo2){
 
-  connection.connect();
-  var queryCartesJ1 = "SELECT id_Carte,coutCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE \'"+connection.escape(room.pseudo1)+"\' AND actifDeck=1)";
-  var queryCartesJ2 = "SELECT id_Carte,coutCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE \'"+connection.escape(room.pseudo2)+"\' AND actifDeck=1)";
+
+  var queryCartesJ1 = "SELECT id_Carte, coutCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo1)+" AND estActif = 1);";
+  var queryCartesJ2 = "SELECT id_Carte, coutCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo2)+" AND estActif = 1);";
 
   var deck1 = [];
+  var deck2 = [];
+
+
+
   connection.query(queryCartesJ1, function(err, rows, fields){
     if (err) throw err;
-    console.log('rows = '+rows);
     for(var i in rows){
-      console.log('rows['+i+'] = '+rows[i]);
       deck1.push(rows[i]);
     }
   });
-  var deck2 = [];
-  connection.query(queryCartesJ2, function(err, rows, fields){
+
+  return connection.query(queryCartesJ2, function(err, rows, fields){
     if (err) throw err;
-    console.log('rows = '+rows);
     for(var i in rows){
-      console.log('rows['+i+'] = '+rows[i]);
       deck2.push(rows[i]);
     }
+
+    var etatM = new etatMatch(pseudo1, pseudo2, deck1, deck2);
+
+    var index = insereSalon(etatM);
+    if(index > -1) var nameRoom = "room"+index;
+    console.log("nameRoom = "+nameRoom);
+    etatM.nameRoom = nameRoom;
+
+    fifoJoueurs[0].socket.idRoom = index;
+    fifoJoueurs[1].socket.idRoom = index;
+    (fifoJoueurs[0].socket).join(nameRoom);
+    (fifoJoueurs[1].socket).join(nameRoom);
+    io.sockets.in(nameRoom).emit('matchStart','match lancé vous etes dans la salle : '+nameRoom);
+
+    console.log(etatM);
+
+    fifoJoueurs.shift();
+    fifoJoueurs.shift();
+    fournirSalons();
   });
 
 
-  connection.end();
-  var etatM = new etatMatch(room.pseudo1, room.pseudo2, deck1, deck2);
-  console.log('Match lancé !');
-  console.log(etatM);
 }
 
 var server = http.createServer(function(req,res){
@@ -139,6 +150,12 @@ var server = http.createServer(function(req,res){
   var url_p = url.parse(req.url,true,true);
   if(url_p.pathname == '/cli.html'){
     fs.readFile('./cli.html','utf-8',function(error,content){
+      res.writeHead(200,{"Content-type":"text/html"});
+      res.end(content);
+    });
+  }
+  if(url_p.pathname == '/js/cli.js'){
+    fs.readFile('./js/cli.js','utf-8',function(error,content){
       res.writeHead(200,{"Content-type":"text/html"});
       res.end(content);
     });
@@ -156,9 +173,19 @@ io.sockets.on('connection', function (socket){
       fournirSalons();
   });
 
+  socket.on('useCard', function(action){
+    var idRoom = socket.idRoom;
+    var etatM = listSalons[idRoom]
+  });
 
   //Fonction très très longue :
 });
 
+
+
+
+
+
+initListSalon();
 server.listen(8080);
 console.log("server pret");
