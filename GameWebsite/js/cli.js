@@ -1,25 +1,19 @@
 var socket = io.connect('http://localhost:8080');
 var Joueur = (document.getElementById('pseudo').value  !== null) ? document.getElementById('pseudo').value : 'TantPisPourToi' ;    //Récup le pseudo du guguss
 
+var etatJoueur;
+var actifAdversaire;
 
-function utiliserCarte(etatMatch){
+function utiliserCarte(id_Carte){
 
-  /*var Joueur;
-  if(joueur == etatMatch.joueur1.pseudo) Joueur = etatMatch.joueur1;
-  else Joueur = etatMatch.joueur2;*/
 
-  //Récupérer la carte = id_Carte;
-  if (Joueur.main.includes(id_Carte)){
-    if(Joueur.main[id_Carte].cout >= Joueur.poudre){
-        console.log("Pas assez de poudre !");
-    }
-    else {
-      socket.emit('useCard', id_Carte);
-    }
+  if(etatJoueur.main[id_Carte].cout >= Joueur.poudre){
+      console.log("Pas assez de poudre !");
   }
   else {
-      console.log("Carte pas dans la main");
+    socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
   }
+
 }
 
 function chercherMatch(){
@@ -27,6 +21,13 @@ function chercherMatch(){
     socket.emit('chercherMatch',Joueur);
 }
 
-socket.on('matchStart', function (message) {
-  alert(message);
+socket.on('matchStart', function (obj) {
+  etatJoueur = obj.etatJoueur;
+  actifAdversaire = obj.actifAdversaire;
+  console.log(obj.actifAdversaire);
+  console.log(obj.etatJoueur);
+  console.log(obj.message);
+  for (var i = 0; i < 4; i++) {
+    console.log("id_carte : "+etatJoueur.main[i].id_Carte);
+  }
 });
