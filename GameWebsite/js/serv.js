@@ -111,8 +111,8 @@ function tireCarteMain(etatJoueur){
 function initMatch(pseudo1, pseudo2){
 
 
-  var queryCartesJ1 = "SELECT id_Carte, coutCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo1)+" AND estActif = 1);";
-  var queryCartesJ2 = "SELECT id_Carte, coutCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo2)+" AND estActif = 1);";
+  var queryCartesJ1 = "SELECT id_Carte, coutCarte, imageCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo1)+" AND estActif = 1);";
+  var queryCartesJ2 = "SELECT id_Carte, coutCarte, imageCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo2)+" AND estActif = 1);";
 
   var deck1 = [];
   var deck2 = [];
@@ -164,6 +164,7 @@ function initMatch(pseudo1, pseudo2){
 var server = http.createServer(function(req,res){
 
   var url_p = url.parse(req.url,true,true);
+  console.log(url_p.pathname);
   if(url_p.pathname == '/cli.html'){
     fs.readFile('./cli.html','utf-8',function(error,content){
       res.writeHead(200,{"Content-type":"text/html"});
@@ -172,6 +173,13 @@ var server = http.createServer(function(req,res){
   }
   if(url_p.pathname == '/js/cli.js'){
     fs.readFile('./js/cli.js','utf-8',function(error,content){
+      res.writeHead(200,{"Content-type":"text/html"});
+      res.end(content);
+    });
+  }
+  else {
+    console.log("je fournit "+url_p.pathname);
+    fs.readFile(url_p.pathname,'utf-8',function(error,content){
       res.writeHead(200,{"Content-type":"text/html"});
       res.end(content);
     });

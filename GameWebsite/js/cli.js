@@ -21,13 +21,25 @@ function chercherMatch(){
     socket.emit('chercherMatch',Joueur);
 }
 
+function dessineMain(main){
+  console.log(main[0].imageCarte);
+  console.log(main[1].imageCarte);
+  console.log(main[2].imageCarte);
+  console.log(main[3].imageCarte);
+  $('#zone_deck_cards_card1 img').attr('src','img/'+main[0].imageCarte);
+
+  $('#zone_deck_cards_card2 img').attr('src','img/'+main[1].imageCarte);
+  $('#zone_deck_cards_card3 img').attr('src','img/'+main[2].imageCarte);
+  $('#zone_deck_cards_card4 img').attr('src','img/'+main[3].imageCarte);
+
+}
+
 socket.on('matchStart', function (obj) {
   etatJoueur = obj.etatJoueur;
   actifAdversaire = obj.actifAdversaire;
   console.log(obj.actifAdversaire);
   console.log(obj.etatJoueur);
   console.log(obj.message);
-  for (var i = 0; i < 4; i++) {
-    console.log("id_carte : "+etatJoueur.main[i].id_Carte);
-  }
+  
+  dessineMain(etatJoueur.main);
 });
