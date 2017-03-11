@@ -28,6 +28,7 @@
 <%
 
     String pseudo = (String) session.getAttribute("pseudo");
+    Boolean estAdmin = (Boolean) (session.getAttribute("estAdmin"));
 
     InventoryManager inventoryManager = new InventoryManager();
     InventoryView inventoryView = inventoryManager.createInventoryView(pseudo);
@@ -44,15 +45,19 @@
 
                 System.out.println("pseudo = "+session.getAttribute("pseudo"));
                 String icone = (String) request.getSession().getAttribute("iconeJoueur");
+                System.out.println(estAdmin);
                 System.out.println("icone = "+icone);
                 if(session.getAttribute("pseudo") == null) {
                     out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
                 }
-                else if((int) session.getAttribute("estAdmin") == 1) {
-                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
-                            "<li><a href=\"admin.jsp\" id=\"admin\"></a>Admin</li>" +
-                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                            "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                else if(estAdmin != null) {
+                    if(estAdmin){
+                        System.out.println("coucou");
+                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                                "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+                                "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                    }
 
                 }
                 else {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Pack {
     private int id;
     private String nom;
+    private String img;
     private int misEnVente;
     private ArrayList<LootPack> lootPacks = new ArrayList<LootPack>();
 
@@ -25,6 +26,9 @@ public class Pack {
         this.nom = nom;
     }
 
+    public String getImg(){ return img; }
+    public void setImg(String img){ this.img = img; }
+
     public int getMisEnVente() {
         return misEnVente;
     }
@@ -39,15 +43,17 @@ public class Pack {
         this.lootPacks = lootPacks;
     }
 
-    public Pack(int id, String nom){
+    public Pack(int id, String nom, String img){
         this.id = id;
         this.nom = nom;
+        this.img = img;
         this.lootPacks = null;
         this.misEnVente = 0;
     }
-    public Pack(int id, String nom, int misEnVente, ArrayList<LootPack> lootPacks){
+    public Pack(int id, String nom, String img, int misEnVente, ArrayList<LootPack> lootPacks){
         this.id = id;
         this.nom = nom;
+        this.img = img;
         this.misEnVente = misEnVente;
         this.lootPacks = lootPacks;
     }

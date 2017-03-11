@@ -80,10 +80,10 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>Admin</servlet-name>
-        <servlet-class></servlet-class>
+        <servlet-class>AccountServlets.AdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name></servlet-name>
-        <url-pattern>/admin</url-pattern>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/Admin</url-pattern>
     </servlet-mapping>
 </web-app>

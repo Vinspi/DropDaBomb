@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class AdminPackView {
 
+    PackManager packManager = new PackManager();
+
     private Pack currentPack = new Pack();
     private LootPack currentLootPack = new LootPack();
     private Ensemble currentEnsemble = new Ensemble();
@@ -71,10 +73,12 @@ public class AdminPackView {
     }
 
     public AdminPackView(){
-        PackManager packManager = new PackManager();
+
         packManager.getEvthgAlrdCreated();
+        packManager.getAllCards();
 
         this.currentEnsemble = packManager.getCurrentEnsemble();
+        System.out.println(this.currentEnsemble);
         this.currentLootPack = packManager.getCurrentLootPack();
         this.currentPack = packManager.getCurrentPack();
 
@@ -82,6 +86,30 @@ public class AdminPackView {
         this.listEnsembles = packManager.getListEnsembles();
         this.listLootPacks = packManager.getListLootPacks();
         this.listPacks = packManager.getListPacks();
+
     }
 
+    public void choosePack(int idPack){
+        for(Pack p : listPacks){
+            if (p.getId() == idPack) {
+                currentPack = p;
+                break;
+            }
+        }
+    }
+    public void chooseEnsemble(int idEns){
+        for(Ensemble e : listEnsembles){
+            if (e.getId() == idEns) {
+                currentEnsemble = e;
+                break;
+            }
+        }
+    }
+    //Ajout d'une carte dans le currentEnsemble
+    public void addCarteToEnsemble(int id_Carte){
+        for(MiniatureCarte m : listCards){
+            if(m.getId() == id_Carte) getCurrentEnsemble().getCartes().add(m);
+            break;
+        }
+    }
 }

@@ -11,7 +11,7 @@ public class Ensemble {
     private int id;
     private String nom;
     private float dropRate;
-    private ArrayList<MiniatureCarte> cartes;
+    private ArrayList<MiniatureCarte> cartes = new ArrayList<>();
 
     public int getId() {
         return id;

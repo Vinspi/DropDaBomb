@@ -141,7 +141,7 @@ public class PackManager {
         listPacks = new ArrayList<>();
         listLootPacks = new ArrayList<>();
         listEnsembles = new ArrayList<>();
-        String queryPacks = "SELECT id_Pack, nomPack, misEnVentePack, id_Ensemble, nomEnsemble, id_LootPack, nomLootPack, id_Carte, nomCarte, imageCarte" +
+        String queryPacks = "SELECT id_Pack, nomPack, misEnVentePack, imageMiniaturePack, id_Ensemble, nomEnsemble, id_LootPack, nomLootPack, id_Carte, nomCarte, imageCarte" +
                 " FROM Pack" +
                 " JOIN LootPackPack USING (id_Pack)" +
                 " JOIN LootPackEnsemble USING (id_LootPack)" +
@@ -151,7 +151,7 @@ public class PackManager {
 
 
         int id_Pack = -1, id_LootPack = -1, id_Ensemble = -1, misEnVentePack = 0, maxLootPack = -1, maxEnsemble = -1;
-        String nomPack = "", nomLootPack = "", nomEnsemble = "";
+        String nomPack = "", nomLootPack = "", nomEnsemble = "", imagePack = "";
 
         ArrayList<LootPack> tmpLootPack = new ArrayList();
         ArrayList<Ensemble> tmpEnsemble = new ArrayList();
@@ -169,7 +169,7 @@ public class PackManager {
                        tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
                        listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
 
-                       listPacks.add(new Pack(id_Pack, nomPack, misEnVentePack, tmpLootPack));
+                       listPacks.add(new Pack(id_Pack, nomPack, imagePack, misEnVentePack, tmpLootPack));
 
                        tmpCarte = new ArrayList<>();
                        tmpEnsemble = new ArrayList<>();
@@ -181,6 +181,7 @@ public class PackManager {
                    id_Pack = resultSet.getInt("id_Pack");
                    nomPack = resultSet.getString("nomPack");
                    misEnVentePack = resultSet.getInt("misEnVentePack");
+                   imagePack = resultSet.getString("imageMiniaturePack");
 
                    id_LootPack = resultSet.getInt("id_LootPack");
                    nomLootPack = resultSet.getString("nomLootPack");
@@ -238,7 +239,7 @@ public class PackManager {
             listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
             tmpLootPack.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
             listLootPacks.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
-            listPacks.add(new Pack(id_Pack,nomPack,misEnVentePack,tmpLootPack));
+            listPacks.add(new Pack(id_Pack,nomPack,imagePack,misEnVentePack,tmpLootPack));
 
             current_idPack = id_Pack;
             current_idLootPack = maxLootPack;
