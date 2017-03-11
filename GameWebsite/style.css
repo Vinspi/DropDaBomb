@@ -1,0 +1,242 @@
+body{
+    background: url(../img/bg.png);
+
+}
+
+
+#zone{
+    border-left: 10px solid black;
+    border-right: 10px solid black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background: url(../img/text.png);
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+/*----------------------------------------------*/
+/*             ZONE BARRE DIV                   */
+/*----------------------------------------------*/
+
+
+#zone_barre{
+   height: 15%;
+   background:
+    radial-gradient(rgba(0,0,0,1) 15%, rgba(255,255,255,0) 16%) 0 1px,
+    radial-gradient(rgba(0,0,0,1) 15%, rgba(255,255,255,0) 16%) 8px 9px,
+    radial-gradient(#444 15%, transparent 15%) 8px 10px,
+    radial-gradient(#444 15%, #282828 15%) 39px 80px;
+    background-color:#282828;
+    background-size: 13px 13px;
+    border-radius: 0% 0% 150% 150%;
+    border-bottom: 4px solid #ccc;
+    display: flex;
+    -moz-box-shadow: 10px 10px 5px #000000;
+    -webkit-box-shadow: 10px 10px 5px #000000;
+    -o-box-shadow: 10px 10px 5px #000000;
+    box-shadow: 10px 10px 5px #000000;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color='#6565', Direction=135, Strength=5);
+}
+
+#zone_barre_barre_fond{
+    margin:auto;
+    height: 30%;
+    width: 70%;
+    margin-top: 3vh;
+    background-color: blue;
+    border-radius: 10px;
+    border: 2px solid white;
+    display: flex;
+    -moz-box-shadow: 10px 10px 5px #000000;
+    -webkit-box-shadow: 10px 10px 5px #000000;
+    -o-box-shadow: 10px 10px 5px #000000;
+    box-shadow: 10px 10px 5px #000000;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color='#6565', Direction=135, Strength=5);
+}
+
+#zone_barre_barre_fond_left{
+    border-radius: 5px 0px 0px 5px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 29%;
+}
+
+#zone_barre_barre_fond_cursor{
+    width: 2%;
+}
+
+#zone_barre_barre_fond_right{
+    border-radius: 0px 5px 5px 0px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 69%;
+}
+
+
+
+/*----------------------------------------------*/
+/*----------------------------------------------*/
+
+#zone_jeu{
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#zone_jeu_cards_adversaire{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    padding: 2em;
+}
+
+#zone_jeu_cards_middle{
+    width: 100%;
+    height: 50%;
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    margin: auto;
+}
+
+#zone_jeu_card_middle_card{
+    margin:auto;
+}
+
+#zone_jeu_cards_player{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    padding: 2vh;
+}
+
+.zone_jeu_card{
+    border-radius: 10%;
+    border: 4px solid white;
+    width: 16%;
+    height: 100%;
+}
+
+#zone_jeu_card_middle_card{ 
+    height: 80%;
+    border-radius: 15%;
+    border: 4px solid black;
+    margin: auto;
+}
+
+.zone_jeu_separator{
+    width: 4%;
+}
+
+.zone_jeu_cards_separator{
+    width: 2%;
+}
+
+
+/*----------------------------------------------*/
+/*----------------------------------------------*/
+
+
+#zone_deck{
+    height: 20%;
+}   
+
+#zone_deck_container{
+    display: flex;
+    height: 100%;
+}
+
+#zone_deck_infos{
+    border-top: 3px solid white;
+    width: 20%;
+    padding-left: 0.7vw;
+    padding-right: 0.7vw;
+    height: 100%;
+    background:
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+    background-color:#282828;
+    background-size: 13px 13px;
+    padding-top: 3vh;
+}
+
+
+#zone_deck_separator{
+    width: 5%;
+    border-left: 2px dotted gray;
+    border-right: 2px dotted gray;
+}
+
+/*----------------------------------------------*/
+
+#zone_deck_cards{
+    width: 80%;
+    height: 100%;
+    border-top: 3px solid white;
+    
+}
+
+#zone_deck_cards_container{
+    display: flex;
+    height: 100%;
+    background:
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+    background-color:#282828;
+    background-size: 13px 13px;
+    background-size: 13px 13px;
+    padding-top: 3vh;
+}
+
+#zone_deck_cards_card1, #zone_deck_cards_card2, #zone_deck_cards_card3, #zone_deck_cards_card4 {
+    margin-left: 1vw;
+}
+
+
+
+/*----------------------------------------------*/
+/*----------------------------------------------*/
+
+#zone_deck_infos_container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#zone_deck_infos_container_top{
+    height: 40%;
+    width: 100%;
+    display: flex;
+}
+
+#zone_deck_infos_container_bottom{
+    height: 60%;
+    width: 100;
+}
+
+#zone_deck_infos_chat{
+    width: 50%;
+    height: 100%;
+}
+
+#zone_deck_infos_settings{
+    width: 50%;
+    height: 100%;
+}
+
+#zone_deck_infos_powder{
+    width: 100%;
+    height: 100%;
+}
+
+/*----------------------------------------------*/
+/*----------------------------------------------*/
