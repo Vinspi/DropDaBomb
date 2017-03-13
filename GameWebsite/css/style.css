@@ -63,7 +63,7 @@ img{
     border-radius: 5px 0px 0px 5px;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
-    width: 29%;
+    width: 49%;
 }
 
 #zone_barre_barre_fond_cursor{
@@ -74,10 +74,22 @@ img{
     border-radius: 0px 5px 5px 0px;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
-    width: 69%;
+    width: 49%;
 }
 
+#zone_barre_barre_fond_bouclier_right{
 
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 0%;
+}
+
+#zone_barre_barre_fond_bouclier_left{
+    
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 0%;
+}
 
 /*----------------------------------------------*/
 /*----------------------------------------------*/
@@ -108,6 +120,30 @@ img{
     margin:auto;
 }
 
+/* animation vinspi */
+
+@keyframes pop_card {
+    from {transform: scale(1.8);}
+    to {transform: scale(1);}
+}
+
+
+.card_clickable{
+  transition: all .2s ease-in-out;
+}
+
+.card_clickable:hover{
+  transform: scale(1.2);
+}
+
+.pop_card_center{
+  animation-duration: 0.3s;
+  animation-name: pop_card;
+  animation-timing-function: ease-in;
+}
+
+/*********************/
+
 #zone_jeu_cards_player{
     width: 100%;
     height: 25%;
@@ -122,7 +158,7 @@ img{
     height: 100%;
 }
 
-#zone_jeu_card_middle_card{ 
+#zone_jeu_card_middle_card{
     height: 80%;
     border-radius: 15%;
     border: 4px solid black;
@@ -138,13 +174,15 @@ img{
 }
 
 
+
+
 /*----------------------------------------------*/
 /*----------------------------------------------*/
 
 
 #zone_deck{
     height: 20%;
-}   
+}
 
 #zone_deck_container{
     display: flex;
@@ -180,7 +218,7 @@ img{
     width: 80%;
     height: 100%;
     border-top: 3px solid white;
-    
+
 }
 
 #zone_deck_cards_container{
