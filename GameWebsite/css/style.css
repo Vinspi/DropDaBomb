@@ -108,6 +108,14 @@ img{
     margin:auto;
 }
 
+/* animation vinspi */
+
+@keyframes pop_card {
+    from {transform: scale(1.8);}
+    to {transform: scale(1);}
+}
+
+
 .card_clickable{
   transition: all .2s ease-in-out;
 }
@@ -115,6 +123,14 @@ img{
 .card_clickable:hover{
   transform: scale(1.2);
 }
+
+.pop_card_center{
+  animation-duration: 0.3s;
+  animation-name: pop_card;
+  animation-timing-function: ease-in;
+}
+
+/*********************/
 
 #zone_jeu_cards_player{
     width: 100%;

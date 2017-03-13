@@ -9,6 +9,8 @@ var NB_MAX_PDV = 250;
 
 $('.card_clickable').on("click", utiliserCarte);
 
+
+
 /*****************************/
 
 var socket = io.connect('http://localhost:8080');
@@ -17,6 +19,7 @@ var Joueur;    //Récup le pseudo du guguss
 
 var etatJoueur;
 var actifAdversaire;
+var carteJoue;
 
 
 
@@ -76,12 +79,24 @@ function dessineBarreDeVie(pdv){
   /* 49% = NB_MAX_PDV pdv */
   /* pour dessiner X pdv -> Y% = 49*NB_MAX_PDV/X */
 
-  var pourcent_barre_verte = 49*NB_MAX_PDV/pdv;
+  var pourcent_barre_verte = 49*pdv/NB_MAX_PDV;
   var pourcent_barre_rouge = 98-pourcent_barre_verte;
 
   $('#zone_barre_barre_fond_left').css({'width' : pourcent_barre_verte+'%'});
   $('#zone_barre_barre_fond_right').css({'width' : pourcent_barre_rouge+'%'});
 
+}
+
+function dessineCarteCentre(carteJoue){
+
+  $('#zone_jeu_card_middle_card').attr('src','img/'+carteJoue.imageCarte);
+  $('#zone_jeu_card_middle_card').addClass('pop_card_center');
+
+  $('.pop_card_center').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+  function(e) {
+      console.log("coucou l'anim est finie");
+      $('#zone_jeu_card_middle_card').removeClass('pop_card_center');
+  });
 }
 
 socket.on('matchStart', function (obj) {
@@ -98,8 +113,9 @@ socket.on('matchStart', function (obj) {
 socket.on('update',function (obj) {
   etatJoueur = obj.etatJoueur;
   actifAdversaire = obj.actifAdversaire;
-
+  carteJoue = obj.carteJoue;
 
   dessineMain(etatJoueur.main);
   dessineBarreDeVie(etatJoueur.pdv);
+  dessineCarteCentre(carteJoue);
 });

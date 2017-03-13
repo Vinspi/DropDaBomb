@@ -3,6 +3,15 @@
 /* definir toutes les cartes sous forme de constantes */
 
 var CARD_BOMB_25 = 0;
+var CARD_BOMB_50 = 1;
+var CARD_BOMB_50_2TOUR = 2;
+var CARD_BOMB_100_2TOUR = 3;
+var CARD_BOUCLIER_15 = 4;
+var CARD_BOUCLIER_45 = 5;
+var CARD_BOUCLIER_GEN_POUDRE = 6;
+var CARD_ECHANGE_FORCE = 7;
+var CARD_DESENVOUTEMENT = 8;
+var CARD_MELANGE = 9;
 
 /* fin des definitions de cartes */
 
@@ -235,6 +244,8 @@ io.sockets.on('connection', function (socket){
     var etatJoueurEmetteur = etatM.joueur1.pseudo == pseudo ? etatM.joueur1 : etatM.joueur2;
     var etatJoueurAdversaire = etatM.joueur1.pseudo == pseudo ? etatM.joueur2 : etatM.joueur1;
 
+    var carteJoue;
+
     /* fonctions de contrôle */
 
     function poudreSuffisante(id_carte){
@@ -285,21 +296,52 @@ io.sockets.on('connection', function (socket){
 
       console.log("carte utilisé par "+pseudo+" : "+id_carte);
 
-      switch (id_carte) {
+      switch (+id_carte) {
         case CARD_BOMB_25:
           /* carte zero (BOMB 25)*/
 
           etatJoueurEmetteur.pdv += 25;
           etatJoueurAdversaire.pdv -= 25;
-          socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees});
-          socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees})
+
           break;
 
-        default:
-            /* for the moment do nothing */
+        case CARD_BOMB_50:
+
+          etatJoueurEmetteur.pdv += 50;
+          etatJoueurAdversaire.pdv -= 50;
+
+          break;
+
+        case CARD_BOUCLIER_45:
+
+          etatJoueurEmetteur.bouclier += 45;
+          break;
+
+        case CARD_BOUCLIER_15:
+
+          etatJoueurEmetteur.bouclier += 15;
+          break;
       }
 
-      etatM.tour++;
+
+      for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+        if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+          /* on retire la carte joué de la main du joueur */
+          carteJoue = etatJoueurEmetteur.main[i];
+          etatJoueurEmetteur.main.splice(i,1);
+        }
+      }
+
+      /* il tire une nouvelle carte */
+      tireCarteMain(etatJoueurEmetteur);
+
+      /* puis on rajoute la carte joué dans le fond du deck */
+      etatJoueurEmetteur.deck.push(carteJoue);
+
+      socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees, 'carteJoue' : carteJoue});
+      socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees, 'carteJoue' : carteJoue});
+
+      etatM.tour++; /* a changer */
       console.log(etatM);
 
       /* ************************************************************************************************************************** */
