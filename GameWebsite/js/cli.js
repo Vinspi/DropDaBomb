@@ -12,11 +12,11 @@ $('.card_clickable').on("click", utiliserCarte);
 /*****************************/
 
 var socket = io.connect('http://localhost:8080');
-var Joueur = (document.getElementById('pseudo').value  !== null) ? document.getElementById('pseudo').value : 'TantPisPourToi' ;    //Récup le pseudo du guguss
+
+var Joueur;    //Récup le pseudo du guguss
 
 var etatJoueur;
 var actifAdversaire;
-
 
 
 
@@ -45,6 +45,7 @@ function utiliserCarte(){
 }
 
 function chercherMatch(){
+    Joueur = document.getElementById('pseudo').value  !== null) ? document.getElementById('pseudo').value : 'TantPisPourToi'
     document.getElementById('attente').innerHTML = '<p>En attente !</p>';
     socket.emit('chercherMatch',Joueur);
 }
