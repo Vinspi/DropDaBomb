@@ -212,7 +212,7 @@ var server = http.createServer(function(req,res){
     });
   }
   else {
-    console.log("je fournit "+url_p.pathname);
+    
     fs.readFile(url_p.pathname,'utf-8',function(error,content){
       res.writeHead(200,{"Content-type":"text/html"});
       res.end(content);
