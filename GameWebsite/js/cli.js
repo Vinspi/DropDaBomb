@@ -45,7 +45,7 @@ function utiliserCarte(){
 }
 
 function chercherMatch(){
-    Joueur = document.getElementById('pseudo').value  !== null) ? document.getElementById('pseudo').value : 'TantPisPourToi'
+    Joueur = (document.getElementById('pseudo').value  !== null) ? document.getElementById('pseudo').value : 'TantPisPourToi';
     document.getElementById('attente').innerHTML = '<p>En attente !</p>';
     socket.emit('chercherMatch',Joueur);
 }
