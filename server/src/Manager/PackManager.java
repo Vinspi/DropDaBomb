@@ -110,30 +110,71 @@ public class PackManager {
 
     //Ajout d'une carte dans le currentEnsemble
     public void addCarteToEnsemble(int id_Carte){
-        for(MiniatureCarte m : listCards){
-            if(m.getId() == id_Carte) getCurrentEnsemble().getCartes().add(m);
-            break;
+        String queryInsert;
+        for(MiniatureCarte m : getListCards()){
+            if(m.getId() == id_Carte) {
+                getCurrentEnsemble().getCartes().add(m);
+                if (getCurrentEnsemble().getNom() != null){
+                    queryInsert = "INSERT INTO EnsembleCarte (id_Ensemble, id_Carte, nomEnsemble) VALUES ("+getCurrentEnsemble().getId()+","+id_Carte+",'"+getCurrentEnsemble().getNom()+"');";
+                }
+                else {
+                    queryInsert = "INSERT INTO EnsembleCarte (id_Ensemble, id_Carte) VALUES ("+getCurrentEnsemble().getId()+","+id_Carte+");";
+                }
+                Manager.getManager().sendRequestUpdate(queryInsert,connection);
+                try {
+                    if(connection != null) connection.close();
+                }catch(SQLException e){
+                    //Do nothing.
+                }
+                break;
+            }
+        }
+
+
+    }
+
+    //A refaire
+    public void addEnsembleToLootPack(int id_Ensemble,int drop){
+        String queryInsert;
+        for(Ensemble e : getListEnsembles()){
+            if(e.getId() == id_Ensemble) {
+                getCurrentLootPack().getEnsembles().add(e);
+                if (getCurrentLootPack().getNom() != null){
+                    queryInsert = "INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble, dropRatePack, nomLootPack) VALUES ("+getCurrentLootPack().getId()+","+id_Ensemble+","+drop+",'"+getCurrentLootPack().getNom()+"');";
+                }
+                else {
+                    queryInsert = "INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble, dropRatePack) VALUES ("+getCurrentLootPack().getId()+","+id_Ensemble+","+drop+");";
+
+                }
+                Manager.getManager().sendRequestUpdate(queryInsert,connection);
+                try {
+                    if(connection != null) connection.close();
+                }catch(SQLException ex){
+                    //Do nothing.
+                }
+                break;
+            }
         }
     }
 
     //A refaire
-    public void addEnsembleToLootPack(String nom,int drop){
-        currentEnsemble.setId(current_idEnsemble);
-        currentEnsemble.setDropRate(drop);
-        currentEnsemble.setNom(nom);
-        currentLootPack.getEnsembles().add(currentEnsemble);
-        currentEnsemble = new Ensemble();
-        current_idEnsemble++;
-    }
+    public void addLootPackToPack(int id_LootPack,int qte){
+        String queryInsert;
+        for(LootPack lp : getListLootPacks()){
+            if(lp.getId() == id_LootPack) {
+                getCurrentPack().getLootPacks().add(lp);
 
-    //A refaire
-    public void addLootPackToPack(String nom,int qte){
-        currentLootPack.setId(current_idLootPack);
-        currentLootPack.setQte(qte);
-        currentLootPack.setNom(nom);
-        currentPack.getLootPacks().add(currentLootPack);
-        currentLootPack = new LootPack();
-        current_idLootPack++;
+                queryInsert = "INSERT INTO LootPackPack (id_Pack, id_LootPack, qteCartePack) VALUES ("+getCurrentPack().getId()+","+id_LootPack+","+qte+");";
+
+                Manager.getManager().sendRequestUpdate(queryInsert,connection);
+                try {
+                    if(connection != null) connection.close();
+                }catch(SQLException ex){
+                    //Do nothing.
+                }
+                break;
+            }
+        }
     }
 
     //Remplis listEnsembles, listLootPacks, listPacks, contenant tout les Ensembles, LootPacks et Packs.
@@ -141,17 +182,20 @@ public class PackManager {
         listPacks = new ArrayList<>();
         listLootPacks = new ArrayList<>();
         listEnsembles = new ArrayList<>();
-        String queryPacks = "SELECT id_Pack, nomPack, misEnVentePack, imageMiniaturePack, id_Ensemble, nomEnsemble, id_LootPack, nomLootPack, id_Carte, nomCarte, imageCarte" +
+        String queryPacks = "SELECT id_Pack, nomPack, misEnVentePack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte" +
                 " FROM Pack" +
-                " JOIN LootPackPack USING (id_Pack)" +
-                " JOIN LootPackEnsemble USING (id_LootPack)" +
-                " JOIN EnsembleCarte USING (id_Ensemble)" +
+                " RIGHT JOIN LootPackPack USING (id_Pack)" +
+                " RIGHT JOIN LootPackEnsemble USING (id_LootPack)" +
+                " RIGHT JOIN EnsembleCarte USING (id_Ensemble)" +
                 " JOIN Carte USING (id_Carte)" +
                 " ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte";
 
 
-        int id_Pack = -1, id_LootPack = -1, id_Ensemble = -1, misEnVentePack = 0, maxLootPack = -1, maxEnsemble = -1;
+        int id_Pack = -1, id_LootPack = -1, id_Ensemble = -1, misEnVentePack = 0, qteCartePack = 0;
+        float dropRatePack = 0;
         String nomPack = "", nomLootPack = "", nomEnsemble = "", imagePack = "";
+        ArrayList<Integer> listIdEnsembles = new ArrayList<>();
+        ArrayList<Integer> listIdLootPacks = new ArrayList<>();
 
         ArrayList<LootPack> tmpLootPack = new ArrayList();
         ArrayList<Ensemble> tmpEnsemble = new ArrayList();
@@ -163,13 +207,22 @@ public class PackManager {
                if (id_Pack != resultSet.getInt("id_Pack")) { //Nouveau Pack
 
                    if(id_Pack != -1) {     //Premiere iteration, on ne fait qu'ajouter la carte et initialiser les variables.
-                       tmpEnsemble.add(new Ensemble(id_Ensemble, nomEnsemble, tmpCarte));
-                       listEnsembles.add(new Ensemble(id_Ensemble, nomEnsemble, tmpCarte));
+                       if(!(listIdEnsembles.contains(id_Ensemble))){
+                           listIdEnsembles.add(id_Ensemble);
+                           listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
+                       }
 
-                       tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
-                       listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
-
-                       listPacks.add(new Pack(id_Pack, nomPack, imagePack, misEnVentePack, tmpLootPack));
+                       if(id_LootPack != 0) {
+                           tmpEnsemble.add(new Ensemble(id_Ensemble, nomEnsemble, dropRatePack, tmpCarte));
+                           if (!(listIdLootPacks.contains(id_LootPack))) {
+                               listIdLootPacks.add(id_LootPack);
+                               listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
+                           }
+                       }
+                       if(id_Pack != 0) {
+                           tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, qteCartePack, tmpEnsemble));
+                           listPacks.add(new Pack(id_Pack, nomPack, imagePack, misEnVentePack, tmpLootPack));
+                       }
 
                        tmpCarte = new ArrayList<>();
                        tmpEnsemble = new ArrayList<>();
@@ -185,20 +238,28 @@ public class PackManager {
 
                    id_LootPack = resultSet.getInt("id_LootPack");
                    nomLootPack = resultSet.getString("nomLootPack");
-                   if(maxLootPack < id_LootPack) maxLootPack = id_LootPack;
+                   qteCartePack = resultSet.getInt("qteCartePack");
 
                    id_Ensemble = resultSet.getInt("id_Ensemble");
                    nomEnsemble = resultSet.getString("nomEnsemble");
-                   if(maxEnsemble < id_Ensemble) maxEnsemble = id_Ensemble;
+                   dropRatePack = resultSet.getFloat("dropRatePack");
                }
                else {
                     if(id_LootPack != resultSet.getInt("id_LootPack")){
 
-                        tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-                        listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-                        tmpLootPack.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
-                        listLootPacks.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
+                        tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,dropRatePack,tmpCarte));
+                        if(!(listIdEnsembles.contains(id_Ensemble))){
+                            listIdEnsembles.add(id_Ensemble);
+                            listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
+                        }
 
+                        if(id_LootPack != 0) {
+                            tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, qteCartePack, tmpEnsemble));
+                            if (!(listIdLootPacks.contains(id_LootPack))) {
+                                listIdLootPacks.add(id_LootPack);
+                                listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
+                            }
+                        }
                         tmpEnsemble = new ArrayList<>();
                         tmpCarte = new ArrayList<>();
                         tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
@@ -206,19 +267,22 @@ public class PackManager {
 
                         id_LootPack = resultSet.getInt("id_LootPack");
                         nomLootPack = resultSet.getString("nomLootPack");
-                        if(maxLootPack < id_LootPack) maxLootPack = id_LootPack;
+                        qteCartePack = resultSet.getInt("qteCartePack");
 
 
                         id_Ensemble = resultSet.getInt("id_Ensemble");
                         nomEnsemble = resultSet.getString("nomEnsemble");
-                        if(maxEnsemble < id_Ensemble) maxEnsemble = id_Ensemble;
+                        dropRatePack = resultSet.getFloat("dropRatePack");
 
                     }
                     else {
                         if (id_Ensemble != resultSet.getInt("id_Ensemble")){
 
-                            tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-                            listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
+                            tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,dropRatePack,tmpCarte));
+                            if(!(listIdEnsembles.contains(id_Ensemble))){
+                                listIdEnsembles.add(id_Ensemble);
+                                listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
+                            }
 
                             tmpCarte = new ArrayList<>();
                             tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
@@ -226,8 +290,9 @@ public class PackManager {
 
                             id_Ensemble = resultSet.getInt("id_Ensemble");
                             nomEnsemble = resultSet.getString("nomEnsemble");
-                            if(maxEnsemble < id_Ensemble) maxEnsemble = id_Ensemble;
+                            dropRatePack = resultSet.getFloat("dropRatePack");
                         }
+
                         else {
                             tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
 
@@ -235,15 +300,19 @@ public class PackManager {
                     }
                }
             }
-            tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-            listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-            tmpLootPack.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
-            listLootPacks.add(new LootPack(id_LootPack,nomLootPack,tmpEnsemble));
+            tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,dropRatePack,tmpCarte));
+            if(!(listIdEnsembles.contains(id_Ensemble))){
+                listIdEnsembles.add(id_Ensemble);
+                listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
+            }
+            tmpLootPack.add(new LootPack(id_LootPack,nomLootPack,qteCartePack,tmpEnsemble));
+            if(!(listIdLootPacks.contains(id_LootPack))) {
+                listIdLootPacks.add(id_LootPack);
+                listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
+            }
             listPacks.add(new Pack(id_Pack,nomPack,imagePack,misEnVentePack,tmpLootPack));
 
-            current_idPack = id_Pack;
-            current_idLootPack = maxLootPack;
-            current_idEnsemble = maxEnsemble;
+
 
 
         }catch (SQLException e){
@@ -304,40 +373,67 @@ public class PackManager {
 
     // /!\INJ
     //Créer un LootPack dans la db, reliant ainsi ses Ensembles à ce même LootPack.
-    public int createLootPack(String nom){
-
-        ArrayList<String> queryLootPack = new ArrayList<>();
-
-        for(Ensemble e : currentLootPack.getEnsembles()){
-            queryLootPack.add("INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble, nomEnsemble, dropRatePack) VALUES ("+current_idLootPack+","+e.getId()+","+ nom +","+e.getDropRate()+");");
-        }
-        Manager.getManager().sendMultipleRequestUpdate(queryLootPack,connection);
+    public void createLootPack(String nom) {
+        //Récupérer le premier identifiant disponible :
+        //1) Requête à la DB (inutile en fait, traitement en objet ?)
+        String queryId = "SELECT DISTINCT id_LootPack FROM LootPackEnsemble ORDER BY id_LootPack";
+        ResultSet setId = Manager.getManager().sendRequestQuery(queryId,connection);
+        int max = 0;
         try {
-            if (connection != null) connection.close();
+            while(setId.next()){
+                if(max+1 < setId.getInt("id_LootPack")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants d'ensemble.
+                    break;
+                }
+                max = setId.getInt("id_LootPack");
+            }
+
         }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            }catch (SQLException e){
 
+            }
         }
+        setCurrent_idLootPack(max+1);
+        setCurrentLootPack(new LootPack(getCurrent_idLootPack(),nom));
+        getListLootPacks().add(getCurrentLootPack());
 
-        return 0;
     }
+
 
     // /!\INJ
     //Créer un Ensemble dans la db, le liant à ses cartes.
-    public int createEnsemble(String nom){
+    public void createEnsemble(String nom){
 
-        ArrayList<String> queryEnsemble = new ArrayList<>();
 
-        for(MiniatureCarte m : currentEnsemble.getCartes()){
-            queryEnsemble.add("INSERT INTO EnsembleCarte (id_Ensemble, id_Carte, nomEnsemble) VALUES ("+current_idEnsemble+","+m.getId()+","+nom+");");
-        }
-        Manager.getManager().sendMultipleRequestUpdate(queryEnsemble,connection);
+        //Récupérer le premier identifiant disponible :
+        //1) Requête à la DB (inutile en fait)
+        String queryId = "SELECT DISTINCT id_Ensemble FROM EnsembleCarte ORDER BY id_Ensemble";
+        ResultSet setId = Manager.getManager().sendRequestQuery(queryId,connection);
+        int max = -1;
         try {
-            if (connection != null) connection.close();
+            while(setId.next()){
+                if(max+1 < setId.getInt("id_Ensemble")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants d'ensemble.
+                    break;
+                }
+                max = setId.getInt("id_Ensemble");
+            }
+
         }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            }catch (SQLException e){
 
+            }
         }
+        setCurrent_idEnsemble(max+1);
+        setCurrentEnsemble(new Ensemble(getCurrent_idEnsemble(),nom));
+        getListEnsembles().add(getCurrentEnsemble());
 
-        return 0;
     }
 
     public int switchMiseEnVente(int idPack){
@@ -370,21 +466,12 @@ public class PackManager {
             if (currentEnsemble.getCartes().get(i).getId() == idCarte) {
                 k = i;
                 currentEnsemble.getCartes().remove(k);
+                String queryRmCrd = "DELETE FROM EnsembleCarte WHERE id_Carte="+idCarte+" AND id_Ensemble="+currentEnsemble.getId()+";";
+                Manager.getManager().sendDeleteUpdate(queryRmCrd,connection);
                 break;
             }
         }
 
-        //Si l'ensemble est un ensemble existant, on supprime la carte de l'ensemble dans la DB (effectif sur toutes les instances de l'Ensemble, donc pour tout les Packs associés)
-        if (k >= 0) {
-            for(int j = 0; j < listEnsembles.size(); j++) {
-                if (listEnsembles.get(j).getId() == currentEnsemble.getId()) {
-                    String queryRmCrd = "DELETE FROM EnsembleCartes WHERE id_Carte="+idCarte+" AND id_Ensemble="+currentEnsemble.getId()+";";
-                    Manager.getManager().sendRequestUpdate(queryRmCrd,connection);
-                    listEnsembles.get(j).getCartes().remove(k);
-                    break;
-                }
-            }
-        }
         try {
             if (connection != null) connection.close();
         }catch (SQLException e){
@@ -392,11 +479,7 @@ public class PackManager {
         }
     }
 
-    //ALTER TABLE tbl_magazine_issue
-    //DROP FOREIGN KEY FK_tbl_magazine_issue_mst_users
 
-
-    
     public void choosePack(int idPack){
         for(Pack p : listPacks){
             if (p.getId() == idPack) {

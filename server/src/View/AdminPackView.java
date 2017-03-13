@@ -1,6 +1,9 @@
 package View;
 
+import Manager.Manager;
 import Manager.PackManager;
+import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.ArrayList;
 
@@ -9,7 +12,7 @@ import java.util.ArrayList;
  */
 public class AdminPackView {
 
-    PackManager packManager = new PackManager();
+    static PackManager packManager = new PackManager();
 
     private Pack currentPack = new Pack();
     private LootPack currentLootPack = new LootPack();
@@ -77,15 +80,14 @@ public class AdminPackView {
         packManager.getEvthgAlrdCreated();
         packManager.getAllCards();
 
-        this.currentEnsemble = packManager.getCurrentEnsemble();
-        System.out.println(this.currentEnsemble);
-        this.currentLootPack = packManager.getCurrentLootPack();
-        this.currentPack = packManager.getCurrentPack();
+        setCurrentEnsemble(packManager.getCurrentEnsemble());
+        setCurrentLootPack(packManager.getCurrentLootPack());
+        setCurrentPack(packManager.getCurrentPack());
 
-        this.listCards = packManager.getListCards();
-        this.listEnsembles = packManager.getListEnsembles();
-        this.listLootPacks = packManager.getListLootPacks();
-        this.listPacks = packManager.getListPacks();
+        setListCards(packManager.getListCards());
+        setListEnsembles(packManager.getListEnsembles());
+        setListLootPacks(packManager.getListLootPacks());
+        setListPacks(packManager.getListPacks());
 
     }
 
@@ -97,19 +99,52 @@ public class AdminPackView {
             }
         }
     }
-    public void chooseEnsemble(int idEns){
-        for(Ensemble e : listEnsembles){
-            if (e.getId() == idEns) {
-                currentEnsemble = e;
+    public void chooseLootPack(int idLP){
+        for(LootPack lp : listLootPacks){
+            if (lp.getId() == idLP) {
+                currentLootPack = lp;
                 break;
             }
         }
     }
-    //Ajout d'une carte dans le currentEnsemble
-    public void addCarteToEnsemble(int id_Carte){
-        for(MiniatureCarte m : listCards){
-            if(m.getId() == id_Carte) getCurrentEnsemble().getCartes().add(m);
-            break;
+    public int chooseEnsemble(int idEns){
+        for(Ensemble e : listEnsembles){
+            if (e.getId() == idEns) {
+                currentEnsemble = e;
+                return 0;
+            }
         }
+        return 1;
+    }
+    //Ajout d'une carte dans le currentEnsemble
+    public void addCarteToEnsemble(int id_Carte) {
+        packManager.setCurrentEnsemble(getCurrentEnsemble());
+        packManager.addCarteToEnsemble(id_Carte);
+        setCurrentEnsemble(packManager.getCurrentEnsemble());
+
+    }
+
+    public void removeCarteFromEnsemble(int id_Carte){
+        packManager.setCurrentEnsemble(getCurrentEnsemble());
+        packManager.removeCarteFromEnsemble(id_Carte);
+        setCurrentEnsemble(packManager.getCurrentEnsemble());
+    }
+
+    public void createEnsemble(String nom){
+        //packManager.setListEnsembles(getListEnsembles());
+        packManager.createEnsemble(nom);
+        setListEnsembles(packManager.getListEnsembles());
+        setCurrentEnsemble(packManager.getCurrentEnsemble());
+    }
+
+    public void createLootPack(String nom){
+        packManager.createLootPack(nom);
+        setListLootPacks(packManager.getListLootPacks());
+        setCurrentLootPack(packManager.getCurrentLootPack());
+
+    }
+
+    public void createPack(String nom){
+
     }
 }

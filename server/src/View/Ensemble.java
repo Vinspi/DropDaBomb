@@ -45,12 +45,22 @@ public class Ensemble {
         this.id = id;
         this.nom = nom;
         this.dropRate = 0;
-        this.cartes = null;
+        this.cartes = new ArrayList<>();
     }
+
+    //Définit un Ensemble sans contexte.
     public Ensemble(int id, String nom, ArrayList<MiniatureCarte> cartes){
         this.id = id;
         this.nom = nom;
-        this.dropRate = 0;
+        this.dropRate = -1;
+        this.cartes = cartes;
+    }
+
+    //Définit un Ensemble DANS un LootPack.
+    public Ensemble(int id, String nom, float dropRate, ArrayList<MiniatureCarte> cartes){
+        this.id = id;
+        this.nom = nom;
+        this.dropRate = dropRate;
         this.cartes = cartes;
     }
     public Ensemble(){

@@ -44,12 +44,20 @@ public class LootPack {
         this.id = id;
         this.nom = nom;
         this.qte = 0;
-        this.ensembles = null;
+        this.ensembles = new ArrayList<>();
     }
     public LootPack(int id, String nom, ArrayList<Ensemble> ensembles){
         this.id = id;
         this.nom = nom;
-        this.qte = 0;
+        this.qte = -1;
+        this.ensembles = ensembles;
+    }
+
+
+    public LootPack(int id, String nom, int qte, ArrayList<Ensemble> ensembles){
+        this.id = id;
+        this.nom = nom;
+        this.qte = qte;
         this.ensembles = ensembles;
     }
     public LootPack(){

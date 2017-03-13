@@ -3,6 +3,7 @@
 <%@ page import="View.Ensemble" %>
 <%@ page import="View.LootPack" %>
 <%@ page import="View.Pack" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -17,10 +18,10 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="css/admin.css"  media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
 
 
@@ -32,6 +33,8 @@
     String pseudo = (String) session.getAttribute("pseudo");
     String icone = (String) request.getSession().getAttribute("iconeJoueur");
     Boolean estAdmin = (Boolean) (session.getAttribute("estAdmin"));
+    int j = 0;
+
 %>
 
 <nav>
@@ -64,15 +67,73 @@
         </ul>
     </div>
 </nav>
-<%
-    AdminPackView apv = new AdminPackView();
 
 
-%>
+<div id="modal-newEns" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <form class="col s12 m12 l12">
+                <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                        <input id="nomEns" type="text" class="validate">
+                        <label for="nomEns">Nom du nouvel ensemble</label>
+                    </div>
+                </div>
+                <div class="input-submit col s12 m12 l12">
+                    <input type="submit" value="Valider" />
+                </div>
+            </form>
+        </div>
 
+    </div>
+</div>
+
+<div id="modal-newLootPack" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <form class="col s12 m12 l12">
+                <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                        <input id="nomLootPack" type="text" class="validate">
+                        <label for="nomLootPack">Nom du nouveau LootPack</label>
+                    </div>
+                </div>
+                <div class="input-submit col s12 m12 l12">
+                    <input type="submit" value="Valider" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div id="modal-newPack" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <form class="col s12 m12 l12">
+                <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                        <input id="nomPack" type="text" class="validate">
+                        <label for="nomPack">Nom du nouveau Pack</label>
+                    </div>
+                </div>
+                <div class="input-submit col s12 m12 l12">
+                    <input type="submit" value="Valider" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 <h3>Panneau d'administration des packs</h3>
     <div class="container pack">
         <div class="row">
+
+            <ul id="slide-out" class="side-nav">
+
+            </ul>
+
+
+
             <div class="col s12 m12 l12">
                 <div class="card">
                     <div class="card-content">
@@ -91,44 +152,21 @@
                                                     <div class="col s12 m12 l12">
                                                         <div class="card">
                                                             <div class="card-content">
-                                                                <p>Gestion des Ensembles</p>
+                                                                <p>Liste des Ensembles</p>
                                                                 <div id="listEnsembles" class="row">
-                                                                    <%
-                                                                        for(int i = 0; i < apv.getListEnsembles().size();i++){
-                                                                            out.print("<div class=\"col s2 m2 l2\">");
-                                                                            out.print("<div class=\"block\" id=\"e"+apv.getListEnsembles().get(i).getId()+"\"><p id=\"blockEnsemble"+apv.getListEnsembles().get(i).getId()+"\">Ensemble "+apv.getListEnsembles().get(i).getId()+"</p>");
-                                                                            out.print("</div></div>");
-                                                                            if(i != 0 && i%6 == 0) out.print("</div><div class=\"row\">");
-                                                                        }
-                                                                    %>
+
                                                                 </div>
-                                                                <div id="btnEnsemble"><a class="waves-effect waves-light btn">Add</a><a class="waves-effect waves-light btn">Remove</a></div>
-                                                                <p>Ensemble courant</p>
+                                                                <p id="idCurrentEnsemble"></p>
                                                                 <div id="currentEnsemble" class="row">
-                                                                    <%
-                                                                        int j = 0;
-                                                                        for(MiniatureCarte c : apv.getCurrentEnsemble().getCartes()){
-                                                                            j++;
-                                                                            out.print("<div class=\"col s2 m2 l2\">");
-                                                                            out.print(/*"/*<div id=\"cE"+c.getId()+"\">" +*/
-                                                                                    "     <div class=\"card-image grow\" id=\"cE" + c.getId() + "\">" +
-                                                                                    "       <img src=\"../img/CARDS/" + c.getImg() + "\">" +
-                                                                                    "     </div>");
-                                                                            out.print("</div>"/*</div>"*/);
-                                                                            if(j != 0 && j%6 == 0){
-                                                                                j = 0;
-                                                                                out.print("</div><div class=\"row\">");
-                                                                            }
-                                                                        }
-                                                                    %>
+
                                                                 </div>
 
 
 
                                                             </div>
-                                                            <div class="card-action">
-                                                                <a class="waves-effect waves-teal btn-flat" onclick=newEnsemble()>New</a>
-                                                                <a class="waves-effect waves-teal btn-flat" onclick=createEnsemble()>Create</a>
+                                                            <div id="actionEns" class="card-action">
+                                                                <a href="#modal-newEns" class="waves-effect waves-teal btn-flat modal-action modal-close modal-trigger">New</a>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,82 +174,36 @@
                                             </div>
 
                                             <!-- Mettre LootPack -->
-                                            <p>Listes des LootPacks</p>
-                                            <div id="listLP" class="row">
-                                                <%
-                                                    for(int i = 0; i < apv.getListLootPacks().size();i++){
-                                                        out.print("<div class=\"col s2 m2 l2\">");
-                                                        out.print("<div class=\"block\" id=\"lp"+apv.getListLootPacks().get(i).getId()+"\"><p id=\"blockLootPack"+apv.getListLootPacks().get(i).getId()+"\">LootPack "+apv.getListLootPacks().get(i).getId()+"</p>");
-                                                        out.print("</div></div>");
-                                                        if(i != 0 && i%6 == 0) out.print("</div><div class=\"row\">");
-                                                    }
-                                                %>
+                                            <p>Liste des LootPacks</p>
+                                            <div id="listLootPack" class="row">
+
                                             </div>
-                                            <div id="btnLP"><a class="waves-effect waves-light btn">Add</a><a class="waves-effect waves-light btn">Remove</a></div>
-                                            <div id="currentLP" class="row">
-                                                <%
-                                                    j = 0;
-                                                    for(Ensemble e : apv.getCurrentLootPack().getEnsembles()){
-                                                        j++;
-                                                        out.print("<div class=\"col s2 m2 l2\">");
-                                                        out.print("<div class=\"block\" id=\"E"+e.getId()+"\"><p>Ensemble "+e.getId()+"</p>" );
-                                                        out.print("</div></div>");
-                                                        if(j != 0 && j%6 == 0){
-                                                            j = 0;
-                                                            out.print("</div><div class=\"row\">");
-                                                        }
-                                                    }
-                                                %>
+                                            <p id="idCurrentLootPack"></p>
+                                            <div id="currentLootPack" class="row">
+
                                             </div>
                                         </div>
-                                        <div class="card-action">
-                                            <a class="waves-effect waves-teal btn-flat" onclick=newLootPack()>New</a>
-                                            <a class="waves-effect waves-teal btn-flat" onclick=createLootPack()>Create</a>
+                                        <div id="actionLootPack" class="card-action">
+                                            <a href="#modal-newLootPack" class="waves-effect waves-teal btn-flat modal-action modal-close modal-trigger">New</a>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             </div>
                         <!-- Mettre Packs -->
-                        <p>Gestion des Packs</p>
+                        <p>Liste des Packs</p>
                         <div id="listPack" class="row">
-                            <%
-                                j = 0;
-                                for(Pack p : apv.getListPacks()){
-                                    j++;
-                                    out.print("<div class=\"col s2 m2 l2\">");
-                                    out.print(/*"<div id=\"cartesEns"+p.getId()+"\">" +*/
-                                            "     <div class=\"card-image grow\" id=\"p" + p.getId() + "\">" +
-                                            "       <img src=\"../img/" + p.getImg() + "\">" +
-                                            "     </div>"/*</div>"*/);
-                                    out.print("</div>");
-                                    if(j != 0 && j%6 == 0){
-                                        j = 0;
-                                        out.print("</div><div class=\"row\">");
-                                    }
-                                }
-                            %>
+
                         </div>
-                        <div id="btnPack"><a class="waves-effect waves-light btn">Add</a><a class="waves-effect waves-light btn">Remove</a></div>
+                        <p id="idCurrentPack"></p>
                         <div id="currentPack" class="row">
-                            <%
-                                j = 0;
-                                for(LootPack lp : apv.getCurrentPack().getLootPacks()){
-                                    j++;
-                                    out.print("<div class=\"col s2 m2 l2\">");
-                                    out.print("<div class=\"block\" id=\"LP"+lp.getId()+"\"><p>LootPack "+lp.getId()+"</p></div>" );
-                                    out.print("</div>");
-                                    if(j != 0 && j%6 == 0){
-                                        j = 0;
-                                        out.print("</div><div class=\"row\">");
-                                    }
-                                }
-                            %>
+
                         </div>
                     </div>
-                    <div class="card-action">
-                        <a class="waves-effect waves-teal btn-flat" onclick=newPack()>New</a>
-                        <a class="waves-effect waves-teal btn-flat" onclick=createPack()>Create</a>
+                    <div id="actionPack" class="card-action">
+                        <a href="#modal-newPack" class="waves-effect waves-teal btn-flat modal-action modal-close modal-trigger">New</a>
+
                     </div>
                 </div>
             </div>
