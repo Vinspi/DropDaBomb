@@ -134,10 +134,11 @@ public class PackManager {
     }
 
     //A refaire
-    public void addEnsembleToLootPack(int id_Ensemble,int drop){
+    public void addEnsembleToLootPack(int id_Ensemble,float drop){
         String queryInsert;
         for(Ensemble e : getListEnsembles()){
             if(e.getId() == id_Ensemble) {
+                e.setDropRate(drop);
                 getCurrentLootPack().getEnsembles().add(e);
                 if (getCurrentLootPack().getNom() != null){
                     queryInsert = "INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble, dropRatePack, nomLootPack) VALUES ("+getCurrentLootPack().getId()+","+id_Ensemble+","+drop+",'"+getCurrentLootPack().getNom()+"');";
@@ -461,17 +462,48 @@ public class PackManager {
 
     public void removeCarteFromEnsemble(int idCarte) {
 
-        int k = -1;
+
         for (int i = 0; i < currentEnsemble.getCartes().size(); i++) {
             if (currentEnsemble.getCartes().get(i).getId() == idCarte) {
-                k = i;
-                currentEnsemble.getCartes().remove(k);
+                currentEnsemble.getCartes().remove(i);
                 String queryRmCrd = "DELETE FROM EnsembleCarte WHERE id_Carte="+idCarte+" AND id_Ensemble="+currentEnsemble.getId()+";";
                 Manager.getManager().sendDeleteUpdate(queryRmCrd,connection);
                 break;
             }
         }
 
+        try {
+            if (connection != null) connection.close();
+        }catch (SQLException e){
+
+        }
+    }
+
+    public void removeEnsembleFromLootPack(int id_ensemble){
+        for (int i = 0; i < currentLootPack.getEnsembles().size(); i++) {
+            if (currentLootPack.getEnsembles().get(i).getId() == id_ensemble) {
+                currentLootPack.getEnsembles().remove(i);
+                String queryRmEns = "DELETE FROM LootPackEnsemble WHERE id_Ensemble="+id_ensemble+" AND id_LootPack="+currentLootPack.getId()+";";
+                Manager.getManager().sendDeleteUpdate(queryRmEns,connection);
+                break;
+            }
+        }
+
+        try {
+            if (connection != null) connection.close();
+        }catch (SQLException e){
+
+        }
+    }
+    public void modifyDropRate(int id_ensemble, float drop){
+        for (int i = 0; i < currentLootPack.getEnsembles().size(); i++) {
+            if (currentLootPack.getEnsembles().get(i).getId() == id_ensemble) {
+                currentLootPack.getEnsembles().get(i).setDropRate(drop);
+                String updateDrop = "UPDATE LootPackEnsemble SET dropRatePack="+drop+" WHERE (id_Ensemble="+id_ensemble+" AND id_LootPack="+currentLootPack.getId()+");";
+                Manager.getManager().sendRequestUpdate(updateDrop,connection);
+                break;
+            }
+        }
         try {
             if (connection != null) connection.close();
         }catch (SQLException e){
@@ -488,7 +520,6 @@ public class PackManager {
             }
         }
     }
-
     public void chooseLootPack(int idLP){
         for(LootPack lp : listLootPacks){
             if (lp.getId() == idLP) {
@@ -497,7 +528,6 @@ public class PackManager {
             }
         }
     }
-
     public void chooseEnsemble(int idEns){
         for(Ensemble e : listEnsembles){
             if (e.getId() == idEns) {

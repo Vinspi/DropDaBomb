@@ -64,7 +64,7 @@ $(document).ready(function() {
             dataType: 'json', // JSON
             success: function(data) {
                 console.log(data);
-                var result = JSON.parse(data);
+                var result = data;//JSON.parse(data);
                 console.log("succes ");
                 document.getElementById("listLootPack").innerHTML = "";
                 var p = document.createElement('div');
@@ -145,16 +145,29 @@ function setCurrentLootPack(value){
             var result = JSON.parse(data.responseText);
             console.log("succes ");
             document.getElementById("currentLootPack").innerHTML = "";
+            document.getElementById("gestion-LootPack").innerHTML = "";
             var p = document.createElement('div');
+            var b = document.createElement('div');
+            b.innerHTML = "<ul>";
 
             for(var i = 0; i < result.ensembles.length; i++){
                 p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"LP"+result.ensembles[i].id+"\"><p>Ensemble "+result.ensembles[i].id+"</p></div>" +
-                    "     </div>";
+                    "       <div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"setCurrentEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>";
                 if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                b.innerHTML += "<li><div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>"+
+                    "<div class=\"input-field\"><input id=\"newDropRate"+result.ensembles[i].id+"\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyDropRate("+result.ensembles[i].id+")\">DropRate</a>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\">Remove</a>"+
+                    "</div></li>";
             }
+            b.innerHTML += "</ul>";
             document.getElementById("currentLootPack").appendChild(p);
-            document.getElementById("actionLootPack").innerHTML = "<a href=\"#modal-newLootPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a><a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetCarte()\">Add</a>";
+            document.getElementById("gestion-LootPack").appendChild(b);
+            document.getElementById("actionLootPack").innerHTML = "<a href=\"#modal-newLootPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a>"+
+                "<a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetEnsemble()\">Add</a>"+
+                "<a href=\"#modal-gestionLootPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">Modifier</a>";
+
+
             $(".button-collapse").sideNav();
             if(result.nom != null) document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : " + result.nom + ", "+result.id;
             else document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : "+result.id;
@@ -459,9 +472,9 @@ function addGetEnsemble(){
             console.log("succes ");
             document.getElementById("slide-out").innerHTML = "";
             var p = document.createElement('div');
-
+            p.innerHTML ="<div class=\"row\"><div class=\"input-field col s12 m12 l12\"><input id=\"dropEns\" type=\"text\" class=\"validate\"><label for=\"dropEns\">DropRate de l'ensemble dans le LootPack</label></div></div>";
             for(var i = 0; i < result.length; i++){
-                p.innerHTML += "<li ><div class=\"block\" id=\"E"+result[i].id+"\" onclick=\"addEnsembleToCurrentLootPack("+result[i].id+")\"><p>Ensemble "+result[i].id+"</p></div></li>";
+                p.innerHTML += "<li ><div class=\"block\" id=\"E"+result[i].id+"\" onclick=\"addEnsembleToCurrentLootPack("+result[i].id+")\"><br>Ensemble "+result[i].id+"</p></div></li>";
             }
             document.getElementById("slide-out").appendChild(p);
             //$('.button-collapse').sideNav('show');
@@ -476,12 +489,15 @@ function addGetEnsemble(){
 }
 
 function addEnsembleToCurrentLootPack(value){
+    var drop;
+    if (document.getElementById("dropEns").value !== "") drop = document.getElementById("dropEns").value;
+    else drop = 0.0;
     $.ajax({
 
         url : 'Admin',
         type : 'POST',
 
-        data : {"idRequest": 14,"id_Ensemble": value},
+        data : {"idRequest": 14,"id_Ensemble": value, "dropRate": drop},
 
         dataType : 'json',
 
@@ -491,14 +507,23 @@ function addEnsembleToCurrentLootPack(value){
             console.log("succes ");
             document.getElementById("currentLootPack").innerHTML = "";
             var p = document.createElement('div');
+            var b = document.createElement('div');
+            b.innerHTML = "<ul>";
 
             for(var i = 0; i < result.ensembles.length; i++){
                 p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\"><p>Ensemble "+result.ensembles[i].id+"</p></div>" +
+                    "       <div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"setCurrentEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div>" +
                     "     </div>";
                 if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                b.innerHTML += "<li class=\'row\'><div class=\"block \" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>"+
+                    "<div class=\"input-field\"><input id=\"newDropRate"+result.ensembles[i].id+"\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyDropRate("+result.ensembles[i].id+")\">DropRate</a>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\">Remove</a>"+
+                    "</div></li>";
             }
+
             document.getElementById("currentLootPack").appendChild(p);
+            document.getElementById("gestion-LootPack").appendChild(b);
 
             Materialize.toast('Ensemble '+value+' ajouté !', 4000) // 4000 is the duration of the toast
             $('.button-collapse').sideNav('hide');
@@ -509,5 +534,109 @@ function addEnsembleToCurrentLootPack(value){
             console.log("request failed "+status);
         }
     });
+
+}
+
+function removeEnsemble(id_ensemble){
+    $("modal-gestionLootPack").modal('close');
+    var verif = prompt("Voulez-vous supprimer l'ensemble "+id_ensemble+" de l'ensemble courant ?");
+    if (verif == "Oui" || verif == "oui" || verif == "yes" || verif == "Yes" || verif == "OUI" || verif == "YES" || verif == "o" || verif == "O" || verif == "y" || verif == "Y") {
+
+
+        $.ajax({
+
+            url: 'Admin',
+            type: 'POST',
+
+            data: {"idRequest": 15, "id_Ensemble": id_ensemble},
+
+            dataType: 'json',
+
+            complete: function (data) {
+                console.log(data);
+                var result = JSON.parse(data.responseText);
+                console.log("succes ");
+                document.getElementById("currentLootPack").innerHTML = "";
+                document.getElementById("gestion-LootPack").innerHTML = "";
+                var p = document.createElement('div');
+                var b = document.createElement('div');
+                b.innerHTML = "<ul>";
+
+                for(var i = 0; i < result.ensembles.length; i++){
+                    p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                        "       <div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"setCurrentEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>";
+                    if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                    b.innerHTML += "<li class=\'row\'><div class=\"block \" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>"+
+                        "<div class=\"input-field\"><input id=\"newDropRate"+result.ensembles[i].id+"\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>"+
+                        "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyDropRate("+result.ensembles[i].id+")\">DropRate</a>"+
+                        "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\">Remove</a>"+
+                        "</div></li>";
+                }
+                b.innerHTML += "</ul>";
+                document.getElementById("currentLootPack").appendChild(p);
+                document.getElementById("gestion-LootPack").appendChild(b);
+                Materialize.toast('Ensemble '+id_ensemble+' retiré !', 4000) // 4000 is the duration of the toast
+
+            },
+
+            error: function (code_html, status) {
+                console.log("request failed " + status);
+            }
+        });
+    }
+    else {
+        Materialize.toast('Vous ne vouliez pas supprimer l\'ensemble du LootPack '+id_ensemble, 4000) // 4000 is the duration of the toast
+    }
+
+
+
+
+}
+function modifyDropRate(id_ensemble){
+
+
+    var drop = $('#newDropRate'+id_ensemble).val();
+
+    $.ajax({
+
+        url: 'Admin',
+        type: 'POST',
+
+        data: {"idRequest": 16, "id_Ensemble": id_ensemble, "dropRate": drop},
+
+        dataType: 'json',
+
+        complete: function (data) {
+            console.log(data);
+            var result = JSON.parse(data.responseText);
+            console.log("succes ");
+            document.getElementById("currentLootPack").innerHTML = "";
+            document.getElementById("gestion-LootPack").innerHTML = "";
+            var p = document.createElement('div');
+            var b = document.createElement('div');
+            b.innerHTML = "<ul>";
+
+            for(var i = 0; i < result.ensembles.length; i++){
+                p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                    "       <div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"setCurrentEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>";
+                if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                b.innerHTML += "<li><div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" ><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>"+
+                    "<div class=\"input-field\"><input id=\"newDropRate\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyDropRate("+result.ensembles[i].id+")\">DropRate</a>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\">Remove</a>"+
+                    "</div></li>";
+            }
+            b.innerHTML += "</ul>";
+            document.getElementById("currentLootPack").appendChild(p);
+            document.getElementById("gestion-LootPack").appendChild(b);
+            Materialize.toast('DropRate de l\'Ensemble '+id_ensemble+' modifié !', 4000) // 4000 is the duration of the toast
+
+        },
+
+        error: function (code_html, status) {
+            console.log("request failed " + status);
+        }
+    });
+
 
 }

@@ -123,12 +123,28 @@ public class AdminPackView {
         setCurrentEnsemble(packManager.getCurrentEnsemble());
 
     }
-
     public void removeCarteFromEnsemble(int id_Carte){
         packManager.setCurrentEnsemble(getCurrentEnsemble());
         packManager.removeCarteFromEnsemble(id_Carte);
         setCurrentEnsemble(packManager.getCurrentEnsemble());
     }
+
+    public void addEnsembleToLootPack(int id_Ensemble,float drop){
+        packManager.setCurrentLootPack(getCurrentLootPack());
+        packManager.addEnsembleToLootPack(id_Ensemble,drop);
+        setCurrentLootPack(packManager.getCurrentLootPack());
+    }
+    public void removeEnsembleFromLootPack(int id_Ensemble){
+        packManager.setCurrentLootPack(getCurrentLootPack());
+        packManager.removeEnsembleFromLootPack(id_Ensemble);
+        setCurrentLootPack(packManager.getCurrentLootPack());
+    }
+    public void modifyDropRate(int id_Ensemble, float drop){
+        packManager.setCurrentLootPack(getCurrentLootPack());
+        packManager.modifyDropRate(id_Ensemble,drop);
+        setCurrentLootPack(packManager.getCurrentLootPack());
+    }
+
 
     public void createEnsemble(String nom){
         //packManager.setListEnsembles(getListEnsembles());
@@ -136,7 +152,6 @@ public class AdminPackView {
         setListEnsembles(packManager.getListEnsembles());
         setCurrentEnsemble(packManager.getCurrentEnsemble());
     }
-
     public void createLootPack(String nom){
         packManager.createLootPack(nom);
         setListLootPacks(packManager.getListLootPacks());

@@ -106,6 +106,15 @@
 
     </div>
 </div>
+
+<div id="modal-gestionLootPack" class="modal">
+    <div class="modal-content">
+        <div id="gestion-LootPack" class="row">
+
+        </div>
+    </div>
+</div>
+
 <div id="modal-newPack" class="modal">
     <div class="modal-content">
         <div class="row">
@@ -124,6 +133,10 @@
 
     </div>
 </div>
+
+
+
+
 <h3>Panneau d'administration des packs</h3>
     <div class="container pack">
         <div class="row">
