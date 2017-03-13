@@ -11,7 +11,7 @@ var ZoneW = ScreenW;
 var ZoneH = ScreenH;
 
 //Proportion de la zone globable de jeu si (ScreenW>ScreenH)
-var ZoneRatio = 0.5;
+var ZoneRatio = 0.4;
 
 
 

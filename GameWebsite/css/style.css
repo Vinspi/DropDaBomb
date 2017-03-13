@@ -1,6 +1,5 @@
 body{
-    background: url(../img/bg.png);
-
+/*    background: url(../img/bg.png);*/
 }
 
 
@@ -36,12 +35,47 @@ img{
     border-radius: 0% 0% 150% 150%;
     border-bottom: 4px solid #ccc;
     display: flex;
+    flex-direction: column;
     -moz-box-shadow: 10px 10px 5px #000000;
     -webkit-box-shadow: 10px 10px 5px #000000;
     -o-box-shadow: 10px 10px 5px #000000;
     box-shadow: 10px 10px 5px #000000;
     filter:progid:DXImageTransform.Microsoft.Shadow(color='#6565', Direction=135, Strength=5);
 }
+
+#zone_barre_container{
+    width: 100%;
+    height: 60%;
+}
+
+#zone_barre_timer_container{
+    width: 100%;
+    height: 30%;
+    display: flex;
+}
+
+#zone_barre_timer_idjoueur{
+    width: 15%;
+    font-size: 2rem;
+    color: white;
+}
+
+#zone_barre_timer_chrono{
+    width: 15%;
+    height: 100%;
+}
+
+#zone_barre_timer_time{
+    width: 15%;
+    height: 30%;
+    font-size: 2rem;
+    color: white;
+}
+
+#zone_barre_timer_separator{
+    width: 27.5%;
+}
+
 
 #zone_barre_barre_fond{
     margin:auto;
