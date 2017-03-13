@@ -75,14 +75,20 @@ function dessineMain(main){
 
 }
 
-function dessineBarreDeVie(pdv){
+function dessineBarreDeVie(etatJoueur,bouclierAdversaire){
   /* 49% = NB_MAX_PDV pdv */
   /* pour dessiner X pdv -> Y% = 49*NB_MAX_PDV/X */
 
-  var pourcent_barre_verte = 49*pdv/NB_MAX_PDV;
-  var pourcent_barre_rouge = 98-pourcent_barre_verte;
+  var pourcent_barre_verte = 98*etatJoueur.pdv/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
+  var pourcent_bouclier_joueur = 98*etatJoueur.bouclier/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
+  var pourcent_bouclier_adversaire = 98*bouclierAdversaire/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
+  var pourcent_barre_rouge = 98-(pourcent_barre_verte+pourcent_bouclier_joueur+pourcent_bouclier_adversaire);
+
+
 
   $('#zone_barre_barre_fond_left').css({'width' : pourcent_barre_verte+'%'});
+  $('#zone_barre_barre_fond_bouclier_left').css({'width' : pourcent_bouclier_joueur+'%'});
+  $('#zone_barre_barre_fond_bouclier_right').css({'width' : pourcent_bouclier_adversaire+'%'});
   $('#zone_barre_barre_fond_right').css({'width' : pourcent_barre_rouge+'%'});
 
 }
@@ -116,6 +122,7 @@ socket.on('update',function (obj) {
   carteJoue = obj.carteJoue;
 
   dessineMain(etatJoueur.main);
-  dessineBarreDeVie(etatJoueur.pdv);
+  dessineBarreDeVie(etatJoueur,obj.bouclierAdversaire);
+  console.log("Bouclier de l'adversaire : "+obj.bouclierAdversaire);
   dessineCarteCentre(carteJoue);
 });

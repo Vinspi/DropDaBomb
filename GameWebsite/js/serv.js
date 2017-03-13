@@ -18,6 +18,7 @@ var CARD_MELANGE = 9;
 var NB_MAX_SALON = 6;
 var NB_MAX_PDV = 250;
 var NB_CARTE_MAIN_MAX = 4;
+var NB_POUDRE_PAR_TOUR = 5;
 
 var fifoJoueurs = [];
 var listSalons = [];
@@ -220,7 +221,28 @@ var server = http.createServer(function(req,res){
 
 });
 
+function infligeDegats(joueurEmetteur, joueurCible, degats){
 
+  var residu;
+  var bouclier = joueurCible.bouclier;
+
+  residu = degats - bouclier;
+  bouclier = bouclier - degats;
+  if(residu < 0) residu = 0;
+  if(bouclier < 0) bouclier = 0;
+
+  joueurCible.pdv -= residu;
+  joueurCible.bouclier = bouclier;
+  joueurEmetteur.pdv += residu;
+
+}
+
+function finDeTour(etatJoueur){
+  /* on fait gagner de la poudre */
+  etatJoueur.poudre += NB_POUDRE_PAR_TOUR;
+  /* on lui fait piocher des cartes */
+  tireCarteMain(etatJoueur);
+}
 
 var io = require('socket.io').listen(server);
 
@@ -299,16 +321,13 @@ io.sockets.on('connection', function (socket){
       switch (+id_carte) {
         case CARD_BOMB_25:
           /* carte zero (BOMB 25)*/
-
-          etatJoueurEmetteur.pdv += 25;
-          etatJoueurAdversaire.pdv -= 25;
+          infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,25);
 
           break;
 
         case CARD_BOMB_50:
 
-          etatJoueurEmetteur.pdv += 50;
-          etatJoueurAdversaire.pdv -= 50;
+          infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,50);
 
           break;
 
@@ -337,9 +356,10 @@ io.sockets.on('connection', function (socket){
 
       /* puis on rajoute la carte joué dans le fond du deck */
       etatJoueurEmetteur.deck.push(carteJoue);
+      etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
 
-      socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees, 'carteJoue' : carteJoue});
-      socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees, 'carteJoue' : carteJoue});
+      socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
+      socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees, 'carteJoue' : carteJoue,  'bouclierAdversaire' : etatJoueurEmetteur.bouclier});
 
       etatM.tour++; /* a changer */
       console.log(etatM);
