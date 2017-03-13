@@ -7,7 +7,7 @@ var CARD_BOMB_25 = 0;
 /* fin des definitions de cartes */
 
 var NB_MAX_SALON = 6;
-var NB_MAX_PDV = 200;
+var NB_MAX_PDV = 250;
 var NB_CARTE_MAIN_MAX = 4;
 
 var fifoJoueurs = [];
@@ -60,7 +60,7 @@ function etatJoueur(pseudo,deck){
   this.cActives = [];
   this.cActivesNonRetournees = [];
   /* les point du j1 sont MAX_PDV - j2.pdv */
-  this.pdv = 100;
+  this.pdv = NB_MAX_PDV;
 }
 
 function etatMatch(pseudo1,pseudo2,deck1,deck2) {
@@ -86,12 +86,27 @@ function fournirSalons(){
    }
 }
 
+function melangeCarte(cartes){
+
+  function echange(i,j){
+    var tmp = cartes[i];
+    cartes[i] = cartes[j];
+    cartes[j] = tmp;
+  }
+
+  var j;
+  /* deck de huit carte */
+
+  for (var i = 0; i < 8; i++) {
+    j = Math.floor(Math.random()*7);
+    echange(i,j);
+  }
+  return cartes;
+}
 
 function tireCarteMain(etatJoueur){
 
-  function difference(element){
-    return etatJoueur.main.indexOf(element) == -1;
-  }
+  var carteSommetDeck;
 
   /* 4 cartes dans la main on tire donc (4-nb_carte_dans_main) parmis le deck */
 
@@ -99,11 +114,17 @@ function tireCarteMain(etatJoueur){
 
   var nb_carte_a_tirer = NB_CARTE_MAIN_MAX - etatJoueur.main.length;
 
-  var ensemble_deck = etatJoueur.deck.filter(difference);
 
   for(var i=0;i<nb_carte_a_tirer;i++){
-    etatJoueur.main.push(ensemble_deck[Math.floor(Math.random()*NB_CARTE_MAIN_MAX)]);
-    ensemble_deck = etatJoueur.deck.filter(difference);
+    /* on recupère une carte du sommet du deck */
+    carteSommetDeck = etatJoueur.deck[0];
+
+    /* on retire cette carte du deck de façon à ce qu'elle ne soit pas tiré deux fois */
+    etatJoueur.deck.splice(0,1);
+
+    /* puis on ajoute la carte tiré à la main du joueur */
+    etatJoueur.main.push(carteSommetDeck);
+
   }
 
 }
@@ -143,6 +164,9 @@ function initMatch(pseudo1, pseudo2){
     fifoJoueurs[1].socket.idRoom = index;
     (fifoJoueurs[0].socket).join(nameRoom);
     (fifoJoueurs[1].socket).join(nameRoom);
+
+    etatM.joueur1.deck = melangeCarte(etatM.joueur1.deck);
+    etatM.joueur2.deck = melangeCarte(etatM.joueur2.deck);
 
     tireCarteMain(etatM.joueur1);
     tireCarteMain(etatM.joueur2);
@@ -211,6 +235,8 @@ io.sockets.on('connection', function (socket){
     var etatJoueurEmetteur = etatM.joueur1.pseudo == pseudo ? etatM.joueur1 : etatM.joueur2;
     var etatJoueurAdversaire = etatM.joueur1.pseudo == pseudo ? etatM.joueur2 : etatM.joueur1;
 
+    /* fonctions de contrôle */
+
     function poudreSuffisante(id_carte){
       for(var i=0;i<etatJoueurEmetteur.main.length;i++){
         if(etatJoueurEmetteur.main[i].id_Carte == id_carte && etatJoueurEmetteur.main[i].coutCarte <= etatJoueurEmetteur.poudre){
@@ -242,14 +268,18 @@ io.sockets.on('connection', function (socket){
       }
     }
 
+    /**********************************************************************************************************************************/
+
     console.log("emetteur : "+etatJoueurEmetteur.pseudo);
     console.log("adversaire : "+etatJoueurAdversaire.pseudo);
     console.log(possedeCarteDansMain(id_carte));
     console.log(poudreSuffisante(id_carte));
 
+
+    /* on verifie si il n'y a pas de tricherie */
     if(possedeCarteDansMain(id_carte) && poudreSuffisante(id_carte) && verificationTourJoueur()){
 
-      /* on verifie si il n'y a pas de tricherie */
+
 
       /* *********************************** ajouter des effets de carte dans cette section ************************************** */
 
@@ -261,7 +291,8 @@ io.sockets.on('connection', function (socket){
 
           etatJoueurEmetteur.pdv += 25;
           etatJoueurAdversaire.pdv -= 25;
-
+          socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees});
+          socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees})
           break;
 
         default:
