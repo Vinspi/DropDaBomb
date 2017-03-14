@@ -85,7 +85,7 @@ img{
 }
 
 #zone_barre_barre_fond_bouclier_left{
-    
+
     border-top: 2px solid black;
     border-bottom: 2px solid black;
     width: 0%;
@@ -257,8 +257,16 @@ img{
 }
 
 #zone_deck_infos_container_bottom{
+    position: relative;
     height: 60%;
     width: 100;
+}
+
+#zone_deck_infos_bottom_overlay{
+  font-size: 3em;
+  position: absolute;
+  top: 13%;
+  left: 33%;
 }
 
 #zone_deck_infos_chat{

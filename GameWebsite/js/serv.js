@@ -67,6 +67,7 @@ function etatJoueur(pseudo,deck){
   this.poudre = 25;
   this.main = [];
   this.deck = deck;
+  this.effetsRetardement = [];
   this.cActives = [];
   this.cActivesNonRetournees = [];
   /* les point du j1 sont MAX_PDV - j2.pdv */
@@ -79,7 +80,6 @@ function etatMatch(pseudo1,pseudo2,deck1,deck2) {
   this.joueur2 = new etatJoueur(pseudo2,deck2);
   this.nameRoom = "";
 }
-
 
 function Room(name, pseudo1, pseudo2){
   this.name = name;
@@ -182,6 +182,7 @@ function initMatch(pseudo1, pseudo2){
     tireCarteMain(etatM.joueur2);
 
 
+
     fifoJoueurs[0].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur1, 'actifAdversaire' : etatM.joueur2.cActivesNonRetournees});
     fifoJoueurs[1].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur2, 'actifAdversaire' : etatM.joueur1.cActivesNonRetournees});
 
@@ -212,7 +213,7 @@ var server = http.createServer(function(req,res){
     });
   }
   else {
-    
+
     fs.readFile(url_p.pathname,'utf-8',function(error,content){
       res.writeHead(200,{"Content-type":"text/html"});
       res.end(content);
@@ -242,6 +243,7 @@ function finDeTour(etatJoueur){
   etatJoueur.poudre += NB_POUDRE_PAR_TOUR;
   /* on lui fait piocher des cartes */
   tireCarteMain(etatJoueur);
+
 }
 
 var io = require('socket.io').listen(server);
