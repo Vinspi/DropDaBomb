@@ -13,7 +13,7 @@ $('.card_clickable').on("click", utiliserCarte);
 
 /*****************************/
 
-var socket = io.connect('http://109.7.220.208:3000');
+var socket = io.connect('http://localhost:8080');
 
 var Joueur;    //Récup le pseudo du guguss
 
@@ -125,4 +125,9 @@ socket.on('update',function (obj) {
   dessineBarreDeVie(etatJoueur,obj.bouclierAdversaire);
   console.log("Bouclier de l'adversaire : "+obj.bouclierAdversaire);
   dessineCarteCentre(carteJoue);
+});
+
+socket.on("CLOCK_UPDATE", function(obj){
+    $("#zone_barre_timer_time").text("00:" + obj);
+    //$("#zone_barre_timer_idjoueur").text();
 });

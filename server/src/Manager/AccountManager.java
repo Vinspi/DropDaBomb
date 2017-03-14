@@ -34,10 +34,11 @@ public class AccountManager {
 
         try {
             if (resultSet.next()) {
-                if(resultSet.getInt("estAdmin") == 1){
+                System.out.println(resultSet.getBoolean("estAdmin"));
+                if(resultSet.getBoolean("estAdmin")){
                     status = RequestStatus.AUTH_ADMIN;
                 }
-                status = RequestStatus.AUTH_SUCCES;
+                else status = RequestStatus.AUTH_SUCCES;
             } else status = RequestStatus.AUTH_FAILED;
         } catch (SQLException e) {
             e.printStackTrace();

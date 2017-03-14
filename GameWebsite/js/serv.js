@@ -19,6 +19,7 @@ var NB_MAX_SALON = 6;
 var NB_MAX_PDV = 250;
 var NB_CARTE_MAIN_MAX = 4;
 var NB_POUDRE_PAR_TOUR = 5;
+var NB_MAX_TIMER = 15;
 
 var fifoJoueurs = [];
 var listSalons = [];
@@ -39,6 +40,28 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
+
+
+/* ****** CLOCK DU SERVEUR (POUR UPDATE LES TIMERS DES PARTIES) **** */
+
+
+var CLOCK = setInterval(update_timer, 1000);
+
+function update_timer(){
+    for(var i=0; i<NB_MAX_SALON; i++){
+        if(listSalons[i] != "LIBRE"){
+            if(listSalons[i].timer <= 1){
+                listSalons[i].timer = NB_MAX_TIMER; 
+            }
+            else{
+                listSalons[i].timer--;
+            }
+            io.sockets.to(listSalons[i].nameRoom).emit("CLOCK_UPDATE", listSalons[i].timer);
+        }
+    }
+}
+
+
 
 /* ******************************************************************* */
 
@@ -79,6 +102,7 @@ function etatMatch(pseudo1,pseudo2,deck1,deck2) {
   this.joueur1 = new etatJoueur(pseudo1,deck1);
   this.joueur2 = new etatJoueur(pseudo2,deck2);
   this.nameRoom = "";
+  this.timer = NB_MAX_TIMER;
 }
 
 function Room(name, pseudo1, pseudo2){

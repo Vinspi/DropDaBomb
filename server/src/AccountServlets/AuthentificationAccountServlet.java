@@ -49,6 +49,7 @@ public class AuthentificationAccountServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_SUCCES){
+            System.out.println("Status = joueur");
             session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
             session.setAttribute("mailJoueur",accountManager.getplayerEmail(pseudo));
             session.setAttribute("skinCartonJoueur",accountManager.getPlayerSkinCarton(pseudo));
@@ -60,6 +61,7 @@ public class AuthentificationAccountServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
         }
         else if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_ADMIN){
+            System.out.println("Status = admin");
             session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
             session.setAttribute("mailJoueur",accountManager.getplayerEmail(pseudo));
             session.setAttribute("skinCartonJoueur",accountManager.getPlayerSkinCarton(pseudo));

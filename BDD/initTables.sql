@@ -421,8 +421,8 @@ ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_Offre FOREIGN KEY (id_Off
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 
 ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPack_id_Pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack) ON DELETE CASCADE;
+ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPackPack_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPackEnsemble(id_LootPack) ON DELETE CASCADE;
 
-ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPackPack(id_LootPack) ON DELETE CASCADE;
 ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES EnsembleCarte(id_Ensemble) ON DELETE CASCADE;
 
 ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Carte FOREIGN KEY (id_Carte) REFERENCES Carte(id_Carte) ON DELETE CASCADE;
