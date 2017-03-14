@@ -215,6 +215,7 @@ function initMatch(pseudo1, pseudo2){
     fifoJoueurs[1].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur2, 'actifAdversaire' : etatM.joueur1.cActivesNonRetournees});
 
 
+
     etatM.socketJ1 = fifoJoueurs[0].socket;
     etatM.socketJ2 = fifoJoueurs[1].socket;
 
@@ -223,6 +224,9 @@ function initMatch(pseudo1, pseudo2){
 
     fifoJoueurs.shift();
     fifoJoueurs.shift();
+
+    finDeTour(etatM);
+
     fournirSalons();
   });
 
@@ -364,6 +368,7 @@ io.sockets.on('connection', function (socket){
     console.log("adversaire : "+etatJoueurAdversaire.pseudo);
     console.log(possedeCarteDansMain(id_carte));
     console.log(poudreSuffisante(id_carte));
+    console.log(verificationTourJoueur());
 
 
     /* on verifie si il n'y a pas de tricherie */
@@ -408,8 +413,8 @@ io.sockets.on('connection', function (socket){
         }
       }
 
-      /* il tire une nouvelle carte */
-      tireCarteMain(etatJoueurEmetteur);
+      // /* il tire une nouvelle carte */
+      // tireCarteMain(etatJoueurEmetteur); remplace par fonction fin de tour
 
       /* puis on rajoute la carte joué dans le fond du deck */
       etatJoueurEmetteur.deck.push(carteJoue);
@@ -418,8 +423,8 @@ io.sockets.on('connection', function (socket){
       socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
       socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees, 'carteJoue' : carteJoue,  'bouclierAdversaire' : etatJoueurEmetteur.bouclier});
 
-      etatM.tour++; /* a changer */
-      console.log(etatM);
+      //etatM.tour++; /* a changer */
+      //console.log(etatM);
 
       /* ************************************************************************************************************************** */
 

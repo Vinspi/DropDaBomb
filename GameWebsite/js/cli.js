@@ -36,15 +36,15 @@ function utiliserCarte(){
   }
 
 
-
-  if(verifPoudre()){
-      console.log("Pas assez de poudre !");
+  if(id_Carte >= 0){
+    if(verifPoudre()){
+        console.log("Pas assez de poudre !");
+    }
+    else {
+      console.log("vous jouez "+id_Carte+" !");
+      socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
+    }
   }
-  else {
-    console.log("vous jouez "+id_Carte+" !");
-    socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
-  }
-
 }
 
 function chercherMatch(){
@@ -55,22 +55,41 @@ function chercherMatch(){
 
 function dessineMain(main){
 
-  console.log(main[0].imageCarte);
-  console.log(main[1].imageCarte);
-  console.log(main[2].imageCarte);
-  console.log(main[3].imageCarte);
+  if(main[0] !== undefined){
+    $('#zone_deck_cards_card1 img').attr('src','img/'+main[0].imageCarte);
+    $('#zone_deck_cards_card1 img').attr('id',main[0].id_Carte);
+  }
+  else {
+    $('#zone_deck_cards_card1 img').attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_deck_cards_card1 img').attr('id',-1);
+  }
 
-  $('#zone_deck_cards_card1 img').attr('src','img/'+main[0].imageCarte);
-  $('#zone_deck_cards_card1 img').attr('id',main[0].id_Carte);
+  if(main[1] !== undefined){
+    $('#zone_deck_cards_card2 img').attr('src','img/'+main[1].imageCarte);
+    $('#zone_deck_cards_card2 img').attr('id',main[1].id_Carte);
+  }
+  else {
+    $('#zone_deck_cards_card2 img').attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_deck_cards_card2 img').attr('id',-1);
+  }
 
-  $('#zone_deck_cards_card2 img').attr('src','img/'+main[1].imageCarte);
-  $('#zone_deck_cards_card2 img').attr('id',main[1].id_Carte);
+  if(main[2] !== undefined){
+    $('#zone_deck_cards_card3 img').attr('src','img/'+main[2].imageCarte);
+    $('#zone_deck_cards_card3 img').attr('id',main[2].id_Carte);
+  }
+  else {
+    $('#zone_deck_cards_card3 img').attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_deck_cards_card3 img').attr('id',-1);
+  }
 
-  $('#zone_deck_cards_card3 img').attr('src','img/'+main[2].imageCarte);
-  $('#zone_deck_cards_card3 img').attr('id',main[2].id_Carte);
-
-  $('#zone_deck_cards_card4 img').attr('src','img/'+main[3].imageCarte);
-  $('#zone_deck_cards_card4 img').attr('id',main[3].id_Carte);
+  if(main[3] !== undefined){
+    $('#zone_deck_cards_card4 img').attr('src','img/'+main[3].imageCarte);
+    $('#zone_deck_cards_card4 img').attr('id',main[3].id_Carte);
+  }
+  else {
+    $('#zone_deck_cards_card4 img').attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_deck_cards_card4 img').attr('id',-1);
+  }
 
 
 
@@ -124,8 +143,9 @@ socket.on('update',function (obj) {
 
   dessineMain(etatJoueur.main);
   dessineBarreDeVie(etatJoueur,obj.bouclierAdversaire);
-  console.log("Bouclier de l'adversaire : "+obj.bouclierAdversaire);
+  console.log("update !");
   dessineCarteCentre(carteJoue);
+  $('#zone_deck_infos_bottom_overlay').text(obj.etatJoueur.poudre);
 });
 
 
@@ -138,6 +158,6 @@ socket.on("CLOCK_UPDATE", function(obj){
 socket.on("FIN_TOUR", function(obj){
    $("#zone_barre_timer_idjoueur").text(obj.joueurTour);
    $('#zone_deck_infos_bottom_overlay').text(obj.etatJoueur.poudre);
-   dessineMain(etatJoueur.main);
+   dessineMain(obj.etatJoueur.main);
    //$("#zone_barre_timer_idjoueur").text();
 });
