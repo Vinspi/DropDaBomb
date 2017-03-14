@@ -73,6 +73,7 @@ function dessineMain(main){
   $('#zone_deck_cards_card4 img').attr('id',main[3].id_Carte);
 
 
+
 }
 
 function dessineBarreDeVie(etatJoueur,bouclierAdversaire){
@@ -127,7 +128,16 @@ socket.on('update',function (obj) {
   dessineCarteCentre(carteJoue);
 });
 
+
 socket.on("CLOCK_UPDATE", function(obj){
-    $("#zone_barre_timer_time").text("00:" + obj);
-    //$("#zone_barre_timer_idjoueur").text();
+   $("#zone_barre_timer_time").text("00:" + obj);
+   //$("#zone_barre_timer_idjoueur").text();
+});
+
+
+socket.on("FIN_TOUR", function(obj){
+   $("#zone_barre_timer_idjoueur").text(obj.joueurTour);
+   $('#zone_deck_infos_bottom_overlay').text(obj.etatJoueur.poudre);
+   dessineMain(etatJoueur.main);
+   //$("#zone_barre_timer_idjoueur").text();
 });
