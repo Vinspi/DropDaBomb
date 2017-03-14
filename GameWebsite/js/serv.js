@@ -195,8 +195,7 @@ function initMatch(pseudo1, pseudo2){
     if(index > -1) var nameRoom = "room"+index;
     console.log("nameRoom = "+nameRoom);
     etatM.nameRoom = nameRoom;
-    // etatM.joueur1.socket = fifoJoueurs[1].socket;
-    // etatM.joueur2.socket = fifoJoueurs[0].socket;
+
 
 
     fifoJoueurs[0].socket.idRoom = index;
@@ -214,6 +213,10 @@ function initMatch(pseudo1, pseudo2){
 
     fifoJoueurs[0].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur1, 'actifAdversaire' : etatM.joueur2.cActivesNonRetournees});
     fifoJoueurs[1].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur2, 'actifAdversaire' : etatM.joueur1.cActivesNonRetournees});
+
+
+    etatM.socketJ1 = fifoJoueurs[0].socket;
+    etatM.socketJ2 = fifoJoueurs[1].socket;
 
 
     console.log(etatM);
@@ -276,8 +279,8 @@ function finDeTour(etatMatch){
     /* on lui fait piocher des cartes */
     tireCarteMain(etatMatch.joueur1);
 
-    etatMatch.joueur1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur1});
-
+    etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur1});
+    etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur2});
   }
   else {
     /* on fait gagner de la poudre */
@@ -285,9 +288,15 @@ function finDeTour(etatMatch){
     /* on lui fait piocher des cartes */
     tireCarteMain(etatMatch.joueur2);
 
-    etatMatch.joueur2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur2});
+    etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur1});
+    etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur2});
+
   }
   etatMatch.tour++;
+
+
+
+
   console.log("fin de tour !");
 
 }
