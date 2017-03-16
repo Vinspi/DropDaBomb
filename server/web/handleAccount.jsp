@@ -62,7 +62,6 @@
                 "      </div>\n" +
                 "    </div>";
 
-<<<<<<< HEAD
         /* chargement du driver mysql */
         try{
           Class.forName("com.mysql.jdbc.Driver");
@@ -81,14 +80,11 @@
         try {
           connection = DriverManager.getConnection(urlBDD, user, mdp);
           Statement statement = connection.createStatement();
-=======
-
->>>>>>> 8734fcb48bd80fa82ac86f096f67c8332f216fe6
           String pseudo = request.getParameter("pseudo");
           String email = request.getParameter("email");
           String password = request.getParameter("password");
 
-<<<<<<< HEAD
+
           String query = "SELECT Pseudo, mailCompte FROM CompteJoueur WHERE (Pseudo LIKE \""+pseudo+"\" OR " +
                   "mailCompte LIKE \""+email+"\");";
 
@@ -127,7 +123,6 @@
           }
 
         }
-=======
 
         Manager.AccountManager accountManager = new Manager.AccountManager();
         int result = accountManager.createAccount(pseudo,email,password);
@@ -137,8 +132,6 @@
         }else if (result == RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO){
             out.print(reponseFailPseudoNavigateur);
         }else out.print(reponseFailEmailNavigateur);
->>>>>>> 8734fcb48bd80fa82ac86f096f67c8332f216fe6
-
       %>
     </div>
   </body>
