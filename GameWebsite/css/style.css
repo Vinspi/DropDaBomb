@@ -293,7 +293,7 @@ img{
 #zone_deck_infos_container_bottom{
     position: relative;
     height: 60%;
-    width: 100;
+    width: 100%;
 }
 
 #zone_deck_infos_bottom_overlay{

@@ -95,7 +95,6 @@ function etatJoueur(pseudo,deck){
   this.effetsRetardement = [];
   this.cActives = [];
   this.carteActiveNonRetourne = [];
-  this.socket = '';
   /* les point du j1 sont MAX_PDV - j2.pdv */
   this.pdv = NB_MAX_PDV;
 }
@@ -135,7 +134,6 @@ function melangeCarte(cartes){
     cartes[i] = cartes[j];
     cartes[j] = tmp;
   }
-
   var j;
   /* deck de huit carte */
 
@@ -217,8 +215,8 @@ function initMatch(pseudo1, pseudo2){
 
 
 
-    fifoJoueurs[0].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur1, 'actifAdversaire' : etatM.joueur2.cActivesNonRetournees});
-    fifoJoueurs[1].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur2, 'actifAdversaire' : etatM.joueur1.cActivesNonRetournees});
+    fifoJoueurs[0].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur1, 'actifAdversaire' : etatM.joueur2.carteActiveNonRetourne});
+    fifoJoueurs[1].socket.emit('matchStart',{'message' : 'match lancé vous etes dans la salle : '+nameRoom , 'etatJoueur' : etatM.joueur2, 'actifAdversaire' : etatM.joueur1.carteActiveNonRetourne});
 
 
 
@@ -266,6 +264,7 @@ var server = http.createServer(function(req,res){
 
 function infligeDegats(joueurEmetteur, joueurCible, degats){
 
+  console.log(joueurEmetteur.pseudo+' a infligé '+degats+' à '+joueurCible.pseudo);
   var residu;
   var bouclier = joueurCible.bouclier;
 
@@ -283,19 +282,35 @@ function infligeDegats(joueurEmetteur, joueurCible, degats){
 function ajouteEffet(etatJoueur, effet){
   if(etatJoueur.carteActiveNonRetourne.length < NB_MAX_CARTE_ACTIVE){
     etatJoueur.carteActiveNonRetourne.push(effet);
+    console.log('Ajoute effet : '+effet.id_carte+' pour '+effet.duree);
     return true; //insertion réussie;
   }
   return false; // insertion fail
 }
 
-function checkEffets(etatJoueur, etatJoueurAdversaire){
+function checkEffets(etatJoueur, etatJoueurAdversaire,etatMatch){
   for(var i=0 ; i<NB_MAX_CARTE_ACTIVE ; i++){
     if(etatJoueur.carteActiveNonRetourne[i] === undefined) return; // fin de la liste.
     if(etatJoueur.carteActiveNonRetourne[i].duree == 0){ // timeout de l'effet.
+
+      console.log(etatJoueur.carteActiveNonRetourne[i].id_carte +' durée -- : '+etatJoueur.carteActiveNonRetourne[i].duree+' -> effet appliqué');
       appliqueEffets(etatJoueur,etatJoueurAdversaire,etatJoueur.carteActiveNonRetourne[i]);
+      (etatJoueur.carteActiveNonRetourne).splice(i,1);
+      if (etatMatch.joueur1.pseudo == etatJoueur.pseudo) {
+        etatMatch.socketJ1.emit('update',{'etatJoueur' : etatJoueur, 'actifAdversaire' : etatJoueurAdversaire.carteActiveNonRetourne, 'carteJoue' : etatJoueur.carteActiveNonRetourne[i], 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
+        etatMatch.socketJ2.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueur.carteActiveNonRetourne, 'carteJoue' : etatJoueur.carteActiveNonRetourne[i],  'bouclierAdversaire' : etatJoueur.bouclier});
+      }
+      else {
+        etatMatch.socketJ2.emit('update',{'etatJoueur' : etatJoueur, 'actifAdversaire' : etatJoueurAdversaire.carteActiveNonRetourne, 'carteJoue' : etatJoueur.carteActiveNonRetourne[i], 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
+        etatMatch.socketJ1.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueur.carteActiveNonRetourne, 'carteJoue' : etatJoueur.carteActiveNonRetourne[i],  'bouclierAdversaire' : etatJoueur.bouclier});
+
+      }
+
     }
     else{
       etatJoueur.carteActiveNonRetourne[i].duree--; // sinon on décrémente la duree.
+      console.log(etatJoueur.carteActiveNonRetourne[i].id_carte +' durée -- : '+etatJoueur.carteActiveNonRetourne[i].duree);
+
     }
   }
 }
@@ -304,13 +319,15 @@ function appliqueEffets(etatJoueurEmetteur,etatJoueurAdversaire,effet){
   switch (+effet.id_carte) {
 
     case CARD_BOMB_50_2TOUR:
-      etatJoueurEmetteur.pdv += 50;
-      etatJoueurAdversaire.pdv -+ 50;
+      infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,50);
+  //    etatJoueurEmetteur.pdv += 50;
+  //    etatJoueurAdversaire.pdv -+ 50;
       break;
 
     case CARD_BOMB_100_2TOUR:
-      etatJoueurEmetteur.pdv += 100;
-      etatJoueurAdversaire.pdv -+ 100;
+      infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,100);
+//      etatJoueurEmetteur.pdv += 100;
+//      etatJoueurAdversaire.pdv -+ 100;
       break;
 
     default:
@@ -326,18 +343,19 @@ function finDeTour(etatMatch){
     etatMatch.joueur1.poudre += NB_POUDRE_PAR_TOUR;
     /* on lui fait piocher des cartes */
     tireCarteMain(etatMatch.joueur1);
-
-    etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur1, 'actifAdversaire' : etatMatch.joueur2.cActivesNonRetournees});
-    etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.cActivesNonRetournees});
+    checkEffets(etatMatch.joueur1,etatMatch.joueur2,etatMatch);
+    etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur1, 'actifAdversaire' : etatMatch.joueur2.carteActiveNonRetourne});
+    etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.carteActiveNonRetourne});
   }
   else {
-    /* on fait gagner de la poudre */
+    /* on fait gagner de la poudre */    /* on fait gagner de la poudre */
+
     etatMatch.joueur2.poudre += NB_POUDRE_PAR_TOUR;
     /* on lui fait piocher des cartes */
     tireCarteMain(etatMatch.joueur2);
-
-    etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur1, 'actifAdversaire' : etatMatch.joueur2.cActivesNonRetournees});
-    etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.cActivesNonRetournees});
+    checkEffets(etatMatch.joueur2,etatMatch.joueur1,etatMatch);
+    etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur1, 'actifAdversaire' : etatMatch.joueur2.carteActiveNonRetourne});
+    etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.carteActiveNonRetourne});
 
   }
   etatMatch.tour++;
@@ -417,9 +435,24 @@ io.sockets.on('connection', function (socket){
 
 
     /* on verifie si il n'y a pas de tricherie */
-    if(possedeCarteDansMain(id_carte) && poudreSuffisante(id_carte) && verificationTourJoueur()){
+    retirerCarte = possedeCarteDansMain(id_carte) && poudreSuffisante(id_carte) && verificationTourJoueur();
+    //if(possedeCarteDansMain(id_carte) && poudreSuffisante(id_carte) && verificationTourJoueur(){
+    if(retirerCarte){
 
+      for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+          if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+            // on retire la carte joué de la main du joueur //
+            carteJoue = etatJoueurEmetteur.main[i];
+            etatJoueurEmetteur.main.splice(i,1);
+          }
+      }
 
+      // il tire une nouvelle carte
+      // tireCarteMain(etatJoueurEmetteur); remplace par fonction fin de tour
+
+      // puis on rajoute la carte joué dans le fond du deck
+      etatJoueurEmetteur.deck.push(carteJoue);
+      etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
 
       /* *********************************** ajouter des effets de carte dans cette section ************************************** */
 
@@ -452,30 +485,44 @@ io.sockets.on('connection', function (socket){
 
           ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_50_2TOUR,2));
           break;
+        case CARD_BOMB_100_2TOUR:
+          ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_100_2TOUR,2));
+          break;
 
+        case CARD_MELANGE:
+          for(var k = 0; k < etatJoueurEmetteur.main.length; k++){
+            etatJoueurEmetteur.deck.push(etatJoueurEmetteur.main[i]);
+            etatJoueurEmetteur.main.slice(i,1);
+          }
+          etatJoueurEmetteur.deck = melangeCarte(etatJoueurEmetteur.deck);
+          tireCarteMain(etatJoueurEmetteur);
+
+          break;
       }
 
 
+
+      /*
       if(retirerCarte){
         for(var i=0;i<etatJoueurEmetteur.main.length;i++){
           if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
-            /* on retire la carte joué de la main du joueur */
+            // on retire la carte joué de la main du joueur //
             carteJoue = etatJoueurEmetteur.main[i];
             etatJoueurEmetteur.main.splice(i,1);
           }
         }
       }
-      // /* il tire une nouvelle carte */
+      // il tire une nouvelle carte
       // tireCarteMain(etatJoueurEmetteur); remplace par fonction fin de tour
 
-      /* puis on rajoute la carte joué dans le fond du deck */
+      // puis on rajoute la carte joué dans le fond du deck
       if(retirerCarte){
         etatJoueurEmetteur.deck.push(carteJoue);
         etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
-      }
+      }*/
 
-      socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
-      socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees, 'carteJoue' : carteJoue,  'bouclierAdversaire' : etatJoueurEmetteur.bouclier});
+      socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.carteActiveNonRetourne, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
+      socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.carteActiveNonRetourne, 'carteJoue' : carteJoue,  'bouclierAdversaire' : etatJoueurEmetteur.bouclier});
 
       //etatM.tour++; /* a changer */
       //console.log(etatM);
