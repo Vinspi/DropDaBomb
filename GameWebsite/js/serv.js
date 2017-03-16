@@ -110,7 +110,7 @@ function etatMatch(pseudo1,pseudo2,deck1,deck2) {
 function effet(id_carte,duree,image_carte){
   this.id_carte = id_carte;
   this.duree = duree; // mettre a -1 pour un effet permanent
-  this.image_carte = image_carte;
+  this.imageCarte = image_carte;
 }
 
 function Room(name, pseudo1, pseudo2){

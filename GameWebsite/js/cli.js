@@ -13,7 +13,7 @@ $('.card_clickable').on("click", utiliserCarte);
 
 /*****************************/
 
-var socket = io.connect('http://192.168.43.138:8080');
+var socket = io.connect('http://localhost:8080');
 
 var Joueur;    //Récup le pseudo du guguss
 
@@ -53,11 +53,7 @@ function chercherMatch(){
     socket.emit('chercherMatch',Joueur);
 }
 
-function dessineCartesActives(cartesActives){
-  if(cartesActives[0] !== undefined){
-    $('#zone_jeu_cards_player_card1')
-  }
-}
+
 
 function dessineMain(main){
 
@@ -131,21 +127,57 @@ function dessineCarteCentre(carteJoue){
   });
 }
 
-function dessineCarteActives(etatJoueur,actifAdversaire){
-  var id, src;
+function dessineCartesActives(etatJoueur,actifAdversaire){
+
+  var id, src, duree;
+  var id_adv, src_adv, duree_adv;
+  var selecteur, selecteurAdversaire;
+  var overlay, overlay_adv;
+
   for(var i=0;i<5;i++){
-    id = "#zone_jeu_cards_player_card"+i+" img";
-    if(etatJoueur.carteActiveNonRetourne[i].id_carte === undefined){
-      src = "img/CARD_DEFAULT_VERSO.png";
-      id = -1;
+    selecteur = "#zone_jeu_cards_player_card"+(i+1)+" img";
+    overlay_adv = "#zone_jeu_cards_adversaire_card"+(i+1)+" .jeu_cards_overlay";
+
+    overlay = "#zone_jeu_cards_player_card"+(i+1)+" .jeu_cards_overlay";
+    selecteurAdversaire = "#zone_jeu_cards_adversaire_card"+(i+1)+" img";
+
+    if(actifAdversaire[i] === undefined){
+      src_adv = "img/CARD_DEFAULT_VERSO.png";
+      id_adv = -1;
+      duree_adv = 0;
     }
     else{
-      src = "img/"+etatJoueur.carteActiveNonRetourne[i].image_carte;
-      id = etatJoueur.carteActiveNonRetourne[i].id_carte;
+      src_adv = "img/"+actifAdversaire[i].imageCarte;
+      id_adv = actifAdversaire[i].id_carte;
+      duree_adv = actifAdversaire[i].duree;
     }
-    $(id).attr('src',src);
-    $(id).attr('id',id);
+
+
+    if(etatJoueur.carteActiveNonRetourne[i] === undefined){
+      src = "img/CARD_DEFAULT_VERSO.png";
+      id = -1;
+      duree = 0;
+    }
+    else{
+      src = "img/"+etatJoueur.carteActiveNonRetourne[i].imageCarte;
+      id = etatJoueur.carteActiveNonRetourne[i].id_carte;
+      duree = etatJoueur.carteActiveNonRetourne[i].duree;
+    }
+
+
+    $(selecteur).attr('src',src);
+    $(selecteur).attr('id',id);
+    $(overlay).text(duree);
+
+
+    $(selecteurAdversaire).attr('src',src_adv);
+    $(selecteurAdversaire).attr('id',id_adv);
+    $(overlay_adv).text(duree_adv);
+
   }
+
+
+
 
 }
 
