@@ -13,7 +13,7 @@ $('.card_clickable').on("click", utiliserCarte);
 
 /*****************************/
 
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://192.168.43.7:8080');
 
 var Joueur;    //Récup le pseudo du guguss
 
