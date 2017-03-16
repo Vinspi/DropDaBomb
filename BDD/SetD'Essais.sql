@@ -44,18 +44,18 @@ INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUE
 
 
 
-INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack,misEnVentePack) VALUES (1,'Pack 0','Le premier pack','/pack1.png',1);
-INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack,misEnVentePack) VALUES (2,'Pack 1','Le deuxième pack','/pack2.png',1);
-INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack,misEnVentePack) VALUES (3,'Pack 2','Le troisième pack','/ipack3.png',1);
+INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES (1,'Pack 0','Le premier pack','/pack1.png');
+INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES (2,'Pack 1','Le deuxième pack','/pack2.png');
+INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES (3,'Pack 2','Le troisième pack','/ipack3.png');
 
 INSERT INTO Boost (id_Boost,typeBoost,imageMiniatureBoost,descriptionBoost) VALUES (0,'Boost0','Boost0','/iboost1.png');
 INSERT INTO Boost (id_Boost,typeBoost,imageMiniatureBoost,descriptionBoost) VALUES (1,'Boost1','Boost1','/boost2.png');
 
 
 
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre) VALUES (0,1,2,1,'Pack');
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre) VALUES (1,2,3,2,'Pack');
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre) VALUES (2,3,4,3,'Pack');
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,misEnVentePack) VALUES (0,1,2,1,'Pack',1);
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,misEnVentePack) VALUES (1,2,3,2,'Pack',1);
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,misEnVentePack) VALUES (2,3,4,3,'Pack',1);
 
 INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre) VALUES (3,10,1,'Boost');
 INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre) VALUES (4,11,2,'Boost');

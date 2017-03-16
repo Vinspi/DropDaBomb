@@ -223,6 +223,7 @@ CREATE TABLE Offre(
   prixMonnaieIG int,
   prixMonnaieIRL int,
   typeOffre VARCHAR (50) ,
+  misEnVente int DEFAULT 0 NOT NULL,
   id_Pack int,
   PRIMARY KEY (id_Offre)
 )ENGINE=InnoDB;
@@ -273,7 +274,6 @@ CREATE TABLE OffreIcone (
 CREATE TABLE Pack(
   id_Pack int NOT NULL,
   nomPack varchar(20),
-  misEnVentePack int DEFAULT 0 NOT NULL,
   imageMiniaturePack VARCHAR (100),
   descriptionPack varchar(200),
   PRIMARY KEY (id_Pack)

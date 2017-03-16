@@ -177,13 +177,43 @@ public class PackManager {
             }
         }
     }
+    /* Query pas terrible
+    SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte
+                FROM Offre
+                LEFT JOIN Pack USING (id_Pack)
+                        RIGHT JOIN LootPackPack USING (id_Pack)
+                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)
+                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)
+                        JOIN Carte USING (id_Carte)
+                        ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte;
+    */
+
+    /* -> Query du tueur
+    SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte
+FROM Offre
+RIGHT JOIN
+((SELECT id_Pack, nomPack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte FROM Pack LEFT JOIN
+	(SELECT * FROM LootPackPack
+                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)
+                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)
+                        JOIN Carte USING (id_Carte)) lpe USING (id_Pack))
+
+
+UNION
+(SELECT id_Pack, nomPack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte FROM Pack RIGHT JOIN
+	(SELECT * FROM LootPackPack
+                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)
+                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)
+                        JOIN Carte USING (id_Carte) ) lpe2 USING (id_Pack))) ali USING (id_Pack)
+                       	ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte
+     */
 
     //Remplis listEnsembles, listLootPacks, listPacks, contenant tout les Ensembles, LootPacks et Packs.
     public void getEvthgAlrdCreated(){
         listPacks = new ArrayList<>();
         listLootPacks = new ArrayList<>();
         listEnsembles = new ArrayList<>();
-        String queryPacks = "SELECT id_Pack, nomPack, misEnVentePack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte" +
+        String queryPacks = "SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte" +
                 " FROM Pack" +
                 " RIGHT JOIN LootPackPack USING (id_Pack)" +
                 " RIGHT JOIN LootPackEnsemble USING (id_LootPack)" +
@@ -205,101 +235,106 @@ public class PackManager {
         ResultSet resultSet = Manager.getManager().sendRequestQuery(queryPacks,connection);
         try {
             while (resultSet.next()) {
-               if (id_Pack != resultSet.getInt("id_Pack")) { //Nouveau Pack
+                if (resultSet.getInt("id_Pack") != 0 & (resultSet.getInt("id_LootPack") == 0)){     //Pack non null mais vide (sans LootPack)
+                    listPacks.add(new Pack(resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imagePack"),resultSet.getInt("misEnVente"),new ArrayList<LootPack>()));
 
-                   if(id_Pack != -1) {     //Premiere iteration, on ne fait qu'ajouter la carte et initialiser les variables.
-                       if(!(listIdEnsembles.contains(id_Ensemble))){
-                           listIdEnsembles.add(id_Ensemble);
-                           listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
+                //Finir ici : manque un else if (Pack non null non vide mais avec ensemble incomplet (OU PAS : PEUT ËTRE PAS POSSIBLE EN FAIT)
+                }
+               else {
+
+                   if (id_Pack != resultSet.getInt("id_Pack")) { //Nouveau Pack
+
+                       if (id_Pack != -1) {     //Premiere iteration, on ne fait qu'ajouter la carte et initialiser les variables.
+                           if (!(listIdEnsembles.contains(id_Ensemble))) {
+                               listIdEnsembles.add(id_Ensemble);
+                               listEnsembles.add(new Ensemble(id_Ensemble, nomEnsemble, tmpCarte));
+                           }
+
+                           if (id_LootPack != 0) {
+                               tmpEnsemble.add(new Ensemble(id_Ensemble, nomEnsemble, dropRatePack, tmpCarte));
+                               if (!(listIdLootPacks.contains(id_LootPack))) {
+                                   listIdLootPacks.add(id_LootPack);
+                                   listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
+                               }
+                           }
+                           if (id_Pack != 0) {
+                               tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, qteCartePack, tmpEnsemble));
+                               listPacks.add(new Pack(id_Pack, nomPack, imagePack, misEnVentePack, tmpLootPack));
+                           }
+
+                           tmpCarte = new ArrayList<>();
+                           tmpEnsemble = new ArrayList<>();
+                           tmpLootPack = new ArrayList<>();
+
                        }
+                       tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"), resultSet.getString("nomCarte"), resultSet.getString("imageCarte")));
 
-                       if(id_LootPack != 0) {
+                       id_Pack = resultSet.getInt("id_Pack");
+                       nomPack = resultSet.getString("nomPack");
+                       misEnVentePack = resultSet.getInt("misEnVente");
+                       imagePack = resultSet.getString("imageMiniaturePack");
+
+                       id_LootPack = resultSet.getInt("id_LootPack");
+                       nomLootPack = resultSet.getString("nomLootPack");
+                       qteCartePack = resultSet.getInt("qteCartePack");
+
+                       id_Ensemble = resultSet.getInt("id_Ensemble");
+                       nomEnsemble = resultSet.getString("nomEnsemble");
+                       dropRatePack = resultSet.getFloat("dropRatePack");
+                   } else {
+                       if (id_LootPack != resultSet.getInt("id_LootPack")) {
+
                            tmpEnsemble.add(new Ensemble(id_Ensemble, nomEnsemble, dropRatePack, tmpCarte));
-                           if (!(listIdLootPacks.contains(id_LootPack))) {
-                               listIdLootPacks.add(id_LootPack);
-                               listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
+                           if (!(listIdEnsembles.contains(id_Ensemble))) {
+                               listIdEnsembles.add(id_Ensemble);
+                               listEnsembles.add(new Ensemble(id_Ensemble, nomEnsemble, tmpCarte));
+                           }
+
+                           if (id_LootPack != 0) {
+                               tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, qteCartePack, tmpEnsemble));
+                               if (!(listIdLootPacks.contains(id_LootPack))) {
+                                   listIdLootPacks.add(id_LootPack);
+                                   listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
+                               }
+                           }
+                           tmpEnsemble = new ArrayList<>();
+                           tmpCarte = new ArrayList<>();
+                           tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"), resultSet.getString("nomCarte"), resultSet.getString("imageCarte")));
+
+
+                           id_LootPack = resultSet.getInt("id_LootPack");
+                           nomLootPack = resultSet.getString("nomLootPack");
+                           qteCartePack = resultSet.getInt("qteCartePack");
+
+
+                           id_Ensemble = resultSet.getInt("id_Ensemble");
+                           nomEnsemble = resultSet.getString("nomEnsemble");
+                           dropRatePack = resultSet.getFloat("dropRatePack");
+
+                       } else {
+                           if (id_Ensemble != resultSet.getInt("id_Ensemble")) {
+
+                               tmpEnsemble.add(new Ensemble(id_Ensemble, nomEnsemble, dropRatePack, tmpCarte));
+                               if (!(listIdEnsembles.contains(id_Ensemble))) {
+                                   listIdEnsembles.add(id_Ensemble);
+                                   listEnsembles.add(new Ensemble(id_Ensemble, nomEnsemble, tmpCarte));
+                               }
+
+                               tmpCarte = new ArrayList<>();
+                               tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"), resultSet.getString("nomCarte"), resultSet.getString("imageCarte")));
+
+
+                               id_Ensemble = resultSet.getInt("id_Ensemble");
+                               nomEnsemble = resultSet.getString("nomEnsemble");
+                               dropRatePack = resultSet.getFloat("dropRatePack");
+                           } else {
+                               tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"), resultSet.getString("nomCarte"), resultSet.getString("imageCarte")));
+
                            }
                        }
-                       if(id_Pack != 0) {
-                           tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, qteCartePack, tmpEnsemble));
-                           listPacks.add(new Pack(id_Pack, nomPack, imagePack, misEnVentePack, tmpLootPack));
-                       }
-
-                       tmpCarte = new ArrayList<>();
-                       tmpEnsemble = new ArrayList<>();
-                       tmpLootPack = new ArrayList<>();
-
                    }
-                   tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
-
-                   id_Pack = resultSet.getInt("id_Pack");
-                   nomPack = resultSet.getString("nomPack");
-                   misEnVentePack = resultSet.getInt("misEnVentePack");
-                   imagePack = resultSet.getString("imageMiniaturePack");
-
-                   id_LootPack = resultSet.getInt("id_LootPack");
-                   nomLootPack = resultSet.getString("nomLootPack");
-                   qteCartePack = resultSet.getInt("qteCartePack");
-
-                   id_Ensemble = resultSet.getInt("id_Ensemble");
-                   nomEnsemble = resultSet.getString("nomEnsemble");
-                   dropRatePack = resultSet.getFloat("dropRatePack");
                }
-               else {
-                    if(id_LootPack != resultSet.getInt("id_LootPack")){
 
-                        tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,dropRatePack,tmpCarte));
-                        if(!(listIdEnsembles.contains(id_Ensemble))){
-                            listIdEnsembles.add(id_Ensemble);
-                            listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-                        }
-
-                        if(id_LootPack != 0) {
-                            tmpLootPack.add(new LootPack(id_LootPack, nomLootPack, qteCartePack, tmpEnsemble));
-                            if (!(listIdLootPacks.contains(id_LootPack))) {
-                                listIdLootPacks.add(id_LootPack);
-                                listLootPacks.add(new LootPack(id_LootPack, nomLootPack, tmpEnsemble));
-                            }
-                        }
-                        tmpEnsemble = new ArrayList<>();
-                        tmpCarte = new ArrayList<>();
-                        tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
-
-
-                        id_LootPack = resultSet.getInt("id_LootPack");
-                        nomLootPack = resultSet.getString("nomLootPack");
-                        qteCartePack = resultSet.getInt("qteCartePack");
-
-
-                        id_Ensemble = resultSet.getInt("id_Ensemble");
-                        nomEnsemble = resultSet.getString("nomEnsemble");
-                        dropRatePack = resultSet.getFloat("dropRatePack");
-
-                    }
-                    else {
-                        if (id_Ensemble != resultSet.getInt("id_Ensemble")){
-
-                            tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,dropRatePack,tmpCarte));
-                            if(!(listIdEnsembles.contains(id_Ensemble))){
-                                listIdEnsembles.add(id_Ensemble);
-                                listEnsembles.add(new Ensemble(id_Ensemble,nomEnsemble,tmpCarte));
-                            }
-
-                            tmpCarte = new ArrayList<>();
-                            tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
-
-
-                            id_Ensemble = resultSet.getInt("id_Ensemble");
-                            nomEnsemble = resultSet.getString("nomEnsemble");
-                            dropRatePack = resultSet.getFloat("dropRatePack");
-                        }
-
-                        else {
-                            tmpCarte.add(new MiniatureCarte(resultSet.getInt("id_Carte"),resultSet.getString("nomCarte"),resultSet.getString("imageCarte")));
-
-                        }
-                    }
-               }
             }
             tmpEnsemble.add(new Ensemble(id_Ensemble,nomEnsemble,dropRatePack,tmpCarte));
             if(!(listIdEnsembles.contains(id_Ensemble))){
