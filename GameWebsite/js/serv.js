@@ -20,6 +20,7 @@ var NB_MAX_PDV = 250;
 var NB_CARTE_MAIN_MAX = 4;
 var NB_POUDRE_PAR_TOUR = 5;
 var NB_MAX_TIMER = 15;
+var NB_MAX_CARTE_ACTIVE = 5;
 
 var fifoJoueurs = [];
 var listSalons = [];
@@ -93,7 +94,7 @@ function etatJoueur(pseudo,deck){
   this.deck = deck;
   this.effetsRetardement = [];
   this.cActives = [];
-  this.cActivesNonRetournees = [];
+  this.carteActiveNonRetourne = [];
   this.socket = '';
   /* les point du j1 sont MAX_PDV - j2.pdv */
   this.pdv = NB_MAX_PDV;
@@ -105,6 +106,11 @@ function etatMatch(pseudo1,pseudo2,deck1,deck2) {
   this.joueur2 = new etatJoueur(pseudo2,deck2);
   this.nameRoom = "";
   this.timer = NB_MAX_TIMER;
+}
+
+function effet(id_carte,duree){
+  this.id_carte = id_carte;
+  this.duree = duree; // mettre a -1 pour un effet permanent
 }
 
 function Room(name, pseudo1, pseudo2){
@@ -274,6 +280,44 @@ function infligeDegats(joueurEmetteur, joueurCible, degats){
 
 }
 
+function ajouteEffet(etatJoueur, effet){
+  if(etatJoueur.carteActiveNonRetourne.length < NB_MAX_CARTE_ACTIVE){
+    etatJoueur.carteActiveNonRetourne.push(effet);
+    return true; //insertion réussie;
+  }
+  return false; // insertion fail
+}
+
+function checkEffets(etatJoueur, etatJoueurAdversaire){
+  for(var i=0 ; i<NB_MAX_CARTE_ACTIVE ; i++){
+    if(etatJoueur.carteActiveNonRetourne[i] === undefined) return; // fin de la liste.
+    if(etatJoueur.carteActiveNonRetourne[i].duree == 0){ // timeout de l'effet.
+      appliqueEffets(etatJoueur,etatJoueurAdversaire,etatJoueur.carteActiveNonRetourne[i]);
+    }
+    else{
+      etatJoueur.carteActiveNonRetourne[i].duree--; // sinon on décrémente la duree.
+    }
+  }
+}
+
+function appliqueEffets(etatJoueurEmetteur,etatJoueurAdversaire,effet){
+  switch (+effet.id_carte) {
+
+    case CARD_BOMB_50_2TOUR:
+      etatJoueurEmetteur.pdv += 50;
+      etatJoueurAdversaire.pdv -+ 50;
+      break;
+
+    case CARD_BOMB_100_2TOUR:
+      etatJoueurEmetteur.pdv += 100;
+      etatJoueurAdversaire.pdv -+ 100;
+      break;
+
+    default:
+
+  }
+}
+
 function finDeTour(etatMatch){
 
   /* c'est la fin du tour du joueur 1 */
@@ -328,6 +372,7 @@ io.sockets.on('connection', function (socket){
     var etatJoueurAdversaire = etatM.joueur1.pseudo == pseudo ? etatM.joueur2 : etatM.joueur1;
 
     var carteJoue;
+    var retirerCarte = true;
 
     /* fonctions de contrôle */
 
@@ -402,23 +447,32 @@ io.sockets.on('connection', function (socket){
 
           etatJoueurEmetteur.bouclier += 15;
           break;
+
+        case CARD_BOMB_50_2TOUR:
+
+          ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_50_2TOUR,2));
+          break;
+
       }
 
 
-      for(var i=0;i<etatJoueurEmetteur.main.length;i++){
-        if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
-          /* on retire la carte joué de la main du joueur */
-          carteJoue = etatJoueurEmetteur.main[i];
-          etatJoueurEmetteur.main.splice(i,1);
+      if(retirerCarte){
+        for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+          if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+            /* on retire la carte joué de la main du joueur */
+            carteJoue = etatJoueurEmetteur.main[i];
+            etatJoueurEmetteur.main.splice(i,1);
+          }
         }
       }
-
       // /* il tire une nouvelle carte */
       // tireCarteMain(etatJoueurEmetteur); remplace par fonction fin de tour
 
       /* puis on rajoute la carte joué dans le fond du deck */
-      etatJoueurEmetteur.deck.push(carteJoue);
-      etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
+      if(retirerCarte){
+        etatJoueurEmetteur.deck.push(carteJoue);
+        etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
+      }
 
       socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.cActivesNonRetournees, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
       socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.cActivesNonRetournees, 'carteJoue' : carteJoue,  'bouclierAdversaire' : etatJoueurEmetteur.bouclier});

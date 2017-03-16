@@ -13,7 +13,7 @@ $('.card_clickable').on("click", utiliserCarte);
 
 /*****************************/
 
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://192.168.43.138:8080');
 
 var Joueur;    //Récup le pseudo du guguss
 
@@ -51,6 +51,12 @@ function chercherMatch(){
     Joueur = (document.getElementById('pseudo').value  !== null) ? document.getElementById('pseudo').value : 'TantPisPourToi';
     document.getElementById('attente').innerHTML = '<p>En attente !</p>';
     socket.emit('chercherMatch',Joueur);
+}
+
+function dessineCartesActives(cartesActives){
+  if(cartesActives[0] !== undefined){
+    $('#zone_jeu_cards_player_card1')
+  }
 }
 
 function dessineMain(main){
