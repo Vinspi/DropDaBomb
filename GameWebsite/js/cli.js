@@ -131,6 +131,18 @@ function dessineCarteCentre(carteJoue){
   });
 }
 
+function dessineCarteActives(etatJoueur,actifAdversaire){
+  var id, src;
+  for(var i=0;i<5;i++){
+    id = "#zone_jeu_cards_player_card"+i;
+    if(etatJoueur.carteActiveNonRetourne[i].id_carte === undefined) src = "img/CARD_DEFAULT_VERSO.png";
+    else src = "img/"+etatJoueur.carteActiveNonRetourne[i].imageCarte;
+    if() $(id).attr('src')
+  }
+
+  $('#zone_jeu_cards_player_card1').attr('src','img/'+etatJoueur[0].)
+}
+
 socket.on('matchStart', function (obj) {
   etatJoueur = obj.etatJoueur;
   actifAdversaire = obj.actifAdversaire;
@@ -149,6 +161,8 @@ socket.on('update',function (obj) {
 
   dessineMain(etatJoueur.main);
   dessineBarreDeVie(etatJoueur,obj.bouclierAdversaire);
+  dessineCartesActives(etatJoueur,actifAdversaire);
+
   console.log("update !");
   dessineCarteCentre(carteJoue);
   $('#zone_deck_infos_bottom_overlay').text(obj.etatJoueur.poudre);
