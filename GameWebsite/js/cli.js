@@ -134,13 +134,19 @@ function dessineCarteCentre(carteJoue){
 function dessineCarteActives(etatJoueur,actifAdversaire){
   var id, src;
   for(var i=0;i<5;i++){
-    id = "#zone_jeu_cards_player_card"+i;
-    if(etatJoueur.carteActiveNonRetourne[i].id_carte === undefined) src = "img/CARD_DEFAULT_VERSO.png";
-    else src = "img/"+etatJoueur.carteActiveNonRetourne[i].imageCarte;
-    if() $(id).attr('src')
+    id = "#zone_jeu_cards_player_card"+i+" img";
+    if(etatJoueur.carteActiveNonRetourne[i].id_carte === undefined){
+      src = "img/CARD_DEFAULT_VERSO.png";
+      id = -1;
+    }
+    else{
+      src = "img/"+etatJoueur.carteActiveNonRetourne[i].image_carte;
+      id = etatJoueur.carteActiveNonRetourne[i].id_carte;
+    }
+    $(id).attr('src',src);
+    $(id).attr('id',id);
   }
 
-  $('#zone_jeu_cards_player_card1').attr('src','img/'+etatJoueur[0].)
 }
 
 socket.on('matchStart', function (obj) {
