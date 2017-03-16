@@ -26,10 +26,29 @@
 
 
     <body class="white">
-        <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo">
-        <button type="button" id="mm" onclick="chercherMatch()">Chercher un adversaire</button>
-        <div id='attente'></div>
-        <button type="button" id="m" onclick="utiliserCarte(0)">utiliser carte</button>
+        
+        
+        
+        
+        <div id="modal_connexion" class="modal">
+            <div class="modal-content center">
+                
+                <div class="row">
+                
+                    <div class="col l4 m4 s4 offset-l4 offset-m4 offset-s4 input-field">
+                        <input placeholder="Pseudo" id="connexion_pseudo" type="text" class="validate center-align">
+                    </div>
+                    
+                    <div class="col l4 m4 s4 offset-l4 offset-m4 offset-s4 input-field">
+                        <input placeholder="Mot de passe" id="connexion_mdp" type="password" class="validate center-align">
+                    </div>            
+                </div>
+              
+              <a class="waves-effect waves-green btn-flat green darken-4 white-text" id="connexion_btn">Se connecter et chercher un match</a>
+            </div>
+        </div>
+        
+        
         <div class="" id="zone">
 
             <div id="zone_barre" class="transparent">
