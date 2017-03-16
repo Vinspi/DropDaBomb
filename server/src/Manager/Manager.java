@@ -61,6 +61,27 @@ public class Manager {
 
     }
 
+    public void sendDeleteUpdate(String query,Connection connection){
+        try {
+            connection = DriverManager.getConnection(RequestStatus.URL_BDD, RequestStatus.BDD_USER, RequestStatus.BDD_PASSWORD);
+            Statement fkc = connection.createStatement();
+            fkc.execute("SET FOREIGN_KEY_CHECKS=0");
+            fkc.close();
+
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+            fkc = connection.createStatement();
+            fkc.execute("SET FOREIGN_KEY_CHECKS=1");
+            fkc.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+
+        }
+
+    }
+
     public void sendMultipleRequestUpdate(List<String> queries, Connection connection){
 
 
