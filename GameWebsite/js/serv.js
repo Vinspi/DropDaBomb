@@ -286,7 +286,6 @@ function ajouteEffet(etatJoueur, effet){
     console.log('Ajoute effet : '+effet.id_carte+' pour '+effet.duree);
     return true; //insertion réussie;
   }
-  return false; // insertion fail
 }
 
 function checkEffets(etatJoueur, etatJoueurAdversaire,etatMatch){
@@ -339,12 +338,22 @@ function appliqueEffets(etatJoueurEmetteur,etatJoueurAdversaire,effet){
 function finDeTour(etatMatch){
 
   /* c'est la fin du tour du joueur 1 */
+
+  if(etatMatch.joueur1.pdv <= 0){
+    io.sockets.to(etatMatch.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatMatch.joueur2.pseudo, 'perdant' : 'maurice'});
+    return;
+  }
+  if(etatMatch.joueur2.pdv <= 0){
+    io.sockets.to(etatMatch.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatMatch.joueur1.pseudo, 'perdant' : 'maurice'});
+    return;
+  }
+
   if(etatMatch.tour%2 == 0){
     /* on fait gagner de la poudre */
     etatMatch.joueur1.poudre += NB_POUDRE_PAR_TOUR;
     /* on lui fait piocher des cartes */
     tireCarteMain(etatMatch.joueur1);
-    checkEffets(etatMatch.joueur1,etatMatch.joueur2,etatMatch);
+    checkEffets(etatMatch.joueur2,etatMatch.joueur1,etatMatch);
     etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur1, 'actifAdversaire' : etatMatch.joueur2.carteActiveNonRetourne});
     etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur2.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.carteActiveNonRetourne});
   }
@@ -354,18 +363,23 @@ function finDeTour(etatMatch){
     etatMatch.joueur2.poudre += NB_POUDRE_PAR_TOUR;
     /* on lui fait piocher des cartes */
     tireCarteMain(etatMatch.joueur2);
-    checkEffets(etatMatch.joueur2,etatMatch.joueur1,etatMatch);
+    checkEffets(etatMatch.joueur1,etatMatch.joueur2,etatMatch);
     etatMatch.socketJ1.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur1, 'actifAdversaire' : etatMatch.joueur2.carteActiveNonRetourne});
     etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.carteActiveNonRetourne});
 
   }
+
+
   etatMatch.tour++;
+  console.log("tour : "+etatMatch.tour);
 
+}
 
-
-
-  console.log("fin de tour !");
-
+function chercherMatch(pseudo, socket){
+  fifoJoueurs.push({'socket': socket,'pseudo': pseudo});
+  socket.pseudo = pseudo;
+  console.log(pseudo+" cherche un match");
+  fournirSalons();
 }
 
 var io = require('socket.io').listen(server);
@@ -394,6 +408,7 @@ io.sockets.on('connection', function (socket){
       }
       else {
         socket.emit('AUTH_CLI_OK',0);
+        chercherMatch(pseudo,socket);
       }
     });
 
@@ -413,6 +428,16 @@ io.sockets.on('connection', function (socket){
 
     var carteJoue;
     var retirerCarte = true;
+
+    if(etatM.joueur1.pdv <= 0){
+      io.sockets.to(etatM.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatM.joueur2.pseudo, 'perdant' : 'maurice'});
+      return;
+    }
+    if(etatM.joueur2.pdv <= 0){
+      io.sockets.to(etatM.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatM.joueur1.pseudo, 'perdant' : 'maurice'});
+      return;
+    }
+
 
     /* fonctions de contrôle */
 
@@ -459,7 +484,7 @@ io.sockets.on('connection', function (socket){
     /* on verifie si il n'y a pas de tricherie */
     //retirerCarte = possedeCarteDansMain(id_carte) && poudreSuffisante(id_carte) && verificationTourJoueur();
     if(possedeCarteDansMain(id_carte) && poudreSuffisante(id_carte) && verificationTourJoueur()){
-    //if(retirerCarte){
+
 
       /*for(var i=0;i<etatJoueurEmetteur.main.length;i++){
           if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
