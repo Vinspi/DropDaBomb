@@ -17,3 +17,4 @@ DropDaBomp est un jeu de cartes tours par tours basé sur un systeme de mana et 
 * La technologie [Tomcat](http://tomcat.apache.org/) pour gérer l'administration de la base de données coté client.
 * La plateforme [PhpMyAdmin](http://www.phpmyadmin.net)
 * Le framework [Materialize](http://materializecss.com) pour le style du site web. 
+* Le langage [MySql](https://www.mysql.fr/) et le programme JMerise pour la conception de la base de données.
