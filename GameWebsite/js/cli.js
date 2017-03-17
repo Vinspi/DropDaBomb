@@ -1,6 +1,6 @@
 /* constantes */
 
-var NB_MAX_PDV = 150;
+var NB_MAX_PDV = 50;
 
 /* ********** */
 
@@ -21,6 +21,8 @@ var Joueur;    //Récup le pseudo du guguss
 var etatJoueur;
 var actifAdversaire;
 var carteJoue;
+var FLAG_FIN_PARTIE = false;
+var vainqueur;
 
 
 
@@ -42,7 +44,7 @@ function utiliserCarte(){
         console.log("Pas assez de poudre !");
     }
     else {
-      console.log("vous jouez "+id_Carte+" !");
+      console.log(Joueur+"joue jouez "+id_Carte+" !");
       socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
     }
   }
@@ -99,8 +101,7 @@ function dessineMain(main){
 }
 
 function dessineBarreDeVie(etatJoueur,bouclierAdversaire){
-  /* 49% = NB_MAX_PDV pdv */
-  /* pour dessiner X pdv -> Y% = 49*NB_MAX_PDV/X */
+
 
   var pourcent_barre_verte = 98*etatJoueur.pdv/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
   var pourcent_bouclier_joueur = 98*etatJoueur.bouclier/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
@@ -113,6 +114,12 @@ function dessineBarreDeVie(etatJoueur,bouclierAdversaire){
   $('#zone_barre_barre_fond_bouclier_left').css({'width' : pourcent_bouclier_joueur+'%'});
   $('#zone_barre_barre_fond_bouclier_right').css({'width' : pourcent_bouclier_adversaire+'%'});
   $('#zone_barre_barre_fond_right').css({'width' : pourcent_barre_rouge+'%'});
+
+  console.log("vie : "+etatJoueur.pdv);
+  console.log("vie : "+etatJoueur.bouclier);
+
+
+  $('#zone_barre_vie_left').html('<span class=\"white-text\">'+(etatJoueur.pdv+etatJoueur.bouclier)+'</span>(<span class = \"green-text\">'+etatJoueur.pdv+'</span> + <span class=\"purple-text\">'+etatJoueur.bouclier+'</span>)');
 
 }
 
@@ -132,15 +139,21 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
 
   var id, src, duree;
   var id_adv, src_adv, duree_adv;
+  var zone, zone_adv;
   var selecteur, selecteurAdversaire;
   var overlay, overlay_adv;
+  var rm_class = true;
 
   for(var i=0;i<5;i++){
+    rm_class = true;
     selecteur = "#zone_jeu_cards_player_card"+(i+1)+" img";
     overlay_adv = "#zone_jeu_cards_adversaire_card"+(i+1)+" .jeu_cards_overlay";
+    zone = "#zone_jeu_cards_player_card"+(i+1);
 
     overlay = "#zone_jeu_cards_player_card"+(i+1)+" .jeu_cards_overlay";
     selecteurAdversaire = "#zone_jeu_cards_adversaire_card"+(i+1)+" img";
+    zone_adv = "#zone_jeu_cards_adversaire_card"+(i+1);
+
 
     if(actifAdversaire[i] === undefined){
       src_adv = "img/CARD_DEFAULT_VERSO.png";
@@ -151,6 +164,7 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
       src_adv = "img/"+actifAdversaire[i].imageCarte;
       id_adv = actifAdversaire[i].id_carte;
       duree_adv = actifAdversaire[i].duree;
+      if(duree_adv == 0) rm_class = false;
     }
 
 
@@ -163,6 +177,7 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
       src = "img/"+etatJoueur.carteActiveNonRetourne[i].imageCarte;
       id = etatJoueur.carteActiveNonRetourne[i].id_carte;
       duree = etatJoueur.carteActiveNonRetourne[i].duree;
+
     }
 
 
@@ -171,15 +186,25 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
     $(overlay).text(duree);
 
 
+
     $(selecteurAdversaire).attr('src',src_adv);
     $(selecteurAdversaire).attr('id',id_adv);
     $(overlay_adv).text(duree_adv);
 
+    $(zone_adv).addClass("boom");
+    if(rm_class) $(zone_adv).removeClass("boom");
+
   }
+}
 
+function annoncerVictoire(){
+  console.log("victoire");
+  $('#modal_annonce_victoire').modal('open');
+}
 
-
-
+function annoncerDefaite(){
+  console.log("defaite");
+  $('#modal_annonce_defaite').modal('open');
 }
 
 socket.on('matchStart', function (obj) {
@@ -190,10 +215,20 @@ socket.on('matchStart', function (obj) {
   console.log(obj.message);
 
   dessineMain(etatJoueur.main);
-  dessineBarreDeVie(etatJoueur.pdv);
+  dessineBarreDeVie(etatJoueur,0);
+});
+
+socket.on('FIN_DU_GAME', function(obj){
+  if(obj.vainqueur == Joueur){
+    annoncerVictoire();
+  }
+  else {
+    annoncerDefaite();
+  }
 });
 
 socket.on('update',function (obj) {
+
   etatJoueur = obj.etatJoueur;
   actifAdversaire = obj.actifAdversaire;
   carteJoue = obj.carteJoue;
@@ -218,5 +253,6 @@ socket.on("FIN_TOUR", function(obj){
    $("#zone_barre_timer_idjoueur").text(obj.joueurTour);
    $('#zone_deck_infos_bottom_overlay').text(obj.etatJoueur.poudre);
    dessineMain(obj.etatJoueur.main);
+   dessineCartesActives(obj.etatJoueur,obj.actifAdversaire);
    //$("#zone_barre_timer_idjoueur").text();
 });

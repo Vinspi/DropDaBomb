@@ -23,35 +23,61 @@
     </head>
         
     <body class="white">
-        
-        
-        
-        
+
+
+
+
         <div id="modal_connexion" class="modal">
             <div class="modal-content center">
-                
+
                 <div class="row">
-                
+
                     <div class="col l4 m4 s4 offset-l4 offset-m4 offset-s4 input-field">
                         <input placeholder="Pseudo" id="connexion_pseudo" type="text" class="validate center-align">
                     </div>
-                    
+
                     <div class="col l4 m4 s4 offset-l4 offset-m4 offset-s4 input-field">
                         <input placeholder="Mot de passe" id="connexion_mdp" type="password" class="validate center-align">
-                    </div>            
+                    </div>
                 </div>
-              
+
               <a class="waves-effect waves-green btn-flat green darken-4 white-text" id="connexion_btn">Se connecter et chercher un match</a>
             </div>
         </div>
-        
-        
+
+        <div id="modal_annonce_victoire" class="modal">
+            <div class="modal-content center">
+
+                <div class="row">
+
+                    <div class="green-text">VICTOIRE !</div>
+
+                </div>
+
+              <a class="waves-effect waves-green btn-flat green darken-4 white-text" id="connexion_btn">Se connecter et chercher un match</a>
+            </div>
+        </div>
+
+        <div id="modal_annonce_defaite" class="modal">
+            <div class="modal-content center">
+
+                <div class="row">
+
+                  <div class="red-text">DEFAITE</div>
+
+                </div>
+
+              <a class="waves-effect waves-green btn-flat green darken-4 white-text" id="connexion_btn">Se connecter et chercher un match</a>
+            </div>
+        </div>
+
+
         <div class="" id="zone">
 
             <div id="zone_barre" class="transparent">
-                
-                <div id="zone_barre_container">
 
+                <div id="zone_barre_container" class="white-text">
+                    <div id="zone_barre_vie_left"></div>
                     <div id="zone_barre_barre_fond" class="">
 
                         <div id="zone_barre_barre_fond_left" class="light-green darken-3"></div>
@@ -61,18 +87,19 @@
                         <div id="zone_barre_barre_fond_right" class="red accent-3"></div>
 
                     </div>
-                    
+                    <div id="zone_barre_vie_right" class="white-text"></div>
+
                 </div>
-                
+
                 <div id="zone_barre_timer_container" class="center-align">
-                
+
                     <div class="zone_barre_timer_separator"></div>
                     <div id="zone_barre_timer_idjoueur">Vinspi</div>
                     <div id="zone_barre_timer_chrono"> <img src="img/timer_white.png"></div>
                     <div id="zone_barre_timer_time">00:15</div>
                     <div class="zone_barre_timer_separator"></div>
-                
-                
+
+
                 </div>
 
             </div>
@@ -82,9 +109,9 @@
 
 
                 <div id="zone_jeu_cards_adversaire" class="">
-                    
+
                      <div class="zone_jeu_separator"></div>
-                    
+
                         <div id="zone_jeu_cards_adversaire_card1" class="zone_jeu_card">
                             <img src="img/BOUCLIER_RENVOI.png" class="grey zone_jeu_card_img">
                             <div class="jeu_cards_overlay red-text"> 2</div>
@@ -133,7 +160,7 @@
 
 
                         <div class="zone_jeu_separator"></div>
-                    
+
                         <div id="zone_jeu_cards_player_card1" class="zone_jeu_card">
                             <img src="img/BOUCLIER_RENVOI.png" class="grey zone_jeu_card_img">
                             <div class="jeu_cards_overlay blue-text"> 2</div>
@@ -216,12 +243,12 @@
                     <div id="zone_deck_cards_container">
 
                         <div id="zone_deck_cards_card1" class="">
-                            
+
                             <div id="zone_deck_cards_card1_container">
                                 <img src="img/BOMB_25.png" class="card_clickable">
                                 <div class="powder_card_overlay red-text center-align"> 10 </div>
                             </div>
-                            
+
                         </div>
 
                         <div id="zone_deck_cards_card2" class="">
