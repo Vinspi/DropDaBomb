@@ -529,6 +529,4 @@ public class AccountManager {
         return money;
     }
 
-
-
 }
