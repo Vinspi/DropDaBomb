@@ -11,7 +11,7 @@ $(document).ready(function(){
 
     setZoneObjects();
 
-    $('#modal_connexion').modal({
+    $('.modal').modal({
       dismissible: false, // Modal can be dismissed by clicking outside of the modal
       opacity: .5, // Opacity of modal background
       inDuration: 300, // Transition in duration
