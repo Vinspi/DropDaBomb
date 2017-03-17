@@ -9,6 +9,7 @@
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/account.js"></script>
 
@@ -20,11 +21,7 @@
 
 </head>
 
-<body class="brown">
-
-
-
-
+<body class="grey darken-3">
 
     <nav>
         <div class="nav-wrapper nav-perso">
@@ -38,7 +35,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col s12 m4 l4">
+            <div class="col s12 m12 l4">
                 <div class="card card_signup" id="first-card">
 
                     <!--
@@ -58,7 +55,6 @@
                             <span class="card-title white-text">Créer votre compte</span>
                         </div>
                         <div class="row">
-                            <form method="POST" action="CreateAccountNavigator" class="col s12">
                                 <div class="row">
                                     <div class="input-field col s8 offset-s2">
                                         <input placeholder="Pseudo" id="pseudo" name="pseudo" type="text" class="validate">
@@ -92,14 +88,13 @@
                                         <input type="submit" class="btn-large waves-effect waves-light light-green" id="btn-create" value="Create">
                                     </div>
                                 </div>
-                            </form>
                         </div>
                     </div>
 
 
                 </div>
             </div>
-            <div class="col s12 m4 l4">
+            <div class="col s12 m6 l4">
                 <div class="card card_signup" id="second-card">
                     <div class="card-content title-card">
                         <div class="center-align amber">
@@ -122,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m4 l4">
+            <div class="col s12 m6 l4">
                 <div class="card card_signup" id="third-card">
                     <div class="card-content title-card">
                         <div class="center-align blue">

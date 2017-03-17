@@ -238,3 +238,38 @@ nav li{
 .card .card-content .card-title{
     margin-bottom: 0;
 }
+
+
+
+
+.card-title{
+    padding: 2vw;
+}
+
+.timeline .col{
+    padding:0px;
+}
+
+.line{
+    background-color: #444444;
+    height: 1vh;
+}
+
+.point{
+    background-color: white;
+    border: 3px solid green;
+    color: green;
+    font-size: 4vh;
+    font-weight: 500;
+    border-radius: 100%;
+    margin-top: -3vh;
+    height: 6vh;
+    width: 6vh;
+    padding-top: 5%;
+}
+
+.point-actif{
+    background-color: green;
+    border: 5px solid white;
+    color: white;
+}
