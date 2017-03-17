@@ -45,11 +45,6 @@ $(document).ready(function(){
 
     } );
     
-    
-    
-    
-    
-    
   });
 
 

@@ -1,0 +1,240 @@
+.nav-perso {
+    background: linear-gradient(10deg,#4b6572,#2c3e50);
+}
+
+nav li{
+    margin-right: 1em;
+}
+
+.iconeJoueur{
+    width: 4rem;
+}
+
+@font-face {
+    font-family: Luna;
+    src: url("../fonts/Luna.ttf");
+}
+
+body{
+
+    background-image: url("../img/bg.png");
+
+    background-attachment: fixed;
+}
+
+.luna{
+    font-family: Luna;
+}
+
+.brand-logo{
+    text-shadow: 2px 2px #000000;
+    margin-left: 20px;
+}
+
+.titre-modif-email{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-bottom: 3em;
+    background: repeating-linear-gradient(
+            45deg,
+            #1e88e5,
+            #1e88e5 6px,
+            #1976d2 6px,
+            #1976d2 12px
+    );
+
+}
+
+.titre-mon-compte{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #ffb300,
+            #ffb300 6px,
+            #ffa000 6px,
+            #ffa000 12px
+    );
+}
+
+.modal .modal-content{
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: #b0bec5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #b0bec5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #b0bec5;
+    opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: #b0bec5;
+    opacity: 1;
+}
+
+.section-mon-compte{
+    padding-top: 5em;
+}
+
+
+
+@font-face {
+    font-family: Luna;
+    src: url("../fonts/Luna.ttf");
+}
+
+.brand-logo{
+    text-shadow: 2px 2px #000000;
+    margin-left: 20px;
+}
+
+.card_signup{
+    margin-top: 12em;
+}
+
+.luna{
+    font-family: Luna;
+}
+
+.card .title-card{
+    padding: 0px;
+}
+
+.titre-creation-compte{
+
+    padding-top: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #689f38,
+            #689f38 6px,
+            #7cb342 6px,
+            #7cb342 12px
+    );
+}
+
+.titre-telechargement{
+
+    padding-top: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #ffb300,
+            #ffb300 6px,
+            #ffa000 6px,
+            #ffa000 12px
+    );
+}
+
+
+.titre-mon-compte{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #ffb300,
+            #ffb300 6px,
+            #ffa000 6px,
+            #ffa000 12px
+    );
+}
+
+.titre-connexion{
+
+    padding-top: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #1e88e5,
+            #1e88e5 6px,
+            #1976d2 6px,
+            #1976d2 12px
+    );
+}
+
+.card-index{
+    margin-top: 20em;
+}
+
+.log-card{
+    margin-top: 10em;
+}
+
+.btn-index{
+    margin: 2em;
+}
+
+.nav-perso {
+    background: linear-gradient(10deg,#4b6572,#2c3e50);
+}
+
+.bottom-arrow-creation-compte{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 15px solid transparent;
+    border-top: 15px solid #8bc34a;
+    left: 47%;
+
+}
+
+
+.bottom-arrow-telechargement{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 15px solid transparent;
+    border-top: 15px solid #ffc107;
+    left: 47%;
+}
+
+.bottom-arrow-connexion{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 15px solid transparent;
+    border-top: 15px solid #2196f3;
+    left: 47%;
+}
+
+#btn-download{
+    position: relative;
+    padding-bottom: 2em;
+    bot: 0px;
+}
+
+nav li{
+    margin-right: 1em;
+}
+
+.card-download{
+    padding: 2.5em;
+}
+
+.iconeJoueur{
+    width: 4rem;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: #b0bec5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #b0bec5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #b0bec5;
+    opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: #b0bec5;
+    opacity: 1;
+}
+
+.card .card-content .card-title{
+    margin-bottom: 0;
+}
