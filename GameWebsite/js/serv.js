@@ -379,6 +379,27 @@ io.sockets.on('connection', function (socket){
       fournirSalons();
   });
 
+  socket.on('AUTH_CLI',function(joueur){
+    var pseudo = joueur.pseudo;
+    var mdp = joueur.mdp;
+
+    console.log("log request : "+pseudo+" : "+mdp);
+
+    query = "SELECT Pseudo FROM CompteJoueur WHERE (Pseudo LIKE "+connection.escape(pseudo)+" AND mdpCompte LIKE "+connection.escape(mdp)+" );";
+
+    connection.query(query, function(err, rows, fields){
+      if (err) throw err;
+      if(rows.length == 0){
+        socket.emit('AUTH_CLI_FAIL',0);
+      }
+      else {
+        socket.emit('AUTH_CLI_OK',0);
+      }
+    });
+
+
+  });
+
   socket.on('useCard', function(action){
 
     var idRoom = socket.idRoom;
