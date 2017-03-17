@@ -163,6 +163,7 @@ public class PackManager {
         String queryInsert;
         for(LootPack lp : getListLootPacks()){
             if(lp.getId() == id_LootPack) {
+                lp.setQte(qte);
                 getCurrentPack().getLootPacks().add(lp);
 
                 queryInsert = "INSERT INTO LootPackPack (id_Pack, id_LootPack, qteCartePack) VALUES ("+getCurrentPack().getId()+","+id_LootPack+","+qte+");";
@@ -213,13 +214,23 @@ UNION
         listPacks = new ArrayList<>();
         listLootPacks = new ArrayList<>();
         listEnsembles = new ArrayList<>();
-        String queryPacks = "SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte" +
-                " FROM Pack" +
-                " RIGHT JOIN LootPackPack USING (id_Pack)" +
-                " RIGHT JOIN LootPackEnsemble USING (id_LootPack)" +
-                " RIGHT JOIN EnsembleCarte USING (id_Ensemble)" +
-                " JOIN Carte USING (id_Carte)" +
-                " ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte";
+        String queryPacks = "SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte\n" +
+                "FROM Offre\n " +
+                "RIGHT JOIN\n " +
+                " ((SELECT id_Pack, nomPack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte FROM Pack LEFT JOIN\n" +
+                " \t(SELECT * FROM LootPackPack\n" +
+                "                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)\n" +
+                "                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)\n" +
+                "                        JOIN Carte USING (id_Carte)) lpe USING (id_Pack))\n" +
+                " \n" +
+                " \n" +
+                " UNION\n" +
+                " (SELECT id_Pack, nomPack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte FROM Pack RIGHT JOIN\n" +
+                " \t(SELECT * FROM LootPackPack\n" +
+                "                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)\n" +
+                "                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)\n" +
+                "                        JOIN Carte USING (id_Carte) ) lpe2 USING (id_Pack))) ali USING (id_Pack)\n" +
+                "                       \tORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte";
 
 
         int id_Pack = -1, id_LootPack = -1, id_Ensemble = -1, misEnVentePack = 0, qteCartePack = 0;
@@ -236,7 +247,7 @@ UNION
         try {
             while (resultSet.next()) {
                 if (resultSet.getInt("id_Pack") != 0 & (resultSet.getInt("id_LootPack") == 0)){     //Pack non null mais vide (sans LootPack)
-                    listPacks.add(new Pack(resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imagePack"),resultSet.getInt("misEnVente"),new ArrayList<LootPack>()));
+                    listPacks.add(new Pack(resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imageMiniaturePack"),resultSet.getInt("misEnVente"),new ArrayList<LootPack>()));
 
                 //Finir ici : manque un else if (Pack non null non vide mais avec ensemble incomplet (OU PAS : PEUT ËTRE PAS POSSIBLE EN FAIT)
                 }
@@ -384,7 +395,7 @@ UNION
     //Créer un pack dans la base de données, reliant ainsi les LootPacks à ce même Pack.
     public int createPack(String nom,String description, int prixIG, int prixIRL, String image, int id_Offre){
         String queryPack = "INSERT INTO Pack (id_Pack,nomPack,descriptionPack,imageMiniaturePack) VALUES ("+current_idPack+",'"+nom+"','"+description+"','"+image+"');";
-        String queryOffre = "INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre ) VALUES ("+id_Offre+","+prixIG+","+prixIRL+","+current_idPack+",'Pack');";
+        String queryOffre = "INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,image) VALUES ("+id_Offre+","+prixIG+","+prixIRL+","+current_idPack+",'Pack');";
 
         ArrayList<String> queryLootPackPack = new ArrayList<>();
         String tmp;
@@ -472,27 +483,19 @@ UNION
 
     }
 
-    public int switchMiseEnVente(int idPack){
+    public void switchMiseEnVente(){
         String updateMisEnVente;
 
-        //Recherche du pack par son id
-        for(Pack p : listPacks){
-            if (p.getId() == idPack) {
-
-                if(p.getMisEnVente() == 0) {      //Pack non mis en vente
-                    updateMisEnVente = "UPDATE Pack SET misEnVentePack = 1 WHERE id_Pack="+idPack+";";
-                    Manager.getManager().sendRequestUpdate(updateMisEnVente,connection);
-                    p.setMisEnVente(1);
-                }
-                else {                       //Pack actuellement en vente.
-                    updateMisEnVente = "UPDATE Pack SET misEnVentePack = 0 WHERE id_Pack="+idPack+";";
-                    Manager.getManager().sendRequestUpdate(updateMisEnVente,connection);
-                    p.setMisEnVente(0);
-                }
-                return 0;
-            }
+        if(getCurrentPack().getMisEnVente() == 0){
+            updateMisEnVente = "UPDATE Pack SET misEnVentePack = 1 WHERE id_Pack="+getCurrentPack().getId()+";";
+            Manager.getManager().sendRequestUpdate(updateMisEnVente,connection);
+            getCurrentPack().setMisEnVente(1);
         }
-        return -1;
+        else {
+            updateMisEnVente = "UPDATE Pack SET misEnVentePack = 0 WHERE id_Pack="+getCurrentPack().getId()+";";
+            Manager.getManager().sendRequestUpdate(updateMisEnVente,connection);
+            getCurrentPack().setMisEnVente(1);
+        }
     }
 
     public void removeCarteFromEnsemble(int idCarte) {
@@ -546,6 +549,24 @@ UNION
         }
     }
 
+    public void removeLootPackFromPack(int id_LootPack){
+        for (int i = 0; i < currentPack.getLootPacks().size(); i++) {
+            if (currentPack.getLootPacks().get(i).getId() == id_LootPack) {
+                currentPack.getLootPacks().remove(i);
+                String queryRmEns = "DELETE FROM LootPackPack WHERE id_Ensemble="+id_LootPack+" AND id_Pack="+currentPack.getId()+";";
+                Manager.getManager().sendDeleteUpdate(queryRmEns,connection);
+                break;
+            }
+        }
+
+        try {
+            if (connection != null) connection.close();
+        }catch (SQLException e){
+
+        }
+
+
+    }
 
     public void choosePack(int idPack){
         for(Pack p : listPacks){

@@ -135,6 +135,13 @@
 </div>
 
 
+<div id="modal-gestionPack" class="modal">
+    <div class="modal-content">
+        <div id="gestion-Pack" class="row">
+
+        </div>
+    </div>
+</div>
 
 
 <h3>Panneau d'administration des packs</h3>

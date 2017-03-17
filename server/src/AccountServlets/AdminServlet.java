@@ -1,9 +1,6 @@
 package AccountServlets;
 
-import View.AdminPackView;
-import View.Ensemble;
-import View.MiniatureCarte;
-import View.ShopView;
+import View.*;
 import com.google.gson.Gson;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
@@ -102,7 +99,7 @@ public class AdminServlet extends HttpServlet {
         int request = Integer.parseInt(req.getParameter("idRequest"));
         System.out.println("idRequest = "+request);
 
-        int id, j; String json_CNE; float drop;
+        int id, j, qte; String json_CNE; float drop;
 
         switch(request){
             case -1:        //Reset de l'adv (refresh, etc)
@@ -156,6 +153,9 @@ public class AdminServlet extends HttpServlet {
                 out.print(json_NP);
                 break;
 
+
+
+
             case 10:
                 ArrayList<MiniatureCarte> listCartesAjoutables = new ArrayList<>();
 
@@ -185,6 +185,11 @@ public class AdminServlet extends HttpServlet {
                 json_CNE = new Gson().toJson(adv.getCurrentEnsemble());
                 out.print(json_CNE);
                 break;
+
+
+
+
+
             case 13:
                 ArrayList<Ensemble> listEnsembleAjoutable = new ArrayList<>();
 
@@ -222,6 +227,56 @@ public class AdminServlet extends HttpServlet {
                 json_CNE = new Gson().toJson(adv.getCurrentLootPack());
                 out.print(json_CNE);
                 break;
+
+
+
+
+
+            case 17:
+                ArrayList<LootPack> listLootPacksAjoutable = new ArrayList<>();
+
+                for(LootPack lp : adv.getListLootPacks()){
+                    j = 0;
+                    for(int i = 0; i < adv.getCurrentPack().getLootPacks().size();i++){
+                        if (lp.getId() == adv.getCurrentPack().getLootPacks().get(i).getId()) j = 1;
+                    }
+                    if (j == 0) listLootPacksAjoutable.add(lp);
+                }
+                String json_LLP = new Gson().toJson(listLootPacksAjoutable);
+                out.print(json_LLP);
+                break;
+            case 18:
+                id = Integer.parseInt(req.getParameter("id_LootPack"));
+                System.out.println(req.getParameter("qte"));
+                qte = Integer.parseInt(req.getParameter("qte"));
+
+                adv.addLootPackToPack(id,qte);
+                json_CNE = new Gson().toJson(adv.getCurrentPack());
+                System.out.println(json_CNE);
+                out.print(json_CNE);
+                break;
+            case 19:
+                id = Integer.parseInt(req.getParameter("id_LootPack"));
+                adv.removeLootPackFromPack(id);
+                json_CNE = new Gson().toJson(adv.getCurrentPack());
+                out.print(json_CNE);
+                break;
+            case 20:
+                id = Integer.parseInt(req.getParameter("id_LootPack"));
+                drop = Float.parseFloat(req.getParameter(""));
+                adv.modifyDropRate(id,drop);
+                json_CNE = new Gson().toJson(adv.getCurrentLootPack());
+                out.print(json_CNE);
+                break;
+            case 21:
+                adv.switchMisEnVente();
+                json_CNE = new Gson().toJson(adv.getCurrentPack());
+                out.print(json_CNE);
+                break;
+
+
+
+
             case 42:
                 String listEns = new Gson().toJson(adv.getListEnsembles());
                 out.print(listEns);
