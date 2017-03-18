@@ -20,9 +20,7 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="css/admin.css"  media="screen,projection"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/admin.js"></script>
+
 
 
     <meta charset="utf-8">
@@ -123,6 +121,26 @@
                     <div class="input-field col s12 m12 l12">
                         <input id="nomPack" type="text" class="validate">
                         <label for="nomPack">Nom du nouveau Pack</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 m6 l6">
+                        <input id="prixIG" type="text" class="validate">
+                        <label for="prixIG">PrixIG du nouveau Pack</label>
+                    </div>
+                    <div class="input-field col s6 m6 l6">
+                        <input id="prixIRL" type="text" class="validate">
+                        <label for="prixIRL">PrixIRL du nouveau Pack</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 m6 l6">
+                        <input id="descriptionPack" type="text" class="validate">
+                        <label for="descriptionPack">Description du nouveau Pack</label>
+                    </div>
+                    <div class="input-field col s6 m6 l6">
+                        <input id="imagePack" type="text" class="validate">
+                        <label for="imagePack">Lien de l'image du nouveau Pack</label>
                     </div>
                 </div>
                 <div class="input-submit col s12 m12 l12">
@@ -232,7 +250,9 @@
 
 
     </div>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/admin.js"></script>
 </body>
 </html>
 

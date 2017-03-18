@@ -147,7 +147,11 @@ public class AdminServlet extends HttpServlet {
 
             case 5:
                 String nomNwP = req.getParameter("nomPack");
-                adv.createPack(nomNwP);
+                String description = req.getParameter("description");
+                String image = req.getParameter("image");
+                int prixIG = Integer.parseInt(req.getParameter("prixIG"));
+                int prixIRL = Integer.parseInt(req.getParameter("prixIRL"));
+                adv.createPack(nomNwP,description,image,prixIG,prixIRL);
                 String json_NP = new Gson().toJson(adv.getListPacks());
                 System.out.println(json_NP);
                 out.print(json_NP);
@@ -263,9 +267,9 @@ public class AdminServlet extends HttpServlet {
                 break;
             case 20:
                 id = Integer.parseInt(req.getParameter("id_LootPack"));
-                drop = Float.parseFloat(req.getParameter(""));
-                adv.modifyDropRate(id,drop);
-                json_CNE = new Gson().toJson(adv.getCurrentLootPack());
+                qte = Integer.parseInt(req.getParameter("qte"));
+                adv.modifyQte(id,qte);
+                json_CNE = new Gson().toJson(adv.getCurrentPack());
                 out.print(json_CNE);
                 break;
             case 21:

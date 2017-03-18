@@ -145,25 +145,28 @@ public class AdminPackView {
         setCurrentLootPack(packManager.getCurrentLootPack());
     }
 
+
     public void addLootPackToPack(int id_LootPack, int qte){
         packManager.setCurrentPack(getCurrentPack());
         packManager.addLootPackToPack(id_LootPack,qte);
         setCurrentPack(packManager.getCurrentPack());
-
     }
     public void removeLootPackFromPack(int id_LootPack){
         packManager.setCurrentPack(getCurrentPack());
         packManager.removeLootPackFromPack(id_LootPack);
         setCurrentPack(packManager.getCurrentPack());
     }
-
+    public void modifyQte(int id, int qte){
+        packManager.setCurrentPack(getCurrentPack());
+        packManager.modifyQte(id,qte);
+        setCurrentPack(packManager.getCurrentPack());
+    }
     public void switchMisEnVente(){
         packManager.setCurrentPack(getCurrentPack());
         packManager.switchMiseEnVente();
         setCurrentPack(packManager.getCurrentPack());
-
-
     }
+
 
 
     public void createEnsemble(String nom){
@@ -179,7 +182,9 @@ public class AdminPackView {
 
     }
 
-    public void createPack(String nom){
-
+    public void createPack(String nom,String description, String image, int prixIG, int prixIRL){
+        packManager.createPack(nom,description,prixIG,prixIRL,image);
+        setListPacks(packManager.getListPacks());
+        setCurrentPack(packManager.getCurrentPack());
     }
 }

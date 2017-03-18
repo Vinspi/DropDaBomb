@@ -43,14 +43,13 @@ public class Pack {
         this.lootPacks = lootPacks;
     }
 
-    public Pack(int id, String nom, String img){
+    public Pack(int id, String nom){
         this.id = id;
         this.nom = nom;
-        this.img = img;
         this.lootPacks = null;
         this.misEnVente = 0;
     }
-    public Pack(int id, String nom, String img, int misEnVente, ArrayList<LootPack> lootPacks){
+    public Pack(int id, String nom, int misEnVente, ArrayList<LootPack> lootPacks){
         this.id = id;
         this.nom = nom;
         this.img = img;

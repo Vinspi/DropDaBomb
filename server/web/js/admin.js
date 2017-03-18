@@ -46,7 +46,7 @@ $(document).ready(function() {
                     }
                     document.getElementById("listEnsembles").appendChild(p);
 
-                    document.getElementById("actionEns").innerHTML = "<a href=\"#modal-newEns\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a>";
+                    //document.getElementById("actionEns").innerHTML = "<a href=\"#modal-newEns\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a>";
                     //('.modal').modal();
                     $(".button-collapse").sideNav();
                     $('#modal-newEns').modal('close');
@@ -82,7 +82,7 @@ $(document).ready(function() {
                         if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
                     }
                     document.getElementById("listLootPack").appendChild(p);
-                    document.getElementById("actionLootPack").innerHTML = "<a href=\"#modal-newLootPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a>";
+                    //document.getElementById("actionLootPack").innerHTML = "<a href=\"#modal-newLootPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a>";
                     $(".button-collapse").sideNav();
                     $('#modal-newLootPack').modal('close');
                     console.log("qq");
@@ -95,13 +95,23 @@ $(document).ready(function() {
     });
     $('#modal-newPack').on('submit',function(e){
         e.preventDefault();
-        if($("#nomPack").val().length != 0) {
+        if($("#nomPack").val().length != 0 && $("#prixIG").val().length != 0 && $("#prixIRL").val().length != 0) {
             var nomPack = $('#nomPack').val();
+            var description;
+            if($("#descriptionPack").val().length != 0) description = $("#descriptionPack").val();
+            else description = "";
+
+            var image;
+            if($("#imagePack").val().length != 0) image = $("#imagePack").val();
+            else image = "";
+
+            var prixIG = $("#prixIG").val();
+            var prixIRL = $("#prixIRL").val();
 
             $.ajax({
                 url: "Admin",
                 type: 'POST',
-                data: 'idRequest=5&nomPack=' + nomPack,
+                data: {"idRequest": 5, "nomPack": nomPack, "description" : description, "image": image, "prixIG": prixIG, "prixIRL": prixIRL},
                 dataType: 'json', // JSON
                 success: function (data) {
                     console.log(data);
@@ -119,7 +129,7 @@ $(document).ready(function() {
                         else
                         {
                             p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                                "       <div class=\"block pev\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
+                                "       <div class=\"pev\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
                                 "     </div>";
                         }
                         if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
@@ -127,8 +137,8 @@ $(document).ready(function() {
                     document.getElementById("listPack").appendChild(p);
 
                     $(".button-collapse").sideNav();
-                    $('#modal-newLootPack').modal('close');
-                    console.log("qq");
+                    $('#modal-newPack').modal('close');
+                    Materialize.toast("Pack  créé",4000);
                 }
             });
         }
@@ -167,8 +177,8 @@ function setCurrentEnsemble(value){
             document.getElementById("currentEnsemble").appendChild(p);
             document.getElementById("actionEns").innerHTML = "<a href=\"#modal-newEns\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a><a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetCarte()\">Add</a>";
             $(".button-collapse").sideNav();
-            if(result.nom != null) document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : " + result.nom + ", "+result.id;
-            else document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : "+result.id;
+            if(result.nom != null) document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : nom = " + result.nom + ", id = "+result.id;
+            else document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : id = "+result.id;
 
 
             console.log("qq");
@@ -219,8 +229,8 @@ function setCurrentLootPack(value){
 
 
             $(".button-collapse").sideNav();
-            if(result.nom != null) document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : " + result.nom + ", "+result.id;
-            else document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : "+result.id;
+            if(result.nom != null) document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : nom = " + result.nom + ", id = "+result.id;
+            else document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : id = "+result.id;
             console.log("qq");
 
         },
@@ -244,19 +254,35 @@ function setCurrentPack(value) {
             var result = JSON.parse(data.responseText);
             console.log("succes ");
             document.getElementById("currentPack").innerHTML = "";
+            document.getElementById("gestion-Pack").innerHTML = "";
+
             var p = document.createElement('div');
+            var b = document.createElement('div');
+            b.innerHTML += "<ul>";
 
             for(var i = 0; i < result.lootPacks.length; i++){
                 p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"p"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack($(this).attr('id'))\"><p>LootPack "+result.lootPacks[i].id+"</p></div>" +
+                    "       <div class=\"block\" id=\"lpP"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\">LootPack "+result.lootPacks[i].id+"<br>"+result.lootPacks[i].qte+" cartes</p></div>" +
                     "     </div>";
                 if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                b.innerHTML += "<li class=\'row\'><div class=\"block \" id=\"lpP"+result.lootPacks[i].id+"\" onclick=\"removeLootPack("+result.lootPacks[i].id+")\"><p>LootPack "+result.lootPacks[i].id+"</br>"+result.lootPacks[i].qte+" cartes</p></div></div>"+
+                    "<div class=\"input-field\"><input id=\"newQte"+result.lootPacks[i].id+"\" type=\"text\" class=\"validate\"> <label for=\"newQte\">Changer la quantité ?</label>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyQte("+result.lootPacks[i].id+")\">Qte</a>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeLootPack("+result.lootPacks[i].id+")\">Remove</a>"+
+                    "</div></li>";
             }
+            b.innerHTML += "</ul>";
             document.getElementById("currentPack").appendChild(p);
+            document.getElementById("gestion-Pack").appendChild(b);
             document.getElementById("actionPack").innerHTML = "<a href=\"#modal-newPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a>"+
-                "<a onclick=\"addGetLootPack()\" data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" >Add</a>"+
+                "<a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetLootPack()\">Add</a>"+
                 "<a href=\"#modal-gestionPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">Modifier</a>"+
                 "<a onclick=\"switchMiseEnVente()\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">Switch</a>";
+
+
+            if(result.nom != null) document.getElementById("idCurrentPack").innerHTML = "Pack courant : nom = " + result.nom + ", id = "+result.id;
+            else document.getElementById("idCurrentPack").innerHTML = "Pack courant : id = "+result.id;
+            $(".button-collapse").sideNav();
             console.log("qq");
 
         },
@@ -360,7 +386,7 @@ function getListPacks(){
                 else
                 {
                     p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                        "       <div class=\"block pev\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
+                        "       <div class=\"pev\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
                         "     </div>";
                 }
                 if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
@@ -543,6 +569,8 @@ function addEnsembleToCurrentLootPack(value){
             var result = JSON.parse(data.responseText);
             console.log("succes ");
             document.getElementById("currentLootPack").innerHTML = "";
+            document.getElementById("gestion-LootPack").innerHTML = "";
+
             var p = document.createElement('div');
             var b = document.createElement('div');
             b.innerHTML = "<ul>";
@@ -660,7 +688,7 @@ function modifyDropRate(id_ensemble) {
                         "       <div class=\"block\" id=\"eLP" + result.ensembles[i].id + "\" onclick=\"setCurrentEnsemble(" + result.ensembles[i].id + ")\"><p>Ensemble " + result.ensembles[i].id + "</br>" + result.ensembles[i].dropRate + "%</p></div></div>";
                     if (i != 0 && i % 6 == 5) p.innerHTML += "</div><div class=\"row\">";
                     b.innerHTML += "<li><div class=\"block\" id=\"eLP" + result.ensembles[i].id + "\" ><p>Ensemble " + result.ensembles[i].id + "</br>" + result.ensembles[i].dropRate + "%</p></div></div>" +
-                        "<div class=\"input-field\"><input id=\"newDropRate\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>" +
+                        "<div class=\"input-field\"><input id=\"newDropRate"+result.ensembles[i].id+"\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>" +
                         "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyDropRate(" + result.ensembles[i].id + ")\">DropRate</a>" +
                         "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeEnsemble(" + result.ensembles[i].id + ")\">Remove</a>" +
                         "</div></li>";
@@ -734,13 +762,14 @@ function addLootPackToCurrentPack(value){
             var result = JSON.parse(data.responseText);
             console.log("succes ");
             document.getElementById("currentPack").innerHTML = "";
+            document.getElementById("gestion-Pack").innerHTML = "";
             var p = document.createElement('div');
             var b = document.createElement('div');
             b.innerHTML = "<ul>";
 
             for(var i = 0; i < result.lootPacks.length; i++){
                 p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"lpP"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\"><p>LootPack "+result.lootPacks[i].id+"</br>"+result.lootPacks[i].qte+" cartes</p></div>" +
+                    "       <div class=\"block\" id=\"lpp"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\">LootPack "+result.lootPacks[i].id+"<br>"+result.lootPacks[i].qte+" cartes</p></div>" +
                     "     </div>";
                 if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
                 b.innerHTML += "<li class=\'row\'><div class=\"block \" id=\"lpP"+result.lootPacks[i].id+"\" onclick=\"removeLootPack("+result.lootPacks[i].id+")\"><p>LootPack "+result.lootPacks[i].id+"</br>"+result.lootPacks[i].qte+" cartes</p></div></div>"+
@@ -749,7 +778,7 @@ function addLootPackToCurrentPack(value){
                     "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeLootPack("+result.lootPacks[i].id+")\">remove</a>"+
                     "</div></li>";
             }
-
+            b.innerHTML += "</ul>";
             document.getElementById("currentPack").appendChild(p);
             document.getElementById("gestion-Pack").appendChild(b);
 
@@ -775,7 +804,7 @@ function removeLootPack(value){
             url: 'Admin',
             type: 'POST',
 
-            data: {"idRequest": 19, "id_Ensemble": value},
+            data: {"idRequest": 19, "id_LootPack": value},
 
             dataType: 'json',
 
@@ -791,7 +820,7 @@ function removeLootPack(value){
 
                 for(var i = 0; i < result.lootPacks.length; i++){
                     p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                        "       <div class=\"block\" id=\"lpP"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\"><p>LootPack "+result.lootPacks[i].id+"</br>"+result.lootPacks[i].qte+" cartes</p></div>" +
+                        "       <div class=\"block\" id=\"lpp"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\">LootPack "+result.lootPacks[i].id+"<br>"+result.lootPacks[i].qte+" cartes</p></div>" +
                         "     </div>";
                     if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
                     b.innerHTML += "<li class=\'row\'><div class=\"block \" id=\"lpP"+result.lootPacks[i].id+"\" onclick=\"removeLootPack("+result.lootPacks[i].id+")\"><p>LootPack "+result.lootPacks[i].id+"</br>"+result.lootPacks[i].qte+" cartes</p></div></div>"+
@@ -844,7 +873,7 @@ function modifyQte(value){
 
                 for (var i = 0; i < result.lootPacks.length; i++) {
                     p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                        "       <div class=\"block\" id=\"lpP" + result.lootPacks[i].id + "\" onclick=\"setCurrentLootPack(" + result.lootPacks[i].id + ")\"><p>LootPack " + result.lootPacks[i].id + "</br>" + result.lootPacks[i].qte + " cartes</p></div>" +
+                        "       <div class=\"block\" id=\"lpp"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\">LootPack "+result.lootPacks[i].id+"<br>"+result.lootPacks[i].qte+" cartes</p></div>" +
                         "     </div>";
                     if (i != 0 && i % 6 == 5) p.innerHTML += "</div><div class=\"row\">";
                     b.innerHTML += "<li class=\'row\'><div class=\"block \" id=\"lpP" + result.lootPacks[i].id + "\" onclick=\"removeLootPack(" + result.lootPacks[i].id + ")\"><p>LootPack " + result.lootPacks[i].id + "</br>" + result.lootPacks[i].qte + " cartes</p></div></div>" +
@@ -884,14 +913,14 @@ function switchMiseEnVente(){
 
         success: function (data) {
             console.log(data);
-            var result = JSON.parse(data.responseText);
+            var result = data;//JSON.parse(data.responseText);
             console.log("succes ");
             if(result.misEnVente == 1){
                 $("#P"+result.id).attr('class', 'block');
                 Materialize.toast(result.id+' mis en vente', 4000);// 4000 is the duration of the toast
             }
             else {
-                $("#P"+result.id).attr('class','block pev');
+                $("#P"+result.id).attr('class','pev');
                 Materialize.toast(result.id+' retiré de la vente',4000);
             }
 
