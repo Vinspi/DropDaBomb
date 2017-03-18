@@ -173,7 +173,7 @@ public class AccountManager {
         Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
 
-        if(password.length() < RequestStatus.MIN_SIZE_PASSWORD) return RequestStatus.ERR_MDP;
+        if(password.length() < MIN_SIZE_PASSWORD) return RequestStatus.ERR_MDP;
 
         if(!matcher.matches()){
             return RequestStatus.CREATE_ACCOUNT_FAILED_EMAIL;

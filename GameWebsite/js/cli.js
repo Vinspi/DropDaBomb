@@ -1,6 +1,6 @@
 /* constantes */
 
-var NB_MAX_PDV = 150;
+var NB_MAX_PDV = 50;
 
 /* ********** */
 
@@ -100,8 +100,7 @@ function dessineMain(main){
 }
 
 function dessineBarreDeVie(etatJoueur,bouclierAdversaire){
-  /* 49% = NB_MAX_PDV pdv */
-  /* pour dessiner X pdv -> Y% = 49*NB_MAX_PDV/X */
+
 
   var pourcent_barre_verte = 98*etatJoueur.pdv/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
   var pourcent_bouclier_joueur = 98*etatJoueur.bouclier/(NB_MAX_PDV*2+etatJoueur.bouclier+bouclierAdversaire);
@@ -114,6 +113,12 @@ function dessineBarreDeVie(etatJoueur,bouclierAdversaire){
   $('#zone_barre_barre_fond_bouclier_left').css({'width' : pourcent_bouclier_joueur+'%'});
   $('#zone_barre_barre_fond_bouclier_right').css({'width' : pourcent_bouclier_adversaire+'%'});
   $('#zone_barre_barre_fond_right').css({'width' : pourcent_barre_rouge+'%'});
+
+  console.log("vie : "+etatJoueur.pdv);
+  console.log("vie : "+etatJoueur.bouclier);
+
+
+  $('#zone_barre_vie_left').html('<span class=\"white-text\">'+(etatJoueur.pdv+etatJoueur.bouclier)+'</span>(<span class = \"green-text\">'+etatJoueur.pdv+'</span> + <span class=\"purple-text\">'+etatJoueur.bouclier+'</span>)');
 
 }
 
@@ -189,10 +194,6 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
     if(rm_class) $(zone_adv).removeClass("boom");
 
   }
-
-
-
-
 }
 
 function annoncerVictoire(){
@@ -213,7 +214,7 @@ socket.on('matchStart', function (obj) {
   console.log(obj.message);
 
   dessineMain(etatJoueur.main);
-  dessineBarreDeVie(etatJoueur.pdv);
+  dessineBarreDeVie(etatJoueur,0);
 });
 
 socket.on('FIN_DU_GAME', function(obj){

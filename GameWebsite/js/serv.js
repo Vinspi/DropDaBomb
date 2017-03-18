@@ -16,7 +16,7 @@ var CARD_MELANGE = 9;
 /* fin des definitions de cartes */
 
 var NB_MAX_SALON = 6;
-var NB_MAX_PDV = 150;
+var NB_MAX_PDV = 50;
 var NB_CARTE_MAIN_MAX = 4;
 var NB_POUDRE_PAR_TOUR = 5;
 var NB_MAX_TIMER = 15;
@@ -201,6 +201,8 @@ function initMatch(pseudo1, pseudo2){
     console.log("nameRoom = "+nameRoom);
     etatM.nameRoom = nameRoom;
 
+    console.log("match n° "+index);
+
 
 
     fifoJoueurs[0].socket.idRoom = index;
@@ -335,18 +337,32 @@ function appliqueEffets(etatJoueurEmetteur,etatJoueurAdversaire,effet){
   }
 }
 
-function finDeTour(etatMatch){
+function finDeMatch(etatMatch){
 
-  /* c'est la fin du tour du joueur 1 */
+  var num_room = etatMatch.socketJ1.idRoom;
+
+  console.log("fin du match n° "+num_room);
+
 
   if(etatMatch.joueur1.pdv <= 0){
+
     io.sockets.to(etatMatch.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatMatch.joueur2.pseudo, 'perdant' : 'maurice'});
+    listSalons[num_room] = "LIBRE";
     return;
   }
   if(etatMatch.joueur2.pdv <= 0){
     io.sockets.to(etatMatch.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatMatch.joueur1.pseudo, 'perdant' : 'maurice'});
+    listSalons[num_room] = "LIBRE";
     return;
   }
+
+}
+
+function finDeTour(etatMatch){
+
+  /* c'est la fin du tour du joueur 1 */
+
+
 
   if(etatMatch.tour%2 == 0){
     /* on fait gagner de la poudre */
@@ -368,6 +384,12 @@ function finDeTour(etatMatch){
     etatMatch.socketJ2.emit('FIN_TOUR', {'joueurTour' : etatMatch.joueur1.pseudo, 'etatJoueur' : etatMatch.joueur2, 'actifAdversaire' : etatMatch.joueur1.carteActiveNonRetourne});
 
   }
+
+  if(etatMatch.joueur1.pdv <= 0 || etatMatch.joueur2.pdv <= 0){
+    finDeMatch(etatMatch);
+    return;
+  }
+
 
 
   etatMatch.tour++;
@@ -429,14 +451,7 @@ io.sockets.on('connection', function (socket){
     var carteJoue;
     var retirerCarte = true;
 
-    if(etatM.joueur1.pdv <= 0){
-      io.sockets.to(etatM.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatM.joueur2.pseudo, 'perdant' : 'maurice'});
-      return;
-    }
-    if(etatM.joueur2.pdv <= 0){
-      io.sockets.to(etatM.nameRoom).emit('FIN_DU_GAME',{'vainqueur': etatM.joueur1.pseudo, 'perdant' : 'maurice'});
-      return;
-    }
+
 
 
     /* fonctions de contrôle */
@@ -544,7 +559,7 @@ io.sockets.on('connection', function (socket){
         case CARD_MELANGE:
           for(var k = 0; k < etatJoueurEmetteur.main.length; k++){
             etatJoueurEmetteur.deck.push(etatJoueurEmetteur.main[i]);
-            etatJoueurEmetteur.main.slice(i,1);
+            etatJoueurEmetteur.main.splice(i,1);
           }
           etatJoueurEmetteur.deck = melangeCarte(etatJoueurEmetteur.deck);
           tireCarteMain(etatJoueurEmetteur);
@@ -574,6 +589,11 @@ io.sockets.on('connection', function (socket){
         etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
       }
 
+      if(etatM.joueur1.pdv <= 0 || etatM.joueur2.pdv <= 0){
+        finDeMatch(etatM);
+        return;
+      }
+
       socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.carteActiveNonRetourne, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
       socket.broadcast.emit('update',{'etatJoueur' : etatJoueurAdversaire, 'actifAdversaire' : etatJoueurEmetteur.carteActiveNonRetourne, 'carteJoue' : carteJoue,  'bouclierAdversaire' : etatJoueurEmetteur.bouclier});
 
@@ -592,11 +612,6 @@ io.sockets.on('connection', function (socket){
 
   //Fonction très très longue :
 });
-
-
-
-
-
 
 initListSalon();
 server.listen(8080);
