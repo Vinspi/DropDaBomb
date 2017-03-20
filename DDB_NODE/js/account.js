@@ -66,8 +66,16 @@ function next_step(){
     $("#step"+step).trigger("mouseenter");
     $("#step"+step+"_text").addClass("point-actif");
 
-    $("#zone_content_form").hide();
-    $("#zone_content_configure_account").show();
+
+    if(step == 2){
+        $("#zone_content_form").hide();
+        $("#zone_content_configure_account").show();
+    }
+    else if(step == 3){
+        $("#zone_content_form").hide();
+        $("#zone_content_configure_account").hide();
+        $("#zone_content_starter").show();
+    }
 
 
 }
