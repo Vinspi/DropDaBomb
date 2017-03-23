@@ -575,8 +575,6 @@ io.sockets.on('connection', function (socket){
           flagMelange = true;
           break;
 
-<<<<<<< HEAD
-=======
         case CARD_DESENVOUTEMENT:
           id_carte_destroyed = action.id_carte_destroyed;
           if(id_carte_destroyed < 0 || id_carte_destroyed > etatJoueurAdversaire.carteActiveNonRetourne.length){
@@ -612,7 +610,7 @@ io.sockets.on('connection', function (socket){
           etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
 
           break;
->>>>>>> a3942f3cc47f75b826890ada2b86d3122aa4ea42
+
       }
 
 
