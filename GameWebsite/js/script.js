@@ -10,7 +10,7 @@ $(document).ready(function(){
     console.log("ZoneH: " + ZoneH);
 
     setZoneObjects();
-    
+    $("#zone_select_card_effect").hide();
 
     $('.modal').modal({
       dismissible: false, // Modal can be dismissed by clicking outside of the modal
