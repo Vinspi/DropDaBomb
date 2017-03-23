@@ -640,7 +640,8 @@ io.sockets.on('connection', function (socket){
       }
 
       if(flagMelange){
-        for(var k = 0; k < etatJoueurEmetteur.main.length; k++){
+        var x = etatJoueurEmetteur.main.length;
+        for(var k = 0; k < x; k++){
           etatJoueurEmetteur.deck.push(etatJoueurEmetteur.main[0]);
           etatJoueurEmetteur.main.splice(0,1);
         }
