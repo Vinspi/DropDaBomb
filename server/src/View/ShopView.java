@@ -23,6 +23,10 @@ public class ShopView {
     private List<SkinCartonView> listSkinCartonView = new LinkedList<>();
     private List<IconeView> listIconeView = new LinkedList<>();
 
+    public ShopView(String pseudo){
+        getAllOffers(pseudo);
+    }
+
     public void addPackView(PackView packView){
         listPackView.add(packView);
     }
@@ -80,4 +84,6 @@ public class ShopView {
         setListSkinMapView(shopManager.getAllMapOffers(pseudo));
         setListIconeView(shopManager.getAllIconeOffers(pseudo));
     }
+
+
 }

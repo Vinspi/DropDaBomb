@@ -9,8 +9,8 @@ $(document).ready(function(){
     $("#btn-create").click(function(e){create_account();});
 
     socket.on("CREATE_ACCOUNT_FAIL_ALREADYEXIST", function(obj){
-        // Materialize.toast("Un compte avec ce pseudo/email existe déjà", 4000);
-        next_step();
+        Materialize.toast("Un compte avec ce pseudo/email existe déjà", 4000);
+        
     });
     socket.on("CREATE_ACCOUNT_SUCCESS", function(obj){
         next_step();
@@ -56,26 +56,38 @@ function create_account(){
 
 function next_step(){
 
-    console.log("toto");
-
-    $("#step"+step).tooltip('remove');
-    $("#step"+step+"_text").removeClass("point-actif");
+    $("#tab-step-"+step).removeClass("tab-active");
+    $("#tab-step-"+step).addClass("disabled");
+    $("#tab-step-"+step).tooltip("remove");
 
     step++;
+    $("#tab-step-"+step).removeClass("disabled");
+    $("#tab-step-"+step).addClass("tab-active");
+    $("#tab-step-"+step+"-click").trigger("click");
+    $("#tab-step-"+step).trigger("mouseenter");
 
-    $("#step"+step).trigger("mouseenter");
-    $("#step"+step+"_text").addClass("point-actif");
+   
+
+    // console.log("toto");
+
+    // $("#step"+step).tooltip('remove');
+    // $("#step"+step+"_text").removeClass("point-actif");
+
+    // step++;
+
+    // $("#step"+step).trigger("mouseenter");
+    // $("#step"+step+"_text").addClass("point-actif");
 
 
-    if(step == 2){
-        $("#zone_content_form").hide();
-        $("#zone_content_configure_account").show();
-    }
-    else if(step == 3){
-        $("#zone_content_form").hide();
-        $("#zone_content_configure_account").hide();
-        $("#zone_content_starter").show();
-    }
+    // if(step == 2){
+    //     $("#zone_content_form").hide();
+    //     $("#zone_content_configure_account").show();
+    // }
+    // else if(step == 3){
+    //     $("#zone_content_form").hide();
+    //     $("#zone_content_configure_account").hide();
+    //     $("#zone_content_starter").show();
+    // }
 
 
 }

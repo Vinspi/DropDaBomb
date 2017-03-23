@@ -1,12 +1,18 @@
 $(document).ready(function(){
     console.log("Ready");
 
-    $("#zone_content_configure_account").hide();
-    $("#zone_content_starter").hide();
 
-     $("#step1").trigger("mouseenter");
+    $('ul.tabs').tabs({});
 
 
-     setTimeout(function(){ next_step();}, 2000);
-     setTimeout(function(){ next_step();}, 4000);
+    $("#tab-step-1").trigger("mouseenter");
+
+
+    setTimeout(() => {
+        next_step();
+    }, 2000);
+
+     setTimeout(() => {
+        next_step();
+    }, 8000);
 });
