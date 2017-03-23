@@ -45,11 +45,10 @@ $(document).ready(function(){
             $("#connexion_mdp").val("");
 
     } );
-<<<<<<< HEAD
-    
-  });
-=======
->>>>>>> 23ae79d682d2fb0d324e4c0de31f45f0eaa44e8e
+
+
+
+
 
 
 
