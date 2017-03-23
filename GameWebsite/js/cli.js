@@ -97,7 +97,7 @@ function handleSelectCardEffectDesenvoutement(){
   $('#zone_deck').css({'opacity': 1});
 
   $("#zone_select_card_effect").hide();
-
+  console.log("modal emit !!!!");
   socket.emit('useCard',{'id_carte' : CARD_DESENVOUTEMENT, 'pseudo' : Joueur, 'id_carte_destroyed' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
 
 }
@@ -171,7 +171,7 @@ function utiliserCarte(val,id_Carte){
         pos_carte_selection = val;
         card_desenvoutement();
       }
-      if(id_Carte == CARD_ECHANGE_FORCE){
+      else if(id_Carte == CARD_ECHANGE_FORCE){
         pos_carte_selection = val;
         card_echange_force();
       }
