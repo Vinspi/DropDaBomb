@@ -27,6 +27,7 @@ var actifAdversaire;
 var carteJoue;
 var FLAG_FIN_PARTIE = false;
 var vainqueur;
+var pos_carte_selection;
 
 // $(document).ready(function(){
 //   card_desenvoutement();
@@ -46,7 +47,7 @@ function handleSelectCardEffectEchangeForce(){
 
   $("#zone_select_card_effect").hide();
 
-  socket.emit('useCard',{'id_carte' : CARD_ECHANGE_FORCE, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1)});
+  socket.emit('useCard',{'id_carte' : CARD_ECHANGE_FORCE, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
 }
 
 function card_echange_force(){
@@ -97,7 +98,7 @@ function handleSelectCardEffectDesenvoutement(){
 
   $("#zone_select_card_effect").hide();
 
-  socket.emit('useCard',{'id_carte' : CARD_DESENVOUTEMENT, 'pseudo' : Joueur, 'id_carte_destroyed' : (value[value.length-1]-1)});
+  socket.emit('useCard',{'id_carte' : CARD_DESENVOUTEMENT, 'pseudo' : Joueur, 'id_carte_destroyed' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
 
 }
 
@@ -147,11 +148,10 @@ function card_desenvoutement(){
 
 }
 
-function utiliserCarte(val){
-
-  var id_Carte = $(this).attr('id');
+function utiliserCarte(val,id_Carte){
 
 
+  console.log("val = "+val+" id_carte = "+id_Carte);
 
   function verifPoudre(){
     for(var i=0 ; i<etatJoueur.main.length;i++){
@@ -168,9 +168,11 @@ function utiliserCarte(val){
     }
     else {
       if(id_Carte == CARD_DESENVOUTEMENT){
+        pos_carte_selection = val;
         card_desenvoutement();
       }
       if(id_Carte == CARD_ECHANGE_FORCE){
+        pos_carte_selection = val;
         card_echange_force();
       }
       else {

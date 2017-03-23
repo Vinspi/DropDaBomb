@@ -532,14 +532,17 @@ io.sockets.on('connection', function (socket){
       etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
       */
       /* *********************************** ajouter des effets de carte dans cette section ************************************** */
-      var pos_carte_joue;
-      for(var i=0;i<etatJoueurEmetteur.main.length;i++){
-        if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
-          carteJoue = etatJoueurEmetteur.main[i];
-          pos_carte_joue = i;
-          break;
-        }
-      }
+      var pos_carte_joue = action.pos_carte;
+      carteJoue = etatJoueurEmetteur.main[pos_carte_joue];
+      console.log(pos_carte_joue);
+
+      // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+      //   if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+      //     carteJoue = etatJoueurEmetteur.main[i];
+      //     pos_carte_joue = i;
+      //     break;
+      //   }
+      // }
       console.log("carte utilisé par "+pseudo+" : "+id_carte);
 
       switch (+id_carte) {
