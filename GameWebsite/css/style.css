@@ -12,6 +12,15 @@ body{
     background: url(../img/text.png);
 }
 
+#zone_disable{
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background: url(../img/text.png);
+}
+
 img{
     max-width: 100%;
     max-height: 100%;
@@ -392,9 +401,60 @@ img{
     }
 }
 
+@keyframes pop-selection-card-effect {
+    0%{
+      transform : scale(0);
+      opacity: 0.2;
+    }
+    100%{
+      transform: scale(1);
+      opacity: 1;
+    }
+}
+
 
 .boom{
   animation-duration: 1s;
   animation-name: boomer;
   animation-iteration-count: infinite;
+}
+
+/*-------------------------------------------------------*/
+/*-----------      Zone select-card-effect    -----------*/
+
+
+#zone_select_card_effect{
+
+  position: absolute;
+  z-index: 2;
+
+  border: none;
+
+  opacity: 0;
+
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+
+  width: 50%;
+
+}
+
+#zone_select_card_effect_container{
+  display: flex;
+}
+
+#zone_select_card_img{
+
+}
+
+#zone_select_card_effect_card1, #zone_select_card_effect_card2, #zone_select_card_effect_card3, #zone_select_card_effect_card4{
+  opacity: 1;
+}
+
+.pop_select_card_effect{
+  animation: pop-selection-card-effect 0.5s ease-in-out forwards;
+}
+
+.out_select_card_effect{
+  animation: pop-selection-card-effect 0.5s ease-in-out reverse forwards;
 }

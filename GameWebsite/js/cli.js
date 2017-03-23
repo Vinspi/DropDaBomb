@@ -1,6 +1,7 @@
 /* constantes */
 
 var NB_MAX_PDV = 150;
+var CARD_DESENVOUTEMENT = 8;
 
 /* ********** */
 
@@ -23,11 +24,40 @@ var carteJoue;
 var FLAG_FIN_PARTIE = false;
 var vainqueur;
 
+// $(document).ready(function(){
+//   card_desenvoutement();
+//
+// });
 
+function handleSelectCardEffect(value){
+
+  socket.emit('useCard',{'id_carte' : CARD_DESENVOUTEMENT, 'pseudo' : Joueur, 'id_carte_destroyed' : value});
+
+}
+
+function card_desenvoutement(){
+  var width = $('#zone').width();
+  var height = $(document).height();
+
+  console.log('width '+width+' height '+height);
+
+
+
+  $('#zone_select_card_effect').css({'opacity': 0.95, 'width': width+"px", 'height': (height*0.2)+"px",'top': height/2-((height*0.3)/2)});
+  $('#zone_select_card_effect').addClass('pop_select_card_effect');
+  $('#zone_barre').css({'opacity': 0.3});
+  $('#zone_jeu').css({'opacity': 0.3});
+  $('#zone_deck').css({'opacity': 0.3});
+
+
+
+}
 
 function utiliserCarte(){
 
   var id_Carte = $(this).attr('id');
+
+
 
   function verifPoudre(){
     for(var i=0 ; i<etatJoueur.main.length;i++){
@@ -43,8 +73,14 @@ function utiliserCarte(){
         console.log("Pas assez de poudre !");
     }
     else {
-      console.log(Joueur+"joue jouez "+id_Carte+" !");
-      socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
+      if(id_Carte == CARD_DESENVOUTEMENT){
+        card_desenvoutement();
+      }
+      else {
+        console.log(Joueur+"joue jouez "+id_Carte+" !");
+        socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
+      }
+
     }
   }
 }
@@ -94,7 +130,6 @@ function dessineMain(main){
     $('#zone_deck_cards_card4 img').attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_deck_cards_card4 img').attr('id',-1);
   }
-
 
 
 }
@@ -151,18 +186,22 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
 
     overlay = "#zone_jeu_cards_player_card"+(i+1)+" .jeu_cards_overlay";
     selecteurAdversaire = "#zone_jeu_cards_adversaire_card"+(i+1)+" img";
+    selecteurZoneSelect = "#zone_select_card_effect_card"+(i+1);
     zone_adv = "#zone_jeu_cards_adversaire_card"+(i+1);
 
 
     if(actifAdversaire[i] === undefined){
       src_adv = "img/CARD_DEFAULT_VERSO.png";
       id_adv = -1;
+      $(selecteurZoneSelect).removeClass("card_clickable");
       duree_adv = 0;
     }
     else{
       src_adv = "img/"+actifAdversaire[i].imageCarte;
       id_adv = actifAdversaire[i].id_carte;
       duree_adv = actifAdversaire[i].duree;
+      $(selecteurZoneSelect).addClass("card_clickable");
+      $(selecteurZoneSelect).on('click',handleSelectCardEffect());
       if(duree_adv == 0) rm_class = false;
     }
 
@@ -188,6 +227,7 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
 
     $(selecteurAdversaire).attr('src',src_adv);
     $(selecteurAdversaire).attr('id',id_adv);
+    $(selecteurZoneSelect).attr('src',src_adv);
     $(overlay_adv).text(duree_adv);
 
     $(zone_adv).addClass("boom");
