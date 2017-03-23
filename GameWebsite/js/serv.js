@@ -267,6 +267,13 @@ var server = http.createServer(function(req,res){
 
 function infligeDegats(joueurEmetteur, joueurCible, degats){
 
+   for(var i = 0; i < joueurCible.carteActiveNonRetourne.length; i++){
+     if(joueurCible.carteActiveNonRetourne[i].id_carte == CARD_BOUCLIER_GEN_POUDRE){
+        joueurCible.poudre += (degats*0.2);   //Vérifier si ça tombe juste.
+        console.log("poudre gagnée = "+(degats*0.2));
+     }
+   }
+
   console.log(joueurEmetteur.pseudo+' a infligé '+degats+' à '+joueurCible.pseudo);
   var residu;
   var bouclier = joueurCible.bouclier;
@@ -309,6 +316,10 @@ function checkEffets(etatJoueur, etatJoueurAdversaire,etatMatch){
       }
 
     }
+    else if(etatJoueur.carteActiveNonRetourne[i].duree == -1){  //Carte à durée infini
+          //Rien
+    }
+
     else{
       etatJoueur.carteActiveNonRetourne[i].duree--; // sinon on décrémente la duree.
       console.log(etatJoueur.carteActiveNonRetourne[i].id_carte +' durée -- : '+etatJoueur.carteActiveNonRetourne[i].duree);
@@ -444,6 +455,8 @@ io.sockets.on('connection', function (socket){
 
     var pseudo = action.pseudo;
     var id_carte = action.id_carte;
+    var id_carte_destroyed;
+    var carte_cible;
 
     var etatJoueurEmetteur = etatM.joueur1.pseudo == pseudo ? etatM.joueur1 : etatM.joueur2;
     var etatJoueurAdversaire = etatM.joueur1.pseudo == pseudo ? etatM.joueur2 : etatM.joueur1;
@@ -561,6 +574,42 @@ io.sockets.on('connection', function (socket){
         case CARD_MELANGE:
           flagMelange = true;
           break;
+
+        case CARD_DESENVOUTEMENT:
+          id_carte_destroyed = action.id_carte_destroyed;
+          if(id_carte_destroyed < 0 || id_carte_destroyed > etatJoueurAdversaire.carteActiveNonRetourne.length){
+            return;
+          }
+          etatJoueurAdversaire.carteActiveNonRetourne.splice(id_carte_destroyed,1);
+          break;
+
+        case CARD_BOUCLIER_GEN_POUDRE:
+          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOUCLIER_GEN_POUDRE,-1,carteJoue.imageCarte));
+          break;
+
+        case CARD_ECHANGE_FORCE:
+          retirerCarte = false;
+          carte_cible = action.carte_cible;
+          var f = false;  //Flag pour vérifier si l'adversaire possède bien la carte dans la main.
+          for(var i = 0; i < etatJoueurAdversaire.main.length; i++){
+              if(etatJoueurAdversaire.main[i].id_carte == carte_cible.id_carte) f = true;
+          }
+          if (!f){
+            return;
+          }
+          carte_cible.from = carteJoue;
+
+          if(retirerCarte){
+            for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+              if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+                  etatJoueurEmetteur.main.splice(i,1);
+              }
+            }
+          }
+          etatJoueurEmetteur.deck.push(carte_cible);  //Deck ou main ?
+          etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
+
+          break;
       }
 
 
@@ -570,7 +619,7 @@ io.sockets.on('connection', function (socket){
         for(var i=0;i<etatJoueurEmetteur.main.length;i++){
           if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
             // on retire la carte joué de la main du joueur //
-            carteJoue = etatJoueurEmetteur.main[i];
+            //carteJoue = etatJoueurEmetteur.main[i];
             etatJoueurEmetteur.main.splice(i,1);
           }
         }
@@ -580,7 +629,8 @@ io.sockets.on('connection', function (socket){
 
       // puis on rajoute la carte joué dans le fond du deck
       if(retirerCarte){
-        etatJoueurEmetteur.deck.push(carteJoue);
+        if(carteJoue.from !== undefined) etatJoueurEmetteur.deck.push(carteJoue.from);
+        else etatJoueurEmetteur.deck.push(carteJoue);
         etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
       }
 
