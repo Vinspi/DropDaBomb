@@ -1,7 +1,6 @@
 
 
 /* definir toutes les cartes sous forme de constantes */
-
 var CARD_BOMB_25 = 0;
 var CARD_BOMB_50 = 1;
 var CARD_BOMB_50_2TOUR = 2;
@@ -16,7 +15,7 @@ var CARD_MELANGE = 9;
 /* fin des definitions de cartes */
 
 var NB_MAX_SALON = 6;
-var NB_MAX_PDV = 50;
+var NB_MAX_PDV = 150;
 var NB_CARTE_MAIN_MAX = 4;
 var NB_POUDRE_PAR_TOUR = 5;
 var NB_MAX_TIMER = 15;

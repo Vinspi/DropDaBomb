@@ -1,6 +1,6 @@
 /* constantes */
 
-var NB_MAX_PDV = 50;
+var NB_MAX_PDV = 150;
 
 /* ********** */
 
