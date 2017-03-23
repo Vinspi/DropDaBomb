@@ -28,6 +28,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var express = require("express");
+var retirerCarteMelange = true;
 
 
 var mysql = require('mysql');
@@ -449,6 +450,8 @@ io.sockets.on('connection', function (socket){
 
     var carteJoue;
     var retirerCarte = true;
+    retirerCarteMelange = true;
+    var flagMelange = false;
 
 
 
@@ -556,14 +559,7 @@ io.sockets.on('connection', function (socket){
           break;
 
         case CARD_MELANGE:
-          for(var k = 0; k < etatJoueurEmetteur.main.length; k++){
-            etatJoueurEmetteur.deck.push(etatJoueurEmetteur.main[i]);
-            etatJoueurEmetteur.main.splice(i,1);
-          }
-          etatJoueurEmetteur.deck = melangeCarte(etatJoueurEmetteur.deck);
-          tireCarteMain(etatJoueurEmetteur);
-          retirerCarte = false;
-          etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
+          flagMelange = true;
           break;
       }
 
@@ -591,6 +587,16 @@ io.sockets.on('connection', function (socket){
       if(etatM.joueur1.pdv <= 0 || etatM.joueur2.pdv <= 0){
         finDeMatch(etatM);
         return;
+      }
+
+      if(flagMelange){
+        for(var k = 0; k < etatJoueurEmetteur.main.length; k++){
+          etatJoueurEmetteur.deck.push(etatJoueurEmetteur.main[0]);
+          etatJoueurEmetteur.main.splice(0,1);
+        }
+        etatJoueurEmetteur.deck = melangeCarte(etatJoueurEmetteur.deck);
+        tireCarteMain(etatJoueurEmetteur);
+
       }
 
       socket.emit('update',{'etatJoueur' : etatJoueurEmetteur, 'actifAdversaire' : etatJoueurAdversaire.carteActiveNonRetourne, 'carteJoue' : carteJoue, 'bouclierAdversaire' : etatJoueurAdversaire.bouclier});
