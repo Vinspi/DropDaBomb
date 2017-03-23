@@ -273,3 +273,54 @@ nav li{
     border: 5px solid white;
     color: white;
 }
+
+
+
+
+#step1_btn{
+    background: url(../img/utils/btn_one_step.png);
+    background-repeat: no-repeat;
+    background-color: blue;
+}
+
+
+.indicator{
+    background-color: transparent !important;
+    height: 8% !important;
+}
+
+
+.tabs{
+    background-color: rgba(0,0,0,0);
+}
+
+.tab-active{
+    background-color: #4CAF50 !important;
+}
+
+.tab{
+    background-color: #2196F3 ;
+    /*border-radius: 15% 15% 0% 0%;*/
+}
+
+#test-swipe-1, #test-swipe-2, #test-swipe-3, #test-swipe-4{
+    padding-top: 5vh;
+    border: 10px solid #4CAF50;
+    border-top: none;
+    border-radius: 0% 0% 5% 5%;
+}
+
+
+.switch label .lever:after{
+    background-color: black;
+}
+
+.switch label .lever{
+    background-color: white;
+}
+.switch label input[type=checkbox]:checked+.lever:after{
+    background-color: #1976d2;
+}
+.switch label input[type=checkbox]:checked+.lever{
+    background-color: white;
+}
