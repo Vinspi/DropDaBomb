@@ -601,6 +601,7 @@ io.sockets.on('connection', function (socket){
           }
           carte_cible = etatJoueurAdversaire.main[id_carte_cible];
           carte_cible.from = carteJoue;
+          carte_cible.from.from = undefined;
 
 
           // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
