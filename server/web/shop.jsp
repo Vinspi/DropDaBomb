@@ -134,8 +134,7 @@
 
     <%
 
-        ShopView shopView = new ShopView();
-        shopView.getAllOffers(pseudo);
+        ShopView shopView = new ShopView(pseudo);
         int i = 0,m = 0;
         int id_Offre = 0;
 

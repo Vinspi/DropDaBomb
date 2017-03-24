@@ -137,14 +137,13 @@ public class ShopManager {
 
 
 
-        String query = "SELECT id_Offre,nomPack,prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageOffre FROM Offre" +
+        String query = "SELECT id_Offre,nomPack,prixMonnaieIG, prixMonnaieIRL, id_Pack, descriptionPack, imageOffre, misEnVente FROM Offre" +
                 " JOIN Pack USING(id_pack);";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-
-                listItem.add((new PackView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imageOffre"),resultSet.getString("descriptionPack"))));
+                if(resultSet.getInt("misEnVente") == 1) listItem.add((new PackView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getString("imageOffre"),resultSet.getString("descriptionPack"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -164,7 +163,7 @@ public class ShopManager {
         LinkedList<BoostView> listItem = new LinkedList<>();
 
 
-        String query = "SELECT id_Offre,nomBoost,prixMonnaieIG, prixMonnaieIRL, id_Boost, imageOffre, descriptionBoost FROM Offre " +
+        String query = "SELECT id_Offre,nomBoost,prixMonnaieIG, prixMonnaieIRL, id_Boost, imageOffre, descriptionBoost, misEnVente FROM Offre " +
 
                 "JOIN OffreBoost USING (id_Offre)" +
                 " JOIN Boost USING(id_Boost);";
@@ -172,8 +171,7 @@ public class ShopManager {
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-
-                listItem.add((new BoostView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Boost"),resultSet.getString("nomBoost"),resultSet.getString("imageOffre"),resultSet.getString("descriptionBoost"))));
+                if(resultSet.getInt("misEnVente") == 1) listItem.add((new BoostView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_Boost"),resultSet.getString("nomBoost"),resultSet.getString("imageOffre"),resultSet.getString("descriptionBoost"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -192,12 +190,12 @@ public class ShopManager {
 
         LinkedList<SkinCartonView> listItem = new LinkedList<>();
 
-        String query =  "SELECT id_Offre,nomCarton,prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageOffre, descriptionCarton FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
+        String query =  "SELECT id_Offre,nomCarton,prixMonnaieIRL, prixMonnaieIG, id_SkinCartonCarte, imageOffre, descriptionCarton, misEnVente FROM Offre JOIN OffreCartonCarte USING (id_Offre)" +
                 " JOIN SkinCartonCarte USING (id_SkinCartonCarte) WHERE id_SkinCartonCarte NOT IN (SELECT id_SkinCartonCarte FROM posséderSkinCartonCarte WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listItem.add((new SkinCartonView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinCartonCarte"),resultSet.getString("nomCarton"),resultSet.getString("imageOffre"),resultSet.getString("descriptionCarton"))));
+                if(resultSet.getInt("misEnVente") == 1) listItem.add((new SkinCartonView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinCartonCarte"),resultSet.getString("nomCarton"),resultSet.getString("imageOffre"),resultSet.getString("descriptionCarton"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -215,11 +213,11 @@ public class ShopManager {
 
         LinkedList<SkinMapView> listItem = new LinkedList<>();
 
-        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageOffre, descriptionMap FROM Offre JOIN OffreMap USING (id_Offre) JOIN SkinMap USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
+        String query =  "SELECT id_Offre,nomMap,prixMonnaieIG, prixMonnaieIRL, id_SkinMap, imageOffre, descriptionMap, misEnVente FROM Offre JOIN OffreMap USING (id_Offre) JOIN SkinMap USING (id_SkinMap) WHERE id_SkinMap NOT IN (SELECT id_SkinMap FROM posséderSkinMap WHERE Pseudo LIKE '"+pseudo+"');";
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listItem.add((new SkinMapView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinMap"),resultSet.getString("nomMap"),resultSet.getString("imageOffre"),resultSet.getString("descriptionMap"))));
+                if(resultSet.getInt("misEnVente") == 1) listItem.add((new SkinMapView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_SkinMap"),resultSet.getString("nomMap"),resultSet.getString("imageOffre"),resultSet.getString("descriptionMap"))));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -235,13 +233,13 @@ public class ShopManager {
     }
     public LinkedList<IconeView> getAllIconeOffers(String pseudo){
         LinkedList<IconeView> listIcone = new LinkedList<>();
-        String query = "SELECT id_Offre, nomIcone, prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageOffre, descriptionIcone FROM Offre JOIN OffreIcone USING (id_Offre)" +
+        String query = "SELECT id_Offre, nomIcone, prixMonnaieIRL, prixMonnaieIG, id_IconeJoueur, imageOffre, descriptionIcone, misEnVente FROM Offre JOIN OffreIcone USING (id_Offre)" +
                 " JOIN IconeJoueur USING (id_IconeJoueur) WHERE id_IconeJoueur NOT IN (SELECT id_IconeJoueur FROM posséderIconeJoueur WHERE Pseudo LIKE '"+pseudo+"');";
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query,connection);
         try {
             while (resultSet.next()){
-                listIcone.add((new IconeView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("nomIcone"),resultSet.getString("imageOffre"),resultSet.getString("descriptionIcone"))));
+                if(resultSet.getInt("misEnVente") == 1) listIcone.add((new IconeView(resultSet.getInt("id_Offre"),resultSet.getInt("prixMonnaieIRL"),resultSet.getInt("prixMonnaieIG"),resultSet.getInt("id_IconeJoueur"),resultSet.getString("nomIcone"),resultSet.getString("imageOffre"),resultSet.getString("descriptionIcone"))));
             }
 
         }catch (SQLException e){

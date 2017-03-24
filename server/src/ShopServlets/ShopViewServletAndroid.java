@@ -59,11 +59,13 @@ public class ShopViewServletAndroid extends HttpServlet {
         //Récupérer le pseudo pour n'afficher que les SKinMap/SkinCarton qu'il ne possède pas.
         String pseudo = (String) session.getAttribute("pseudo");
         int request = Integer.parseInt(req.getParameter("idRequest"));
+        System.out.println("doPost");
 
         switch(request){
             case 0:
                 ShopView shopView = new ShopView(pseudo);
                 String view = new Gson().toJson(shopView);
+                System.out.println("View Shop :"+view);
                 out.print(view);
                 break;
 
