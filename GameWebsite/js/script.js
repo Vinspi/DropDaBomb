@@ -3,6 +3,11 @@ $(document).ready(function(){
 
     setZoneSize();
 
+    $('#zone_jeu_cards_middle').on('click',modalSelectionHide);
+    $('#zone_jeu_cards_player').on('click',modalSelectionHide);
+    $('#zone_jeu_cards_adversaire').on('click',modalSelectionHide);
+
+
     console.log("ScreenW: " + ScreenW);
     console.log("ScreenH: " + ScreenH);
 
