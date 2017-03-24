@@ -15,8 +15,8 @@ var CARD_ECHANGE_FORCE = 7;
 
 /*****************************/
 
-//var socket = io.connect('http://192.168.43.7:8080');
-var socket = io.connect('http://109.7.220.208:3000');
+var socket = io.connect('http://192.168.43.7:8080');
+//var socket = io.connect('http://109.7.220.208:3000');
 //var socket = io.connect('http://localhost:8080');
 
 
@@ -29,10 +29,10 @@ var FLAG_FIN_PARTIE = false;
 var vainqueur;
 var pos_carte_selection;
 
-// $(document).ready(function(){
-//   card_desenvoutement();
-//
-// });
+$(document).ready(function(){
+  card_desenvoutement();
+
+});
 
 function handleSelectCardEffectEchangeForce(){
   var value = $(this).attr('id');
@@ -63,6 +63,11 @@ function card_echange_force(){
     '<img id=\"zone_select_card_effect_card3\" src=\"img/CARD_DEFAULT_VERSO.png\" class=\"zone_select_card_img card_clickable\">' +
     '<img id=\"zone_select_card_effect_card4\" src=\"img/CARD_DEFAULT_VERSO.png\" class=\"zone_select_card_img card_clickable\">'
   );
+
+  $("#zone_select_card_effect_card1").css({'width': '25%', 'height': '20%'});
+  $("#zone_select_card_effect_card2").css({'width': '25%', 'height': '20%'});
+  $("#zone_select_card_effect_card3").css({'width': '25%', 'height': '20%'});
+  $("#zone_select_card_effect_card4").css({'width': '25%', 'height': '20%'});
 
   for(var i=1;i<5;i++){
 
@@ -106,8 +111,10 @@ function card_desenvoutement(){
   var width = $('#zone').width();
   var height = $(document).height();
 
+  $('#zone_select_card_effect_container').show();
 
   /* dessin du modal */
+
 
   $("#zone_select_card_effect_container").html(
     '<img id=\"zone_select_card_effect_card1\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
@@ -116,6 +123,12 @@ function card_desenvoutement(){
     '<img id=\"zone_select_card_effect_card4\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
     '<img id=\"zone_select_card_effect_card5\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">'
   );
+
+  $("#zone_select_card_effect_card1").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card2").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card3").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card4").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card5").css({'width': '20%', 'height': '20%'});
 
 
   for(var i=0;i<actifAdversaire.length;i++){

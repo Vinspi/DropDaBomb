@@ -404,10 +404,12 @@ img{
 @keyframes pop-selection-card-effect {
     0%{
       transform : scale(0);
+      -webkit-transform: scale(0);
       opacity: 0.2;
     }
     100%{
       transform: scale(1);
+      -webkit-transform: scale(1);
       opacity: 1;
     }
 }
@@ -435,20 +437,22 @@ img{
   border-top: 5px solid black;
   border-bottom: 5px solid black;
 
-  width: 50%;
 
 }
 
 #zone_select_card_effect_container{
   display: flex;
+  
 }
 
 #zone_select_card_img{
 
 }
 
-#zone_select_card_effect_card1, #zone_select_card_effect_card2, #zone_select_card_effect_card3, #zone_select_card_effect_card4{
+#zone_select_card_effect_card1, #zone_select_card_effect_card2, #zone_select_card_effect_card3, #zone_select_card_effect_card4, #zone_select_card_effect_card5 {
   opacity: 1;
+  height: 20%;
+  width: 20%;
 }
 
 .pop_select_card_effect{
