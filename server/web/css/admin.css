@@ -11,6 +11,11 @@ body{
     background-attachment: fixed;
 }
 
+.pev {
+    border: dotted;
+    /*border-width: 2px;*/
+}
+
 
 .brand-logo{
     text-shadow: 2px 2px #000000;

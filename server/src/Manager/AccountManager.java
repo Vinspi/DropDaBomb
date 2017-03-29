@@ -27,14 +27,18 @@ public class AccountManager {
 
     public int authentification(String pseudo, String password) {
 
-        String query = "SELECT Pseudo, mdpCompte FROM CompteJoueur WHERE (Pseudo LIKE '"+pseudo+"' AND mdpCompte LIKE '"+password+"')";
+        String query = "SELECT Pseudo, mdpCompte, estAdmin FROM CompteJoueur WHERE (Pseudo LIKE '"+pseudo+"' AND mdpCompte LIKE '"+password+"')";
         int status = RequestStatus.AUTH_FAILED;
 
         ResultSet resultSet = Manager.getManager().sendRequestQuery(query, connection);
 
         try {
             if (resultSet.next()) {
-                status = RequestStatus.AUTH_SUCCES;
+                System.out.println(resultSet.getBoolean("estAdmin"));
+                if(resultSet.getBoolean("estAdmin")){
+                    status = RequestStatus.AUTH_ADMIN;
+                }
+                else status = RequestStatus.AUTH_SUCCES;
             } else status = RequestStatus.AUTH_FAILED;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -168,6 +172,7 @@ public class AccountManager {
 
         Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
+
 
         if(password.length() < RequestStatus.MIN_SIZE_PASSWORD) return RequestStatus.ERR_MDP;
 
@@ -525,6 +530,5 @@ public class AccountManager {
         return money;
     }
 
-   
 
 }
