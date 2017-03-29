@@ -18,12 +18,17 @@ $(document).ready(function(){
         next_step();
     });
 
+    socket.on("CREATE_ACCOUNT_SUCCESS", function(obj){
+        next_step();
+    });
+
+   
+
     $('ul.tabs').tabs({});
 
 
     $("#tab-step-1").trigger("mouseenter");
 
-    $("#btn-valider-starter").click(() => next_step());
     $("#btn-valider-starter").click(() => create_account());
 
     $("#step2-nextbtn").click(() => next_step());
@@ -43,8 +48,29 @@ $(document).ready(function(){
         setSelectedStarter("#card_starter_MTBBWY", "red");
     });
 
+
+    $("#signin_submit").click(() => connect_account());
+
+     socket.on("CONNECT_ACCOUNT_CHECK_SUCCESS", function(obj){
+        console.log("jai recu walla");
+        alert("CONNEXION REUSSIE");
+    });
+    
+    socket.on("CONNECT_ACCOUNT_CHECK_FAIL", function(obj){
+        alert("CONNEXION ECHOUEE");
+    });
+
 });
 
+function connect_account(){
+
+    var account = {
+        'pseudo': $("#signin_pseudo").val(),
+        'password': $("#signin_password").val()
+    };
+
+    socket.emit("CONNECT_ACCOUNT_CHECK", account);
+}
 
 function check_account(){
     var pseudo      = $("#pseudo").val();
@@ -77,11 +103,9 @@ function check_account(){
     socket.emit("CREATE_ACCOUNT_CHECK", account);
 }
 
-
 function create_account(){
     socket.emit("CREATE_ACCOUNT_SEND", account);
 }
-
 
 function next_step(){
     $("#tab-step-"+step).removeClass("tab-active");
@@ -94,7 +118,6 @@ function next_step(){
     $("#tab-step-"+step+"-click").trigger("click");
     $("#tab-step-"+step).trigger("mouseenter");
 }
-
 
 function setSelectedStarter(id, color){
         $("#btn-valider-starter").show();
