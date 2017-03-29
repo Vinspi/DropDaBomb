@@ -4,9 +4,7 @@ import Manager.AccountManager;
 import Manager.Manager;
 import Manager.RequestStatus;
 import org.junit.Test;
-
 import java.sql.Connection;
-
 import static org.junit.Assert.assertEquals;
 
 /**
