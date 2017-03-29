@@ -25,19 +25,30 @@
             <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="shop.jsp">Boutique</a></li>
-                <li><a href="account.jsp">Inscription</a></li>
                 <%
 
+                    String pseudo = (String) request.getSession().getAttribute("pseudo");
                     System.out.println("pseudo = "+session.getAttribute("pseudo"));
                     String icone = (String) request.getSession().getAttribute("iconeJoueur");
-                    String pseudo = (String) request.getSession().getAttribute("pseudo");
                     System.out.println("icone = "+icone);
+                    Boolean estAdmin = (Boolean) (session.getAttribute("estAdmin"));
                     if(session.getAttribute("pseudo") == null) {
-                        out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
+                                out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
+                                out.print("<li><a href=\"account.jsp\">Inscription</a></li>");
+                    }
+                    else if(estAdmin != null) {
+                        if(estAdmin){
+                                    System.out.println("coucou");
+                                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                                    "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+                                    "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                    "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                        }
+
                     }
                     else {
-                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + "</a></li>" +
-                                "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                                "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" + "<li><a href=\"game.jsp\">Jouer</a></li>" +
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
 

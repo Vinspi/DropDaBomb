@@ -27,12 +27,16 @@
             <div class="row">
                 <div class="input-field col s8 offset-s2">
                     <input placeholder="password" id="password" name="password" type="password" class="validate">
+                    <% if(request.getAttribute("STATUS") != null && request.getAttribute("STATUS").equals(RequestStatus.ERR_MDP))
+                        out.print("<h8 class='red-text'> votre mot de passe est trop court ("+RequestStatus.MIN_SIZE_PASSWORD+" caractères min).</h8>");%>
                     <label for="password"></label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s8 offset-s2">
                     <input placeholder="Confirm password" id="password_confirm" name="password_confirm" type="password" class="validate">
+                    <% if(request.getAttribute("STATUS") != null && request.getAttribute("STATUS").equals(RequestStatus.ERR_MDP_NOT_MATCH))
+                        out.print("<h8 class='red-text'> les mots de passe ne sont pas les mêmes.</h8>");%>
                     <label for="password_confirm"></label>
                 </div>
             </div>
@@ -40,7 +44,7 @@
                 <div class="input-field col s8 offset-s2">
                     <input placeholder="Email" id="email" name="email" type="email" class="validate">
                     <% if(request.getAttribute("STATUS") != null && request.getAttribute("STATUS").equals(RequestStatus.CREATE_ACCOUNT_FAILED_EMAIL))
-                        out.print("<h8 class='red-text'>Cet email est déjà utilisé.</h8>");%>
+                        out.print("<h8 class='red-text'>Cet email est déjà utilisé ou n'est pas valide.</h8>");%>
                     <label for="email"></label>
                 </div>
             </div>
