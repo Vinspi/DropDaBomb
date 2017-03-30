@@ -41,6 +41,46 @@ $(document).ready(function(){
 
 });
 
+function card_batiment(){
+  var width = $('#zone').width();
+  var height = $(document).height();
+
+  $('#zone_select_card_effect_container').show();
+
+  /* dessin du modal */
+
+
+  $("#zone_select_card_effect_container").html(
+    '<img id=\"zone_select_card_effect_card1\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card2\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card3\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card4\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card5\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">'
+  );
+
+  $("#zone_select_card_effect_card1").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card2").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card3").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card4").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card5").css({'width': '20%', 'height': '20%'});
+
+
+
+
+  for(var i=0;i<actifAdversaire.length;i++){
+    console.log('#zone_select_card_effect_card'+(i+1)+' '+actifAdversaire[i].imageCarte);
+    $('#zone_select_card_effect_card'+(i+1)).attr('src',"img/"+actifAdversaire[i].imageCarte);
+    $('#zone_select_card_effect_card'+(i+1)).on('click',handleSelectCardEffectDesenvoutement);
+    $('#zone_select_card_effect_card'+(i+1)).addClass("card_clickable");
+  }
+  for(var i=actifAdversaire.length;i<6;i++){
+    console.log("i = "+i);
+    $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_select_card_effect_card'+(i+1)).off('click',handleSelectCardEffectDesenvoutement);
+    $('#zone_select_card_effect_card'+(i+1)).removeClass("card_clickable");
+  }
+}
+
 function handleSelectCardEffectEchangeForce(){
   var value = $(this).attr('id');
 
