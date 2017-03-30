@@ -74,7 +74,7 @@
 
         <div class="" id="zone">
 
-            <div id="zone_select_card_effect" class="center-align valign-wrapper grey out_select_card_effect">
+            <div id="zone_select_card_effect" class="center-align valign-wrapper grey">
               <div id="zone_select_card_effect_container" class="valign">
                 <img id="zone_select_card_effect_card1" src="img/BOUCLIER_RENVOI.png" class="zone_select_card_img card_clickable">
                 <img id="zone_select_card_effect_card2" src="img/BOUCLIER_RENVOI.png" class="zone_select_card_img card_clickable">
@@ -256,7 +256,7 @@
                         <div id="zone_deck_cards_card1" class="">
 
                             <div id="zone_deck_cards_card1_container">
-                                <img src="img/BOMB_25.png" class="card_clickable">
+                                <img src="img/BOMB_25.png" class="card_clickable" onclick="utiliserCarte(0,$(this).attr('id'))">
                                 <div class="powder_card_overlay red-text center-align"> 10 </div>
                             </div>
 
@@ -264,21 +264,21 @@
 
                         <div id="zone_deck_cards_card2" class="">
                               <div id="zone_deck_cards_card2_container">
-                                <img src="img/BOUCLIER_15.png" class="card_clickable">
+                                <img src="img/BOUCLIER_15.png" class="card_clickable" onclick="utiliserCarte(1,$(this).attr('id'))">
                                 <div class="powder_card_overlay red-text center-align"> 20 </div>
                             </div>
                         </div>
 
                         <div id="zone_deck_cards_card3" class="">
                               <div id="zone_deck_cards_card3_container">
-                                <img src="img/BOUCLIER_RENVOI.png" class="card_clickable">
+                                <img src="img/BOUCLIER_RENVOI.png" class="card_clickable" onclick="utiliserCarte(2,$(this).attr('id'))">
                                 <div class="powder_card_overlay red-text center-align"> 10 </div>
                             </div>
                         </div>
 
                         <div id="zone_deck_cards_card4" class="">
                               <div id="zone_deck_cards_card4_container">
-                                <img src="img/SPELL_BRULURE_DE_POWDER.png" class="card_clickable">
+                                <img src="img/SPELL_BRULURE_DE_POWDER.png" class="card_clickable" onclick="utiliserCarte(3,$(this).attr('id'))">
                                 <div class="powder_card_overlay red-text center-align"> 40 </div>
                             </div>
                         </div>

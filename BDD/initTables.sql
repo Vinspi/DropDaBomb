@@ -205,7 +205,7 @@ CREATE TABLE Historique(
 #___________________________________
 
 CREATE TABLE activer(
-  HeuresFin  INT ,
+  HeuresFin  TIME ,
   nbMatchFin int ,
   id_Boost Int NOT NULL ,
   Pseudo   Varchar (20) NOT NULL ,
@@ -296,7 +296,7 @@ CREATE TABLE LootPackPack (
 #_____________________________________________________________
 # Table: LootPackEnsemble
 #_____________________________________________________________
-CREATE TABLE LootPackEnsemble (
+CREATE TABLE LootPack (
   id_LootPack int NOT NULL ,
   id_Ensemble int NOT NULL ,
   nomLootPack VARCHAR (50) ,
@@ -308,10 +308,10 @@ CREATE TABLE LootPackEnsemble (
 
 
 #_____________________________________________________________
-# Table: EnsembleCarte
+# Table: Ensemble
 #_____________________________________________________________
 
-CREATE TABLE EnsembleCarte (
+CREATE TABLE Ensemble (
   id_Ensemble int NOT NULL,
   id_Carte int NOT NULL,
   nomEnsemble VARCHAR (50),
@@ -421,8 +421,8 @@ ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_Offre FOREIGN KEY (id_Off
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 
 ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPack_id_Pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack) ON DELETE CASCADE;
-ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPackPack_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPackEnsemble(id_LootPack) ON DELETE CASCADE;
+ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPackPack_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPack(id_LootPack) ON DELETE CASCADE;
 
-ALTER TABLE LootPackEnsemble ADD CONSTRAINT FK_LootPackEnsemble_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES EnsembleCarte(id_Ensemble) ON DELETE CASCADE;
+ALTER TABLE LootPack ADD CONSTRAINT FK_LootPack_id_Ensemble FOREIGN KEY (id_Ensemble) REFERENCES Ensemble(id_Ensemble) ON DELETE CASCADE;
 
-ALTER TABLE EnsembleCarte ADD CONSTRAINT FK_EnsembleCarte_id_Carte FOREIGN KEY (id_Carte) REFERENCES Carte(id_Carte) ON DELETE CASCADE;
+ALTER TABLE Ensemble ADD CONSTRAINT FK_EnsembleCarte_id_Carte FOREIGN KEY (id_Carte) REFERENCES Carte(id_Carte) ON DELETE CASCADE;

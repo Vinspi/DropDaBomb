@@ -75,11 +75,14 @@ public class ShopManager {
         }
     }
 
-    public class ListEnsemble{
+    public class ListLootPack{
         int id;
+        int qte;
         ArrayList<TripletEnsemble> ensembles;
-        public ListEnsemble(int id, ArrayList<TripletEnsemble> Le){
+
+        public ListLootPack(int id, int qte, ArrayList<TripletEnsemble> Le){
             this.id = id;
+            this.qte = qte;
             this.ensembles = Le;
         }
 
@@ -262,7 +265,7 @@ public class ShopManager {
 
 
         long deb = System.nanoTime();
-        int x, i = -1, y = -1, a = -1, b = -1;
+        int x, i = -1, y = -1, a = -1, b = -1,tq = -1,oldtq = -1;
         float r;
         float c = -1, d = -1;
         float rand;
@@ -295,7 +298,7 @@ public class ShopManager {
         ArrayList<String> ListImgCartes = new ArrayList<>();
         ArrayList<Integer> ListCartes = new ArrayList<>();              //Liste de cartes composant un Ensemble.
         ArrayList<TripletEnsemble> tmpListSet = new ArrayList<>();
-        ArrayList<ListEnsemble> ListSet = new ArrayList<>();
+        ArrayList<ListLootPack> ListSet = new ArrayList<>();
 
         long fquery = System.nanoTime();
         ResultSet setPack = Manager.getManager().sendRequestQuery(queryListLoot,connection);
@@ -305,13 +308,14 @@ public class ShopManager {
             while (setPack.next()){
                 if (i != setPack.getInt("id_LootPack")){
                     i = setPack.getInt("id_LootPack");
+                    tq = setPack.getInt("qteCartePack");
                     a = setPack.getInt("id_Ensemble");
                     c = setPack.getFloat("dropRatePack");
 
-                    ListLoot.add(new Doublet(i,setPack.getInt("qteCartePack")));
+                    ListLoot.add(new Doublet(i,tq));
                     if (!(tmpListSet.isEmpty())) {
                         tmpListSet.add(new TripletEnsemble(b,d,ListCartes,ListImgCartes));
-                        ListSet.add(new ListEnsemble(y,tmpListSet));
+                        ListSet.add(new ListLootPack(y,oldtq,tmpListSet));
                     }
 
                     tmpListSet = new ArrayList<>();
@@ -324,6 +328,7 @@ public class ShopManager {
                 else {
                     if (y != setPack.getInt("id_LootPack")) {
                         y = setPack.getInt("id_LootPack");
+                        oldtq = setPack.getInt("qteCartePack");
                     }
 
 
@@ -347,14 +352,14 @@ public class ShopManager {
 
             }
             tmpListSet.add(new TripletEnsemble(a,c,ListCartes,ListImgCartes));
-            ListSet.add(new ListEnsemble(i,tmpListSet));
+            ListSet.add(new ListLootPack(i,tq,tmpListSet));
             System.out.println("set = "+(System.nanoTime()-set)/Math.pow(10,9));
 
-            /*for(Doublet doublet : ListLoot){
+            for(Doublet doublet : ListLoot){
                 System.out.println(doublet.id + "     " + doublet.value);
             }
-            for (ListEnsemble le : ListSet){
-                System.out.print(le.id+":      ");
+            for (ListLootPack le : ListSet){
+                System.out.print(le.id+", (qte :"+le.qte+"):      ");
                 for(TripletEnsemble tripletEnsemble : le.ensembles) {
                     System.out.print(tripletEnsemble.id_Ensemble + "/" + tripletEnsemble.dropRate + " [");
                     for (int id_carte : tripletEnsemble.Cartes){
@@ -363,7 +368,7 @@ public class ShopManager {
                     System.out.print("]     ");
                 }
                 System.out.println();
-            }*/
+            }
 
             long queryC = System.nanoTime();
             ResultSet setCartesPossedees = Manager.getManager().sendRequestQuery(queryCartesPossedees,connection);
@@ -373,13 +378,16 @@ public class ShopManager {
             System.out.println("queryC = "+(System.nanoTime()-queryC)/Math.pow(10,9));
 
             long loop = System.nanoTime();
-            for(Doublet doubletLoot : ListLoot){                     //On choisit un LootPack coupleLoot (càd une partie du Pack)
-                for(int q = 0; q < (int) doubletLoot.value; q++) {
+            for(ListLootPack llp : ListSet){
+//            for(Doublet doubletLoot : ListLoot){                     //On choisit un LootPack coupleLoot (càd une partie du Pack)
+ //               for(int q = 0; q < (int) doubletLoot.value; q++) {
+              for(int q = 0; q < (int) llp.qte;q++){
                     r = 0;
                     int id_Carte; String imageCarte;
                     int randCarte;
                     rand = (float) Math.random();
-                    for (TripletEnsemble coupleEnsemble : ListSet.get(doubletLoot.id).ensembles) {
+                    for(TripletEnsemble coupleEnsemble : llp.ensembles){
+                    //for (TripletEnsemble coupleEnsemble : ListSet.get(doubletLoot.id).ensembles) {
                         System.out.println("Cartes :"+coupleEnsemble.Cartes);
                         System.out.println("Images :"+coupleEnsemble.img);
                         r += coupleEnsemble.dropRate;
@@ -409,7 +417,12 @@ public class ShopManager {
                 x = 0;
                 j = 0;
                 while(j < ListCopiesCartes.size()){
-                    if(dab.id == ListCopiesCartes.get(j).id && dab.value == ListCopiesCartes.get(j).value)  x++;
+                    //System.out.println("Taille ListCopiesCartes : "+ListCopiesCartes.size()+", j :"+j);
+                    if(dab.id == ListCopiesCartes.get(j).id && dab.value == ListCopiesCartes.get(j).value){
+                        x++;
+                        ListCopiesCartes.remove(j);
+                        j--;
+                    }
                     j++;
                 }
                 if(x > 0) s.add(new Triplet(dab.id,x,(String) dab.value));
@@ -437,7 +450,7 @@ public class ShopManager {
 
             }
         }
-        System.out.println((System.nanoTime()- deb)/Math.pow(10,9));
+        System.out.println("Total = "+(System.nanoTime()- deb)/Math.pow(10,9));
         System.out.println("s = "+s);
         return s;
     }
@@ -540,18 +553,26 @@ public class ShopManager {
                 matcherHeures = patternHeures.matcher(typeBoost);
 
                 if (matcherMatchs.find()) {       //Boost XP en nbMatchs.
+                    System.out.println(matcherMatchs);
+                    System.out.println(matcherMatchs.group(1));
                     duree = matcherMatchs.group(1);
                     if (boostActif.contains(id_Boost)) queryAjout.add("UPDATE activer SET nbMatchsFin=nbMatchsFin+"+duree+" WHERE Pseudo LIKE '"+pseudo+"' AND id_Boost="+id_Boost+";");
                     else queryAjout.add("INSERT INTO activer (Pseudo,id_Boost,nbMatchsFin) VALUES ('"+pseudo+"',"+id_Boost+","+duree+");");
+                    Manager.getManager().sendMultipleRequestUpdate(queryAjout,connection);
+                    s.add(new Doublet(id_Boost,Integer.parseInt(duree)));
                 }
                 else if (matcherHeures.find()) {
+                    System.out.println(matcherHeures);
+                    System.out.println(matcherHeures.group(1));
                     duree = matcherHeures.group(1);
                     if (boostActif.contains(id_Boost)) queryAjout.add("UPDATE activer SET HeuresFin=HeuresFin+SEC_TO_TIME("+duree+"*3600) WHERE Pseudo LIKE '"+pseudo+"' AND id_Boost="+id_Boost+";");
                     else queryAjout.add("INSERT INTO activer (Pseudo,id_Boost,HeuresFin) VALUES ('"+pseudo+"',"+id_Boost+",SEC_TO_TIME("+duree+"*3600));");
+                    Manager.getManager().sendMultipleRequestUpdate(queryAjout,connection);
+                    s.add(new Doublet(id_Boost,Integer.parseInt(duree)));
                 }
-                s.add(new Doublet(id_Boost,1));
+
             }
-            Manager.getManager().sendMultipleRequestUpdate(queryAjout,connection);
+
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -677,11 +698,11 @@ public class ShopManager {
 
         return RequestStatus.ACHAT_SUCCESS;
     }
-    public Doublet doAchatDoublet(String pseudo, String mdp, String id_Offre, String money){
+    public Doublet doAchatDoublet(String pseudo, String id_Offre, String money){
 
 
 
-        Doublet s = new Doublet();
+        Doublet s = new Doublet();/*
         String queryMdp = "SELECT mdpCompte " +
                 "FROM CompteJoueur " +
                 "WHERE Pseudo LIKE '"+pseudo+"';";
@@ -694,7 +715,7 @@ public class ShopManager {
             }
         }catch (SQLException e){
             e.printStackTrace();
-        }
+        }*/
 
 
         String queryMoney = "SELECT "+money+

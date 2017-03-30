@@ -2,19 +2,22 @@
 
 var NB_MAX_PDV = 150;
 var CARD_DESENVOUTEMENT = 8;
+var CARD_ECHANGE_FORCE = 7;
 
 /* ********** */
 
 
 /* mise en place des handlers */
 
-$('.card_clickable').on("click", utiliserCarte);
+// $('.card_clickable').on("click", utiliserCarte);
 
 
 
 /*****************************/
 
 var socket = io.connect('http://192.168.43.7:8080');
+//var socket = io.connect('http://109.7.220.208:3000');
+
 //var socket = io.connect('http://localhost:8080');
 
 
@@ -25,15 +28,83 @@ var actifAdversaire;
 var carteJoue;
 var FLAG_FIN_PARTIE = false;
 var vainqueur;
+var pos_carte_selection;
 
-// $(document).ready(function(){
-//   card_desenvoutement();
-//
-// });
+$(document).ready(function(){
+  card_desenvoutement();
 
-function handleSelectCardEffect(value){
+});
 
-  socket.emit('useCard',{'id_carte' : CARD_DESENVOUTEMENT, 'pseudo' : Joueur, 'id_carte_destroyed' : value});
+function handleSelectCardEffectEchangeForce(){
+  var value = $(this).attr('id');
+
+  console.log("id = "+(value[value.length-1]-1));
+
+  $('#zone_select_card_effect').removeClass('pop_select_card_effect');
+  $('#zone_select_card_effect').addClass('out_select_card_effect');
+  $('#zone_barre').css({'opacity': 1});
+  $('#zone_jeu').css({'opacity': 1});
+  $('#zone_deck').css({'opacity': 1});
+
+  $("#zone_select_card_effect").hide();
+
+  socket.emit('useCard',{'id_carte' : CARD_ECHANGE_FORCE, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
+}
+
+function card_echange_force(){
+  var width = $('#zone').width();
+  var height = $(document).height();
+
+
+  /* dessin du modal */
+
+  $("#zone_select_card_effect_container").html(
+    '<img id=\"zone_select_card_effect_card1\" src=\"img/CARD_DEFAULT_VERSO.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card2\" src=\"img/CARD_DEFAULT_VERSO.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card3\" src=\"img/CARD_DEFAULT_VERSO.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card4\" src=\"img/CARD_DEFAULT_VERSO.png\" class=\"zone_select_card_img card_clickable\">'
+  );
+
+  $("#zone_select_card_effect_card1").css({'width': '25%', 'height': '20%'});
+  $("#zone_select_card_effect_card2").css({'width': '25%', 'height': '20%'});
+  $("#zone_select_card_effect_card3").css({'width': '25%', 'height': '20%'});
+  $("#zone_select_card_effect_card4").css({'width': '25%', 'height': '20%'});
+
+  for(var i=1;i<5;i++){
+
+    $('#zone_select_card_effect_card'+i).on('click',handleSelectCardEffectEchangeForce);
+
+  }
+
+  /*******************/
+
+
+
+  $("#zone_select_card_effect").show();
+
+  $('#zone_select_card_effect').css({'opacity': 0.95, 'width': width+"px", 'height': (height*0.2)+"px",'top': height/2-((height*0.3)/2)});
+  $('#zone_select_card_effect').removeClass('out_select_card_effect');
+  $('#zone_select_card_effect').addClass('pop_select_card_effect');
+  $('#zone_barre').css({'opacity': 0.3});
+  $('#zone_jeu').css({'opacity': 0.3});
+  $('#zone_deck').css({'opacity': 0.3});
+}
+
+function handleSelectCardEffectDesenvoutement(){
+
+  var value = $(this).attr('id');
+
+  console.log("id = "+(value[value.length-1]-1));
+
+  $('#zone_select_card_effect').removeClass('pop_select_card_effect');
+  $('#zone_select_card_effect').addClass('out_select_card_effect');
+  $('#zone_barre').css({'opacity': 1});
+  $('#zone_jeu').css({'opacity': 1});
+  $('#zone_deck').css({'opacity': 1});
+
+  $("#zone_select_card_effect").hide();
+  console.log("modal emit !!!!");
+  socket.emit('useCard',{'id_carte' : CARD_DESENVOUTEMENT, 'pseudo' : Joueur, 'id_carte_destroyed' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
 
 }
 
@@ -41,11 +112,47 @@ function card_desenvoutement(){
   var width = $('#zone').width();
   var height = $(document).height();
 
-  console.log('width '+width+' height '+height);
+  $('#zone_select_card_effect_container').show();
+
+  /* dessin du modal */
 
 
+  $("#zone_select_card_effect_container").html(
+    '<img id=\"zone_select_card_effect_card1\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card2\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card3\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card4\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card5\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">'
+  );
+
+  $("#zone_select_card_effect_card1").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card2").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card3").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card4").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card5").css({'width': '20%', 'height': '20%'});
+
+
+  for(var i=0;i<actifAdversaire.length;i++){
+    console.log('#zone_select_card_effect_card'+(i+1)+' '+actifAdversaire[i].imageCarte);
+    $('#zone_select_card_effect_card'+(i+1)).attr('src',"img/"+actifAdversaire[i].imageCarte);
+    $('#zone_select_card_effect_card'+(i+1)).on('click',handleSelectCardEffectDesenvoutement);
+    $('#zone_select_card_effect_card'+(i+1)).addClass("card_clickable");
+  }
+  for(var i=actifAdversaire.length;i<6;i++){
+    console.log("i = "+i);
+    $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_select_card_effect_card'+(i+1)).off('click',handleSelectCardEffectDesenvoutement);
+    $('#zone_select_card_effect_card'+(i+1)).removeClass("card_clickable");
+  }
+
+  /*******************/
+
+
+
+  $("#zone_select_card_effect").show();
 
   $('#zone_select_card_effect').css({'opacity': 0.95, 'width': width+"px", 'height': (height*0.2)+"px",'top': height/2-((height*0.3)/2)});
+  $('#zone_select_card_effect').removeClass('out_select_card_effect');
   $('#zone_select_card_effect').addClass('pop_select_card_effect');
   $('#zone_barre').css({'opacity': 0.3});
   $('#zone_jeu').css({'opacity': 0.3});
@@ -55,11 +162,10 @@ function card_desenvoutement(){
 
 }
 
-function utiliserCarte(){
-
-  var id_Carte = $(this).attr('id');
+function utiliserCarte(val,id_Carte){
 
 
+  console.log("val = "+val+" id_carte = "+id_Carte);
 
   function verifPoudre(){
     for(var i=0 ; i<etatJoueur.main.length;i++){
@@ -76,11 +182,16 @@ function utiliserCarte(){
     }
     else {
       if(id_Carte == CARD_DESENVOUTEMENT){
+        pos_carte_selection = val;
         card_desenvoutement();
+      }
+      else if(id_Carte == CARD_ECHANGE_FORCE){
+        pos_carte_selection = val;
+        card_echange_force();
       }
       else {
         console.log(Joueur+"joue jouez "+id_Carte+" !");
-        socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur});
+        socket.emit('useCard',{'id_carte' : id_Carte, 'pseudo' : Joueur, 'pos_carte' : val});
       }
 
     }
@@ -188,22 +299,19 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
 
     overlay = "#zone_jeu_cards_player_card"+(i+1)+" .jeu_cards_overlay";
     selecteurAdversaire = "#zone_jeu_cards_adversaire_card"+(i+1)+" img";
-    selecteurZoneSelect = "#zone_select_card_effect_card"+(i+1);
+
     zone_adv = "#zone_jeu_cards_adversaire_card"+(i+1);
 
 
     if(actifAdversaire[i] === undefined){
       src_adv = "img/CARD_DEFAULT_VERSO.png";
       id_adv = -1;
-      $(selecteurZoneSelect).removeClass("card_clickable");
       duree_adv = 0;
     }
     else{
       src_adv = "img/"+actifAdversaire[i].imageCarte;
       id_adv = actifAdversaire[i].id_carte;
       duree_adv = actifAdversaire[i].duree;
-      $(selecteurZoneSelect).addClass("card_clickable");
-      $(selecteurZoneSelect).on('click',handleSelectCardEffect());
       if(duree_adv == 0) rm_class = false;
     }
 
@@ -229,7 +337,7 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
 
     $(selecteurAdversaire).attr('src',src_adv);
     $(selecteurAdversaire).attr('id',id_adv);
-    $(selecteurZoneSelect).attr('src',src_adv);
+
     $(overlay_adv).text(duree_adv);
 
     $(zone_adv).addClass("boom");

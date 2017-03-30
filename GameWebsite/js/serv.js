@@ -532,12 +532,17 @@ io.sockets.on('connection', function (socket){
       etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
       */
       /* *********************************** ajouter des effets de carte dans cette section ************************************** */
+      var pos_carte_joue = action.pos_carte;
+      carteJoue = etatJoueurEmetteur.main[pos_carte_joue];
+      console.log(pos_carte_joue);
 
-      for(var i=0;i<etatJoueurEmetteur.main.length;i++){
-        if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
-          carteJoue = etatJoueurEmetteur.main[i];
-        }
-      }
+      // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+      //   if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+      //     carteJoue = etatJoueurEmetteur.main[i];
+      //     pos_carte_joue = i;
+      //     break;
+      //   }
+      // }
       console.log("carte utilisé par "+pseudo+" : "+id_carte);
 
       switch (+id_carte) {
@@ -589,47 +594,54 @@ io.sockets.on('connection', function (socket){
 
         case CARD_ECHANGE_FORCE:
           retirerCarte = false;
-          carte_cible = action.carte_cible;
+          var id_carte_cible = action.carte_cible;
           var f = false;  //Flag pour vérifier si l'adversaire possède bien la carte dans la main.
-          for(var i = 0; i < etatJoueurAdversaire.main.length; i++){
-              if(etatJoueurAdversaire.main[i].id_carte == carte_cible.id_carte) f = true;
-          }
-          if (!f){
+          if(!(id_carte_cible >= 0 && id_carte_cible < 4)){
             return;
           }
+          carte_cible.id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
+          carte_cible.coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
+          carte_cible.imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
           carte_cible.from = carteJoue;
 
-          if(retirerCarte){
-            for(var i=0;i<etatJoueurEmetteur.main.length;i++){
-              if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
-                  etatJoueurEmetteur.main.splice(i,1);
-              }
-            }
-          }
-          etatJoueurEmetteur.deck.push(carte_cible);  //Deck ou main ?
+
+          // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+          //   if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+          //       etatJoueurEmetteur.main.splice(i,1);
+          //   }
+          // }
+
+          etatJoueurEmetteur.main.splice(pos_carte_joue,1);
+
+          etatJoueurEmetteur.main.push(carte_cible);  //Deck ou main ?
           etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
 
           break;
+
       }
 
 
 
 
       if(retirerCarte){
-        for(var i=0;i<etatJoueurEmetteur.main.length;i++){
-          if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
-            // on retire la carte joué de la main du joueur //
-            //carteJoue = etatJoueurEmetteur.main[i];
-            etatJoueurEmetteur.main.splice(i,1);
-          }
-        }
+        // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
+        //   if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
+        //     // on retire la carte joué de la main du joueur //
+        //     //carteJoue = etatJoueurEmetteur.main[i];
+        //     etatJoueurEmetteur.main.splice(i,1);
+        //   }
+        // }
+        etatJoueurEmetteur.main.splice(pos_carte_joue,1);
       }
       // il tire une nouvelle carte
       // tireCarteMain(etatJoueurEmetteur); remplace par fonction fin de tour
 
       // puis on rajoute la carte joué dans le fond du deck
       if(retirerCarte){
-        if(carteJoue.from !== undefined) etatJoueurEmetteur.deck.push(carteJoue.from);
+        if(carteJoue.from !== undefined){
+          etatJoueurEmetteur.deck.push(carteJoue.from);
+          console.log("carte avec un from !!! : "+carteJoue.from.imageCarte);
+        }
         else etatJoueurEmetteur.deck.push(carteJoue);
         etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
       }
@@ -657,6 +669,12 @@ io.sockets.on('connection', function (socket){
       //console.log(etatM);
 
       /* ************************************************************************************************************************** */
+
+
+      for(var i=0;i<etatJoueurEmetteur.deck.length;i++){
+        console.log("carte "+i+" : "+etatJoueurEmetteur.deck[i].imageCarte);
+      }
+
 
     }
     else {

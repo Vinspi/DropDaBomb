@@ -56,7 +56,7 @@ public class ShopViewServletAndroid extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
-        //Récupérer le pseudo pour n'afficher que les SKinMap/SkinCarton qu'il ne possède pas.
+        //Récupérer le pseudo pour n'afficher que les SKinMap/SkinCarton/Icones qu'il ne possède pas.
         String pseudo = (String) session.getAttribute("pseudo");
         int request = Integer.parseInt(req.getParameter("idRequest"));
         System.out.println("doPost");
