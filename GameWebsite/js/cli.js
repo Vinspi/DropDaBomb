@@ -5,6 +5,7 @@ var CARD_DESENVOUTEMENT = 8;
 var CARD_ECHANGE_FORCE = 7;
 var CARD_BOMB_25 = 0;
 var CARD_BOMB_50 = 1;
+var CARD_UPGRADE = 11;
 
 
 
@@ -46,6 +47,89 @@ $(document).ready(function(){
   card_desenvoutement();
 
 });
+
+function handleSelectCardEffectUpgrade(val){
+  var value = $(this).attr('id');
+
+  $('#zone_select_card_effect').removeClass('pop_select_card_effect');
+  $('#zone_select_card_effect').addClass('out_select_card_effect');
+  $('#zone_barre').css({'opacity': 1});
+  $('#zone_jeu').css({'opacity': 1});
+  $('#zone_deck').css({'opacity': 1});
+
+  $("#zone_select_card_effect").hide();
+
+
+  socket.emit('useCard',{'id_carte' : carte_degat_selectionne, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
+  console.log({'id_carte' : CARD_UPGRADE, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
+
+
+
+
+}
+
+
+function card_upgrade(){
+  var width = $('#zone').width();
+  var height = $(document).height();
+
+  $('#zone_select_card_effect_container').show();
+
+  /* dessin du modal */
+
+
+
+  $("#zone_select_card_effect_container").html(
+    '<img id=\"zone_select_card_effect_card1\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card2\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card3\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card4\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">' +
+    '<img id=\"zone_select_card_effect_card5\" src=\"img/BOUCLIER_RENVOI.png\" class=\"zone_select_card_img card_clickable\">'
+  );
+
+  $("#zone_select_card_effect_card1").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card2").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card3").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card4").css({'width': '20%', 'height': '20%'});
+  $("#zone_select_card_effect_card5").css({'width': '20%', 'height': '20%'});
+
+
+
+
+  for(var i=0;i<etatJoueur.carteActiveNonRetourne.length;i++){
+    if(etatJoueur.carteActiveNonRetourne[i].typeCarte == 'batiment'){
+      $('#zone_select_card_effect_card'+(i+1)).attr('src',"img/"+etatJoueur.carteActiveNonRetourne[i].imageCarte);
+      $('#zone_select_card_effect_card'+(i+1)).on('click',handleSelectCardEffectUpgrade);
+      $('#zone_select_card_effect_card'+(i+1)).addClass("card_clickable");
+    }
+    else {
+      $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
+      $('#zone_select_card_effect_card'+(i+1)).off('click',handleSelectCardEffectUpgrade);
+      $('#zone_select_card_effect_card'+(i+1)).removeClass("card_clickable");
+    }
+  }
+  for(var i=etatJoueur.carteActiveNonRetourne.length;i<5;i++){
+    $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
+    $('#zone_select_card_effect_card'+(i+1)).off('click',handleSelectCardEffectUpgrade);
+    $('#zone_select_card_effect_card'+(i+1)).removeClass("card_clickable");
+  }
+
+  /*******************/
+
+
+
+  $("#zone_select_card_effect").show();
+
+
+  $('#zone_select_card_effect').css({'opacity': 0.95, 'width': width+"px", 'height': (height*0.2)+"px",'top': height/2-((height*0.3)/2)});
+  $('#zone_select_card_effect').removeClass('out_select_card_effect');
+  $('#zone_select_card_effect').addClass('pop_select_card_effect');
+  $('#zone_barre').css({'opacity': 0.3});
+  $('#zone_jeu').css({'opacity': 0.3});
+  $('#zone_deck').css({'opacity': 0.3});
+
+
+}
 
 function handleSelectCardEffectBatiment(val){
   var value = $(this).attr('id');
@@ -97,7 +181,7 @@ function card_batiment(){
   $("#zone_select_card_effect_card4").css({'width': '20%', 'height': '20%'});
   $("#zone_select_card_effect_card5").css({'width': '20%', 'height': '20%'});
 
-  var nb_carte_verso = 0;
+
 
 
   for(var i=0;i<actifAdversaire.length;i++){
@@ -105,7 +189,6 @@ function card_batiment(){
       $('#zone_select_card_effect_card'+(i+1)).attr('src',"img/"+actifAdversaire[i].imageCarte);
       $('#zone_select_card_effect_card'+(i+1)).on('click',handleSelectCardEffectBatiment);
       $('#zone_select_card_effect_card'+(i+1)).addClass("card_clickable");
-      nb_carte_verso++;
     }
     else {
       $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
@@ -113,7 +196,7 @@ function card_batiment(){
       $('#zone_select_card_effect_card'+(i+1)).removeClass("card_clickable");
     }
   }
-  for(var i=nb_carte_verso;i<5;i++){
+  for(var i=actifAdversaire.length;i<5;i++){
     $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_select_card_effect_card'+(i+1)).off('click',handleSelectCardEffectBatiment);
     $('#zone_select_card_effect_card'+(i+1)).removeClass("card_clickable");
@@ -256,7 +339,7 @@ function card_desenvoutement(){
     $('#zone_select_card_effect_card'+(i+1)).on('click',handleSelectCardEffectDesenvoutement);
     $('#zone_select_card_effect_card'+(i+1)).addClass("card_clickable");
   }
-  for(var i=actifAdversaire.length;i<6;i++){
+  for(var i=actifAdversaire.length;i<5;i++){
     console.log("i = "+i);
     $('#zone_select_card_effect_card'+(i+1)).attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_select_card_effect_card'+(i+1)).off('click',handleSelectCardEffectDesenvoutement);
@@ -317,6 +400,10 @@ function utiliserCarte(val,id_Carte){
         pos_carte_selection = val;
         carte_degat_selectionne = CARD_BOMB_50;
         card_batiment();
+      }
+      else if(id_Carte == CARD_UPGRADE){
+        pos_carte_selection = val;
+        card_upgrade();
       }
       else {
         console.log(Joueur+"joue jouez "+id_Carte+" !");

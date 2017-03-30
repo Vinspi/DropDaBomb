@@ -11,12 +11,12 @@ var CARD_BOUCLIER_GEN_POUDRE = 6;
 var CARD_ECHANGE_FORCE = 7;
 var CARD_DESENVOUTEMENT = 8;
 var CARD_MELANGE = 9;
-var CARD_UPGRADE = 10;
-var CARD_BOMBARDEMENT = 11;
+var CARD_UPGRADE = 11;
+var CARD_BOMBARDEMENT = 13;
 
 var CARD_EXTRACTEUR_LVL_1 = 12;
 
-var CARD_CANON_LVL_1 = 13;
+var CARD_CANON_LVL_1 = 10;
 
 /* fin des definitions de cartes */
 
@@ -305,22 +305,26 @@ function infligeDegats(joueurEmetteur, joueurCible, degats){
   joueurCible.bouclier = bouclier;
   joueurEmetteur.pdv += residu;
 
+
+
 }
 
 
 function attaquerBatiment(joueurCible,carte_cible, degats){
-
+  console.log("fonction attaquer batiment -------------------------");
   var residu = degats;
   while(residu > 0){
     joueurCible.carteActiveNonRetourne[carte_cible].pdv -= degats;
+    residu = -(joueurCible.carteActiveNonRetourne[carte_cible].pdv);
+    console.log("degat pris par un batiment ! : "+joueurCible.carteActiveNonRetourne[carte_cible].imageCarte+" : "+joueurCible.carteActiveNonRetourne[carte_cible].pdv);
 
-    if(joueurCible.carteActiveNonRetourne[carte_cible].pdv < 0){
+    if(joueurCible.carteActiveNonRetourne[carte_cible].pdv <= 0){
         if(joueurCible.carteActiveNonRetourne[carte_cible].level == 1){
           (joueurCible.carteActiveNonRetourne).splice(carte_cible,1);
           return;
         }
         else {
-          residu = -(joueurCible.carteActiveNonRetourne[carte_cible].pdv);
+
           joueurCible.carteActiveNonRetourne[carte_cible].level--;
           joueurCible.carteActiveNonRetourne[carte_cible].pdv = 50;
           switch (+joueurCible.carteActiveNonRetourne[carte_cible].id_carte) {
@@ -334,6 +338,7 @@ function attaquerBatiment(joueurCible,carte_cible, degats){
         }
     }
   }
+
 
 }
 
