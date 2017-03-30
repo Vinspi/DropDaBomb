@@ -21,9 +21,9 @@ var CARD_UPGRADE = 11;
 /*****************************/
 
 //var socket = io.connect('http://192.168.43.7:8080');
-//var socket = io.connect('http://109.7.220.208:3000');
+var socket = io.connect('http://109.7.220.208:3000');
 
-var socket = io.connect('http://localhost:8080');
+//var socket = io.connect('http://localhost:8080');
 
 
 var Joueur;    //Récup le pseudo du guguss
@@ -60,7 +60,7 @@ function handleSelectCardEffectUpgrade(val){
   $("#zone_select_card_effect").hide();
 
 
-  socket.emit('useCard',{'id_carte' : carte_degat_selectionne, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
+  socket.emit('useCard',{'id_carte' : CARD_UPGRADE, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
   console.log({'id_carte' : CARD_UPGRADE, 'pseudo' : Joueur, 'carte_cible' : (value[value.length-1]-1), 'pos_carte' : pos_carte_selection});
 
 
