@@ -11,6 +11,12 @@ var CARD_BOUCLIER_GEN_POUDRE = 6;
 var CARD_ECHANGE_FORCE = 7;
 var CARD_DESENVOUTEMENT = 8;
 var CARD_MELANGE = 9;
+var CARD_UPGRADE = 10;
+var CARD_BOMBARDEMENT = 11;
+
+var CARD_EXTRACTEUR_LVL_1 = 12;
+
+var CARD_CANON_LVL_1 = 13;
 
 /* fin des definitions de cartes */
 
@@ -106,11 +112,21 @@ function etatMatch(pseudo1,pseudo2,deck1,deck2) {
   this.nameRoom = "";
   this.timer = NB_MAX_TIMER;
 }
-
+/* Vielle version
 function effet(id_carte,duree,image_carte){
   this.id_carte = id_carte;
   this.duree = duree; // mettre a -1 pour un effet permanent
   this.imageCarte = image_carte;
+}
+*/
+
+function effet(id_carte,duree,image_carte,typeCarte,pdv,level){
+  this.id_carte = id_carte;
+  this.duree = duree; // mettre a -1 pour un effet permanent
+  this.imageCarte = image_carte;
+  this.typeCarte = typeCarte;
+  this.pdv = pdv;
+  this.level = level;
 }
 
 function Room(name, pseudo1, pseudo2){
@@ -173,8 +189,8 @@ function tireCarteMain(etatJoueur){
 function initMatch(pseudo1, pseudo2){
 
 
-  var queryCartesJ1 = "SELECT id_Carte, coutCarte, imageCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo1)+" AND estActif = 1);";
-  var queryCartesJ2 = "SELECT id_Carte, coutCarte, imageCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo2)+" AND estActif = 1);";
+  var queryCartesJ1 = "SELECT id_Carte, coutCarte, imageCarte, typeCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo1)+" AND estActif = 1);";
+  var queryCartesJ2 = "SELECT id_Carte, coutCarte, imageCarte, typeCarte FROM JoueurCarteDeck JOIN Deck USING (id_Deck) JOIN Carte USING (id_Carte) WHERE (Pseudo LIKE "+connection.escape(pseudo2)+" AND estActif = 1);";
 
   var deck1 = [];
   var deck2 = [];
@@ -184,6 +200,7 @@ function initMatch(pseudo1, pseudo2){
   connection.query(queryCartesJ1, function(err, rows, fields){
     if (err) throw err;
     for(var i in rows){
+      rows[i].level = 1;
       deck1.push(rows[i]);
     }
   });
@@ -191,6 +208,7 @@ function initMatch(pseudo1, pseudo2){
   connection.query(queryCartesJ2, function(err, rows, fields){
     if (err) throw err;
     for(var i in rows){
+      rows[i].level = 1;
       deck2.push(rows[i]);
     }
 
@@ -289,6 +307,36 @@ function infligeDegats(joueurEmetteur, joueurCible, degats){
 
 }
 
+
+function attaquerBatiment(joueurCible,carte_cible, degats){
+
+  var residu = degats;
+  while(residu > 0){
+    joueurCible.carteActiveNonRetourne[carte_cible].pdv -= degats;
+
+    if(joueurCible.carteActiveNonRetourne[carte_cible].pdv < 0){
+        if(joueurCible.carteActiveNonRetourne[carte_cible].level == 1){
+          (joueurCible.carteActiveNonRetourne).splice(carte_cible,1);
+          return;
+        }
+        else {
+          residu = -(joueurCible.carteActiveNonRetourne[carte_cible].pdv);
+          joueurCible.carteActiveNonRetourne[carte_cible].level--;
+          joueurCible.carteActiveNonRetourne[carte_cible].pdv = 50;
+          switch (+joueurCible.carteActiveNonRetourne[carte_cible].id_carte) {
+            case CARD_CANON_LVL_1:
+              joueurCible.carteActiveNonRetourne[carte_cible].imageCarte = "img/CARDS/CARD_CANON_LVL_"+joueurCible.carteActiveNonRetourne[carte_cible].level;
+              break;
+            case CARD_EXTRACTEUR_LVL_1:
+              joueurCible.carteActiveNonRetourne[carte_cible].imageCarte = "img/CARDS/CARD_EXTRACTEUR_LVL_"+joueurCible.carteActiveNonRetourne[carte_cible].level;
+              break;
+          }
+        }
+    }
+  }
+
+}
+
 function ajouteEffet(etatJoueur, effet){
   if(etatJoueur.carteActiveNonRetourne.length < NB_MAX_CARTE_ACTIVE){
     etatJoueur.carteActiveNonRetourne.push(effet);
@@ -317,7 +365,29 @@ function checkEffets(etatJoueur, etatJoueurAdversaire,etatMatch){
 
     }
     else if(etatJoueur.carteActiveNonRetourne[i].duree == -1){  //Carte à durée infini
-          //Rien
+        if(etatJoueur.carteActiveNonRetourne[i].id_carte == CARD_EXTRACTEUR_LVL_1){
+          if(etatJoueur.carteActiveNonRetourne[i].level == 1){
+            etatJoueur.poudre += 3;
+          }
+          else if(etatJoueur.carteActiveNonRetourne[i].level == 2){
+            etatJoueur.poudre += 8;
+          }
+          else if(etatJoueur.carteActiveNonRetourne[i].level == 3){
+            etatJoueur.poudre += 14;
+          }
+
+        }
+        else if(etatJoueur.carteActiveNonRetourne[i].id_carte == CARD_CANON_LVL_1){
+          if(etatJoueur.carteActiveNonRetourne[i].level == 1){
+            infligeDegats(etatJoueur,etatJoueurAdversaire,10);
+          }
+          else if(etatJoueur.carteActiveNonRetourne[i].level == 2){
+            infligeDegats(etatJoueur,etatJoueurAdversaire,25);
+          }
+          else if(etatJoueur.carteActiveNonRetourne[i].level == 3){
+            infligeDegats(etatJoueur,etatJoueurAdversaire,60);
+          }
+        }
     }
 
     else{
@@ -346,6 +416,52 @@ function appliqueEffets(etatJoueurEmetteur,etatJoueurAdversaire,effet){
     default:
 
   }
+}
+
+function upgrade_batiment(etatJoueur,id){
+    if(etatJoueur.carteActiveNonRetourne[id].typeCarte == "batiment"){
+      switch(+etatJoueur.carteActiveNonRetourne[id].id_carte){
+
+          case CARD_CANON_LVL_1 :
+            if(etatJoueur.carteActiveNonRetourne[id].level == 1){
+              etatJoueur.carteActiveNonRetourne[id].imageCarte = "img/CARDS/CARD_CANON_LVL_2.png";
+              etatJoueur.carteActiveNonRetourne[id].level = 2;
+              etatJoueur.carteActiveNonRetourne[id].pdv = 50;
+              return true;
+            }
+            else if(etatJoueur.carteActiveNonRetourne[id].level == 2){
+              etatJoueur.carteActiveNonRetourne[id].imageCarte = "img/CARDS/CARD_CANON_LVL_3.png";
+              etatJoueur.carteActiveNonRetourne[id].level = 3;
+              etatJoueur.carteActiveNonRetourne[id].pdv = 50;
+              return true;
+            }
+            else{ //Batiment déjà level 3.
+              return false;
+            }
+            break;
+
+          case CARD_EXTRACTEUR_LVL_1 :
+            if(etatJoueur.carteActiveNonRetourne[id].level == 1){
+              etatJoueur.carteActiveNonRetourne[id].imageCarte = "img/CARDS/CARD_EXTRACTEUR_LVL_2.png";
+              etatJoueur.carteActiveNonRetourne[id].level = 2;
+              etatJoueur.carteActiveNonRetourne[id].pdv = 50;
+              return true;
+            }
+            else if(etatJoueur.carteActiveNonRetourne[id].level == 2){
+              etatJoueur.carteActiveNonRetourne[id].imageCarte = "img/CARDS/CARD_EXTRACTEUR_LVL_3.png";
+              etatJoueur.carteActiveNonRetourne[id].level = 3;
+              etatJoueur.carteActiveNonRetourne[id].pdv = 50;
+              return true;
+            }
+            else{ //Batiment déjà level 3.
+              return false;
+            }
+            break;
+      }
+    }
+    else{ //La carteActive n'est pas un batiment.
+      return false;
+    }
 }
 
 function finDeMatch(etatMatch){
@@ -548,15 +664,42 @@ io.sockets.on('connection', function (socket){
       switch (+id_carte) {
         case CARD_BOMB_25:
           /* carte zero (BOMB 25)*/
-          infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,25);
-
+          id_carte_cible = action.carte_cible;
+          if(id_carte_cible > -1 && id_carte_cible < 5 ){
+              if(etatJoueurAdversaire.carteActiveNonRetourne[id_carte_cible].typeCarte == "batiment"){
+                attaquerBatiment(etatJoueurAdversaire,id_carte_cible,25);
+              }
+              else {  //tricherie
+                return;
+              }
+          }
+          else if(id_carte_cible == -1){
+            infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,25);
+          }
+          else {  //tricherie
+            return;
+          }
           break;
 
         case CARD_BOMB_50:
-
-          infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,50);
-
+          id_carte_cible = action.carte_cible;
+          if(id_carte_cible > -1 && id_carte_cible < 5 ){
+              if(etatJoueurAdversaire.carteActiveNonRetourne[id_carte_cible].typeCarte == "batiment"){
+                attaquerBatiment(etatJoueurAdversaire,id_carte_cible,50);
+              }
+              else {  //tricherie
+                return;
+              }
+          }
+          else if(id_carte_cible == -1){
+            infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,50);
+          }
+          else {  //tricherie
+            return;
+          }
           break;
+
+            break;
 
         case CARD_BOUCLIER_45:
 
@@ -570,10 +713,10 @@ io.sockets.on('connection', function (socket){
 
         case CARD_BOMB_50_2TOUR:
 
-          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_50_2TOUR,2,carteJoue.imageCarte));
+          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_50_2TOUR,2,carteJoue.imageCarte,"chargement",-1));
           break;
         case CARD_BOMB_100_2TOUR:
-          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_100_2TOUR,2,carteJoue.imageCarte));
+          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOMB_100_2TOUR,2,carteJoue.imageCarte,"chargement",-1));
           break;
 
         case CARD_MELANGE:
@@ -589,7 +732,7 @@ io.sockets.on('connection', function (socket){
           break;
 
         case CARD_BOUCLIER_GEN_POUDRE:
-          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOUCLIER_GEN_POUDRE,-1,carteJoue.imageCarte));
+          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_BOUCLIER_GEN_POUDRE,-1,carteJoue.imageCarte,"sort",-1));
           break;
 
         case CARD_ECHANGE_FORCE:
@@ -600,11 +743,6 @@ io.sockets.on('connection', function (socket){
             return;
           }
 
-          carte_cible.id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
-          carte_cible.coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
-          carte_cible.imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
-          carte_cible.from = carteJoue;
-
 
           /* copie de la carte */
 
@@ -613,7 +751,8 @@ io.sockets.on('connection', function (socket){
           etatJoueurEmetteur.main[pos_carte_joue].id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
           etatJoueurEmetteur.main[pos_carte_joue].imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
           etatJoueurEmetteur.main[pos_carte_joue].coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
-
+          etatJoueurEmetteur.main[pos_carte_joue].typeCarte = etatJoueurAdversaire.main[id_carte_cible].typeCarte;
+          etatJoueurEmetteur.main[pos_carte_joue].level = etatJoueurAdversaire.main[id_carte_cible].level;
 
 
           etatJoueurEmetteur.main[pos_carte_joue].from = tmp;
@@ -631,8 +770,30 @@ io.sockets.on('connection', function (socket){
 
           break;
 
+        case CARD_EXTRACTEUR_LVL_1 :
+          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_EXTRACTEUR_LVL_1,-1,carteJoue.imageCarte,"batiment",50,1));
+          break;
 
+        case CARD_CANON_LVL_1 :
+          retirerCarte = ajouteEffet(etatJoueurEmetteur,new effet(CARD_CANON_LVL_1,-1,carteJoue.imageCarte,"batiment",50,1));
+          break;
 
+        case CARD_UPGRADE :
+          var id_carte_cible = action.carte_cible;
+          if (id_carte_cible < 0 || id_carte_cible > 4) return;
+          retirerCarte = upgrade_batiment(etatJoueurEmetteur,id_carte_cible);
+          break;
+        case CARD_BOMBARDEMENT :
+          var r = 0;
+          for(var i = 0; i < 2; i++){
+              infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,10);
+          }
+          for(var j = 0; j < 3; i++){
+              r = Math.random()*10;
+              if(r < Math.pow(2,(3-j)))  infligeDegats(etatJoueurEmetteur,etatJoueurAdversaire,10);
+              else break;
+          }
+          break;
       }
 
 

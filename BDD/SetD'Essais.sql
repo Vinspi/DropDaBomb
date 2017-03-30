@@ -76,21 +76,21 @@ INSERT INTO OffreIcone (id_Offre,id_IconeJoueur) VALUES (7,1);
 INSERT INTO LootPackPack (id_LootPack,id_Pack,qteCartePack) VALUES (1,1,9);
 INSERT INTO LootPackPack (id_LootPack,id_Pack,qteCartePack) VALUES (2,1,1);
 
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,5,'Ensemble0');
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,6,'Ensemble0');
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,7,'Ensemble0');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,5,'Ensemble0');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,6,'Ensemble0');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,7,'Ensemble0');
 
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (1,0,'Ensemble1');
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (1,8,'Ensemble1');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (1,0,'Ensemble1');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (1,8,'Ensemble1');
 
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (2,2,'Ensemble2');
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (2,12,'Ensemble2');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (2,2,'Ensemble2');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (2,12,'Ensemble2');
 
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,1,'Ensemble3');
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,10,'Ensemble3');
-INSERT INTO EnsembleCarte(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,11,'Ensemble3');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,1,'Ensemble3');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,10,'Ensemble3');
+INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,11,'Ensemble3');
 
-INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (1,0,40,'LootPack0');
-INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (1,1,60,'LootPack0');
-INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (2,2,10,'LootPack1');
-INSERT INTO LootPackEnsemble (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (2,3,90,'LootPack1');
+INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (1,0,40,'LootPack0');
+INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (1,1,60,'LootPack0');
+INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (2,2,10,'LootPack1');
+INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (2,3,90,'LootPack1');
