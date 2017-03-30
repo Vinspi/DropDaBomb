@@ -170,6 +170,8 @@ public class AccountManager {
 
     public int createAccount(String pseudo,String email,String password){
 
+        int MIN_SIZE_PASSWORD = 3;
+
         Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
 

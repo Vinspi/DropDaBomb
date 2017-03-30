@@ -41,7 +41,7 @@
         <div class="nav-wrapper nav-perso">
             <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="shop.jsp">Boutique</a></li>
+                <li><a href="boutique.jsp">Boutique</a></li>
                 <%
 
                     System.out.println("pseudo = "+pseudo);

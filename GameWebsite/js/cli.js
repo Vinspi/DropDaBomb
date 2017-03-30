@@ -17,6 +17,7 @@ var CARD_ECHANGE_FORCE = 7;
 
 var socket = io.connect('http://192.168.43.7:8080');
 //var socket = io.connect('http://109.7.220.208:3000');
+
 //var socket = io.connect('http://localhost:8080');
 
 

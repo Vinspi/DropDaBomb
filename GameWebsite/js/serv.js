@@ -600,6 +600,12 @@ io.sockets.on('connection', function (socket){
             return;
           }
 
+          carte_cible.id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
+          carte_cible.coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
+          carte_cible.imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
+          carte_cible.from = carteJoue;
+
+
           /* copie de la carte */
 
           var tmp = {'id_Carte': etatJoueurEmetteur.main[pos_carte_joue].id_Carte, 'imageCarte': etatJoueurEmetteur.main[pos_carte_joue].imageCarte, 'coutCarte': etatJoueurEmetteur.main[pos_carte_joue].coutCarte};
@@ -611,7 +617,6 @@ io.sockets.on('connection', function (socket){
 
 
           etatJoueurEmetteur.main[pos_carte_joue].from = tmp;
-
 
           // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
           //   if(etatJoueurEmetteur.main[i].id_Carte == id_carte){

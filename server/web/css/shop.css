@@ -1,70 +1,91 @@
+.nav-perso {
+    background: linear-gradient(10deg,#4b6572,#2c3e50);
+}
+
+nav li{
+    margin-right: 1em;
+}
+
+.iconeJoueur{
+    width: 4rem;
+}
+
 @font-face {
     font-family: Luna;
     src: url("../fonts/Luna.ttf");
 }
 
 body{
-    background-image: url("../img/background_create_account.png");
+
+    background-image: url("../img/BG6.jpg");
+
+    background-attachment: fixed;
+
+
 }
 
-#h1_boutique{
-    color: white;
+.card .card-image img_pack {
+
+    width: 20%;
+}
+
+.luna{
     font-family: Luna;
-    font-size: 4em;
-    margin-top:1em;
-    margin-bottom:1em;
-    text-shadow: 4px 2px 2px rgba(0, 0, 0, 1);
 }
 
-.card-container {
-    background-image: url("../img/wooden_bg.jpg");
-    /*border: 3px solid black;*/
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+.brand-logo{
+    text-shadow: 2px 2px #000000;
+    margin-left: 20px;
 }
 
+.titre-modif-email{
 
-
-.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
-
-    text-align: center;
-    display: inline-block;
-    width: 33%;
-    height: 100%;
-    float: left;
-    margin-left: 0px;
-}
-
-
-#coffre_img{
-    border-radius: 15px 15px;
-}
-
-#coffre_card{
-    border-radius: 15px 15px;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
-
-.btn_buy_pack{
-    margin-top: 2em;
-}
-
-.card-reveal{
-    padding: 2em;
-}
-
-#pack_name{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-bottom: 3em;
+    background: repeating-linear-gradient(
+            45deg,
+            #1e88e5,
+            #1e88e5 6px,
+            #1976d2 6px,
+            #1976d2 12px
+    );
 
 }
 
-#coffre_card_reveal{
-    border:5px solid #c6ff00;
+.titre-mon-compte{
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background: repeating-linear-gradient(
+            45deg,
+            #ffb300,
+            #ffb300 6px,
+            #ffa000 6px,
+            #ffa000 12px
+    );
 }
 
-/*.modal-footer {
-    display:inline-block;
-    float:left;
-}*/
+.modal .modal-content{
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: #b0bec5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #b0bec5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #b0bec5;
+    opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: #b0bec5;
+    opacity: 1;
+}
+
+.section-mon-compte{
+    padding-top: 5em;
+}

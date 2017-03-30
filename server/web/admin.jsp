@@ -45,7 +45,7 @@
     <div class="nav-wrapper nav-perso">
         <a href="#" class="brand-logo">DropDaBomb</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="shop.jsp">Boutique</a></li>
+            <li><a href="boutique.jsp">Boutique</a></li>
             <%
 
                 if(session.getAttribute("pseudo") == null) {
