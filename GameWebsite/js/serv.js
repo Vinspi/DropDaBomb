@@ -1,7 +1,7 @@
 
 
 /* definir toutes les cartes sous forme de constantes */
-var CARD_BOMB_25 = 0;   
+var CARD_BOMB_25 = 0;
 var CARD_BOMB_50 = 1;
 var CARD_BOMB_50_2TOUR = 2;
 var CARD_BOMB_100_2TOUR = 3;
@@ -600,10 +600,10 @@ io.sockets.on('connection', function (socket){
             return;
           }
 
-          carte_cible.id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
-          carte_cible.coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
-          carte_cible.imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
-          carte_cible.from = carteJoue;
+            // carte_cible.id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
+            // carte_cible.coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
+            // carte_cible.imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
+            // carte_cible.from = carteJoue;
 
 
           /* copie de la carte */
