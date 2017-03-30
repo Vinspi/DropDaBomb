@@ -19,10 +19,10 @@ var CARD_BOMB_50 = 1;
 
 /*****************************/
 
-var socket = io.connect('http://192.168.43.7:8080');
+//var socket = io.connect('http://192.168.43.7:8080');
 //var socket = io.connect('http://109.7.220.208:3000');
 
-//var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://localhost:8080');
 
 
 var Joueur;    //Récup le pseudo du guguss
@@ -340,37 +340,52 @@ function dessineMain(main){
   if(main[0] !== undefined){
     $('#zone_deck_cards_card1 img').attr('src','img/'+main[0].imageCarte);
     $('#zone_deck_cards_card1 img').attr('id',main[0].id_Carte);
+    $('#zone_deck_cards_card1_powder').text(main[0].coutCarte);
   }
   else {
     $('#zone_deck_cards_card1 img').attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_deck_cards_card1 img').attr('id',-1);
+    $('#zone_deck_cards_card1_powder').text('');
+
   }
 
   if(main[1] !== undefined){
     $('#zone_deck_cards_card2 img').attr('src','img/'+main[1].imageCarte);
     $('#zone_deck_cards_card2 img').attr('id',main[1].id_Carte);
+    $('#zone_deck_cards_card2_powder').text(main[1].coutCarte);
+
   }
   else {
     $('#zone_deck_cards_card2 img').attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_deck_cards_card2 img').attr('id',-1);
+    $('#zone_deck_cards_card2_powder').text('');
+
   }
 
   if(main[2] !== undefined){
     $('#zone_deck_cards_card3 img').attr('src','img/'+main[2].imageCarte);
     $('#zone_deck_cards_card3 img').attr('id',main[2].id_Carte);
+    $('#zone_deck_cards_card3_powder').text(main[2].coutCarte);
+
   }
   else {
     $('#zone_deck_cards_card3 img').attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_deck_cards_card3 img').attr('id',-1);
+    $('#zone_deck_cards_card3_powder').text('');
+
   }
 
   if(main[3] !== undefined){
     $('#zone_deck_cards_card4 img').attr('src','img/'+main[3].imageCarte);
     $('#zone_deck_cards_card4 img').attr('id',main[3].id_Carte);
+    $('#zone_deck_cards_card4_powder').text(main[3].coutCarte);
+
   }
   else {
     $('#zone_deck_cards_card4 img').attr('src','img/CARD_DEFAULT_VERSO.png');
     $('#zone_deck_cards_card4 img').attr('id',-1);
+    $('#zone_deck_cards_card4_powder').text('');
+
   }
 
 
