@@ -446,6 +446,22 @@ img{
 
 }
 
+
+
+#zone_select_card_effect_direct{
+
+  position: absolute;
+
+  z-index: 2;
+
+  opacity: 0;
+
+  border: 5px solid white;
+
+  display: none;
+
+}
+
 #zone_select_card_effect_container{
   display: flex;
 

@@ -743,7 +743,6 @@ io.sockets.on('connection', function (socket){
             return;
           }
 
-
           /* copie de la carte */
 
           var tmp = {'id_Carte': etatJoueurEmetteur.main[pos_carte_joue].id_Carte, 'imageCarte': etatJoueurEmetteur.main[pos_carte_joue].imageCarte, 'coutCarte': etatJoueurEmetteur.main[pos_carte_joue].coutCarte};

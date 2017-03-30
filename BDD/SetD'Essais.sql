@@ -36,13 +36,21 @@ INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descrip
 
 INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (9,'Melange','rare','Sort','mélange votre deck avec votre main','SWAP_CARDS_DECK.png',3,0);
 
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (10,'Canon','rare','batiment','pose un batiment canon qui inflige des dégat a chaque fin de tour, peut etre amélioré','SPELL_CANON_LVL_1.jpg',5,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (11,'Upgrade','normal','sort','ameliore un de vos batiment','SPELL_UPGRADE.jpg',2,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (12,'Extracteur','rare','batiment','pose un batiment extracteur qui genere de la poudre a chaque fin de tour, peut etre amélioré','EXTRACTEUR_LVL_1.jpg',5,0);
+
+INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (13,'Canon','rare','batiment','lance trois bombes, le materiel etant ce qu\'il est il est possible qu\'elle n\'explose pas toutes ...','SPELL_CANON_LVL_1.jpg',5,0);
 
 
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (10,'Dick Out For Harambe','Sort','Harambe est toujours dans nos coeurs. +25 mana',0);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (11,'YasuoPogChamp','Combattant','2items100%ccNarmol',5);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (12,'WhereIsMyTeam?','Sort','Vous n\'avez pas de team ? Pas de problème, on vous fournit ça',20);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (13,'JféDéRouAriairDanLeQDeTaMer','Sort','VroumVroum',5);
-INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (14,'Victoire Dou Blazil','Sort','Vous invoquez Leonardo l\'interdit, qui invoque le carnaval Dou Blazil.',100);
+
+-- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (10,'Dick Out For Harambe','Sort','Harambe est toujours dans nos coeurs. +25 mana',0);
+-- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (11,'YasuoPogChamp','Combattant','2items100%ccNarmol',5);
+-- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (12,'WhereIsMyTeam?','Sort','Vous n\'avez pas de team ? Pas de problème, on vous fournit ça',20);
+-- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (13,'JféDéRouAriairDanLeQDeTaMer','Sort','VroumVroum',5);
+-- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (14,'Victoire Dou Blazil','Sort','Vous invoquez Leonardo l\'interdit, qui invoque le carnaval Dou Blazil.',100);
 
 
 
