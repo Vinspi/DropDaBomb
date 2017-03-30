@@ -21,6 +21,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="css/admin.css"  media="screen,projection"/>
 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/admin.js"></script>
+
+
+
 
 
     <meta charset="utf-8">
@@ -53,13 +59,18 @@
                                 "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
+                    else {
+                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+
+
+                                "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" + "<li><a href=\"game.jsp\">Jouer</a></li>" +
+
+
+                                "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
+                    }
 
                 }
-                else {
-                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
-                            "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                            "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
-                }
+
 
             %>
         </ul>
@@ -123,6 +134,8 @@
                         <label for="nomPack">Nom du nouveau Pack</label>
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
                 <div class="row">
                     <div class="input-field col s6 m6 l6">
                         <input id="prixIG" type="text" class="validate">
@@ -143,6 +156,7 @@
                         <label for="imagePack">Lien de l'image du nouveau Pack</label>
                     </div>
                 </div>
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
                 <div class="input-submit col s12 m12 l12">
                     <input type="submit" value="Valider" />
                 </div>
@@ -153,6 +167,8 @@
 </div>
 
 
+<<<<<<< HEAD
+=======
 <div id="modal-gestionPack" class="modal">
     <div class="modal-content">
         <div id="gestion-Pack" class="row">
@@ -160,6 +176,7 @@
         </div>
     </div>
 </div>
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 
 
 <h3>Panneau d'administration des packs</h3>
@@ -250,9 +267,13 @@
 
 
     </div>
+<<<<<<< HEAD
+
+=======
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 </body>
 </html>
 

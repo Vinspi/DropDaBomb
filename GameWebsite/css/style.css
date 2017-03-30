@@ -179,10 +179,7 @@ img{
 
 /* animation vinspi */
 
-@keyframes pop_card {
-    from {transform: scale(1.8);}
-    to {transform: scale(1);}
-}
+
 
 
 .card_clickable{
@@ -383,7 +380,16 @@ img{
 /*----------------------------------------------*/
 /*-----------      Zone animation    -----------*/
 
-
+@keyframes pop_card {
+    from {
+      transform: scale(1.8);
+      opacity: 0.2;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+}
 
 
 @keyframes boomer {
@@ -442,7 +448,7 @@ img{
 
 #zone_select_card_effect_container{
   display: flex;
-  
+
 }
 
 #zone_select_card_img{

@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta title="Index" />
 
+    <meta charset="UTF-8" />
+
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/account.js"></script>
+    <!--<script type="text/javascript" src="js/test.js"></script>-->
 
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -23,141 +26,74 @@
 
 <body class="grey darken-3">
 
-    <nav>
-        <div class="nav-wrapper nav-perso">
-            <a href="#" class="brand-logo"><img src="img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="account.jsp">Inscription</a></li>
-                <li><a href="log.jsp">Connexion</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <div class="container">
-        <div class="row">
-            <div class="col s12 m12 l4">
-                <div class="card card_signup" id="first-card">
 
-                    <!--
-                <% if(request.getAttribute("STATUS") != null && request.getAttribute("STATUS").equals(RequestStatus.CREATE_ACCOUNT_SUCCES)) {%>
-                    <%@include file="accountSucces.jsp"%>
-                <%}%>
-                <% if(request.getAttribute("STATUS") == null || !request.getAttribute("STATUS").equals(RequestStatus.CREATE_ACCOUNT_SUCCES)) { %>
-                    <%@include file="accountFailed.jsp"%>
-                <%}%>-->
+        <div class="row center-align" style="margin-top: 15vh">
 
-                    <div class="card-content title-card">
-                        <div class="center-align light-green">
-                            <span class="card-title white-text">1</span>
-                            <div class="bottom-arrow bottom-arrow-creation-compte"></div>
-                        </div>
-                        <div class="center-align titre-creation-compte">
-                            <span class="card-title white-text">Créer votre compte</span>
-                        </div>
-                        <div class="row">
-                                <div class="row">
-                                    <div class="input-field col s8 offset-s2">
-                                        <input placeholder="Pseudo" id="pseudo" name="pseudo" type="text" class="validate">
 
-                                        <label for="pseudo"></label>
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <div class="card amber darken-3 center-align">
+                        <div class="card-action container">
+                            <div class="row">
+                                <div class="col l6 m6 s6">
+                                    <div class="card">
+                                        <div class="card-image waves-effect waves-block waves-light">
+                                            <img class="activator" src="img/SIGNIN_ICON.png">
+                                        </div>
+                                        <div class="card-content edo black-text">
+                                            Créer un compte
+                                        </div>
+                                        <div class="card-reveal">
+                                            <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                                            <div class="row">
+                                                    <div class="row">
+                                                        <div class="input-field col l12 m12 s12">
+                                                            <i class="material-icons prefix">account_circle</i>
+                                                            <input id="signin_pseudo" type="text" class="validate">
+                                                            <label for="pseudo">Pseudo ou Email</label>
+                                                        </div>
+                                                        <div class="input-field col l12 m12 s12">
+                                                            <i class="material-icons prefix">offline_pin</i>
+                                                            <input id="signin_password" type="password" class="validate">
+                                                            <label for="password">Mot de passe</label>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn waves-effect waves-light amber darken-2 black-text" id="signin_submit">Se connecter
+                                                        <i class="material-icons right">send</i>
+                                                    </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="input-field col s8 offset-s2">
-                                        <input placeholder="password" id="password" name="password" type="password" class="validate">
 
-                                        <label for="password"></label>
-                                    </div>
+                                <div class="col l6 m6 s6">
+                                    <a href="AccountCreate.html" style="margin-right: 0px">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="img/SIGNUP_ICON.png">
+                                            </div>
+                                            <div class="card-content edo black-text">
+                                                Créer un compte
+                                            </div>
+
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="row">
-                                    <div class="input-field col s8 offset-s2">
-                                        <input placeholder="Confirm password" id="password_confirm" name="password_confirm" type="password" class="validate">
+                            </div>
 
-                                        <label for="password_confirm"></label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s8 offset-s2">
-                                        <input placeholder="Email" id="email" name="email" type="email" class="validate">
-
-                                        <label for="email"></label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col s4 offset-s4">
-                                        <input type="submit" class="btn-large waves-effect waves-light light-green" id="btn-create" value="Create">
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-            <div class="col s12 m6 l4">
-                <div class="card card_signup" id="second-card">
-                    <div class="card-content title-card">
-                        <div class="center-align amber">
-                            <span class="card-title white-text">2</span>
-                            <div class="bottom-arrow bottom-arrow-telechargement"></div>
-                        </div>
-                        <div class="center-align titre-telechargement">
-                            <span class="card-title white-text">Téléchargez l'application</span>
-                        </div>
-                        <div class="card-download">
-                            <p>
-                                Vous avez maintenant un compte, téléchargez l'application DropDaBomb depuis Google play et installez la sur votre smartphone
-                                !
-                            </p>
-
-                        </div>
-                        <div class="center-align" id="btn-download">
-                            <a class="btn-large waves-effect waves-light amber">Téléchargement</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col s12 m6 l4">
-                <div class="card card_signup" id="third-card">
-                    <div class="card-content title-card">
-                        <div class="center-align blue">
-                            <span class="card-title white-text">3</span>
-                            <div class="bottom-arrow bottom-arrow-connexion"></div>
-                        </div>
-                        <div class="center-align titre-connexion">
-                            <span class="card-title white-text">Amusez vous !</span>
-                        </div>
-                        <div class="card-download">
-                            <p>
-                                Vous etes maintenant prêt à vous mesurer aux autres joueurs, battez vous, grimpez le ladder, soyer malin et stratège pour
-                                vaincre vos adversaire, devenez le meilleur joueur de DropDaBomb et n'oubliez pas de passer
-                                par notre boutique !
-                            </p>
-
-                        </div>
-                        <div class="center-align" id="btn-connexion">
-                            <a class="btn-large waves-effect waves-light blue" href="log.jsp">Connexion</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Import jQuery before materialize.js-->
-            <script>
-                $(document).ready(function () {
-
-                    var max_height_card = Math.max($('#first-card').height(), $('#second-card').height(), $('#third-card').height());
-                    $('#second-card').height(max_height_card);
-                    $('#third-card').height(max_height_card);
-                    $('#first-card').height(max_height_card);
 
 
 
-                });
-            </script>
+
 
         </div>
-    </div>
 
+    </div>
 
 </body>
 

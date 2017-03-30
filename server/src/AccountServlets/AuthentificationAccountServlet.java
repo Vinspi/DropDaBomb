@@ -60,6 +60,7 @@ public class AuthentificationAccountServlet extends HttpServlet {
 
             session.setAttribute("estAdmin",false);
 
+
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
         }
         else if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_ADMIN){

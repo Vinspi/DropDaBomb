@@ -599,11 +599,24 @@ io.sockets.on('connection', function (socket){
           if(!(id_carte_cible >= 0 && id_carte_cible < 4)){
             return;
           }
+
           carte_cible.id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
           carte_cible.coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
           carte_cible.imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
           carte_cible.from = carteJoue;
 
+
+          /* copie de la carte */
+
+          var tmp = {'id_Carte': etatJoueurEmetteur.main[pos_carte_joue].id_Carte, 'imageCarte': etatJoueurEmetteur.main[pos_carte_joue].imageCarte, 'coutCarte': etatJoueurEmetteur.main[pos_carte_joue].coutCarte};
+
+          etatJoueurEmetteur.main[pos_carte_joue].id_Carte = etatJoueurAdversaire.main[id_carte_cible].id_Carte;
+          etatJoueurEmetteur.main[pos_carte_joue].imageCarte = etatJoueurAdversaire.main[id_carte_cible].imageCarte;
+          etatJoueurEmetteur.main[pos_carte_joue].coutCarte = etatJoueurAdversaire.main[id_carte_cible].coutCarte;
+
+
+
+          etatJoueurEmetteur.main[pos_carte_joue].from = tmp;
 
           // for(var i=0;i<etatJoueurEmetteur.main.length;i++){
           //   if(etatJoueurEmetteur.main[i].id_Carte == id_carte){
@@ -611,12 +624,14 @@ io.sockets.on('connection', function (socket){
           //   }
           // }
 
-          etatJoueurEmetteur.main.splice(pos_carte_joue,1);
+          //etatJoueurEmetteur.main.splice(pos_carte_joue,1);
 
-          etatJoueurEmetteur.main.push(carte_cible);  //Deck ou main ?
+          //etatJoueurEmetteur.main.push(carte_cible);  //Deck ou main ?
           etatJoueurEmetteur.poudre -= carteJoue.coutCarte;
 
           break;
+
+
 
       }
 

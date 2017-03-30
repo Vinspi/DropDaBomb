@@ -30,6 +30,13 @@ var FLAG_FIN_PARTIE = false;
 var vainqueur;
 var pos_carte_selection;
 
+var pdvJoueurPrec = 150;
+var pdvAdversairePrec = 150;
+var bouclierAdversairePrec = 0;
+var bouclierJoueurPrec = 0;
+var poudreJoueurPrec = 0;
+
+
 $(document).ready(function(){
   card_desenvoutement();
 
@@ -90,6 +97,15 @@ function card_echange_force(){
   $('#zone_deck').css({'opacity': 0.3});
 }
 
+function modalSelectionHide(){
+  $('#zone_select_card_effect').removeClass('pop_select_card_effect');
+  $('#zone_select_card_effect').addClass('out_select_card_effect');
+  $('#zone_barre').css({'opacity': 1});
+  $('#zone_jeu').css({'opacity': 1});
+  $('#zone_deck').css({'opacity': 1});
+  $("#zone_select_card_effect").hide();
+}
+
 function handleSelectCardEffectDesenvoutement(){
 
   var value = $(this).attr('id');
@@ -132,6 +148,8 @@ function card_desenvoutement(){
   $("#zone_select_card_effect_card5").css({'width': '20%', 'height': '20%'});
 
 
+
+
   for(var i=0;i<actifAdversaire.length;i++){
     console.log('#zone_select_card_effect_card'+(i+1)+' '+actifAdversaire[i].imageCarte);
     $('#zone_select_card_effect_card'+(i+1)).attr('src',"img/"+actifAdversaire[i].imageCarte);
@@ -164,6 +182,7 @@ function card_desenvoutement(){
 
 function utiliserCarte(val,id_Carte){
 
+  modalSelectionHide();
 
   console.log("val = "+val+" id_carte = "+id_Carte);
 
@@ -356,9 +375,48 @@ function annoncerDefaite(){
   $('#modal_annonce_defaite').modal('open');
 }
 
+function toast(pdvJoueur,bouclierJoueur,bouclierAdversaire,poudre){
+
+  var pdvPerdu = (pdvJoueurPrec+bouclierJoueurPrec) - (pdvJoueur+bouclierJoueur);
+
+  if(poudreJoueurPrec < poudre){
+    Materialize.toast('+'+(poudre-poudreJoueurPrec)+'poudre',1000);
+  }
+
+  if(bouclierJoueurPrec < bouclierJoueur){
+    var $toastContent = $('<span class=\"white-text\">+'+(-pdvPerdu)+'</span>');
+    Materialize.toast($toastContent,1000,'purple');
+  }
+  else{
+    if(pdvPerdu == 0){
+
+    }
+    else if(pdvPerdu < 0){
+      /* on a gagne des pdv */
+      var $toastContent = $('<span class=\"white-text\">+'+(-pdvPerdu)+'</span>');
+      Materialize.toast($toastContent,1000,'green');
+    }
+    else {
+      var $toastContent = $('<span class=\"white-text\">-'+pdvPerdu+'</span>');
+      Materialize.toast($toastContent,1000,'red');
+    }
+  }
+  pdvJoueurPrec = pdvJoueur;
+  bouclierJoueurPrec = bouclierJoueur;
+  poudreJoueurPrec = poudre;
+
+}
+
+
 socket.on('matchStart', function (obj) {
+
+
+
   etatJoueur = obj.etatJoueur;
   actifAdversaire = obj.actifAdversaire;
+
+  poudreJoueurPrec = etatJoueur.poudre;
+
   console.log(obj.actifAdversaire);
   console.log(obj.etatJoueur);
   console.log(obj.message);
@@ -378,9 +436,12 @@ socket.on('FIN_DU_GAME', function(obj){
 
 socket.on('update',function (obj) {
 
+
   etatJoueur = obj.etatJoueur;
   actifAdversaire = obj.actifAdversaire;
   carteJoue = obj.carteJoue;
+
+  toast(obj.etatJoueur.pdv,obj.etatJoueur.bouclier,obj.bouclierAdversaire,obj.etatJoueur.poudre);
 
   dessineMain(etatJoueur.main);
   dessineBarreDeVie(etatJoueur,obj.bouclierAdversaire);
@@ -399,6 +460,7 @@ socket.on("CLOCK_UPDATE", function(obj){
 
 
 socket.on("FIN_TOUR", function(obj){
+   modalSelectionHide();
    $("#zone_barre_timer_idjoueur").text(obj.joueurTour);
    $('#zone_deck_infos_bottom_overlay').text(obj.etatJoueur.poudre);
    dessineMain(obj.etatJoueur.main);

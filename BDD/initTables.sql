@@ -294,7 +294,7 @@ CREATE TABLE LootPackPack (
 
 
 #_____________________________________________________________
-# Table: LootPackEnsemble
+# Table: LootPack
 #_____________________________________________________________
 CREATE TABLE LootPack (
   id_LootPack int NOT NULL ,

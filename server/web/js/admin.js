@@ -23,6 +23,73 @@ $(document).ready(function() {
     $('#modal-newEns').on('submit', function(e) {
 
         e.preventDefault();
+<<<<<<< HEAD
+        var nomEns = $('#nomEns').val();
+
+        $.ajax({
+            url: "Admin",
+            type: 'POST',
+            data: 'idRequest=3&nomEnsemble='+nomEns,
+            dataType: 'json', // JSON
+            success: function(data) {
+                console.log(data);
+                var result = data;//JSON.parse(data);
+                console.log("succes ");
+                document.getElementById("listEnsembles").innerHTML = "";
+                var p = document.createElement('div');
+
+                for(var i = 0; i < result.length; i++){
+                    p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                        "       <div class=\"block\" id=\"E"+result[i].id+"\" onclick=\"setCurrentEnsemble("+result[i].id+")\"><p>Ensemble "+result[i].id+"</p></div>" +
+                        "     </div>";
+                    if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                }
+                document.getElementById("listEnsembles").appendChild(p);
+
+                document.getElementById("actionEns").innerHTML = "<a href=\"#modal-newEns\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a><a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetCarte()\">Add</a>";
+                //('.modal').modal();
+                $(".button-collapse").sideNav();
+                $('#modal-newEns').modal('close');
+                console.log("qq");
+            }
+        });
+    });
+    $('#modal-newLootPack').on('submit',function(e){
+        e.preventDefault();
+        var nomLootPack = $('#nomLootPack').val();
+
+        $.ajax({
+            url: "Admin",
+            type: 'POST',
+            data: 'idRequest=4&nomLootPack='+nomLootPack,
+            dataType: 'json', // JSON
+            success: function(data) {
+                console.log(data);
+                var result = data;//JSON.parse(data);
+                console.log("succes ");
+                document.getElementById("listLootPack").innerHTML = "";
+                var p = document.createElement('div');
+
+                for(var i = 0; i < result.length; i++){
+                    p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                        "       <div class=\"block\" id=\"LP"+result[i].id+"\" onclick=\"setCurrentLootPack("+result[i].id+")\"><p>LootPack "+result[i].id+"</p></div>" +
+                        "     </div>";
+                    if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                }
+                document.getElementById("listLootPack").appendChild(p);
+                document.getElementById("actionLootPack").innerHTML = "<a href=\"#modal-newLootPack\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a><a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetEnsemble()\">Add</a>";
+                $(".button-collapse").sideNav();
+                $('#modal-newLootPack').modal('close');
+                console.log("qq");
+            }
+        });
+    });
+    $('#modal-newPack').on('submit',function(e){
+        e.preventDefault();
+
+    });
+
+=======
         if($('#nommEns').val().length != 0) {
             var nomEns = $('#nomEns').val();
 
@@ -148,6 +215,7 @@ $(document).ready(function() {
     });
 
 
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 });
 
 function setCurrentEnsemble(value){
@@ -177,8 +245,13 @@ function setCurrentEnsemble(value){
             document.getElementById("currentEnsemble").appendChild(p);
             document.getElementById("actionEns").innerHTML = "<a href=\"#modal-newEns\" class=\"waves-effect waves-teal btn-flat modal-action modal-close modal-trigger\">New</a><a data-activates=\'slide-out\' class=\"waves-effect waves-teal btn-flat button-collapse\" onclick=\"addGetCarte()\">Add</a>";
             $(".button-collapse").sideNav();
+<<<<<<< HEAD
+            if(result.nom != null) document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : " + result.nom + ", "+result.id;
+            else document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : "+result.id;
+=======
             if(result.nom != null) document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : nom = " + result.nom + ", id = "+result.id;
             else document.getElementById("idCurrentEnsemble").innerHTML = "Ensemble courant : id = "+result.id;
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 
 
             console.log("qq");
@@ -229,8 +302,13 @@ function setCurrentLootPack(value){
 
 
             $(".button-collapse").sideNav();
+<<<<<<< HEAD
+            if(result.nom != null) document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : " + result.nom + ", "+result.id;
+            else document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : "+result.id;
+=======
             if(result.nom != null) document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : nom = " + result.nom + ", id = "+result.id;
             else document.getElementById("idCurrentLootPack").innerHTML = "LootPack courant : id = "+result.id;
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
             console.log("qq");
 
         },
@@ -246,11 +324,29 @@ function setCurrentPack(value) {
         url : 'Admin',
 
         type : 'POST',
+<<<<<<< HEAD
+        cache: false,
+=======
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
         data : 'idRequest=2&id_pack='+value,
 
 
         complete: function (data) {
             console.log(data);
+<<<<<<< HEAD
+            var result = JSON.parse(data);
+            console.log("succes ");
+            document.getElementById("currentPack").innerHTML = "";
+            var p = document.createElement('div');
+
+            for(var i = 0; i < result.lootPacks.length; i++){
+                p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                    "       <div class=\"block\" id=\"P"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack($(this).attr('id'))\"><p>LootPack "+result.lootPacks[i].id+"</p></div>" +
+                    "     </div>";
+                if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+            }
+            document.getElementById("currentPack").appendChild(p);
+=======
             var result = JSON.parse(data.responseText);
             console.log("succes ");
             document.getElementById("currentPack").innerHTML = "";
@@ -283,6 +379,7 @@ function setCurrentPack(value) {
             if(result.nom != null) document.getElementById("idCurrentPack").innerHTML = "Pack courant : nom = " + result.nom + ", id = "+result.id;
             else document.getElementById("idCurrentPack").innerHTML = "Pack courant : id = "+result.id;
             $(".button-collapse").sideNav();
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
             console.log("qq");
 
         },
@@ -378,6 +475,11 @@ function getListPacks(){
             var p = document.createElement('div');
 
             for(var i = 0; i < result.length; i++){
+<<<<<<< HEAD
+                p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                    "       <div class=\"block\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
+                    "     </div>";
+=======
                 if(result[i].misEnVente == 1) {
                     p.innerHTML += "<div class=\"col s2 m2 l2\">" +
                         "       <div class=\"block\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
@@ -389,6 +491,7 @@ function getListPacks(){
                         "       <div class=\"pev\" id=\"P"+result[i].id+"\" onclick=\"setCurrentPack("+result[i].id+")\"><p>Pack "+result[i].id+"</p></div>" +
                         "     </div>";
                 }
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
                 if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
             }
             document.getElementById("listPack").appendChild(p);
@@ -404,6 +507,33 @@ function getListPacks(){
 }
 
 
+<<<<<<< HEAD
+function switchMiseEnVente(value) {
+    $.ajax({
+
+        url : 'Admin',
+
+        type : 'POST',
+
+        data : {"idRequest": 3,"id_Pack": value.substring(1)},
+
+        dataType : 'json',
+
+        succes: function (code_html,status) {
+            console.log("succes "+status);
+            alert("coucou");
+
+        },
+
+        error: function (code_html,status) {
+            console.log("request failed "+status);
+        }
+    });
+}
+
+
+=======
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 function addGetCarte(){
     $.ajax({
 
@@ -569,8 +699,11 @@ function addEnsembleToCurrentLootPack(value){
             var result = JSON.parse(data.responseText);
             console.log("succes ");
             document.getElementById("currentLootPack").innerHTML = "";
+<<<<<<< HEAD
+=======
             document.getElementById("gestion-LootPack").innerHTML = "";
 
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
             var p = document.createElement('div');
             var b = document.createElement('div');
             b.innerHTML = "<ul>";
@@ -657,6 +790,21 @@ function removeEnsemble(id_ensemble){
 
 
 }
+<<<<<<< HEAD
+function modifyDropRate(id_ensemble){
+
+
+    var drop = $('#newDropRate'+id_ensemble).val();
+
+    $.ajax({
+
+        url: 'Admin',
+        type: 'POST',
+
+        data: {"idRequest": 16, "id_Ensemble": id_ensemble, "dropRate": drop},
+
+        dataType: 'json',
+=======
 function modifyDropRate(id_ensemble) {
 
     if ($('#newDropRate' + id_ensemble).val().length != 0) {
@@ -756,17 +904,39 @@ function addLootPackToCurrentPack(value){
         data : {"idRequest": 18,"id_LootPack": value, "qte": qte},
 
         dataType : 'json',
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 
         complete: function (data) {
             console.log(data);
             var result = JSON.parse(data.responseText);
             console.log("succes ");
+<<<<<<< HEAD
+            document.getElementById("currentLootPack").innerHTML = "";
+            document.getElementById("gestion-LootPack").innerHTML = "";
+=======
             document.getElementById("currentPack").innerHTML = "";
             document.getElementById("gestion-Pack").innerHTML = "";
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
             var p = document.createElement('div');
             var b = document.createElement('div');
             b.innerHTML = "<ul>";
 
+<<<<<<< HEAD
+            for(var i = 0; i < result.ensembles.length; i++){
+                p.innerHTML += "<div class=\"col s2 m2 l2\">" +
+                    "       <div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" onclick=\"setCurrentEnsemble("+result.ensembles[i].id+")\"><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>";
+                if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                b.innerHTML += "<li><div class=\"block\" id=\"eLP"+result.ensembles[i].id+"\" ><p>Ensemble "+result.ensembles[i].id+"</br>"+result.ensembles[i].dropRate+"%</p></div></div>"+
+                    "<div class=\"input-field\"><input id=\"newDropRate\" type=\"text\" class=\"validate\"> <label for=\"newDropRate\">Changer le DropRate ?</label>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"modifyDropRate("+result.ensembles[i].id+")\">DropRate</a>"+
+                    "<a class=\"waves-effect waves-light btn modal-close\" onclick=\"removeEnsemble("+result.ensembles[i].id+")\">Remove</a>"+
+                    "</div></li>";
+            }
+            b.innerHTML += "</ul>";
+            document.getElementById("currentLootPack").appendChild(p);
+            document.getElementById("gestion-LootPack").appendChild(b);
+            Materialize.toast('DropRate de l\'Ensemble '+id_ensemble+' modifié !', 4000) // 4000 is the duration of the toast
+=======
             for(var i = 0; i < result.lootPacks.length; i++){
                 p.innerHTML += "<div class=\"col s2 m2 l2\">" +
                     "       <div class=\"block\" id=\"lpp"+result.lootPacks[i].id+"\" onclick=\"setCurrentLootPack("+result.lootPacks[i].id+")\">LootPack "+result.lootPacks[i].id+"<br>"+result.lootPacks[i].qte+" cartes</p></div>" +
@@ -923,14 +1093,22 @@ function switchMiseEnVente(){
                 $("#P"+result.id).attr('class','pev');
                 Materialize.toast(result.id+' retiré de la vente',4000);
             }
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
 
         },
 
         error: function (code_html, status) {
             console.log("request failed " + status);
         }
+<<<<<<< HEAD
+    });
+
+
+}
+=======
 
     });
 
 
 }
+>>>>>>> 98b2d1c6a819424146cff475afe40033d9d621e7
