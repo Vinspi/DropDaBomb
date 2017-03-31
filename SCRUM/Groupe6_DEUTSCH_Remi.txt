@@ -1,0 +1,20 @@
+Avancement dans le projet (pas fait, commencé, avancé, terminé).
+
+Terminé:
+  -Création de la BDD.
+  -Script de test BDD (Packs) -> setD'Essais.sql. (tests sur l'insertion de packs).
+  -Script de test BDD (Offres) -> setD'Essais.sql. (tests sur l'insertion d'ofres).
+  -Manager jdbc (update request) -> Manager.java. (fonction d'interface se chargeant de faire des requetes de type update à la BDD).
+  -Inventory Manager (swap card) -> InventoryManager.java. (fonctions se chargeant d'intervertir deux cartes d'un joueur, entre son deck et son inventaire).
+  -Inventory Manager (Inventory view) -> InventoryManager.java. (fonctions se chageant de créer un objet représentant l'inventaire d'un joueur).
+  -Servlet d'inventaire -> InventoryViewServlet.java. (controleur pour les fonctions lié à l'inventaire).
+  -Servlet de boutique -> ShopAchatServlet.java. (controleur lié au fonction de gestion de la boutique).
+  -Shop Manager -> ShopManager.java. (fonctions se chargeant de gérer les achats).
+  -Page JSP d'administration. (page d'administration, permet d'ajouter des packs, des offres ...).
+  -Pack Manager (modèle et controleur) -> PackManager.java. (fonctions se chargeant de gérer les Packs).
+
+  Supplément:
+    -création d'un serveur de jeu en node.js.
+    -création d'un client de jeu en JS.
+    -création d'une interface de jeu HTML/CSS.
+    -design et création de cartes jouables.
