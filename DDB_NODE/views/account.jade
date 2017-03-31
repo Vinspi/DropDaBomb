@@ -1,7 +1,7 @@
 doctype html
 html(lang="fr")
   head
-    title= DropDaBomb
+    title DropDaBomb
     meta(charset='UTF-8')
     link(rel='stylesheet' href='web/css/template.css')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css')
@@ -35,41 +35,40 @@ html(lang="fr")
 
     div(class="row" id="GUI_CONTENT")
 
-        div(class="col l2 m2 s12")
-        
-        div(class="col l9 m9 s12")
-            div(class="col l12 m12 s12")
-                div(class="card amber darken-3 center-align")
-                    div(class="card-action container")
-                        div(class="row")
-                            div(class="col l6 m6 s6")
-                                div(class="card")
-                                    div(class="card-image waves-effect waves-block waves-light")
-                                        img(class="activator" src="web/img/SIGNIN_ICON.png")
-                                    div(class="card-content edo black-text") Créer un compte (#{pseudo})
-                                    div(class="card-reveal")
-                                        span(class="card-title grey-text text-darken-4")
-                                            i(class="material-icons right") close
-                                        div(class="row")
-                                            div(class="row")
-                                                div(class="input-field col l12 m12 s12")
-                                                    i(class="material-icons prefix") account_circle
-                                                    input(id="signin_pseudo" type="text" class="validate")
-                                                    label(for="signin_pseudo") Pseudo ou email
-                                                div(class="input-field col l12 m12 s12")
-                                                    i(class="material-icons prefix") offline_pin
-                                                    input(id="signin_password" type="text" class="validate")
-                                                    label(for="signin_password") Mot de passe
-                                            button(class="btn waves-effect waves-light amber darken-2 black-text" id="signin_submit") Se connecter
-                                                i(class="material-icons right") send
-                            
-                            div(class="col l6 m6 s6")
-                                a(href="AccountCreate.html" style="margin-right:0px")
+            div(class="col l2 m2 s12")
+            
+            div(class="col l9 m9 s12")
+                div(class="col l12 m12 s12")
+                    div(class="card amber darken-3 center-align")
+                        div(class="card-action container")
+                            div(class="row")
+                                div(class="col l6 m6 s6")
                                     div(class="card")
-                                        div(class="card-image")
-                                            img(src="web/img/SIGNUP_ICON.png")
-                                        div(class="card-content edo black-text") Créer un compte
+                                        div(class="card-image waves-effect waves-block waves-light")
+                                            img(class="activator" src="web/img/SIGNIN_ICON.png")
+                                        div(class="card-content edo black-text") account.pseudo
+                                        div(class="card-reveal")
+                                            span(class="card-title grey-text text-darken-4")
+                                                i(class="material-icons right") close
+                                            div(class="row")
+                                                form(id="signin" action="Account" method="post")
+                                                    div(class="input-field col l12 m12 s12")
+                                                        i(class="material-icons prefix") account_circle
+                                                        input(id="signin_pseudo" type="text" class="validate" name="signin_pseudo")
+                                                        label(for="signin_pseudo") Pseudo ou email
+                                                    div(class="input-field col l12 m12 s12")
+                                                        i(class="material-icons prefix") offline_pin
+                                                        input(id="signin_password" type="password" class="validate" name="signin_password") 
+                                                        label(for="signin_password") Mot de passe
+                                                    button(class="btn waves-effect waves-light amber darken-2 black-text" id="signin_submit") Se connecter
+                                                        i(class="material-icons right") send
+                                
+                                div(class="col l6 m6 s6")
+                                    a(href="AccountCreate.html" style="margin-right:0px")
+                                        div(class="card")
+                                            div(class="card-image")
+                                                img(src="web/img/SIGNUP_ICON.png")
+                                            div(class="card-content edo black-text") Créer un compte
 
 
-
-        div(class="col l1 m1 s12")
+            div(class="col l1 m1 s12")

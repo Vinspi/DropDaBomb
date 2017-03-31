@@ -162,25 +162,25 @@ app.use(express.static(path.resolve('../')));
 app.set('view engine', 'jade');
 app.set('views', '../views');
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 app.get('/', function (req, res) {
   res.render('index', { title: 'Hey', message: 'Hello hey!'});
 });
 
 
 app.get('/Account', function (req, res) {
-
-  if(req.session.account == undefined){
-     res.render('account', {});
-     req.session.save((err)=>{});
-  }
-  else{
-       res.render('account', req.session.account);
-  }
+     res.render('AccountA', req.session.account);
 });
 
-app.get('/Lucas', function(req, res){
-    req.session.account = {pseudo: 'Lucas'};
-    req.session.save((err)=>{});
+app.post('/Account', function (req, res) {
+    console.log(req.param("signin_pseudo"));
+ req.session.account = {pseudo : req.param("signin_pseudo")};
+ req.session.save( (err) => {} );
+ console.log(req.session.account);
+ res.render('AccountA', req.session.account);
 });
+
 
 app.listen(8080);
