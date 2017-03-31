@@ -171,15 +171,26 @@ app.get('/', function (req, res) {
 
 
 app.get('/Account', function (req, res) {
-     res.render('AccountA', req.session.account);
+     res.render('Account', req.session.account);
+});
+
+app.get('/AccountCreate', function (req, res) {
+     res.render('AccountCreate');
 });
 
 app.post('/Account', function (req, res) {
-    console.log(req.param("signin_pseudo"));
  req.session.account = {pseudo : req.param("signin_pseudo")};
  req.session.save( (err) => {} );
- console.log(req.session.account);
- res.render('AccountA', req.session.account);
+ res.render('Account', req.session.account);
+});
+
+
+// pour vider le cookie (pseudo connecté persistant) et tester
+app.get('/clear', function(req, res){
+  req.session.account = null;
+  req.session.save( (err) => {} );
+  console.log(req.session);
+  res.render('Account', req.session.account);
 });
 
 
