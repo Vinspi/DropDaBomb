@@ -8,15 +8,15 @@
 
 // var http = require('http');
 // var url = require('url');
-// var mysql = require('mysql');
+var mysql = require('mysql');
 // var c = require('./const');
 
-// var connection = mysql.createConnection({
-//   host : '217.182.69.175',
-//   user : 'Vinspi',
-//   password : 'vinspi13',
-//   database : 'DropDaBomb',
-// });
+var connection = mysql.createConnection({
+  host : '217.182.69.175',
+  user : 'Vinspi',
+  password : 'vinspi13',
+  database : 'DropDaBomb',
+});
 
 // connection.connect();
 
@@ -80,12 +80,12 @@
 // function create_account(obj, sock){
 
 //             console.log("Jai recu final create : " + JSON.stringify(obj));
-        
+
 //                 connection.query("INSERT INTO CompteJoueur (Pseudo, mailCompte, mdpCompte, nomGuilde, id_Division) " +
 //                              "VALUES ("+connection.escape(obj.pseudo)+","+connection.escape(obj.email)+","+connection.escape(obj.mdp)+",NULL, NULL);");
 //                 connection.query("INSERT INTO Deck(id_Deck,estActif) VALUES ("+connection.escape(obj.pseudo+'0')+",0);");
 //                 connection.query("INSERT INTO Deck(id_Deck,estActif) VALUES ("+connection.escape(obj.pseudo+'1')+",1);");
-//                 connection.query("INSERT INTO Deck(id_Deck,estActif) VALUES ("+connection.escape(obj.pseudo+'2')+",0);");   
+//                 connection.query("INSERT INTO Deck(id_Deck,estActif) VALUES ("+connection.escape(obj.pseudo+'2')+",0);");
 
 
 //                 var starter;
@@ -109,7 +109,7 @@
 //                     connection.query("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, "+connection.escape(obj.pseudo+'0')+","+connection.escape(obj.pseudo)+","+ starter[i] +");");
 //                     connection.query("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, "+connection.escape(obj.pseudo+'1')+","+connection.escape(obj.pseudo)+","+ starter[i] +");");
 //                     connection.query("INSERT INTO JoueurCarteDeck(qteCarteDeck, id_Deck, Pseudo, id_Carte) VALUES (1, "+connection.escape(obj.pseudo+'2')+","+connection.escape(obj.pseudo)+","+ starter[i] +");");
-//                }   
+//                }
 
 //                 connection.query("INSERT INTO posséderIconeJoueur(Pseudo,id_IconeJoueur) VALUES ("+connection.escape(obj.pseudo)+",0)");
 
@@ -123,7 +123,7 @@
 
 // var express      = require('express')
 // var cookieParser = require('cookie-parser')
- 
+
 // var app = express()
 // app.use(cookieParser())
 
@@ -155,7 +155,7 @@ app.use(cookieParser());
 
 app.use(expressSession({secret:'somesecrettokenhere'}));
 
-app.use(bodyParser());  
+app.use(bodyParser());
 
 app.use(express.static(path.resolve('../')));
 
@@ -174,14 +174,22 @@ app.get('/Account', function (req, res) {
      res.render('Account', req.session.account);
 });
 
+app.get('/Decks', function (req, res) {
+  recuperation_deck(req,res);
+    //  res.render('DeckManager', {'session' : req.session.account});
+});
+
 app.get('/AccountCreate', function (req, res) {
      res.render('AccountCreate');
 });
 
 app.post('/Account', function (req, res) {
- req.session.account = {pseudo : req.param("signin_pseudo")};
- req.session.save( (err) => {} );
- res.render('Account', req.session.account);
+
+ authentification(req.param("signin_pseudo"), req.param("signin_password"),req,res);
+
+ // req.session.account = {pseudo : req.param("signin_pseudo")};
+ // req.session.save( (err) => {} );
+ // res.render('Account', req.session.account);
 });
 
 
@@ -192,6 +200,81 @@ app.get('/clear', function(req, res){
   console.log(req.session);
   res.render('Account', req.session.account);
 });
+
+/* interrogation de la BDD */
+
+
+function authentification(pseudo, password,req,res){
+  var query = "SELECT Pseudo FROM CompteJoueur WHERE (Pseudo LIKE "+connection.escape(pseudo)+" AND mdpCompte LIKE "+connection.escape(password)+");";
+
+  connection.query(query, function(err, rows, fields){
+    if (err) throw err;
+    if(rows.length != 0){
+        req.session.account = {'pseudo' : req.param("signin_pseudo")};
+        req.session.save( (err) => {} );
+        res.render('Account', req.session.account);
+    }
+    else{
+        req.session.account = {'pseudo' : undefined};
+        req.session.save( (err) => {} );
+        res.render('Account', req.session.account);
+    }
+  });
+
+}
+
+function recuperation_deck(req, res){
+
+  var deck0 = req.session.account.pseudo+"0";
+  var deck1 = req.session.account.pseudo+"1";
+  var deck2 = req.session.account.pseudo+"2";
+  var query1 = "SELECT Carte.* FROM CompteJoueur JOIN JoueurCarteDeck USING (Pseudo) JOIN Deck USING (id_Deck) JOIN Carte USING (id_carte) WHERE (id_Deck LIKE "+connection.escape(deck1)+")";
+  var query2 = "SELECT Carte.* FROM CompteJoueur JOIN JoueurCarteDeck USING (Pseudo) JOIN Deck USING (id_Deck) JOIN Carte USING (id_carte) WHERE (id_Deck LIKE "+connection.escape(deck2)+")";
+  var query0 = "SELECT Carte.* FROM CompteJoueur JOIN JoueurCarteDeck USING (Pseudo) JOIN Deck USING (id_Deck) JOIN Carte USING (id_carte) WHERE (id_Deck LIKE "+connection.escape(deck0)+")";
+
+  var listeCarte1 = [];
+  var listeCarte2 = [];
+  var inventaire1 = [];
+  var inventaire2 = [];
+
+  connection.query(query0, function(err, rows, fields){
+    if (err) throw err;
+    for(var i=0; i<rows.length ; i++){
+      inventaire1.push(rows[i]);
+      inventaire2.push(rows[i]);
+    }
+  });
+
+  connection.query(query1, function(err, rows, fields){
+    if (err) throw err;
+    for(var i=0; i<rows.length ; i++){
+      listeCarte1.push(rows[i]);
+      for(var j=0 ; j<inventaire1.length ; j++){
+        if(inventaire1[j].id_Carte == listeCarte1[i].id_Carte){
+          inventaire1.splice(j,1);
+        }
+      }
+    }
+  });
+
+
+  connection.query(query2, function(err, rows, fields){
+    if (err) throw err;
+    for(var i=0; i<rows.length ; i++){
+      listeCarte2.push(rows[i]);
+      for(var j=0 ; j<inventaire2.length ; j++){
+        if(inventaire2[j].id_Carte == listeCarte2[i].id_Carte){
+          inventaire2.splice(j,1);
+        }
+      }
+    }
+
+
+    res.render('DeckManager',{'session':req.session, 'deck1': listeCarte1, 'deck2': listeCarte2, 'inventaire1': inventaire1, 'inventaire2': inventaire2});
+
+  });
+
+}
 
 
 app.listen(8080);
