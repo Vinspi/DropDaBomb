@@ -1,5 +1,7 @@
 /* constantes */
 
+
+var NB_MAX_PDV_BATIMENT = 50;
 var NB_MAX_PDV = 150;
 var CARD_DESENVOUTEMENT = 8;
 var CARD_ECHANGE_FORCE = 7;
@@ -21,9 +23,9 @@ var CARD_UPGRADE = 11;
 /*****************************/
 
 //var socket = io.connect('http://192.168.43.7:8080');
-var socket = io.connect('http://109.7.220.208:3000');
+//var socket = io.connect('http://109.7.220.208:3000');
 
-//var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://localhost:8080');
 
 
 var Joueur;    //Récup le pseudo du guguss
@@ -521,6 +523,7 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
   var selecteur, selecteurAdversaire;
   var overlay, overlay_adv;
   var rm_class = true;
+  var percent;
 
   for(var i=0;i<5;i++){
     rm_class = true;
@@ -539,10 +542,22 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
       id_adv = -1;
       duree_adv = 0;
     }
+
     else{
       src_adv = "img/"+actifAdversaire[i].imageCarte;
       id_adv = actifAdversaire[i].id_carte;
       duree_adv = actifAdversaire[i].duree;
+      if(actifAdversaire[i].typeCarte == 'batiment') {
+        console.log("batiment detecté --------------------------");
+        $('#jeu_cards_overlay_pdvadv_carte'+(i+1)).show();
+        $('#jeu_cards_overlay_pdvadv_contour_carte'+(i+1)).show();
+        percent = (100*actifAdversaire[i].pdv/NB_MAX_PDV_BATIMENT);
+        $('#jeu_cards_overlay_pdvadv_carte'+(i+1)).css({'height': percent+'%'});
+      }
+      else {
+        $('#jeu_cards_overlay_pdvadv_carte'+(i+1)).hide();
+        $('#jeu_cards_overlay_pdvadv_contour_carte'+(i+1)).hide();
+      }
       if(duree_adv == 0) rm_class = false;
     }
 
@@ -556,6 +571,17 @@ function dessineCartesActives(etatJoueur,actifAdversaire){
       src = "img/"+etatJoueur.carteActiveNonRetourne[i].imageCarte;
       id = etatJoueur.carteActiveNonRetourne[i].id_carte;
       duree = etatJoueur.carteActiveNonRetourne[i].duree;
+      if(etatJoueur.carteActiveNonRetourne[i].typeCarte == 'batiment') {
+        console.log("batiment allié detecté --------------------------");
+        $('#jeu_cards_overlay_pdv_carte'+(i+1)).show();
+        $('#jeu_cards_overlay_pdv_contour_carte'+(i+1)).show();
+        percent = (100*etatJoueur.carteActiveNonRetourne[i].pdv/NB_MAX_PDV_BATIMENT);
+        $('#jeu_cards_overlay_pdv_carte'+(i+1)).css({'height': percent+'%'});
+      }
+      else {
+        $('#jeu_cards_overlay_pdv_carte'+(i+1)).hide();
+        $('#jeu_cards_overlay_pdv_contour_carte'+(i+1)).hide();
+      }
 
     }
 

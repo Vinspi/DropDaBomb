@@ -258,8 +258,224 @@ img{
     border: 3px solid white;
 }
 
+#jeu_cards_overlay_pdv_carte1{
+    position: absolute;
+    bottom: 0;
+    left: -13px;
+    background-color: red;
+    width: 13px;
+    height: 70%;
+    display: none;
+}
 
+#jeu_cards_overlay_pdv_contour_carte1{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
 
+}
+
+#jeu_cards_overlay_pdv_carte2{
+    position: absolute;
+    bottom: 0;
+    left: -13px;
+    background-color: red;
+    width: 13px;
+    height: 100%;
+    display: none;
+
+}
+
+#jeu_cards_overlay_pdv_contour_carte2{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+
+}
+
+#jeu_cards_overlay_pdv_carte3{
+    position: absolute;
+    bottom: 0;
+    left: -13px;
+    background-color: red;
+    width: 13px;
+    height: 100%;
+    display: none;
+
+}
+
+#jeu_cards_overlay_pdv_contour_carte3{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+
+}
+
+#jeu_cards_overlay_pdv_carte4{
+    position: absolute;
+    bottom: 0;
+    left: -13px;
+    background-color: red;
+    width: 13px;
+    height: 100%;
+    display: none;
+
+}
+
+#jeu_cards_overlay_pdv_contour_carte4{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+
+}
+
+#jeu_cards_overlay_pdv_carte5{
+    position: absolute;
+    bottom: 0;
+    left: -13px;
+    background-color: red;
+    width: 13px;
+    height: 100%;
+    display: none;
+
+}
+
+#jeu_cards_overlay_pdv_contour_carte5{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+
+}
+
+#jeu_cards_overlay_pdvadv_contour_carte1{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_carte1{
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  background-color: red;
+  width: 13px;
+  height: 100%;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_contour_carte2{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_carte2{
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  background-color: red;
+  width: 13px;
+  height: 100%;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_contour_carte3{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_carte3{
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  background-color: red;
+  width: 13px;
+  height: 100%;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_contour_carte4{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_carte4{
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  background-color: red;
+  width: 13px;
+  height: 100%;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_contour_carte5{
+  position: absolute;
+  top: 0;
+  left: -13px;
+  background-color: transparent;
+  width: 13px;
+  height: 100%;
+  border: 3px solid white;
+  display: none;
+}
+
+#jeu_cards_overlay_pdvadv_carte5{
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  background-color: red;
+  width: 13px;
+  height: 100%;
+  display: none;
+}
 /*----------------------------------------------*/
 /*----------------------------------------------*/
 
