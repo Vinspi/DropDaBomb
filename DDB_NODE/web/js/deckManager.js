@@ -3,7 +3,7 @@ var deck_actif = 1;
 var carte_deck = -1;
 var carte_inventaire = -1;
 
-
+//ajout css
 $(document).ready(function(){
   var height = $('#deck1').height();
   $('#decks').css({'height': height+'px'});
@@ -48,7 +48,7 @@ function selectionne_carte_deck(value) {
   if(carte_inventaire != -1){
     /* on echange les des carte */
     $('#'+carte_deck).addClass('carte-deck');
-    
+
     carte_deck = -1;
     carte_inventaire = -1;
   }
