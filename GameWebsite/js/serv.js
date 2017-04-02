@@ -314,10 +314,10 @@ function attaquerBatiment(joueurCible,carte_cible, degats){
   console.log("fonction attaquer batiment -------------------------");
   var residu = degats;
   while(residu > 0){
-    joueurCible.carteActiveNonRetourne[carte_cible].pdv -= degats;
+    joueurCible.carteActiveNonRetourne[carte_cible].pdv -= residu;
     residu = -(joueurCible.carteActiveNonRetourne[carte_cible].pdv);
     console.log("degat pris par un batiment ! : "+joueurCible.carteActiveNonRetourne[carte_cible].imageCarte+" : "+joueurCible.carteActiveNonRetourne[carte_cible].pdv);
-
+    console.log("residu : "+residu);
     if(joueurCible.carteActiveNonRetourne[carte_cible].pdv <= 0){
         if(joueurCible.carteActiveNonRetourne[carte_cible].level == 1){
           (joueurCible.carteActiveNonRetourne).splice(carte_cible,1);

@@ -1,0 +1,22 @@
+Avancement dans le projet (pas fait, commencé, avancé, terminé).
+
+Terminé:
+  -Création de la BDD.
+  -Script de test BDD (CompteJoueur) -> setD'Essais.sql. (tests sur l'insertion de comptes joueurs).
+  -script de test BDD (Cartes) -> setD'Essais.sql. (tests sur l'insertion de cartes).
+  -Manager jdbc (update request) -> Manager.java. (fonction d'interface se chargeant de faire des requetes de type update à la BDD).
+  -Manager jdbc (query request) -> Manager.java. (fonction d'interface se chargeant de faire des requetes de type query à la BDD).
+  -Account Manager (Authentification) -> AccountManager.java. (fonction se chargeant d'authentifier un client).
+  -Account Manager (création de compte) -> AccountManager.java. (fonctions de chargeant de la création d'un compte joueur).
+  -Servlet Authentification -> AuthentificationAccountServlet.java. (servlet faisant office de controleur sur l'authentification d'un client).
+  -Page JSP pour la gestion de compte -> AccountManager.java, accountManager.jsp
+  -Page JSP pour la gestion de des decks d'un joueur -> InventoryManager.java, compte.jsp
+  -Page JSP de présentation. (présentation des règles du jeu).
+  -CSS page présentation.
+  -Tests unitaire avec JUnit (fonctions de type Manager).
+
+Supplément:
+  -création d'un serveur de jeu en node.js.
+  -création d'un client de jeu en JS.
+  -création d'une interface de jeu HTML/CSS.
+  -design et création de cartes jouables. 

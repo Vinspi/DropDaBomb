@@ -1,0 +1,21 @@
+Avancement dans le projet (pas fait, commencé, avancé, terminé).
+
+Terminé:
+  -Création de la BDD.
+  -Création de la pluspart des objets de vue -> package View. (objet java représentant des objet en jeu, exemple: cartes, icone, deck ...).
+  -Servlet de boutique -> ShopViewServlet.java. (controleur pour les fonctions liées à la boutique).
+  -Servlet de Compte -> CreateAccountServletNavigator.java. (controleur pour les fonctions de création de compte).
+  -Création du design des cartes sous photoshop -> dossier DESIGN.
+  -Page JSP pour la création de comptes -> AccountManager.java, account.jsp
+  -Page JSP pour le visualisation de la boutique -> shop.jsp
+  -CSS de la boutique.
+  -CSS de la page d'administration.
+  -CSS de la la gestion des decks.
+  -CSS de la gestion de compte.
+  -CSS de la création de compte.
+
+  Supplément:
+    -création d'un serveur de jeu en node.js.
+    -création d'un client de jeu en JS.
+    -création d'une interface de jeu HTML/CSS.
+    -design et création de cartes jouables.
