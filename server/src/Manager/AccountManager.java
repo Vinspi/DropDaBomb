@@ -12,6 +12,9 @@ import java.util.regex.Pattern;
  * Created by vinspi on 27/01/17.
  */
 public class AccountManager {
+    //Class destinée à gérer et administrer un compteJoueur : connexion, changement d'email, de skins, création de compte ...
+
+
     Connection connection = null;
 
 
@@ -25,6 +28,8 @@ public class AccountManager {
         }
     }
 
+
+    //Fonction d'authentification : renvoie AUTH_FAILED si le couple {pseudo,password} ne correspond à aucun compte, sinon, si le compte est administrateur, renvoie AUTH_ADMIN, sinon, renvoie AUTH_SUCCES;
     public int authentification(String pseudo, String password) {
 
         String query = "SELECT Pseudo, mdpCompte, estAdmin FROM CompteJoueur WHERE (Pseudo LIKE '"+pseudo+"' AND mdpCompte LIKE '"+password+"')";
@@ -55,6 +60,13 @@ public class AccountManager {
         return status;
     }
 
+
+
+    //Pour toutes les prochaines fonctions, le pseudo sera passé en paramètre par la servlet de contrôle, ce qui garantie que le pseudo se trouve dans la variable de session, et
+    //par conséquent que celui existe (verifié par la servlet de connexion au moment de l'authentification).
+
+
+    //Fonction retournant l'email du compte "pseudo".
     public String getplayerEmail(String pseudo){
         String query = "SELECT mailCompte \n" +
                 "FROM CompteJoueur\n" +
@@ -80,7 +92,7 @@ public class AccountManager {
 
         return retour;
     }
-
+    //Fonction retournant le SkinMap utilisé par compte "pseudo".
     public String getPlayerSkinMap(String pseudo){
 
 
@@ -110,6 +122,7 @@ public class AccountManager {
         return retour;
     }
 
+    //Fonction retournant le SkinCarton utilisé par compte "pseudo".
     public String getPlayerSkinCarton(String pseudo){
 
 
@@ -139,6 +152,7 @@ public class AccountManager {
         return retour;
     }
 
+    //Fonction retournant l'icone utilisée par compte "pseudo".
     public String getPlayerIcon(String pseudo){
 
 
@@ -168,9 +182,9 @@ public class AccountManager {
         return retour;
     }
 
+    //Fonction de création de compte dans la base de données : vérifie si le pseudo ou l'email ne sont pas utilisés, auquel cas fait les insertions nécessaires (CompteJoueur, les 3 Decks, et les Cartes et compléments (Skins/Icones) de base).
     public int createAccount(String pseudo,String email,String password){
 
-        int MIN_SIZE_PASSWORD = 3;
 
         Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
@@ -246,7 +260,7 @@ public class AccountManager {
                 if (resultSet.getString("Pseudo").equalsIgnoreCase(pseudo)) {
                     r = RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO;
                 }
-            /* si le pseudo a pas match c'est forcément l'email (ou les deux au quel cas on a deja traité l'erreur */
+            /* si le pseudo n'a pas match, c'est forcément l'email (ou les deux au quel cas on a deja traité l'erreur */
                 else {
                     r = RequestStatus.CREATE_ACCOUNT_FAILED_EMAIL;
                 }
@@ -268,7 +282,7 @@ public class AccountManager {
     }
 
 
-
+    //Fonction de modification de l'email du compte "pseudo".
     public int changerEmail(String pseudo, String newEmail){
 
         Pattern pattern = Pattern.compile(RequestStatus.EMAIL_PATTERN);
@@ -304,7 +318,7 @@ public class AccountManager {
     }
 
 
-
+    //Fonction de modification du SkinMap du compte "pseudo".
     public int changerSkinMap(String pseudo, String newMap){
         String query = "UPDATE CompteJoueur SET id_SkinMap ='"+newMap+"' WHERE Pseudo LIKE '"+pseudo+"';";
         if(Manager.getManager().sendRequestUpdate(query,connection)){
@@ -329,6 +343,8 @@ public class AccountManager {
         }
     }
 
+
+    //Fonction de modification du SkinCarton du compte "pseudo".
     public int changerSkinCarton(String pseudo, String newCarton){
         String query = "UPDATE CompteJoueur SET id_SkinCartonCarte ='"+newCarton+"' WHERE Pseudo LIKE '"+pseudo+"';";
         if(Manager.getManager().sendRequestUpdate(query,connection)){
@@ -353,33 +369,9 @@ public class AccountManager {
         }
     }
 
-    //Pour l'instant, c'est gratuit !
-    public int acheterMonnaieIRL(String pseudo, String quantite){
-        String query = "UPDATE CompteJoueur SET monnaieIRL=monnaieIRL+"+quantite+" WHERE Pseudo LIKE '"+pseudo+"';";
-        if(Manager.getManager().sendRequestUpdate(query,connection)){
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            return RequestStatus.ACHAT_MONNAIE_SUCCESS;
-        }
-        else{
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            return RequestStatus.ACHAT_MONNAIE_FAILED;
-        }
-
-    }
 
 
+    //Fonction de modification de l'icone du compte "pseudo".
     public int changeIcon(String pseudo, String id_newIcon){
 
         String query = "UPDATE CompteJoueur SET id_IconeJoueur=\'"+id_newIcon+"\' WHERE (Pseudo LIKE \'"+pseudo+"\')";
@@ -406,11 +398,10 @@ public class AccountManager {
         }
     }
 
+    //Fonction de modification du mot de passe du compte "pseudo".
     public int changePassword(String pseudo, String newPassword){
 
-        /* le pseudo sera passé en param par la servlet de controle ce qui garanti que le pseudo se trouve
-            dans la variable de session et par conséquent que celui existe (verifié par la servlet de connexion)
-         */
+
 
         String query = "UPDATE CompteJoueur SET mdpCompte=\'"+newPassword+"\' WHERE (Pseudo LIKE \'"+pseudo+"\');";
         if(newPassword.length() >= RequestStatus.MIN_SIZE_PASSWORD) {
@@ -437,6 +428,33 @@ public class AccountManager {
         return RequestStatus.UPDATE_MDP_FAILED;
     }
 
+    //Fonction permettant d'ajouter de la monnaieIRL au compte "pseudo". Pour l'instant, c'est gratuit.
+    public int acheterMonnaieIRL(String pseudo, String quantite){
+        String query = "UPDATE CompteJoueur SET monnaieIRL=monnaieIRL+"+quantite+" WHERE Pseudo LIKE '"+pseudo+"';";
+        if(Manager.getManager().sendRequestUpdate(query,connection)){
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.ACHAT_MONNAIE_SUCCESS;
+        }
+        else{
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            return RequestStatus.ACHAT_MONNAIE_FAILED;
+        }
+
+    }
+
+    //Fonction retournant une ArrayList de l'ensemble des Icones possédées par le compte "pseudo", sous la forme {id_Icone,Image_Icone}
     public ArrayList<Doublet> getPlayerIcons(String pseudo){
 
         ArrayList<Doublet> array = new ArrayList<Doublet>();
@@ -461,6 +479,7 @@ public class AccountManager {
         return array;
     }
 
+    //Fonction retournant une ArrayList de l'ensemble des SkinMap possédés par le compte "pseudo", sous la forme {id_SkinMap,Image_SkinMap}
     public ArrayList<Doublet> getPlayerMaps(String pseudo){
 
         ArrayList<Doublet> array = new ArrayList<Doublet>();
@@ -484,6 +503,7 @@ public class AccountManager {
         return array;
     }
 
+    //Fonction retournant une ArrayList de l'ensemble des SkinCarton possédés par le compte "pseudo", sous la forme {id_SkinCarton,Image_SkinCarton}
     public ArrayList<Doublet> getPlayerCartons(String pseudo){
 
         ArrayList<Doublet> array = new ArrayList<Doublet>();
@@ -507,7 +527,8 @@ public class AccountManager {
         return array;
     }
 
-    public int getPlayerMoney(String pseudo){
+    //Fonction retournant la quantité de monnaieIG que possède le compte "pseudo".
+    public int getPlayerMoneyIG(String pseudo){
 
         String queryMoney = "SELECT monnaieIG" +
                 " FROM CompteJoueur " +
@@ -518,6 +539,32 @@ public class AccountManager {
         try {
             if(monnaie.next()) {
                 money = monnaie.getInt("monnaieIG");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if(connection != null) connection.close();
+            } catch (SQLException e){
+
+            }
+        }
+
+        return money;
+    }
+
+    //Fonction retournant la quantité de monnaieIRL que possède le compte "pseudo".
+    public int getPlayerMoneyIRL(String pseudo){
+
+        String queryMoney = "SELECT monnaieIRL" +
+                " FROM CompteJoueur " +
+                "WHERE (Pseudo LIKE '"+pseudo+"');";
+
+        ResultSet monnaie = Manager.getManager().sendRequestQuery(queryMoney,connection);
+        int money = 0;
+        try {
+            if(monnaie.next()) {
+                money = monnaie.getInt("monnaieIRL");
             }
         } catch (SQLException e){
             e.printStackTrace();

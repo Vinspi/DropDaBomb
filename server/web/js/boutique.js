@@ -191,8 +191,12 @@ function acheterOffreIG(id_offre) {
             success: function (data) {
 
                 console.log(data);
-                Materialize.toast('Offre '+id_offre+' acheté !', 4000) // 4000 is the duration of the toast
+                if(data.id == 5) {
+                    Materialize.toast('Offre ' + id_offre + ' acheté !', 4000); // 4000 is the duration of the toast
 
+                    $( "#pseudo" ).load(" #pseudo");
+                }
+                else Materialize.toast('Erreur : veuillez ré-essayer (vous n\'avez pas été débité', 4000);
             },
 
             error: function (code_html, status) {

@@ -13,13 +13,14 @@ import java.io.PrintWriter;
 /**
  * Created by vinspi on 31/01/17.
  */
+/* servlet d'Authentification */
 public class AuthentificationAccountServlet extends HttpServlet {
     private AccountManager accountManager = new AccountManager();
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /* servlet d'Authentification */
+
 
         String pseudo = req.getParameter("pseudo");
         String password = req.getParameter("password");
@@ -48,6 +49,8 @@ public class AuthentificationAccountServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 
+
+        //Si l'authentification retourne que le compte existe :
         if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_SUCCES){
             System.out.println("Status = joueur");
             session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
@@ -56,13 +59,15 @@ public class AuthentificationAccountServlet extends HttpServlet {
             session.setAttribute("skinMapJoueur",accountManager.getPlayerSkinMap(pseudo));
             session.setAttribute("pseudo",pseudo);
             session.setAttribute("password",password);
-            session.setAttribute("money",accountManager.getPlayerMoney(pseudo));
-
+            session.setAttribute("monnaieIG",accountManager.getPlayerMoneyIG(pseudo));
+            session.setAttribute("monnaieIRL",accountManager.getPlayerMoneyIRL(pseudo));
             session.setAttribute("estAdmin",false);
 
 
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
         }
+
+        //Sinon si l'authentification retourne que le compte est admin :
         else if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_ADMIN){
             System.out.println("Status = admin");
             session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
@@ -71,13 +76,14 @@ public class AuthentificationAccountServlet extends HttpServlet {
             session.setAttribute("skinMapJoueur",accountManager.getPlayerSkinMap(pseudo));
             session.setAttribute("pseudo",pseudo);
             session.setAttribute("password",password);
-            session.setAttribute("money",accountManager.getPlayerMoney(pseudo));
+            session.setAttribute("monnaieIG",accountManager.getPlayerMoneyIG(pseudo));
+            session.setAttribute("monnaieIRL",accountManager.getPlayerMoneyIRL(pseudo));
             session.setAttribute("estAdmin",true);
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
 
         }
+        //Sinon, rediriger vers une page d'erreur :
         else{
-            //sinon rediriger vers une page d'erreur
             session.setAttribute("STATUS",RequestStatus.AUTH_FAILED);
             System.out.println(session.getAttribute("STATUS"));
             this.getServletContext().getRequestDispatcher("/log.jsp").forward(req,resp);

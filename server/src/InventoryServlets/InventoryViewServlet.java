@@ -21,22 +21,19 @@ public class InventoryViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Gson gson = new Gson();
+        resp.setCharacterEncoding("utf-8");
+        resp.setContentType("application/json");
 
         String pseudo = req.getParameter("pseudo");
 
         HttpSession session = req.getSession();
 
+        //Vérifie si le client est connecté, auquel cas l'envoie sur son interface d'inventaire, sinon le renvoie sur la page de connexion.
         if(session.getAttribute("pseudo") == null)
             this.getServletContext().getRequestDispatcher("/log.jsp").forward(req,resp);
         else this.getServletContext().getRequestDispatcher("/compte.jsp").forward(req,resp);
 
-        InventoryManager inventoryManager = new InventoryManager();
-        InventoryView inventoryView = inventoryManager.createInventoryView(pseudo);
 
-        resp.setCharacterEncoding("utf-8");
-        resp.setContentType("application/json");
-        PrintWriter out = resp.getWriter();
 
     }
 

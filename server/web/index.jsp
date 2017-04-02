@@ -24,7 +24,7 @@
         <div class="nav-wrapper nav-perso">
             <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="boutique.jsp">Boutique</a></li>
+
                 <%
 
                     String pseudo = (String) request.getSession().getAttribute("pseudo");
@@ -38,19 +38,19 @@
                     }
                     else if(estAdmin != null) {
                         if(estAdmin){
-                                    System.out.println("coucou");
-                                    out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
-                                    "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+
+                            out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
+                                    "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
                                     "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                    "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
+                                    "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
                         else {
-                            out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
-
-
-                                    "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" + "<li><a href=\"game.jsp\">Jouer</a></li>" +
-
-
+                            out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
+                                    "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
+                                    "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                    "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
 
