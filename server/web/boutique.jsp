@@ -42,17 +42,24 @@
                 }
                 else if(estAdmin != null) {
                     if(estAdmin){
-                        System.out.println("coucou");
-                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
-                                "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+
+                        out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
+                                "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
                                 "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
                     else {
-                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                        out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
                                 "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+
+
+                                "<li><a href=\"game.jsp\">Jouer</a></li>" +
+
+
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
+
                 }
 
 

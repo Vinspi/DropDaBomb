@@ -29,8 +29,7 @@ public class DeckSwapServlet extends HttpServlet {
         String id_carte = req.getParameter("id_carte");
         String id_carteDeck = req.getParameter("id_carteDeck");
 
-        System.out.println("id_deck = "+id_deck+" id_carte = "+id_carte+" id_carteDeck = "+id_carteDeck);
-
+        //Effectue l'échange entre les deux cartes :
         System.out.println(inventoryManager.swapCardsIntoDeck(session.getAttribute("pseudo")+id_deck,id_carte,id_carteDeck));
         out.print(inventoryManager.swapCardsIntoDeck(session.getAttribute("pseudo")+id_deck,id_carte,id_carteDeck));
 

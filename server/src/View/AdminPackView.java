@@ -25,7 +25,7 @@ public class AdminPackView {
     private ArrayList<Pack> listPacks = new ArrayList<>();
 
 
-
+    //Setter & Getter
     public Pack getCurrentPack() {
         return currentPack;
     }
@@ -75,6 +75,8 @@ public class AdminPackView {
         this.listPacks = listPacks;
     }
 
+
+    //Lors de la construction, on génère tout ce qu'il y a générer : la liste des cartes ainsi que la liste des Ensembles/LootPack/Pack
     public AdminPackView(){
 
         packManager.getEvthgAlrdCreated();
@@ -91,6 +93,7 @@ public class AdminPackView {
 
     }
 
+    //Changement d'Ensemble/LootPack/Pack courant
     public void choosePack(int idPack){
         for(Pack p : listPacks){
             if (p.getId() == idPack) {
@@ -116,7 +119,11 @@ public class AdminPackView {
         }
         return 1;
     }
-    //Ajout d'une carte dans le currentEnsemble
+
+
+    //Tout ces fonctions sont des appels à leurs homologues de PackManager. On les applique ici puisqu'elles impliquent un changement de la vue.
+
+
     public void addCarteToEnsemble(int id_Carte) {
         packManager.setCurrentEnsemble(getCurrentEnsemble());
         packManager.addCarteToEnsemble(id_Carte);

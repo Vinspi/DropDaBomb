@@ -19,6 +19,8 @@ import java.sql.Connection;
  * Created by deutsch on 17/02/17.
  */
 public class PackManager {
+    //Class destinée à gérer les Packs en boutique, permettant de les modifier, d'en ajouter ou d'en supprimer de la vente, ...
+
 
     Connection connection = null;
     private Pack currentPack = new Pack();
@@ -34,7 +36,7 @@ public class PackManager {
     private int current_idEnsemble, current_idLootPack, current_idPack;
 
 
-
+    //Getter & Setter.
     public Pack getCurrentPack() {
         return currentPack;
     }
@@ -108,7 +110,7 @@ public class PackManager {
 
 
 
-    //Ajout d'une carte dans le currentEnsemble
+    //Ajout d'une carte à l'Ensemble courant.
     public void addCarteToEnsemble(int id_Carte){
         String queryInsert;
         for(MiniatureCarte m : getListCards()){
@@ -133,7 +135,7 @@ public class PackManager {
 
     }
 
-    //A refaire
+    //Ajout d'un Ensemble (et sa probabilité de tirage) au LootPack courant.
     public void addEnsembleToLootPack(int id_Ensemble,float drop){
         String queryInsert;
         for(Ensemble e : getListEnsembles()){
@@ -158,7 +160,8 @@ public class PackManager {
         }
     }
 
-    //A refaire
+
+    //Ajout d'un LootPack (et de son nombre de tirages) au Pack courant.
     public void addLootPackToPack(int id_LootPack,int qte){
         String queryInsert;
         for(LootPack lp : getListLootPacks()){
@@ -178,42 +181,15 @@ public class PackManager {
             }
         }
     }
-    /* Query pas terrible
-    SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte
-                FROM Offre
-                LEFT JOIN Pack USING (id_Pack)
-                        RIGHT JOIN LootPackPack USING (id_Pack)
-                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)
-                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)
-                        JOIN Carte USING (id_Carte)
-                        ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte;
-    */
-
-    /* -> Query du tueur
-    SELECT id_Pack, nomPack, misEnVente, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte
-FROM Offre
-RIGHT JOIN
-((SELECT id_Pack, nomPack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte FROM Pack LEFT JOIN
-	(SELECT * FROM LootPackPack
-                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)
-                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)
-                        JOIN Carte USING (id_Carte)) lpe USING (id_Pack))
 
 
-UNION
-(SELECT id_Pack, nomPack, imageMiniaturePack, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte FROM Pack RIGHT JOIN
-	(SELECT * FROM LootPackPack
-                        RIGHT JOIN LootPackEnsemble USING (id_LootPack)
-                        RIGHT JOIN EnsembleCarte USING (id_Ensemble)
-                        JOIN Carte USING (id_Carte) ) lpe2 USING (id_Pack))) ali USING (id_Pack)
-                       	ORDER BY id_Pack,id_LootPack,id_Ensemble,id_Carte
-     */
 
-    //Remplis listEnsembles, listLootPacks, listPacks, contenant tout les Ensembles, LootPacks et Packs.
+    //Remplit listEnsembles, listLootPacks, listPacks, contenant tous les Ensembles, LootPacks et Packs, et leurs contenus, présents dans la base de données.
     public void getEvthgAlrdCreated(){
         listPacks = new ArrayList<>();
         listLootPacks = new ArrayList<>();
         listEnsembles = new ArrayList<>();
+
         String queryPacks = "SELECT id_Pack, nomPack, misEnVente, id_Ensemble, nomEnsemble, dropRatePack, id_LootPack, nomLootPack, qteCartePack, id_Carte, nomCarte, imageCarte\n" +
                 "FROM Offre\n " +
                 "RIGHT JOIN\n " +
@@ -249,7 +225,6 @@ UNION
                 if (resultSet.getInt("id_Pack") != 0 & (resultSet.getInt("id_LootPack") == 0)){     //Pack non null mais vide (sans LootPack)
                     listPacks.add(new Pack(resultSet.getInt("id_Pack"),resultSet.getString("nomPack"),resultSet.getInt("misEnVente"),new ArrayList<LootPack>()));
 
-                //Finir ici : manque un else if (Pack non null non vide mais avec ensemble incomplet (OU PAS : PEUT ËTRE PAS POSSIBLE EN FAIT)
                 }
                else {
 
@@ -370,6 +345,8 @@ UNION
         }
     }
 
+
+    //Remplit listCards, ArrayList contenant toutes les cartes, stockées sous la forme {id_Carte,nomCarte,imageCarte}.
     public void getAllCards(){
         listCards = new ArrayList<>();
         String queryCards = "SELECT id_Carte, nomCarte, imageCarte FROM Carte";
@@ -390,8 +367,8 @@ UNION
     }
 
 
-    // /!\INJ
-    //Créer un pack dans la base de données, reliant ainsi les LootPacks à ce même Pack.
+
+    //Cherche un identifiant de Pack et un identifiant d'Offre, puis insère une Offre contenant un pack vide dans la base de données, et enfin ajoute le pack à la listPack.
     public void createPack(String nom,String description, int prixIG, int prixIRL, String image){
 
 
@@ -401,14 +378,14 @@ UNION
         int idPack = 0, idOffre = 0;
         try {
             while(setId.next()){
-                if(idPack+1 < setId.getInt("id_Pack")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants de packs
+                if(idPack+1 < setId.getInt("id_Pack")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants de Pack.
                     break;
                 }
                 idPack = setId.getInt("id_Pack");
             }
             setId = Manager.getManager().sendRequestQuery(queryIdOffre,connection);
             while(setId.next()) {
-                if (idOffre + 1 < setId.getInt("id_Offre")) {
+                if (idOffre + 1 < setId.getInt("id_Offre")) {   //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants d'Offre.
                     break;
                 }
                 idOffre = setId.getInt("id_Offre");
@@ -431,17 +408,18 @@ UNION
         Manager.getManager().sendRequestUpdate(queryOffre,connection);
     }
 
-    // /!\INJ
-    //Créer un LootPack dans la db, reliant ainsi ses Ensembles à ce même LootPack.
+
+
+
+    //Crée un LootPack vide, lui associant un identifiant unique disponible, puis l'insère dans la liste des LootPacks.
     public void createLootPack(String nom) {
         //Récupérer le premier identifiant disponible :
-        //1) Requête à la DB (inutile en fait, traitement en objet ?)
         String queryId = "SELECT DISTINCT id_LootPack FROM LootPackEnsemble ORDER BY id_LootPack";
         ResultSet setId = Manager.getManager().sendRequestQuery(queryId,connection);
         int max = 0;
         try {
             while(setId.next()){
-                if(max+1 < setId.getInt("id_LootPack")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants d'ensemble.
+                if(max+1 < setId.getInt("id_LootPack")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants de LootPack.
                     break;
                 }
                 max = setId.getInt("id_LootPack");
@@ -463,19 +441,18 @@ UNION
     }
 
 
-    // /!\INJ
-    //Créer un Ensemble dans la db, le liant à ses cartes.
+
+    //Crée un Ensemble vide, lui associant un identifiant unique disponible, puis l'insère dans la liste des Ensembles.
     public void createEnsemble(String nom){
 
 
         //Récupérer le premier identifiant disponible :
-        //1) Requête à la DB (inutile en fait)
         String queryId = "SELECT DISTINCT id_Ensemble FROM EnsembleCarte ORDER BY id_Ensemble";
         ResultSet setId = Manager.getManager().sendRequestQuery(queryId,connection);
         int max = -1;
         try {
             while(setId.next()){
-                if(max+1 < setId.getInt("id_Ensemble")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants d'ensemble.
+                if(max+1 < setId.getInt("id_Ensemble")) {       //Donc qu'il y a un "trou" (un identifiant libre) entre deux identifiants d'Ensemble.
                     break;
                 }
                 max = setId.getInt("id_Ensemble");
@@ -511,6 +488,7 @@ UNION
         }
     }
 
+    //Supprime la carte "idCarte" de l'Ensemble de courant.
     public void removeCarteFromEnsemble(int idCarte) {
 
 
@@ -530,6 +508,7 @@ UNION
         }
     }
 
+    //Supprime un Ensemble "id_ensemble" du LootPack courant.
     public void removeEnsembleFromLootPack(int id_ensemble){
         for (int i = 0; i < currentLootPack.getEnsembles().size(); i++) {
             if (currentLootPack.getEnsembles().get(i).getId() == id_ensemble) {
@@ -546,6 +525,8 @@ UNION
 
         }
     }
+
+    //Modifie le DropRate de l'Ensemble "id_ensemble" dans le LootPack courant.
     public void modifyDropRate(int id_ensemble, float drop){
         for (int i = 0; i < currentLootPack.getEnsembles().size(); i++) {
             if (currentLootPack.getEnsembles().get(i).getId() == id_ensemble) {
@@ -562,6 +543,8 @@ UNION
         }
     }
 
+
+    //Supprime un LootPack "id_LootPack" du Pack courant.
     public void removeLootPackFromPack(int id_LootPack){
         for (int i = 0; i < currentPack.getLootPacks().size(); i++) {
             if (currentPack.getLootPacks().get(i).getId() == id_LootPack) {
@@ -580,6 +563,8 @@ UNION
 
 
     }
+
+    //Modifie le nombre de tirages du LootPack "id_lootpack" dans le Pack courant.
     public void modifyQte(int id_lootpack, int qte){
 
         for (int i = 0; i < currentPack.getLootPacks().size(); i++) {
@@ -597,30 +582,5 @@ UNION
         }
     }
 
-
-    public void choosePack(int idPack){
-        for(Pack p : listPacks){
-            if (p.getId() == idPack) {
-                currentPack = p;
-                break;
-            }
-        }
-    }
-    public void chooseLootPack(int idLP){
-        for(LootPack lp : listLootPacks){
-            if (lp.getId() == idLP) {
-                currentLootPack = lp;
-                break;
-            }
-        }
-    }
-    public void chooseEnsemble(int idEns){
-        for(Ensemble e : listEnsembles){
-            if (e.getId() == idEns) {
-                currentEnsemble = e;
-                break;
-            }
-        }
-    }
 
 }

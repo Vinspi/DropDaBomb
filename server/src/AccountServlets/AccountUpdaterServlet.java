@@ -16,7 +16,7 @@ import java.io.PrintWriter;
  * Created by vinspi on 20/02/17.
  */
 public class AccountUpdaterServlet extends HttpServlet{
-
+    //Servlet de controle des actions des modifications sur le compte :
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,34 +33,39 @@ public class AccountUpdaterServlet extends HttpServlet{
         String option = req.getParameter("option");
 
         switch (Integer.parseInt(typeRequest)){
+
+            //Demande de changement de SkinCarton : appel de AccountManager.changerSkinCarton
             case RequestStatus.UPDATE_CARTON:
                 printWriter.print(accountManager.changerSkinCarton(pseudo,update));
                 break;
 
+            //Demande de changement d'Icone : appel de AccountManager.changerIcon
             case RequestStatus.UPDATE_ICON:
-                System.out.println("j'ai changé l'icone par "+update);
                 printWriter.print(accountManager.changeIcon(pseudo,update));
                 session.setAttribute("iconeJoueur",option);
                 break;
 
+            //Demande de changement d'email : appel de AccountManager.changerEmail
             case RequestStatus.UPDATE_EMAIL:
                 printWriter.print(accountManager.changerEmail(pseudo,update));
                 session.setAttribute("mailJoueur",update);
                 break;
 
+            //Demande de changement de mot de passe : appel de AccountManager.changerPassword
             case RequestStatus.UPDATE_MDP:
                 String mdp = (String) req.getParameter("password");
-                System.out.println(mdp+" == "+session.getAttribute("password"));
                 if(mdp.equals(session.getAttribute("password"))) {
                     printWriter.print(accountManager.changePassword(pseudo, update));
                     session.setAttribute("password", update);
                 }
                 break;
 
+            //Demande de changement de SkinMap : appel de AccountManager.changerSkinMap
             case RequestStatus.UPDATE_MAP:
                 printWriter.print(accountManager.changerSkinMap(pseudo,update));
                 break;
 
+            //Achat de monnaie par le joueur : appel de AccountManager.acheterMonnaieIRL
             case RequestStatus.ACHAT_MONNAIE:
                 printWriter.print(accountManager.acheterMonnaieIRL(pseudo,update));
                 break;

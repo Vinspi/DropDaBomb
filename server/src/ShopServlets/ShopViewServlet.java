@@ -15,38 +15,12 @@ import com.google.gson.Gson;
 /**
  * Created by vinspi on 27/01/17.
  */
-public class ShopViewServletAndroid extends HttpServlet {
+public class ShopViewServlet extends HttpServlet {
 
-
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        Gson gson = new Gson();
-
-        Connection connection = null;
-        PrintWriter out = resp.getWriter();
-
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("application/json");
-
-        //Récupérer le pseudo pour n'afficher que les SKinMap/SkinCarton qu'il ne possède pas.
-        String pseudo = req.getParameter("pseudo");
-
-        ShopView shopView = new ShopView(pseudo);
-        //shopView.getAllOffers(pseudo); //Mets tout les Offres dans les attributs de shopView (toutes, même celles que le Joueur possède déjà /!\)
-
-
-        //out.print(gson.toJson(shopView));
-
-
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Gson gson = new Gson();
 
         Connection connection = null;
         PrintWriter out = resp.getWriter();
@@ -62,10 +36,9 @@ public class ShopViewServletAndroid extends HttpServlet {
         System.out.println("doPost");
 
         switch(request){
-            case 0:
+            case 0: //Génère et renvoie la view du Shop
                 ShopView shopView = new ShopView(pseudo);
                 String view = new Gson().toJson(shopView);
-                System.out.println("View Shop :"+view);
                 out.print(view);
                 break;
 
@@ -76,7 +49,6 @@ public class ShopViewServletAndroid extends HttpServlet {
         }
 
 
-        //out.print(gson.toJson(shopView));
 
 
 

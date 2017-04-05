@@ -23,7 +23,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>Shop</servlet-name>
-        <servlet-class>ShopServlets.ShopViewServletAndroid</servlet-class>
+        <servlet-class>ShopServlets.ShopViewServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Shop</servlet-name>

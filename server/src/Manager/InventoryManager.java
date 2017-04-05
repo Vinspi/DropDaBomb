@@ -15,11 +15,15 @@ import java.util.LinkedList;
  * Created by vinspi on 29/01/17.
  */
 public class InventoryManager {
+    //Class destinée à gérer un inventaire : générations des Decks pour l'affichage et modification de ceux-ci.
+
 
     private Connection connection = null;
     private LinkedList<InventoryItem> items;
 
 
+
+    //Fonction permettant de changer une carte du Deck "id_deck" (entre 1 et 2). Pour cela, enlève une carte "id_carteDeck" du deck en question et insère la carte "id_carte".
     public int swapCardsIntoDeck(String id_deck, String id_carte, String id_carteDeck){
 
         String query = "UPDATE JoueurCarteDeck SET id_Carte = "+id_carte+" WHERE (id_Carte = "+id_carteDeck+" AND id_deck LIKE '"+id_deck+"');";
@@ -46,6 +50,8 @@ public class InventoryManager {
 
     }
 
+
+    //Fonction créant et retournant une view de l'inventaire du compte "pseudo".
     public InventoryView createInventoryView(String pseudo){
 
         LinkedList<CardView> playerCards;
@@ -59,6 +65,7 @@ public class InventoryManager {
         return new InventoryView(playerCards,deck1,deck2);
     }
 
+    //Fonction retournant une view du deck "num_deck" du compte "pseudo".
     private DeckView getDeck(String pseudo,int num_deck){
         DeckView deck1 = null;
         LinkedList<CardView> cards = new LinkedList<>();
@@ -101,10 +108,12 @@ public class InventoryManager {
 
         return deck1;
     }
-    private LinkedList<CardView> getPlayerCards(String pseudo){
+
+    //Fonction retournant une LinkedList des cartes possédées par sur le compte "pseudo".
+    public LinkedList<CardView> getPlayerCards(String pseudo){
 
         LinkedList<CardView> cards = new LinkedList<>();
-        ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.* \n" +
+        ResultSet resultSet = Manager.getManager().sendRequestQuery("SELECT Carte.*, qteCarteDeck \n" +
                 "FROM CompteJoueur\n" +
                 "JOIN JoueurCarteDeck USING (pseudo)\n" +
                 "JOIN Deck USING (id_Deck)\n" +
@@ -118,7 +127,7 @@ public class InventoryManager {
                         resultSet.getString("nomCarte"),
                         resultSet.getString("rareteCarte"),
                         resultSet.getString("typeCarte"),
-                        resultSet.getString("coutCarte")));
+                        resultSet.getString("coutCarte"),resultSet.getInt("qteCarteDeck")));
             }
         }catch (SQLException e){
             e.printStackTrace();

@@ -7,7 +7,7 @@ import java.util.List;
  * Created by vinspi on 27/01/17.
  */
 public class Manager {
-
+    //Class destiné à gérer les requêtes envoyées à la base de données via JDBC. Suit un pattern SINGLETON.
 
     private Statement statement;
     private ResultSet resultSet = null;
@@ -32,6 +32,8 @@ public class Manager {
         return manager;
     }
 
+
+    //Fonction d'envoi d'une requête de type Query (SELECT ...) à la base de données.
     public ResultSet sendRequestQuery(String query,Connection connection){
 
         try {
@@ -45,6 +47,8 @@ public class Manager {
         return resultSet;
     }
 
+
+    //Fonction d'envoi d'une requête de type UPDATE (UPDATE, INSERT, DELETE ...) à la base de données.
     public Boolean sendRequestUpdate(String query,Connection connection){
 
 
@@ -61,6 +65,8 @@ public class Manager {
 
     }
 
+
+    //Fonction d'envoi d'une requête de type UPDATE (UPDATE, INSERT, DELETE ...) à la base de données en ignorant les contraintes de FOREIGN KEY.
     public void sendDeleteUpdate(String query,Connection connection){
         try {
             connection = DriverManager.getConnection(RequestStatus.URL_BDD, RequestStatus.BDD_USER, RequestStatus.BDD_PASSWORD);
@@ -82,6 +88,7 @@ public class Manager {
 
     }
 
+    //Fonction d'envoi d'une liste de requêtes de type UPDATE (UPDATE, INSERT, DELETE ...) à la base de données.
     public void sendMultipleRequestUpdate(List<String> queries, Connection connection){
 
 

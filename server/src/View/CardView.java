@@ -9,6 +9,7 @@ public class CardView extends InventoryItem {
     private String typeCarte;
     private String coutCarte;
     private int id_carte;
+    private int qte;
 
     public String getImageCarte(){
         return this.image;
@@ -30,6 +31,8 @@ public class CardView extends InventoryItem {
         return id_carte;
     }
 
+    public int getQte(){ return qte; }
+
     public String webify(){
         return "<div class=\"col s3 m3 l3\">" +
                 "                        <div class=\"card carte-deck\">" +
@@ -49,6 +52,19 @@ public class CardView extends InventoryItem {
         this.rareteCarte = rareteCarte;
         this.typeCarte = typeCarte;
         this.coutCarte = coutCarte;
+        this.qte = 1;
+    }
+
+
+    public CardView(String image, String description, int id_carte, String name, String rareteCarte, String typeCarte, String coutCarte, int qte) {
+        this.image = image;
+        this.description = description;
+        this.id_carte = id_carte;
+        this.name = name;
+        this.rareteCarte = rareteCarte;
+        this.typeCarte = typeCarte;
+        this.coutCarte = coutCarte;
+        this.qte = qte;
     }
 
 

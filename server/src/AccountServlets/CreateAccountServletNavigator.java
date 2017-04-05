@@ -21,6 +21,8 @@ public class CreateAccountServletNavigator extends HttpServlet {
         String password = req.getParameter("password");
         String password_conf = req.getParameter("password_confirm");
 
+
+        //Vérification de la confirmation du mot de passe.
         if(!password.equals(password_conf)){
             req.setAttribute("STATUS",RequestStatus.ERR_MDP_NOT_MATCH);
         }
@@ -28,9 +30,11 @@ public class CreateAccountServletNavigator extends HttpServlet {
             HttpSession session = req.getSession();
             System.out.println("je suis le navigator");
 
+            //Tentative de création du compte :
             Manager.AccountManager accountManager = new Manager.AccountManager();
             int result = accountManager.createAccount(pseudo, email, password);
 
+            //Réponse en fonction de la tentative.
             if (result == RequestStatus.CREATE_ACCOUNT_SUCCES) {
                 req.setAttribute("STATUS", RequestStatus.CREATE_ACCOUNT_SUCCES);
             } else if (result == RequestStatus.CREATE_ACCOUNT_FAILED_PSEUDO) {
