@@ -1,6 +1,5 @@
-/**
- * Created by vinspi on 06/03/17.
- */
+//Fonctions JS associés à accountManager.jsp, donc à la gestion du compte (modifications d'email, de mot de passe etc).
+
 
 
 $(document).ready(function () {
@@ -11,10 +10,13 @@ $(document).ready(function () {
     $('#erreurMdp').hide();
 });
 
+
+//Ouvre le modal pour changer son email.
 function changeEmail() {
     $('#modalEmail').modal('open');
 }
 
+//Envoie du formulaire de changement d'email (ne passe pas un submit, inutile de prévenir l'execution par défaut).
 function validationChangeEmail() {
 
     var email = $('#new-email').val();
@@ -53,10 +55,13 @@ function validationChangeEmail() {
 
 }
 
+
+//Ouvre le modal de changement de mot de passe.
 function changeMdp() {
     $('#modalMdp').modal('open');
 }
 
+//Envoie du formulaire de changement de mot de passe (ne passe pas un submit, inutile de prévenir l'execution par défaut).
 function validationChangeMdp() {
 
     var mdp1 = $('#new-mdp').val();
@@ -93,10 +98,12 @@ function validationChangeMdp() {
     }
 }
 
+//Ouverture du modal de changement d'icone.
 function changeIcone(){
     $('#modalIcone').modal('open');
 }
 
+//Envoie du formulaire de changement d'icone (ne passe pas un submit, inutile de prévenir l'execution par défaut).
 function confirmationChangeIcone(id,nouvelleIcone) {
 
     console.log("id_icone = "+id);
@@ -133,11 +140,12 @@ function confirmationChangeIcone(id,nouvelleIcone) {
 
 }
 
-
+//Ouverture du modal de changement de SkinCarton.
 function changeSkinCarte(){
     $('#modalSkinCarton').modal('open');
 }
 
+//Envoie du formulaire de changement de SkinCarton (ne passe pas un submit, inutile de prévenir l'execution par défaut).
 function confirmationChangeSkinCarte(id,nouvelleIcone) {
 
 
@@ -172,10 +180,12 @@ function confirmationChangeSkinCarte(id,nouvelleIcone) {
 }
 
 
+//Ouverture du modal de changement de SkinMap.
 function changeSkinMap(){
     $('#modalSkinMap').modal('open');
 }
 
+//Envoie du formulaire de changement de SkinMap (ne passe pas un submit, inutile de prévenir l'execution par défaut).
 function confirmationChangeSkinMap(id,nouvelleIcone) {
 
 

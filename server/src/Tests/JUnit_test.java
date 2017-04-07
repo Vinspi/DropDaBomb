@@ -168,7 +168,7 @@ public class JUnit_test {
         Manager.getManager().sendRequestUpdate(queryMonnaie,connection);
 
         //Achat de l'Offre 7 contenant l'icone "superIcone"
-        sm.doAchatDoublet("jean-michel","7","monnaieIG");
+        sm.doAchat("jean-michel","7","monnaieIG");
 
         testIcons = am.getPlayerIcons("jean-michel");
         assertEquals("should be superIcone.png","superIcone.png",testIcons.get(1).image);
@@ -177,7 +177,7 @@ public class JUnit_test {
         assertEquals("should be 499",499,r);
 
         //Achat de l'Offre 8 contenant le Pack 3, contenant 5 cartes piochées dans l'ensemble 0 (Cartes {5,6,7}).
-        ShopManager.Doublet s = sm.doAchatDoublet("jean-michel","8","monnaieIG");
+        ShopManager.Doublet s = sm.doAchat("jean-michel","8","monnaieIG");
 
         testDeckAA = im.getPlayerCards("jean-michel");
         for(int j = 0; j < testDeckAA.size(); j++){

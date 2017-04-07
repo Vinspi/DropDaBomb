@@ -44,29 +44,28 @@
                 <li><a href="boutique.jsp">Boutique</a></li>
                 <%
 
-                    System.out.println("pseudo = "+pseudo);
-                    System.out.println("icone = "+icone);
                     if(session.getAttribute("pseudo") == null) {
                         out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
                     }
                     else if(estAdmin != null) {
                         if(estAdmin){
-                            System.out.println("coucou");
-                            out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
-                                    "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+
+                            out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
+                                    "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
                                     "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+                                    "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
                         else {
-                            out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("money")+"$</a></li>" +
+                            out.print("<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
                                     "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
+
 
                                     "<li><a href=\"game.jsp\">Jouer</a></li>" +
 
 
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
-
 
                     }
 
@@ -138,14 +137,7 @@
                         <a class="btn amber darken-2 waves-effect white-text" onclick="changeMdp()">changer mon mot de passe</a>
                     </div>
                 </div>
-                <%/*
-                out.print();
-                */%>
-                <div class="row">
-                    <div class="col s4 m4 l4 offset-s4 offset-m4 offset-l4">
-                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeMdp()">changer mon mot de passe</a>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -155,7 +147,7 @@
                 <div class="white-text luna titre-modif-email">Modification de votre adresse email</div>
             </div>
             <div id="erreur-email" class="center-align red-text">cet email n'est pas valide</div>
-                <div class="container">
+            <div class="container">
                     <div class="row">
                         <div class="col s6 m6 l6">
                             email actuel :

@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 <%@ page import="java.sql.*" %><%-- Created by IntelliJ IDEA. --%>
-=======
 <%@ page import="java.sql.*" %>
 <%@ page import="Manager.AccountManager" %>
 <%@ page import="Manager.RequestStatus" %><%-- Created by IntelliJ IDEA. --%>
->>>>>>> 8734fcb48bd80fa82ac86f096f67c8332f216fe6
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>

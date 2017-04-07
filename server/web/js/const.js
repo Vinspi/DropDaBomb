@@ -1,4 +1,4 @@
-// CONSTANTES "ECRAN" PRINCIPALES 
+// CONSTANTES "ECRAN" PRINCIPALES
 
 // Largeur de l’écran du client
 var ScreenW = $(window).width();

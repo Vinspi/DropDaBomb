@@ -1,70 +1,58 @@
-/**
- * Created by deutsch on 23/03/17.
- */
+////Fonctions JS de la page boutique.jsp. Utilisées pour la génération de la page et pour les traitements (achat d'une Offre).
 
+//Lorsque le document est prêt, charger la Boutique.
 $(document).ready(function() {
-
     getShopView();
-
-    console.log("get lancé");
-
-
-
 });
 
 
-
+//Charge la vue de la boutique et l'affiche.
 function getShopView(){
 
     $.ajax({
 
         url : 'Shop',
-
         type : 'POST',
         data : 'idRequest=0',
 
 
         success: function (data) {
-            console.log(data);
-            var result = data;//JSON.parse(data);
 
-            console.log('ajax');
-            //Pack
+            var result = data;
 
+
+            //Affichage des Packs
             var p = document.createElement('div');
-
             for(var i = 0; i < result.listPackView.length; i++){
 
 
-                p.innerHTML += " <div class=\"card\">" +
-                "<div class=\"card-image waves-effect waves-block waves-light\">" +
-                    "<img class=\"activator img_pack\" src=\"../img/PACKS/" + result.listPackView[i].image + "\">" +
-                "</div>" +
-                "<div class=\"card-content\">" +
-                    "<p class=\"activator\">"+result.listPackView[i].nom+"</p>" +
-                "</div>" +
-                "<div class=\"card-reveal\">" +
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listPackView[i].id_Offre+")\">IG</a>"+
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listPackView[i].id_Offre+")\">IRL</a>"+
-                "</div>" +
-                "</div>";
+                p.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
+                    "<div class=\"card-image waves-effect waves-block waves-light\">" +
+                        "<img class=\"activator img_pack\" src=\"../img/PACKS/" + result.listPackView[i].image + "\">" +
+                    "</div>" +
+                    "<div class=\"card-content\">" +
+                        "<p class=\"activator\">"+result.listPackView[i].nom+"</p>" +
+                    "</div>" +
+                    "<div class=\"card-reveal\">" +
+                        "<i class=\"card-title material-icons right\">close</i>" +
+                        "<p>"+result.listPackView[i].description+"</p>" +
+                        "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listPackView[i].id_Offre+")\">"+result.listPackView[i].monnaieIG+"</a>"+
+                        "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listPackView[i].id_Offre+")\">"+result.listPackView[i].monnaieIRL+"</a></div>"+
+                    "</div>" +
+                    "</div></div>";
 
-                /*p.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"p"+result.listPackView[i].id_Offre+"\" onclick=\"acheterOffre("+result.listPackView[i].id_Offre+")\"><img class=\"img_pack\" src=\'../img/PACKS/" + result.listPackView[i].image + "\' ><p>"+result.listPackView[i].nom+"</p></div>" +
-                    "     </div>";*/
+                if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+
             }
-            console.log("fin liste");
+            p.innerHTML += "</div>";
             document.getElementById("pack").appendChild(p);
 
 
-            //Boost
-
+            //Affichage des Boosts
             var q = document.createElement("div");
+            for(i = 0; i < result.listBoostView.length; i++){
 
-            q.innerHTML = "";
-            for(var i = 0; i < result.listBoostView.length; i++){
-
-                q.innerHTML += " <div class=\"card\">" +
+                q.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_pack\" src=\"../img/BOOSTS/" + result.listBoostView[i].image + "\">" +
                     "</div>" +
@@ -72,29 +60,28 @@ function getShopView(){
                     "<p class=\"activator\">"+result.listBoostView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listBoostView[i].id_Offre+")\">IG</a>"+
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listBoostView[i].id_Offre+")\">IRL</a>"+
+                    "<i class=\"card-title material-icons right\">close</i>" +
+                    "<p>"+result.listBoostView[i].description+"</p>" +
+                    "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listBoostView[i].id_Offre+")\">"+result.listBoostView[i].monnaieIG+" IG</a>"+
+                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listBoostView[i].id_Offre+")\">"+result.listBoostView[i].monnaieIRL+" IRL</a></div>"+
                     "</div>" +
-                    "</div>";
+                    "</div></div>";
 
-/*                q.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"b"+result.listBoostView[i].id_Offre+"\" onclick=\"acheterOffre("+result.listBoostView[i].id_Offre+")\"><img class=\"img_boost\" src=\'../img/BOOSTS/" + result.listBoostView[i].image + "\' ><p>"+result.listBoostView[i].nom+"</p></div>" +
-                    "     </div>";
-*/                if(i != 0 && i%6 == 5) p.innerHTML += "</div><div class=\"row\">";
+                if(i != 0 && i%6 == 5) q.innerHTML += "</div><div class=\"row\">";
             }
+            q.innerHTML += "</div>";
             document.getElementById("boost").appendChild(q);
-            console.log("cc");
 
 
 
 
 
 
-            //Map
+            //Affichage des SkinMaps
             var r = document.createElement("div");
+            for(i = 0; i < result.listSkinMapView.length; i++){
 
-            for(var i = 0; i < result.listSkinMapView.length; i++){
-                r.innerHTML += " <div class=\"card\">" +
+                r.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_map\" src=\"../img/SKIN_MAP/" + result.listSkinMapView[i].image + "\">" +
                     "</div>" +
@@ -102,21 +89,24 @@ function getShopView(){
                     "<p class=\"activator\">"+result.listSkinMapView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listSkinMapView[i].id_Offre+")\">IG</a>"+
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listSkinMapView[i].id_Offre+")\">IRL</a>"+
+                    "<i class=\"card-title material-icons right\">close</i>" +
+                    "<p>"+result.listSkinMapView[i].description+"</p>" +
+                    "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listSkinMapView[i].id_Offre+")\">"+result.listSkinMapView[i].monnaieIG+" IG</a>"+
+                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listSkinMapView[i].id_Offre+")\">"+result.listSkinMapView[i].monnaieIRL+" IRL</a></div>"+
                     "</div>" +
-                    "</div>";
-                /*r.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"m"+result.listSkinMapView[i].id_Offre+"\" onclick=\"acheterOffre("+result.listSkinMapView[i].id_Offre+")\"><img class=\"img_map\" src=\'../img/SKIN_MAP/" + result.listSkinMapView[i].image + "\' ><p>"+result.listSkinMapView[i].nom+"</p></div>" +
-                    "     </div>";*/
+                    "</div></div>";
+                if(i != 0 && i%6 == 5) r.innerHTML += "</div><div class=\"row\">";
+
             }
+            r.innerHTML += "</div>";
             document.getElementById("map").appendChild(r);
 
 
-            //Carton
+            //Affichage des SkinCartons
             var s = document.createElement("div");
             for(var i = 0; i < result.listSkinCartonView.length; i++){
-                s.innerHTML += " <div class=\"card\">" +
+
+                s.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_carton\" src=\"../img/SKIN_CARTE/" + result.listSkinCartonView[i].image + "\">" +
                     "</div>" +
@@ -124,23 +114,24 @@ function getShopView(){
                     "<p class=\"activator\">"+result.listSkinCartonView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listSkinCartonView[i].id_Offre+")\">IG</a>"+
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listSkinCartonView[i].id_Offre+")\">IRL</a>"+
+                    "<i class=\"card-title material-icons right\">close</i>" +
+                    "<p>"+result.listSkinCartonView[i].description+"</p>" +
+                    "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listSkinCartonView[i].id_Offre+")\">"+result.listSkinCartonView[i].monnaieIG+" IG</a>"+
+                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listSkinCartonView[i].id_Offre+")\">"+result.listSkinCartonView[i].monnaieIRL+" IRL</a></div>"+
                     "</div>" +
-                    "</div>";
+                    "</div></div>";
 
-                /*
-                s.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"c"+result.listSkinCartonView[i].id_Offre+"\" onclick=\"acheterOffre("+result.listSkinCartonView[i].id_Offre+")\"><img class=\"img_carton\" src=\'../img/SKIN_CARTE/" + result.listSkinCartonView[i].image + "\' ><p>"+result.listSkinCartonView[i].nom+"</p></div>" +
-                    "     </div>";*/
+                if(i != 0 && i%6 == 5) s.innerHTML += "</div><div class=\"row\">";
             }
+            s.innerHTML += "</div>";
             document.getElementById("carton").appendChild(s);
 
 
-            //Icone
+            //Affichage des Icones
             var t = document.createElement('div');
             for(var i = 0; i < result.listIconeView.length; i++){
-                t.innerHTML += " <div class=\"card\">" +
+
+                t.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_icone\" src=\"../img/ICONES/" + result.listIconeView[i].image + "\">" +
                     "</div>" +
@@ -148,17 +139,18 @@ function getShopView(){
                     "<p class=\"activator\">"+result.listIconeView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listIconeView[i].id_Offre+")\">IG</a>"+
-                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listIconeView[i].id_Offre+")\">IRL</a>"+
+                    "<i class=\"card-title material-icons right\">close</i>" +
+                    "<p>"+result.listIconeView[i].description+"</p>" +
+                    "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listIconeView[i].id_Offre+")\">"+result.listIconeView[i].monnaieIG+" IG</a>"+
+                    "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listIconeView[i].id_Offre+")\">"+result.listIconeView[i].monnaieIRL+" IRL</a></div>"+
                     "</div>" +
-                    "</div>";
+                    "</div></div>";
+                if(i != 0 && i%6 == 5) t.innerHTML += "</div><div class=\"row\">";
 
-                /*t.innerHTML += "<div class=\"col s2 m2 l2\">" +
-                    "       <div class=\"block\" id=\"i"+result.listIconeView[i].id_Offre+"\" onclick=\"acheterOffre("+result.listIconeView[i].id_Offre+")\"><img class=\"img_carton\" src=\'../img/ICONES/" + result.listIconeView[i].image + "\' ><p>"+result.listIconeView[i].nom+"</p></div>" +
-                    "     </div>";*/
             }
+            t.innerHTML += "</div>";
             document.getElementById("icone").appendChild(t);
-            console.log("qq");
+
 
 
         },
@@ -174,7 +166,7 @@ function getShopView(){
 
 }
 
-
+//Demande confirmation d'achat, puis envoie une requête à la servlet ShopAchat pour effectuer l'achat de l'Offre id_offre avec de la monnaieIG.
 function acheterOffreIG(id_offre) {
 
     var verif = prompt("Voulez-vous acheter l'offre " + id_offre + " avec de la monnaieIG ?");
@@ -183,16 +175,13 @@ function acheterOffreIG(id_offre) {
 
             url: 'ShopAchat',
             type: 'POST',
-
             data: {"idRequest": 1, "id_Offre": id_offre, "money": "monnaieIG"},
-
             dataType: 'json',
 
             success: function (data) {
 
-                console.log(data);
-                if(data.id == 5) {
-                    Materialize.toast('Offre ' + id_offre + ' acheté !', 4000); // 4000 is the duration of the toast
+                if(data.id == 5) {  //5 == Achat réussi.
+                    Materialize.toast('Offre ' + id_offre + ' acheté !', 4000);
 
                     $( "#pseudo" ).load(" #pseudo");
                 }
@@ -205,11 +194,12 @@ function acheterOffreIG(id_offre) {
         });
     }
     else {
-        Materialize.toast('Vous ne vouliez pas acheter l\'offre '+id_offre, 4000) // 4000 is the duration of the toast
+        Materialize.toast('Vous ne vouliez pas acheter l\'offre '+id_offre, 4000);
     }
 }
 
 
+//Demande confirmation d'achat, puis envoie une requête à la servlet ShopAchat pour effectuer l'achat de l'Offre id_offre avec de la monnaieIRL.
 function acheterOffreIRL(id_offre) {
 
     var verif = prompt("Voulez-vous acheter l'offre " + id_offre + " avec de la monnaieIRL ?");
@@ -218,16 +208,14 @@ function acheterOffreIRL(id_offre) {
 
             url: 'ShopAchat',
             type: 'POST',
-
             data: {"idRequest": 2, "id_Offre": id_offre, "money": "monnaieIRL"},
-
             dataType: 'json',
 
             success: function (data) {
-                console.log(data);
-
-                Materialize.toast('Offre '+id_offre+' acheté !', 4000) // 4000 is the duration of the toast
-
+                if(data.id == 5) {  //5 == Achat réussi.
+                    Materialize.toast('Offre ' + id_offre + ' acheté !', 4000);
+                }
+                else Materialize.toast('Erreur : veuillez ré-essayer (vous n\'avez pas été débité', 4000);
             },
 
             error: function (code_html, status) {
@@ -236,6 +224,6 @@ function acheterOffreIRL(id_offre) {
         });
     }
     else {
-        Materialize.toast('Vous ne vouliez pas acheter l\'offre '+id_offre, 4000) // 4000 is the duration of the toast
+        Materialize.toast('Vous ne vouliez pas acheter l\'offre '+id_offre, 4000);
     }
 }

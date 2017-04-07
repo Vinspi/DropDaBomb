@@ -1,12 +1,5 @@
 <%@ page import="javax.swing.undo.AbstractUndoableEdit" %>
-<%@ page import="Manager.RequestStatus" %><%--
-  Created by IntelliJ IDEA.
-  User: vinspi
-  Date: 04/02/17
-  Time: 14:05
-  To change this template use File | Settings | File Templates.
---%>
-
+<%@ page import="Manager.RequestStatus" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,7 +19,7 @@
     <div class="nav-wrapper blue darken-3">
         <a href="#" class="brand-logo">DropDaBomb</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="shop.jsp">Boutique</a></li>
+            <li><a href="boutique.jsp">Boutique</a></li>
             <li><a href="account.jsp">Inscription</a></li>
             <li><a href="log.jsp">Connexion</a></li>
         </ul>

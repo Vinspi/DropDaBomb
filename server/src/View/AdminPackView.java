@@ -79,6 +79,7 @@ public class AdminPackView {
     //Lors de la construction, on génère tout ce qu'il y a générer : la liste des cartes ainsi que la liste des Ensembles/LootPack/Pack
     public AdminPackView(){
 
+        packManager = new PackManager();
         packManager.getEvthgAlrdCreated();
         packManager.getAllCards();
 

@@ -1,3 +1,5 @@
+//Fonctions JS côté client du jeu DropDaBomb.
+
 /* constantes */
 
 var NB_MAX_PDV = 250;

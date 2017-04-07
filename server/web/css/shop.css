@@ -15,6 +15,11 @@ nav li{
     src: url("../fonts/Luna.ttf");
 }
 
+.btnAchat{
+    position: absolute;
+    bottom: 0;
+}
+
 body{
 
     background-image: url("../img/BG6.jpg");
@@ -24,9 +29,9 @@ body{
 
 }
 
-.card .card-image img_pack {
+.card .card-image .img_pack {
 
-    width: 20%;
+    width: 100%;
 }
 
 .luna{

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: deutsch
-  Date: 23/03/17
-  Time: 10:34
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -71,23 +64,11 @@
 <div class="container center-align">
     <div class="row">
         <div class="col s12 m12 l12">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-content">
                     <div class="row" id="pack">
 
                     </div>
-                    <!--
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header"></div>
-                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                    </ul>
-                    -->
-
-
-
-
                 </div>
             </div>
         </div>
@@ -96,23 +77,11 @@
 
     <div class="row">
         <div class="col s12 m12 l12">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-content">
                     <div class="row" id="boost">
 
                     </div>
-                    <!--
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header"></div>
-                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                    </ul>
-                    -->
-
-
-
-
                 </div>
             </div>
         </div>
@@ -120,23 +89,11 @@
 
     <div class="row">
         <div class="col s12 m12 l12">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-content">
                     <div class="row" id="map">
 
                     </div>
-                    <!--
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header"></div>
-                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                    </ul>
-                    -->
-
-
-
-
                 </div>
             </div>
         </div>
@@ -144,24 +101,11 @@
 
     <div class="row">
         <div class="col s12 m12 l12">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-content">
                     <div class="row" id="carton">
 
                     </div>
-
-                    <!--
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header"></div>
-                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                    </ul>
-                    -->
-
-
-
-
                 </div>
             </div>
         </div>
@@ -169,23 +113,11 @@
 
     <div class="row">
         <div class="col s12 m12 l12">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-content">
                     <div class="row" id="icone">
 
                     </div>
-                    <!--
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header"></div>
-                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                    </ul>
-                    -->
-
-
-
-
                 </div>
             </div>
         </div>

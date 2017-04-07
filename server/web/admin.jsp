@@ -1,17 +1,3 @@
-<%@ page import="View.AdminPackView" %>
-<%@ page import="View.MiniatureCarte" %>
-<%@ page import="View.Ensemble" %>
-<%@ page import="View.LootPack" %>
-<%@ page import="View.Pack" %>
-<%@ page import="java.util.ArrayList" %>
-
-<%--
-  Created by IntelliJ IDEA.
-  User: deutsch
-  Date: 09/03/17
-  Time: 21:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,7 +18,7 @@
     <meta charset="utf-8">
     <title>DropDaBomb</title>
 </head>
-<body class="center-align">
+<body>
 <%
     String pseudo = (String) session.getAttribute("pseudo");
     String icone = (String) request.getSession().getAttribute("iconeJoueur");
@@ -78,7 +64,7 @@
     </div>
 </nav>
 
-
+<div class="container center-align">
 <div id="modal-newEns" class="modal">
     <div class="modal-content">
         <div class="row">
@@ -223,7 +209,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Mettre LootPack -->
+
                                             <p>Liste des LootPacks</p>
                                             <div id="listLootPack" class="row">
 
@@ -241,7 +227,7 @@
                                 </div>
                             </div>
                             </div>
-                        <!-- Mettre Packs -->
+
                         <p>Liste des Packs</p>
                         <div id="listPack" class="row">
 
@@ -259,7 +245,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

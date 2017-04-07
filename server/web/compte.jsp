@@ -2,13 +2,6 @@
 <%@ page import="View.CardView" %>
 <%@ page import="View.InventoryView" %>
 <%@ page import="java.util.ArrayList" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: vinspi
-  Date: 10/02/17
-  Time: 14:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -243,6 +236,7 @@
         $('#section-carte-compte-2').hide();
     });
 
+    //Change de Deck visible.
     function swapCardsView() {
         if(deckVisible == 1) {
             $('#section-carte-compte-1').hide();
@@ -256,17 +250,17 @@
         }
     }
 
+    //Sélectionne une carte hors Decks. Procède à un swap si on a déjà sélectionné une carte dans un Deck.
     function selectCard(value) {
 
-
-
-
-        /* selection de la carte pour la premiere fois */
+        /* Focus d'une carte dans les cartes hors Deck*/
         if(lastCardSelected == -1){
             lastCardSelected = value;
 
             $('#'+value).addClass("shake");
             $('#'+value).removeClass("grow");
+
+            //Si une carte est sélectionnée dans un des Deck, alors on swap les deux cartes :
             if(lastCardDeckSelected != -1){
                 console.log($('#'+lastCardSelected).children().attr('src'));
 
@@ -291,18 +285,15 @@
 
                 /* end swap */
 
-                /* envoyer la requete vive l'ajax */
+                /* envoie de la requete avec de l'ajax */
                 $.ajax({
 
                     url : 'DeckSwap',
-
                     type : 'GET',
-
                     data : 'id_deck='+deckVisible+'&id_carte='+lastCardSelected.substring(1)+'&id_carteDeck='+lastCardDeckSelected.substring(1),
 
                     succes: function (code_html,status) {
                         console.log("succes "+status);
-                        alert("coucou");
 
                     },
 
@@ -341,6 +332,7 @@
 
             }
         }
+        //Sélection d'une autre carte hors Deck (n'a lieu que si la dernière carte sélectionnée était une carte hors Deck et qu'elle n'a engendrée aucun swap : il n'y a pas de focus sur une carte d'un Deck, donc pas de swap).
         else {
             $('#'+lastCardSelected).removeClass("shake");
             $('#'+lastCardSelected).addClass("grow");
@@ -352,16 +344,20 @@
 
     }
 
+
+    //Sélectionne une carte dans un Deck. Procède à un swap si on a déjà sélectionné une carte hors Decks.
     function selectCardDeck(value) {
 
 
-        /* selection de la carte pour la premiere fois */
+        /* Focus d'une carte dans un des Decks */
         if(lastCardDeckSelected == -1){
             lastCardDeckSelected = value;
             console.log('#'+value);
 
             $('#'+value).addClass("shake");
             $('#'+value).removeClass("grow");
+
+            //Si une carte est sélectionnée hors Decks, alors on swap les deux cartes :
             if(lastCardSelected != -1){
 
                 var attrLastCardSelected = $('#'+lastCardSelected).children().attr('src');
@@ -387,18 +383,15 @@
                 /* end swap */
 
 
-                /* envoyer la requete vive l'ajax */
+                /* envoie de la requete avec de l'ajax */
                 $.ajax({
 
                     url : 'DeckSwap',
-
                     type : 'GET',
-
                     data : 'id_deck='+deckVisible+'&id_carte='+lastCardSelected.substring(1)+'&id_carteDeck='+lastCardDeckSelected.substring(1),
 
                     succes: function (code_html,status) {
                         console.log("succes "+status);
-                        alert("coucou");
                     },
 
                     error: function (code_html,status) {
@@ -433,6 +426,8 @@
             }
 
         }
+
+        //Sélection d'une autre carte dans le Deck (n'a lieu que si la dernière carte sélectionnée était une carte dans un Deck et qu'elle n'a engendrée aucun swap : il n'y a pas de focus sur une carte hors Decks, donc pas de swap).
         else {
             $('#'+lastCardDeckSelected).removeClass("shake");
             $('#'+lastCardDeckSelected).addClass("grow");

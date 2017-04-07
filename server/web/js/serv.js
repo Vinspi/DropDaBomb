@@ -1,4 +1,4 @@
-
+//Fonctions JS côté serveur du jeu DropDaBomb.
 
 /* definir toutes les cartes sous forme de constantes */
 
