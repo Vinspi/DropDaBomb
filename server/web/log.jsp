@@ -15,8 +15,8 @@
 </head>
 <body class="grey lighten-3">
 
-<nav>
-    <div class="nav-wrapper blue darken-3">
+<nav  class=" light-blue darken-4">
+    <div class="nav-wrapper">
         <a href="#" class="brand-logo">DropDaBomb</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="boutique.jsp">Boutique</a></li>
@@ -50,7 +50,7 @@
                                 </form>
                             </div>
                         </div>
-                        <p>or</p>
+                        <p>ou</p>
                         <a class="btn btn-index waves-effect waves-light amber darken-2" href="account.jsp" >Je n'ai pas de compte</a>
                     </div>
                 </div>

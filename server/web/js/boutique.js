@@ -28,16 +28,16 @@ function getShopView(){
 
                 p.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
-                        "<img class=\"activator img_pack\" src=\"../img/PACKS/" + result.listPackView[i].image + "\">" +
+                        "<img class=\"activator img_pack\" src=\"../img/utils/" + result.listPackView[i].image + "\">" +
                     "</div>" +
-                    "<div class=\"card-content\">" +
+                    "<div class=\"card-content nom-pack\">" +
                         "<p class=\"activator\">"+result.listPackView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
                         "<i class=\"card-title material-icons right\">close</i>" +
                         "<p>"+result.listPackView[i].description+"</p>" +
-                        "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listPackView[i].id_Offre+")\">"+result.listPackView[i].monnaieIG+"</a>"+
-                        "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listPackView[i].id_Offre+")\">"+result.listPackView[i].monnaieIRL+"</a></div>"+
+                        "<div class='btnAchat'><a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIG("+result.listPackView[i].id_Offre+")\">"+result.listPackView[i].monnaieIG+" IG</a>"+
+                        "<a class=\"waves-effect waves-light btn\" onclick=\"acheterOffreIRL("+result.listPackView[i].id_Offre+")\">"+result.listPackView[i].monnaieIRL+" IRL</a></div>"+
                     "</div>" +
                     "</div></div>";
 
@@ -54,9 +54,9 @@ function getShopView(){
 
                 q.innerHTML += "<div class=\"col s2 m2 l2\"><div class=\"card\">" +
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
-                    "<img class=\"activator img_pack\" src=\"../img/BOOSTS/" + result.listBoostView[i].image + "\">" +
+                    "<img class=\"activator img_pack\" src=\"../img/" + result.listBoostView[i].image + "\">" +
                     "</div>" +
-                    "<div class=\"card-content\">" +
+                    "<div class=\"card-content nom-boost\">" +
                     "<p class=\"activator\">"+result.listBoostView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
@@ -85,7 +85,7 @@ function getShopView(){
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_map\" src=\"../img/SKIN_MAP/" + result.listSkinMapView[i].image + "\">" +
                     "</div>" +
-                    "<div class=\"card-content\">" +
+                    "<div class=\"card-content nom-map\">" +
                     "<p class=\"activator\">"+result.listSkinMapView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
@@ -110,7 +110,7 @@ function getShopView(){
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_carton\" src=\"../img/SKIN_CARTE/" + result.listSkinCartonView[i].image + "\">" +
                     "</div>" +
-                    "<div class=\"card-content\">" +
+                    "<div class=\"card-content nom-carton\">" +
                     "<p class=\"activator\">"+result.listSkinCartonView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +
@@ -135,7 +135,7 @@ function getShopView(){
                     "<div class=\"card-image waves-effect waves-block waves-light\">" +
                     "<img class=\"activator img_icone\" src=\"../img/ICONES/" + result.listIconeView[i].image + "\">" +
                     "</div>" +
-                    "<div class=\"card-content\">" +
+                    "<div class=\"card-content nom-icone\">" +
                     "<p class=\"activator\">"+result.listIconeView[i].nom+"</p>" +
                     "</div>" +
                     "<div class=\"card-reveal\">" +

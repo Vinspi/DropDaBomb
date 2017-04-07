@@ -37,8 +37,8 @@
 
 %>
 
-    <nav>
-        <div class="nav-wrapper nav-perso">
+    <nav  class=" light-blue darken-4">
+        <div class="nav-wrapper">
             <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="boutique.jsp">Boutique</a></li>
@@ -82,7 +82,7 @@
             <div class="card-content">
                 <div class="row">
                     <div class="col s4 m4 l4">
-                        <span>pseudo : </span>
+                        <span style="font-weight: 700">Pseudo : </span>
                     </div>
                     <div class="col s4 m4 l4">
                         <%=pseudo%>
@@ -90,46 +90,46 @@
                 </div>
                 <div class="row">
                     <div class="col s4 m4 l4">
-                        <span>email : </span>
+                        <span style="font-weight: 700">Email : </span>
                     </div>
                     <div class="col s4 m4 l4 mail">
                         <%=email%>
                     </div>
                     <div class="s4 m4 l4">
-                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeEmail()">changer</a>
+                        <a class="btn green darken-2 waves-effect white-text" onclick="changeEmail()">changer l'email</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s4 m4 l4">
-                        <span>icone : </span>
+                        <span style="font-weight: 700">Icone : </span>
                     </div>
                     <div class="col s4 m4 l4">
                         <img class="iconeJoueur" id="icone-joueur-compte" src=<%=srcImageIcone%>>
                     </div>
                     <div class="s4 m4 l4">
-                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeIcone()">changer</a>
+                        <a class="btn purple darken-2 waves-effect white-text" onclick="changeIcone()">changer l'icone</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s4 m4 l4">
-                        <span>skin de carte : </span>
+                        <span style="font-weight: 700">Skin de carte : </span>
                     </div>
                     <div class="col s4 m4 l4">
                         <img class="iconeJoueur" id="icone-carte-compte" src=<%=srcImageSkinCarton%>>
                     </div>
                     <div class="s4 m4 l4">
-                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeSkinCarte()">changer</a>
+                        <a class="btn blue darken-2 waves-effect white-text" onclick="changeSkinCarte()">changer le skin carte</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s4 m4 l4">
-                        <span>skin map : </span>
+                        <span style="font-weight: 700">Skin map : </span>
                     </div>
                     <div class="col s4 m4 l4">
                         <img class="iconeJoueur" id="icone-map-compte" src=<%=srcImageSkinMap%>>
                     </div>
                     <div class="s4 m4 l4">
-                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeSkinMap()">changer</a>
+                        <a class="btn red darken-2 waves-effect white-text" onclick="changeSkinMap()">changer le skin map</a>
                     </div>
                 </div>
                 <div class="row">

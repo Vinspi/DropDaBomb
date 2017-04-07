@@ -27,8 +27,8 @@
 
 %>
 
-<nav>
-    <div class="nav-wrapper nav-perso">
+<nav class=" light-blue darken-4">
+    <div class="nav-wrapper">
         <a href="#" class="brand-logo">DropDaBomb</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="boutique.jsp">Boutique</a></li>
@@ -160,8 +160,7 @@
     </div>
 </div>
 
-<h3>Panneau d'administration des packs</h3>
-    <div class="container pack">
+    <div class="container pack center-align">
         <div class="row">
 
             <ul id="slide-out" class="side-nav">
@@ -171,6 +170,7 @@
 
 
             <div class="col s12 m12 l12">
+                <h3 style="color:blue; font-weight: 800">Panneau d'administration des packs</h3>
                 <div class="card">
                     <div class="card-content">
 

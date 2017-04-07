@@ -23,8 +23,8 @@
 
 %>
 
-<nav>
-    <div class="nav-wrapper nav-perso">
+<nav  class=" light-blue darken-4">
+    <div class="nav-wrapper">
         <a href="#" class="brand-logo">DropDaBomb</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="boutique.jsp">Boutique</a></li>

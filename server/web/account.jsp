@@ -15,8 +15,8 @@
 </head>
 <body class="grey lighten-3">
 
-<nav>
-    <div class="nav-wrapper nav-perso">
+<nav class=" light-blue darken-4">
+    <div class="nav-wrapper">
         <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="account.jsp">Inscription</a></li>

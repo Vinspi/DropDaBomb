@@ -20,8 +20,8 @@
     <title>DropDaBomb</title>
 </head>
 <body class="grey lighten-3">
-    <nav>
-        <div class="nav-wrapper nav-perso">
+    <nav class=" light-blue darken-4">
+        <div class="nav-wrapper">
             <a href="#" class="brand-logo"><img src="../img/ICONES/LOGO_DDB.png" class="iconeJoueur"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
 
@@ -62,46 +62,17 @@
         </div>
     </nav>
     <div class="container">
-        <div class="row">
-            <div class="col s3 m3 l3">
-                <div class="card brown">
-                    <div class="card-content">
-                        COUCOU
-                    </div>
-                </div>
-            </div>
-            <div class="col s9 m9 l9">
-                <div class="card blue">
-                    <div class="card-content">
-                        COUCOU
-                    </div>
-                </div>
-            </div>
+        <div class="row center-align">
+
+            <h1 style="color:white; font-weight: 600"> Bienvenue sur le site officiel du jeu </h1>
+            <h1 style="color:black; font-weight: 800">DROP DA BOMB</h1>
+
+            <img src="./img/bomb4.png" class="responsive-img">
+
         </div>
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="card orange">
-                    <div class="card-content">
-                        COUCOU
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
-    <div class="row chat">
-        <div class="col s3 m3 l3 offset-s9 offset-m9 offset-l9">
-            <div class="card">
-                <div class="card-title center-align">
-                    Chat
-                </div>
-                <div class="card-content">
-                    <ul id="message-zone">
-                    </ul>
-                    <input id="message" type="text" class="validate"><a class="btn" onclick="sendMessage()" >send</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js" ></script>
     <script src="../js/clientChat.js"></script>
