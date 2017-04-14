@@ -293,6 +293,23 @@ public class AccountManager {
         }
 
         String query = "UPDATE CompteJoueur SET mailCompte ='"+newEmail+"' WHERE Pseudo LIKE '"+pseudo+"';";
+        String queryVerif = "SELECT mailCompte FROM CompteJoueur WHERE (mailCompte LIKE \""+newEmail+"\");";
+        ResultSet verif = Manager.getManager().sendRequestQuery(queryVerif,connection);
+        try {
+            if(verif.next()){   //Si il existe déjà un compte associé à l'email choisi :
+                if(connection != null){
+                    try {
+                        connection.close();
+                    }catch (SQLException e){
+                        //Do nothing.
+                    }
+                }
+                return RequestStatus.UPDATE_EMAIL_FAILED;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
         if(Manager.getManager().sendRequestUpdate(query,connection)){
             if(connection != null){

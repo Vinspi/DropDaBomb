@@ -33,8 +33,9 @@
                     System.out.println("icone = "+icone);
                     Boolean estAdmin = (Boolean) (session.getAttribute("estAdmin"));
                     if(session.getAttribute("pseudo") == null) {
-                                out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
                                 out.print("<li><a href=\"account.jsp\">Inscription</a></li>");
+                                out.print("<li><a href=\"log.jsp\">Connexion</a></li>");
+
                     }
                     else if(estAdmin != null) {
                         if(estAdmin){
@@ -44,6 +45,7 @@
                                     "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
                                     "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
                                     "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+                                    "<li><a href=\"dc\">Déconnexion</a></li>"+
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
                         else {
@@ -51,6 +53,7 @@
                                     "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
                                     "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
                                     "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
+                                    "<li><a href=\"dc\">Déconnexion</a></li>"+
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
 

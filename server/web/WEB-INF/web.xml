@@ -86,4 +86,13 @@
         <servlet-name>Admin</servlet-name>
         <url-pattern>/Admin</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Deconnexion</servlet-name>
+        <servlet-class>AccountServlets.DisconnectionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Deconnexion</servlet-name>
+        <url-pattern>/dc</url-pattern>
+    </servlet-mapping>
 </web-app>

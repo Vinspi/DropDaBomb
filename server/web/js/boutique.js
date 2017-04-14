@@ -183,6 +183,9 @@ function acheterOffreIG(id_offre) {
                 if(data.id == 5) {  //5 == Achat réussi.
                     Materialize.toast('Offre ' + id_offre + ' acheté !', 4000);
 
+                    $('#modal-loot').modal('open');
+
+
                     $( "#pseudo" ).load(" #pseudo");
                 }
                 else Materialize.toast('Erreur : veuillez ré-essayer (vous n\'avez pas été débité', 4000);

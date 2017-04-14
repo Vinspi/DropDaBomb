@@ -197,7 +197,7 @@ function setCurrentLootPack(value){
 
         success: function (data) {
 
-            var result = JSON.parse(data.responseText);
+            var result = data;
             document.getElementById("currentLootPack").innerHTML = "";
             document.getElementById("gestion-LootPack").innerHTML = "";
             var p = document.createElement('div');
@@ -239,10 +239,10 @@ function setCurrentPack(value) {
         url : 'Admin',
         type : 'POST',
         data : 'idRequest=2&id_pack='+value,
-
+        dataType: 'json',
         success: function (data) {
 
-            var result = JSON.parse(data.responseText);
+            var result = data;
             document.getElementById("currentPack").innerHTML = "";
             document.getElementById("gestion-Pack").innerHTML = "";
 
