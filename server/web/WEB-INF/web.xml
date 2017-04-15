@@ -84,7 +84,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Admin</servlet-name>
-        <url-pattern>/Admin</url-pattern>
+        <url-pattern>/AdminManager</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -95,4 +95,45 @@
         <servlet-name>Deconnexion</servlet-name>
         <url-pattern>/dc</url-pattern>
     </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>AccessAccountManager</servlet-name>
+        <servlet-class>AccessServlets.AccessAccountManager</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccessAccountManager</servlet-name>
+        <url-pattern>/MonCompte</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AccessAdmin</servlet-name>
+        <servlet-class>AccessServlets.AccessAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccessAdmin</servlet-name>
+        <url-pattern>/Admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AccessBoutique</servlet-name>
+        <servlet-class>AccessServlets.AccessBoutique</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccessBoutique</servlet-name>
+        <url-pattern>/Boutique</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AccessInventory</servlet-name>
+        <servlet-class>AccessServlets.AccessInventory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccessInventory</servlet-name>
+        <url-pattern>/Inventaire</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>

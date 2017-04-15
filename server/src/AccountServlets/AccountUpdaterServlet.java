@@ -19,6 +19,11 @@ public class AccountUpdaterServlet extends HttpServlet{
     //Servlet de controle des actions des modifications sur le compte :
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //nothing
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         PrintWriter printWriter = resp.getWriter();
@@ -70,6 +75,31 @@ public class AccountUpdaterServlet extends HttpServlet{
                 printWriter.print(accountManager.acheterMonnaieIRL(pseudo,update));
                 break;
 
+            //Demande de suppression du compte:
+            case RequestStatus.SUPP_ACCOUNT :
+
+                System.out.println("Blop");
+
+                String verif = (String) req.getParameter("verif");
+                String pwd = (String) session.getAttribute("password");
+                int id;
+                if (verif.equals(pwd)){
+
+                    //Mot de passe correct, suppression du compte :
+                    accountManager.supprimerCompte(pseudo);
+
+                    //Suppression des variables de session :
+                    session.invalidate();
+
+                    id = 0;
+                    printWriter.print(id);
+                    System.out.println("Normal");
+                }
+                else {
+                    System.out.println("Pas normal");
+                    id = 1;
+                    printWriter.print(id);
+                }
         }
 
     }

@@ -67,9 +67,6 @@ function validationChangeMdp() {
     var mdp1 = $('#new-mdp').val();
     var mdp2 = $('#new-mdp-confirm').val();
 
-    console.log("actual-mdp = "+$('#actual-mdp').val());
-
-    console.log(mdp1+' : '+mdp2);
 
     if(mdp1 == mdp2 && mdp1.length >= 6) {
         $('#erreurMdp').hide();
@@ -83,7 +80,6 @@ function validationChangeMdp() {
 
             succes: function (code_html, status) {
                 console.log("succes " + status);
-                alert("coucou");
             },
 
             error: function (code_html, status) {
@@ -111,7 +107,6 @@ function confirmationChangeIcone(id,nouvelleIcone) {
 
     var splitted = nouvelleIcone.split('/');
 
-    console.log(splitted[splitted.length-1]);
 
     $.ajax({
 
@@ -125,7 +120,6 @@ function confirmationChangeIcone(id,nouvelleIcone) {
 
         succes: function (code_html, status) {
             console.log("succes " + status);
-            alert("coucou");
         },
 
         error: function (code_html, status) {
@@ -164,7 +158,6 @@ function confirmationChangeSkinCarte(id,nouvelleIcone) {
 
         succes: function (code_html, status) {
             console.log("succes " + status);
-            alert("coucou");
         },
 
         error: function (code_html, status) {
@@ -218,5 +211,47 @@ function confirmationChangeSkinMap(id,nouvelleIcone) {
     $('#icone-map-compte').attr('src',nouvelleIcone);
 
     $('#modalSkinMap').modal('close');
+
+}
+
+
+function SupprAccount() {
+    $('#modalSuppr').modal('open');
+}
+
+function validationSuppr(){
+
+    var mdp = $('#verif-mdp').val();
+
+    $.ajax({
+
+            url: '/AccountUpdater',
+
+            type: 'POST',
+
+            data: 'typeRequest=42&verif=' + mdp,
+
+
+            complete: function (data) {
+
+                
+                var result = data.responseText;
+
+
+                if(result == 1){
+                    Materialize.toast('Erreur : le mot de passe n\'est pas correcte', 4000);
+                }
+                else {
+                    window.location.href = "/dc";
+                }
+
+
+            },
+
+            error: function (code_html, status) {
+                console.log("request failed " + status);
+            }
+
+    });
 
 }

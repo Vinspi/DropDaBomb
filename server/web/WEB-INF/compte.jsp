@@ -8,11 +8,11 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../materialize/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/style.css" media="screen,projection"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="../materialize/js/materialize.js"></script>
 
     <title>DropDaBomb</title>
 </head>

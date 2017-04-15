@@ -5,11 +5,11 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="css/admin.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/admin.css" media="screen,projection"/>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/admin.js"></script>
+    <script type="text/javascript" src="../js/admin.js"></script>
 
 
 
@@ -43,18 +43,19 @@
                     if(estAdmin){
 
                         out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
-                                "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
-                                "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                                "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
-                                "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+                                "<li><a href=\"Inventaire\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
+                                "<li><a href=\"MonCompte\">Mon compte</a></li>" +
+                                "<li><a href=\"Boutique\">Boutique</a></li>" +
+                                "<li><a href=\"Admin\" id=\"admin\">Admin</a></li>" +
                                 "<li><a href=\"dc\">Déconnexion</a></li>"+
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
                     else {
                         out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
-                                "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
-                                "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                                "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
+                                "<li><a href=\"Inventaire\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
+                                "<li><a href=\"MonCompte\">Mon compte</a></li>" +
+                                "<li><a href=\"Boutique\">Boutique</a></li>" +
+                                "<li><a href=\"dc\">Déconnexion</a></li>"+
                                 "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                     }
 
@@ -252,7 +253,7 @@
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/admin.js"></script>
+    <script type="text/javascript" src="../js/admin.js"></script>
 </body>
 </html>
 

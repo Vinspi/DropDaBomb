@@ -596,5 +596,22 @@ public class AccountManager {
         return money;
     }
 
+    public void supprimerCompte(String pseudo){
+
+        String querySupprPrc = "DELETE FROM CompteJoueur WHERE Pseudo LIKE '"+pseudo+"';";
+        String querySupprAnx = "DELETE FROM Deck WHERE (id_Deck LIKE '"+pseudo+"0' OR id_Deck LIKE '"+pseudo+"1' OR id_Deck LIKE '"+pseudo+"2');";
+
+        Manager.getManager().sendRequestUpdate(querySupprPrc,connection);
+        Manager.getManager().sendRequestUpdate(querySupprAnx,connection);
+        if(connection != null){
+            try {
+                connection.close();
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
 }

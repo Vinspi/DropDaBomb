@@ -42,6 +42,7 @@ public class RequestStatus {
     public static final int ERR_MDP = 28;
     public static final int MIN_SIZE_PASSWORD = 6;
     public static final int ERR_MDP_NOT_MATCH = 29;
+    public static final int SUPP_ACCOUNT = 42;
     public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 

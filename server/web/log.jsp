@@ -36,7 +36,7 @@
                         </div>
                         <div class="row content-connexion">
                             <div class="col s8 m8 l8 offset-l2 offset-m2 offset-s2">
-                                <% System.out.println(request.getParameter("AUTH_STATUS"));
+                                <%
                                     if(session.getAttribute("STATUS") != null){
                                         out.print("<h8 class='red-text'>Mauvais identifiants</h8>");
                                     }

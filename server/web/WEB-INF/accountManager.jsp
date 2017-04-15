@@ -14,10 +14,11 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="css/accountManager.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/accountManager.css" media="screen,projection"/>
 
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="../js/accountManager.js"></script>
     <title>DropDaBomb</title>
 </head>
 <body>
@@ -27,7 +28,6 @@
     String pseudo = (String) session.getAttribute("pseudo");
     String email = (String) session.getAttribute("mailJoueur");
     String icone = (String) session.getAttribute("iconeJoueur");
-    System.out.println("attribut iconeJoueur : "+icone);
     String skinCarton = (String) session.getAttribute("skinCartonJoueur");
     String skinMap = (String) session.getAttribute("skinMapJoueur");
     String srcImageIcone = "\"../img/ICONES/"+icone+"\"";
@@ -53,18 +53,18 @@
                         if(estAdmin){
 
                             out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
-                                    "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
-                                    "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                                    "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
-                                    "<li><a href=\"admin.jsp\" id=\"admin\">Admin</a></li>" +
+                                    "<li><a href=\"Inventaire\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
+                                    "<li><a href=\"MonCompte\">Mon compte</a></li>" +
+                                    "<li><a href=\"Boutique\">Boutique</a></li>" +
+                                    "<li><a href=\"Admin\" id=\"admin\">Admin</a></li>" +
                                     "<li><a href=\"dc\">Déconnexion</a></li>"+
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
                         else {
                             out.print("<li><a href=\"game.jsp\">Jouer</a></li>" +
-                                    "<li><a href=\"compte.jsp\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
-                                    "<li><a href=\"accountManager.jsp\">Mon compte</a></li>" +
-                                    "<li><a href=\"boutique.jsp\">Boutique</a></li>" +
+                                    "<li><a href=\"Inventaire\" id=\"pseudo\">" + pseudo + " "+session.getAttribute("monnaieIG")+"$</a></li>" +
+                                    "<li><a href=\"MonCompte\">Mon compte</a></li>" +
+                                    "<li><a href=\"Boutique\">Boutique</a></li>" +
                                     "<li><a href=\"dc\">Déconnexion</a></li>"+
                                     "<li><img onClick=\"hideOrShowChat()\" src=\"../img/ICONES/"+icone+"\" alt=\"\" class=\"circle iconeJoueur\"></li>");
                         }
@@ -136,7 +136,12 @@
                 </div>
                 <div class="row">
                     <div class="col s4 m4 l4 offset-s4 offset-m4 offset-l4">
-                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeMdp()">changer mon mot de passe</a>
+                        <a class="btn amber darken-2 waves-effect white-text" onclick="changeMdp()">changer de mot de passe</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4 m4 l4 offset-s4 offset-m4 offset-l4">
+                        <a class="btn amber darken-2 waves-effect white-text" onclick="SupprAccount()">Suppression du compte</a>
                     </div>
                 </div>
 
@@ -307,6 +312,33 @@
         </div>
     </div>
 
-    <script src="../js/accountManager.js"></script>
+<div id="modalSuppr" class="modal">
+    <div class="modal-content ">
+        <div class="center-align ">
+            <div class="white-text luna titre-modif-email">Suppression de votre compte</div>
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+                <h5>Êtes-vous sûr de vouloir supprimer votre compte ? Aucune récupération ne sera possible.</h5>
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    Mot de passe :
+                </div>
+                <div class="col s6 m6 l6">
+                    <input id="verif-mdp" type="password" class="validate">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action waves-effect waves-green btn-flat" onclick="validationSuppr()">Agree</a>
+    </div>
+</div>
+
 </body>
 </html>

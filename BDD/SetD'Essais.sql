@@ -9,12 +9,8 @@ INSERT INTO IconeJoueur (id_IconeJoueur,imageIcone) VALUES (0,'icone0.png');
 INSERT INTO IconeJoueur (id_IconeJoueur,imageIcone) VALUES (1,'superIcone.png');
 
 
-INSERT INTO ModeDeJeu (id_ModeDeJeu,nomModeDeJeu,descriptionModeDeJeu) VALUES (0,'Classique','C''est un mode de jeu trop bien, essayez-le (et payez)');
+INSERT INTO ModeDeJeu (id_ModeDeJeu,nomModeDeJeu,descriptionModeDeJeu) VALUES (0,'Classique','C''est un mode de jeu vraiment bien, essayez-le (et payez)');
 
-#INSERT INTO Matchs (id_ModeDeJeu,finMatch,Pseudo1,Pseudo2) VALUES (0,NULL,'mouloud','morice');
-#INSERT INTO Matchs (id_ModeDeJeu,finMatch,Pseudo1,Pseudo2) VALUES (0,NULL,'mouloud','morice');
-#INSERT INTO Matchs (id_ModeDeJeu,finMatch,Pseudo1,Pseudo2) VALUES (0,NULL,'moktar','morice');
-#INSERT INTO Matchs (id_ModeDeJeu,finMatch,Pseudo1,Pseudo2) VALUES (0,NULL,'morray','moktar');
 
 INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descriptionCarte`, `imageCarte`,`coutCarte`, `estAmeliorable`) VALUES (0,'BOMB 25','normal','Degat','inflige 25 pts de degats à votre adversaire','BOMB_25.png',3,0);
 
@@ -46,12 +42,6 @@ INSERT INTO `Carte`(`id_Carte`, `nomCarte`, `rareteCarte`, `typeCarte`, `descrip
 
 
 
--- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (10,'Dick Out For Harambe','Sort','Harambe est toujours dans nos coeurs. +25 mana',0);
--- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (11,'YasuoPogChamp','Combattant','2items100%ccNarmol',5);
--- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (12,'WhereIsMyTeam?','Sort','Vous n\'avez pas de team ? Pas de problème, on vous fournit ça',20);
--- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (13,'JféDéRouAriairDanLeQDeTaMer','Sort','VroumVroum',5);
--- INSERT INTO Carte (id_Carte,nomCarte,typeCarte,descriptionCarte,coutCarte) VALUES (14,'Victoire Dou Blazil','Sort','Vous invoquez Leonardo l\'interdit, qui invoque le carnaval Dou Blazil.',100);
-
 
 
 
@@ -59,8 +49,8 @@ INSERT INTO Pack (id_Pack,nomPack,descriptionPack) VALUES (1,'Pack 0','Le premie
 INSERT INTO Pack (id_Pack,nomPack,descriptionPack) VALUES (2,'Pack 1','Le deuxième pack');
 INSERT INTO Pack (id_Pack,nomPack,descriptionPack) VALUES (3,'Pack 2','Le troisième pack');
 
-INSERT INTO Boost (id_Boost,typeBoost,descriptionBoost) VALUES (0,'Boost0','Boost0',);
-INSERT INTO Boost (id_Boost,typeBoost,descriptionBoost) VALUES (1,'Boost1','Boost1',);
+INSERT INTO Boost (id_Boost,typeBoost,nomBoost,imageMiniatureBoost,descriptionBoost) VALUES (0,'XP 10 Heures','Boost 0','boost0.png','Double votre génération d\'expérience pendant 10 heures !');
+INSERT INTO Boost (id_Boost,typeBoost,nomBoost,imageMiniatureBoost,descriptionBoost) VALUES (1,'XP 10 Matchs','Boost 1','boost1.png','Double votre génération d\'expérience pendant 10 matchs !');
 
 
 
@@ -68,11 +58,11 @@ INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,misEn
 INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,misEnVente,imageOffre) VALUES (1,2,3,2,'Pack',0,'pack2.png');
 INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,id_Pack,typeOffre,misEnVente,imageOffre) VALUES (2,3,4,3,'Pack',0,'pack3.png');
 
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (3,10,1,'Boost','boost1.png');
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (4,11,2,'Boost','boost2.png');
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (5,12,3,'Map','map1.png');
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (6,13,4,'Carton','carton1.png');
-INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (7,1,1,'Icone','superIcone.png');
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (3,10,1,'Boost',1,'boost1.png');
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (4,11,2,'Boost',1,'boost2.png');
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (5,12,3,'Map',1,'map1.png');
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (6,13,4,'Carton',1,'carton1.png');
+INSERT INTO Offre (id_Offre,prixMonnaieIG,prixMonnaieIRL,typeOffre,misEnVente,imageOffre) VALUES (7,1,1,'Icone',1,'superIcone.png');
 
 INSERT INTO OffreBoost (id_Offre,id_Boost) VALUES (3,0);
 INSERT INTO OffreBoost (id_Offre,id_Boost) VALUES (4,1);
@@ -80,9 +70,6 @@ INSERT INTO OffreMap (id_Offre,id_SkinMap) VALUES (5,1);
 INSERT INTO OffreCartonCarte (id_Offre,id_SkinCartonCarte) VALUES (6,1);
 INSERT INTO OffreIcone (id_Offre,id_IconeJoueur) VALUES (7,1);
 
-
-INSERT INTO LootPackPack (id_LootPack,id_Pack,qteCartePack) VALUES (1,1,9);
-INSERT INTO LootPackPack (id_LootPack,id_Pack,qteCartePack) VALUES (2,1,1);
 
 INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,5,'Ensemble0');
 INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (0,6,'Ensemble0');
@@ -98,7 +85,14 @@ INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,1,'Ensemble3');
 INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,10,'Ensemble3');
 INSERT INTO Ensemble(id_Ensemble,id_Carte,nomEnsemble) VALUES (3,11,'Ensemble3');
 
+
 INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (1,0,40,'LootPack0');
 INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (1,1,60,'LootPack0');
 INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (2,2,10,'LootPack1');
 INSERT INTO LootPack (id_LootPack, id_Ensemble,dropRatePack,nomLootPack) VALUES (2,3,90,'LootPack1');
+
+
+
+
+INSERT INTO LootPackPack (id_LootPack,id_Pack,qteCartePack) VALUES (1,1,9);
+INSERT INTO LootPackPack (id_LootPack,id_Pack,qteCartePack) VALUES (2,1,1);

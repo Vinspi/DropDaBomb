@@ -7,7 +7,7 @@
 $(document).ready(function() {
     $(".button-collapse").sideNav();
     $.ajax({
-        url: "Admin",
+        url: "AdminManager",
         type: "POST",
         data: "idRequest=-1",
         success: function(data){
@@ -29,7 +29,7 @@ $(document).ready(function() {
             var nomEns = $('#nomEns').val();
 
             $.ajax({
-                url: "Admin",
+                url: "AdminManager",
                 type: 'POST',
                 data: 'idRequest=3&nomEnsemble=' + nomEns,
                 dataType: 'json',
@@ -63,7 +63,7 @@ $(document).ready(function() {
             var nomLootPack = $('#nomLootPack').val();
 
             $.ajax({
-                url: "Admin",
+                url: "AdminManager",
                 type: 'POST',
                 data: 'idRequest=4&nomLootPack='+nomLootPack,
                 dataType: 'json',
@@ -106,7 +106,7 @@ $(document).ready(function() {
             var prixIRL = $("#prixIRL").val();
 
             $.ajax({
-                url: "Admin",
+                url: "AdminManager",
                 type: 'POST',
                 data: {"idRequest": 5, "nomPack": nomPack, "description" : description, "image": image, "prixIG": prixIG, "prixIRL": prixIRL},
                 dataType: 'json',
@@ -153,7 +153,7 @@ function setCurrentEnsemble(value){
 
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=0&id_ensemble='+value,
         dataType: 'json',
@@ -190,7 +190,7 @@ function setCurrentEnsemble(value){
 function setCurrentLootPack(value){
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=1&id_lootpack='+value,
         dataType: 'json',
@@ -236,7 +236,7 @@ function setCurrentLootPack(value){
 function setCurrentPack(value) {
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=2&id_pack='+value,
         dataType: 'json',
@@ -288,7 +288,7 @@ function setCurrentPack(value) {
 function getListEnsembles(){
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=42',
 
@@ -316,7 +316,7 @@ function getListEnsembles(){
 function getListLootPacks(){
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
 
         type : 'POST',
         data : 'idRequest=43',
@@ -347,7 +347,7 @@ function getListLootPacks(){
 function getListPacks(){
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
 
         type : 'POST',
         data : 'idRequest=44',
@@ -388,7 +388,7 @@ function addGetCarte(){
 
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=10',
 
@@ -416,7 +416,7 @@ function addGetCarte(){
 function addCarteToCurrentEnsemble(id_carte) {
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : {"idRequest": 11,"id_carte": id_carte},
         dataType : 'json',
@@ -455,7 +455,7 @@ function removeCarte(id_carte){
 
         $.ajax({
 
-            url: 'Admin',
+            url: 'AdminManager',
             type: 'POST',
             data: {"idRequest": 12, "id_carte": id_carte},
             dataType: 'json',
@@ -497,7 +497,7 @@ function removeCarte(id_carte){
 function addGetEnsemble(){
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=13',
 
@@ -530,14 +530,14 @@ function addEnsembleToCurrentLootPack(value){
 
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : {"idRequest": 14,"id_Ensemble": value, "dropRate": drop},
         dataType : 'json',
 
         success: function (data) {
 
-            var result = JSON.parse(data.responseText);
+            var result = data;
             document.getElementById("currentLootPack").innerHTML = "";
             document.getElementById("gestion-LootPack").innerHTML = "";
             var p = document.createElement('div');
@@ -581,7 +581,7 @@ function removeEnsemble(id_ensemble){
 
         $.ajax({
 
-            url: 'Admin',
+            url: 'AdminManager',
             type: 'POST',
 
             data: {"idRequest": 15, "id_Ensemble": id_ensemble},
@@ -590,7 +590,7 @@ function removeEnsemble(id_ensemble){
 
             success: function (data) {
 
-                var result = JSON.parse(data.responseText);
+                var result = data;
                 document.getElementById("currentLootPack").innerHTML = "";
                 document.getElementById("gestion-LootPack").innerHTML = "";
                 var p = document.createElement('div');
@@ -637,14 +637,14 @@ function modifyDropRate(id_ensemble) {
 
         $.ajax({
 
-            url: 'Admin',
+            url: 'AdminManager',
             type: 'POST',
             data: {"idRequest": 16, "id_Ensemble": id_ensemble, "dropRate": drop},
             dataType: 'json',
 
             success: function (data) {
 
-                var result = JSON.parse(data.responseText);
+                var result = data;
                 document.getElementById("currentLootPack").innerHTML = "";
                 document.getElementById("gestion-LootPack").innerHTML = "";
                 var p = document.createElement('div');
@@ -683,7 +683,7 @@ function modifyDropRate(id_ensemble) {
 function addGetLootPack(){
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : 'idRequest=17',
 
@@ -716,14 +716,14 @@ function addLootPackToCurrentPack(value){
 
     $.ajax({
 
-        url : 'Admin',
+        url : 'AdminManager',
         type : 'POST',
         data : {"idRequest": 18,"id_LootPack": value, "qte": qte},
         dataType : 'json',
 
         success: function (data) {
 
-            var result = JSON.parse(data.responseText);
+            var result = data;
             document.getElementById("currentPack").innerHTML = "";
             document.getElementById("gestion-Pack").innerHTML = "";
             var p = document.createElement('div');
@@ -767,14 +767,14 @@ function removeLootPack(value){
 
         $.ajax({
 
-            url: 'Admin',
+            url: 'AdminManager',
             type: 'POST',
             data: {"idRequest": 19, "id_LootPack": value},
             dataType: 'json',
 
             success: function (data) {
 
-                var result = JSON.parse(data.responseText);
+                var result = data;
                 document.getElementById("currentPack").innerHTML = "";
                 document.getElementById("gestion-Pack").innerHTML = "";
                 var p = document.createElement('div');
@@ -819,14 +819,14 @@ function modifyQte(value){
 
         $.ajax({
 
-            url: 'Admin',
+            url: 'AdminManager',
             type: 'POST',
             data: {"idRequest": 20, "id_LootPack": value, "qte": qte},
             dataType: 'json',
 
             success: function (data) {
 
-                var result = JSON.parse(data.responseText);
+                var result = data;
                 document.getElementById("currentPack").innerHTML = "";
                 document.getElementById("gestion-Pack").innerHTML = "";
                 var p = document.createElement('div');
@@ -868,7 +868,7 @@ function modifyQte(value){
 function switchMiseEnVente(){
     $.ajax({
 
-        url: 'Admin',
+        url: 'AdminManager',
         type: 'POST',
         data: {"idRequest": 21},
         dataType: 'json',

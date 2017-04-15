@@ -13,7 +13,7 @@ CREATE TABLE CompteJoueur(
   mdpCompte                       Varchar (25) ,
   niveauJoueur                    Int DEFAULT 1,
   expJoueur                       Int DEFAULT 0,
-  monnaieIG                       Int DEFAULT 0,
+  monnaieIG                       Int DEFAULT 500,
   monnaieIRL                      Int DEFAULT 0,
   nomGuilde                       Varchar (25) DEFAULT NULL,
   id_SkinMap                      Int NOT NULL DEFAULT 0,
@@ -55,20 +55,6 @@ CREATE TABLE ModeDeJeu(
 )ENGINE=InnoDB;
 
 
-#___________________________________
-# Table: Map
-#___________________________________
-
-CREATE TABLE SkinMap(
-  id_SkinMap Int NOT NULL ,
-  nomMap     VARCHAR (50) ,
-  imageFond  Varchar (100) ,
-  imageTable Varchar (100) ,
-  imageMiniatureMap VARCHAR (100) ,
-  descriptionMap VARCHAR (200) ,
-  PRIMARY KEY (id_SkinMap)
-)ENGINE=InnoDB;
-
 
 #___________________________________
 # Table: Guilde
@@ -106,6 +92,36 @@ CREATE TABLE Deck(
   estDeckActif TINYINT NOT NULL,
   PRIMARY KEY (id_Deck )
 )ENGINE=InnoDB;
+
+#___________________________________
+# Table: JoueurCarteDeck
+#___________________________________
+
+CREATE TABLE JoueurCarteDeck(
+  qteCarteDeck Int DEFAULT 0,
+  id_Deck  Varchar (21) NOT NULL ,
+  Pseudo   Varchar (20) NOT NULL ,
+  id_Carte Int NOT NULL ,
+  PRIMARY KEY (id_deck ,Pseudo ,id_Carte )
+)ENGINE=InnoDB;
+
+
+
+
+#___________________________________
+# Table: Map
+#___________________________________
+
+CREATE TABLE SkinMap(
+  id_SkinMap Int NOT NULL ,
+  nomMap     VARCHAR (50) ,
+  imageFond  Varchar (100) ,
+  imageTable Varchar (100) ,
+  imageMiniatureMap VARCHAR (100) ,
+  descriptionMap VARCHAR (200) ,
+  PRIMARY KEY (id_SkinMap)
+)ENGINE=InnoDB;
+
 
 
 #___________________________________
@@ -175,18 +191,6 @@ CREATE TABLE Amis(
 
 
 
-#___________________________________
-# Table: JoueurCarteDeck
-#___________________________________
-
-CREATE TABLE JoueurCarteDeck(
-  qteCarteDeck Int DEFAULT 0,
-  id_Deck  Varchar (21) NOT NULL ,
-  Pseudo   Varchar (20) NOT NULL ,
-  id_Carte Int NOT NULL ,
-  PRIMARY KEY (id_deck ,Pseudo ,id_Carte )
-)ENGINE=InnoDB;
-
 
 #___________________________________
 # Table: Historique
@@ -200,17 +204,7 @@ CREATE TABLE Historique(
 )ENGINE=InnoDB;
 
 
-#___________________________________
-# Table: activer
-#___________________________________
 
-CREATE TABLE activer(
-  HeuresFin  TIME ,
-  nbMatchFin int ,
-  id_Boost Int NOT NULL ,
-  Pseudo   Varchar (20) NOT NULL ,
-  PRIMARY KEY (id_Boost ,Pseudo )
-)ENGINE=InnoDB;
 
 
 #____________________________________________________________
@@ -369,9 +363,21 @@ CREATE TABLE posséderIconeJoueur(
   PRIMARY KEY (Pseudo,id_IconeJoueur)
 )ENGINE=InnoDB;
 
+#___________________________________
+# Table: activer
+#___________________________________
+
+CREATE TABLE activer(
+  HeuresFin  TIME ,
+  nbMatchFin int ,
+  id_Boost Int NOT NULL ,
+  Pseudo   Varchar (20) NOT NULL ,
+  PRIMARY KEY (id_Boost ,Pseudo )
+)ENGINE=InnoDB;
+
 
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_nom_guilde FOREIGN KEY (nomGuilde) REFERENCES Guilde(nomGuilde) ON DELETE SET NULL;
-ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap) ON DELETE SET NULL;
+ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
 ALTER TABLE CompteJoueur ADD CONSTRAINT FK_CompteJoueur_id_Division FOREIGN KEY (id_Division) REFERENCES Division(id_Division);
@@ -382,7 +388,7 @@ ALTER TABLE Matchs ADD CONSTRAINT FK_Matchs_id_Pseudo2 FOREIGN KEY  (Pseudo2) RE
 
 
 ALTER TABLE Amis ADD CONSTRAINT FK_Amis_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
-ALTER TABLE Amis ADD CONSTRAINT FK_Amis_Pseudo_Amis FOREIGN KEY (Amis) REFERENCES CompteJoueur(Pseudo);
+ALTER TABLE Amis ADD CONSTRAINT FK_Amis_Pseudo_Amis FOREIGN KEY (Amis) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
 
 ALTER TABLE JoueurCarteDeck ADD CONSTRAINT FK_JoueurCarteDeck_id_deck FOREIGN KEY (id_Deck) REFERENCES Deck(id_Deck);
 ALTER TABLE JoueurCarteDeck ADD CONSTRAINT FK_JoueurCarteDeck_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
@@ -391,34 +397,34 @@ ALTER TABLE JoueurCarteDeck ADD CONSTRAINT FK_JoueurCarteDeck_id_Carte FOREIGN K
 ALTER TABLE Historique ADD CONSTRAINT FK_Historique_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
 ALTER TABLE Historique ADD CONSTRAINT FK_Historique_id_match FOREIGN KEY (id_Match) REFERENCES Matchs(id_Match);
 
-ALTER TABLE activer ADD CONSTRAINT FK_activer_id_Boost FOREIGN KEY (id_Boost) REFERENCES Boost(id_Boost);
+ALTER TABLE activer ADD CONSTRAINT FK_activer_id_Boost FOREIGN KEY (id_Boost) REFERENCES Boost(id_Boost) ON DELETE CASCADE;
 ALTER TABLE activer ADD CONSTRAINT FK_activer_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
 
-ALTER TABLE Offre ADD CONSTRAINT FK_Offres_id_pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack);
+ALTER TABLE Offre ADD CONSTRAINT FK_Offres_id_pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack) ON DELETE SET NULL;
 
 ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_id_achat FOREIGN KEY (id_AchatIRL) REFERENCES AchatMonnaieIRL(id_AchatIRL);
 ALTER TABLE HistoriqueAchat ADD CONSTRAINT FK_HistoriqueAchat_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
 
 ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
-ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur) ON DELETE SET NULL;
+ALTER TABLE posséderIconeJoueur ADD CONSTRAINT FK_posséderIconeJoueur_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur) ON DELETE CASCADE;
 
 ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE ;
-ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
+ALTER TABLE posséderSkinCartonCarte ADD CONSTRAINT FK_posséderSkinCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte) ON DELETE CASCADE;
 
 ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_Pseudo FOREIGN KEY (Pseudo) REFERENCES CompteJoueur(Pseudo) ON DELETE CASCADE;
-ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
+ALTER TABLE posséderSkinMap ADD CONSTRAINT FK_posséderSkinMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap) ON DELETE CASCADE;
 
 ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre) ON DELETE CASCADE ;
-ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap);
+ALTER TABLE OffreMap ADD CONSTRAINT FK_OffreMap_id_SkinMap FOREIGN KEY (id_SkinMap) REFERENCES SkinMap(id_SkinMap) ON DELETE CASCADE;
 
 ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre) ON DELETE CASCADE;
-ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte);
+ALTER TABLE OffreCartonCarte ADD CONSTRAINT FK_OffreCartonCarte_id_SkinCartonCarte FOREIGN KEY (id_SkinCartonCarte) REFERENCES SkinCartonCarte(id_SkinCartonCarte) ON DELETE CASCADE;
 
 ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre) ON DELETE CASCADE ;
-ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Boost FOREIGN KEY (id_Boost) REFERENCES Boost(id_Boost);
+ALTER TABLE OffreBoost ADD CONSTRAINT FK_OffreBoost_id_Boost FOREIGN KEY (id_Boost) REFERENCES Boost(id_Boost) ON DELETE CASCADE;
 
 ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_Offre FOREIGN KEY (id_Offre) REFERENCES Offre(id_Offre) ON DELETE CASCADE ;
-ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur);
+ALTER TABLE OffreIcone ADD CONSTRAINT FK_OffreIcone_id_IconeJoueur FOREIGN KEY (id_IconeJoueur) REFERENCES IconeJoueur(id_IconeJoueur) ON DELETE CASCADE;
 
 ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPack_id_Pack FOREIGN KEY (id_Pack) REFERENCES Pack(id_Pack) ON DELETE CASCADE;
 ALTER TABLE LootPackPack ADD CONSTRAINT FK_LootPackPack_id_LootPack FOREIGN KEY (id_LootPack) REFERENCES LootPack(id_LootPack) ON DELETE CASCADE;

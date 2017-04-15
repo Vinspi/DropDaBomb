@@ -42,7 +42,6 @@ public class AuthentificationAccountServlet extends HttpServlet {
         String pseudo = req.getParameter("pseudo");
         String password = req.getParameter("password");
 
-        System.out.println(pseudo+" "+password);
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
