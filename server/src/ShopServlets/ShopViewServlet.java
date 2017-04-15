@@ -33,7 +33,7 @@ public class ShopViewServlet extends HttpServlet {
         //Récupérer le pseudo pour n'afficher que les SKinMap/SkinCarton/Icones qu'il ne possède pas.
         String pseudo = (String) session.getAttribute("pseudo");
         int request = Integer.parseInt(req.getParameter("idRequest"));
-        System.out.println("doPost");
+
 
         switch(request){
             case 0: //Génère et renvoie la view du Shop

@@ -39,7 +39,6 @@ public class AccountManager {
 
         try {
             if (resultSet.next()) {
-                System.out.println(resultSet.getBoolean("estAdmin"));
                 if(resultSet.getBoolean("estAdmin")){
                     status = RequestStatus.AUTH_ADMIN;
                 }
@@ -480,7 +479,6 @@ public class AccountManager {
         ResultSet setIcons = Manager.getManager().sendRequestQuery(queryIcons,connection);
         try {
             while(setIcons.next()){
-                System.out.println(setIcons.getString("imageIcone"));
                 array.add(new Doublet(setIcons.getInt("id_IconeJoueur"),setIcons.getString("imageIcone")));
             }
         }catch (SQLException e){

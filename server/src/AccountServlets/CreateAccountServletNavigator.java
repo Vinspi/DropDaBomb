@@ -28,7 +28,6 @@ public class CreateAccountServletNavigator extends HttpServlet {
         }
         else {
             HttpSession session = req.getSession();
-            System.out.println("je suis le navigator");
 
             //Tentative de création du compte :
             Manager.AccountManager accountManager = new Manager.AccountManager();

@@ -51,7 +51,6 @@ public class AuthentificationAccountServlet extends HttpServlet {
 
         //Si l'authentification retourne que le compte existe :
         if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_SUCCES){
-            System.out.println("Status = joueur");
             session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
             session.setAttribute("mailJoueur",accountManager.getplayerEmail(pseudo));
             session.setAttribute("skinCartonJoueur",accountManager.getPlayerSkinCarton(pseudo));
@@ -68,7 +67,6 @@ public class AuthentificationAccountServlet extends HttpServlet {
 
         //Sinon si l'authentification retourne que le compte est admin :
         else if(accountManager.authentification(pseudo,password) == RequestStatus.AUTH_ADMIN){
-            System.out.println("Status = admin");
             session.setAttribute("iconeJoueur",accountManager.getPlayerIcon(pseudo));
             session.setAttribute("mailJoueur",accountManager.getplayerEmail(pseudo));
             session.setAttribute("skinCartonJoueur",accountManager.getPlayerSkinCarton(pseudo));
@@ -84,7 +82,6 @@ public class AuthentificationAccountServlet extends HttpServlet {
         //Sinon, rediriger vers une page d'erreur :
         else{
             session.setAttribute("STATUS",RequestStatus.AUTH_FAILED);
-            System.out.println(session.getAttribute("STATUS"));
             this.getServletContext().getRequestDispatcher("/log.jsp").forward(req,resp);
         }
 

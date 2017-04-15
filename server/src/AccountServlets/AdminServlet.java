@@ -41,7 +41,6 @@ public class AdminServlet extends HttpServlet {
         String pseudo = (String) session.getAttribute("pseudo");
 
         int request = Integer.parseInt(req.getParameter("idRequest"));
-        System.out.println("idRequest = "+request);
 
         int id, j, qte; String json_CNE; float drop;
 
@@ -55,24 +54,21 @@ public class AdminServlet extends HttpServlet {
             //Changement d'Ensemble/LootPack/Pack courant :
             case 0:
                 id = Integer.parseInt(req.getParameter("id_ensemble"));
-                System.out.println("là");
                 adv.chooseEnsemble(id);
                 String json_CE = new Gson().toJson(adv.getCurrentEnsemble());
-                System.out.println(json_CE);
                 out.print(json_CE);
                 break;
             case 1:
                 id = Integer.parseInt(req.getParameter("id_lootpack"));
                 adv.chooseLootPack(id);
                 String json_CLP = new Gson().toJson(adv.getCurrentLootPack());
-                System.out.println(json_CLP);
+
                 out.print(json_CLP);
                 break;
             case 2:
                 id = Integer.parseInt(req.getParameter("id_pack"));
                 adv.choosePack(id);
                 String json_CP = new Gson().toJson(adv.getCurrentPack());
-                System.out.println(json_CP);
                 out.print(json_CP);
                 break;
 
@@ -123,7 +119,6 @@ public class AdminServlet extends HttpServlet {
 
             //Ajout d'une carte à l'ensemble courant.
             case 11:
-                System.out.println(req.getParameter("id_carte"));
                 id = Integer.parseInt(req.getParameter("id_carte"));
                 adv.addCarteToEnsemble(id);
                 json_CNE = new Gson().toJson(adv.getCurrentEnsemble());

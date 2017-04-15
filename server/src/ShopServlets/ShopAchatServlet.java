@@ -42,8 +42,6 @@ public class ShopAchatServlet extends HttpServlet {
 
         String pseudo = (String) session.getAttribute("pseudo");
         String id_Offre = req.getParameter("id_Offre");
-        System.out.println("Achat de : "+id_Offre);
-        System.out.println(req.getRequestURL());
         int request = Integer.parseInt(req.getParameter("idRequest"));
 
 
@@ -54,16 +52,12 @@ public class ShopAchatServlet extends HttpServlet {
             case 1 :    //Achat de l'offre id_Offre avec monnaieIG
                 s = shopManager.doAchat(pseudo, id_Offre,"monnaieIG");
                 json = gson.toJson(s);
-                System.out.println(json);
-                System.out.println("Achat IG terminé");
                 session.setAttribute("monnaieIG",accountManager.getPlayerMoneyIG(pseudo));
                 out.print(json);
                 break;
             case 2 :    //Achat de l'offre id_Offre avec monnaieIRL
                 s = shopManager.doAchat(pseudo, id_Offre,"monnaieIRL");
                 json = gson.toJson(s);
-                System.out.println(json);
-                System.out.println("Achat IRL terminé");
                 session.setAttribute("monnaieIRL",accountManager.getPlayerMoneyIRL(pseudo));
                 out.print(json);
                 break;

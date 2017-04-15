@@ -78,7 +78,6 @@ public class AccountUpdaterServlet extends HttpServlet{
             //Demande de suppression du compte:
             case RequestStatus.SUPP_ACCOUNT :
 
-                System.out.println("Blop");
 
                 String verif = (String) req.getParameter("verif");
                 String pwd = (String) session.getAttribute("password");
@@ -93,10 +92,9 @@ public class AccountUpdaterServlet extends HttpServlet{
 
                     id = 0;
                     printWriter.print(id);
-                    System.out.println("Normal");
+
                 }
                 else {
-                    System.out.println("Pas normal");
                     id = 1;
                     printWriter.print(id);
                 }
