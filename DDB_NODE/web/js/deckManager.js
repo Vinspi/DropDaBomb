@@ -36,7 +36,7 @@ function switcher(deck){
     $('#inventaire2').show();
     $('#inventaire1').hide();
     $('.carte-inventaire').addClass('carte-inventaire-pop');
-
+    socket.emit('SWAP_DECK', {'actif': $('#pseudo').attr('class')+"2", 'disable': $('#pseudo').attr('class')+"1"});
     deck_actif = 2;
   }
   if(deck == 1){
@@ -47,7 +47,8 @@ function switcher(deck){
     $('#inventaire1').show();
     $('#inventaire2').hide();
     $('.carte-inventaire').addClass('carte-inventaire-pop');
-    
+    socket.emit('SWAP_DECK', {'actif': $('#pseudo').attr('class')+"1", 'disable': $('#pseudo').attr('class')+"2"});
+
     deck_actif = 1;
   }
   carte_deck = -1;

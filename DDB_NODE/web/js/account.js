@@ -4,17 +4,22 @@ var step = 1;
 
 var account;
 
+
+
+
+
+
 $(document).ready(function(){
 
-    socket = io.connect('http://localhost:8080');
+    socket = io.connect('http://localhost:3000');
 
     $("#btn-create").click(function(e){check_account();});
 
     socket.on("CREATE_ACCOUNT_CHECK_FAIL_ALREADYEXIST", function(obj){
         Materialize.toast("Un compte avec ce pseudo/email existe déjà", 4000);
-        
     });
     socket.on("CREATE_ACCOUNT_CHECK_SUCCESS", function(obj){
+        console.log("check success");
         next_step();
     });
 
@@ -22,7 +27,7 @@ $(document).ready(function(){
         next_step();
     });
 
-   
+
 
     $('ul.tabs').tabs({});
 
@@ -55,7 +60,7 @@ $(document).ready(function(){
         console.log("jai recu walla");
         alert("CONNEXION REUSSIE");
     });
-    
+
     socket.on("CONNECT_ACCOUNT_CHECK_FAIL", function(obj){
         alert("CONNEXION ECHOUEE");
     });
@@ -73,23 +78,28 @@ function connect_account(){
 }
 
 function check_account(){
+
+
     var pseudo      = $("#pseudo").val();
     var mdp         = $("#password").val();
     var mdp_confirm = $("#password_confirm").val();
     var email       = $("#email").val();
 
-    if(pseudo == "" || pseudo == " "){                              
-        Materialize.toast('Pseudo invalide', 6000);         return;    }
+    /* JAMAIS DE VERIFICATION COTE CLIENT */
 
-    if(mdp == "" || mdp == " " || mdp.length < 6){                                    
-        Materialize.toast('Mot de passe invalide', 6000);         return;    }
+    // if(pseudo == "" || pseudo == " "){
+    //     Materialize.toast('Pseudo invalide', 6000);         return;    }
+    //
+    // if(mdp == "" || mdp == " " || mdp.length < 6){
+    //     Materialize.toast('Mot de passe invalide', 6000);         return;    }
+    //
+    // if(mdp_confirm != mdp){
+    //     Materialize.toast('Les mots de passes de correspondent pas', 6000);         return;    }
+    //
+    // if(email == "" || email == " " || email.indexOf('@') < 1){
+    //     Materialize.toast('Email invalide', 6000);         return;    }
 
-    if(mdp_confirm != mdp){                                         
-        Materialize.toast('Les mots de passes de correspondent pas', 6000);         return;    }
-
-    if(email == "" || email == " " || email.indexOf('@') < 1){      
-        Materialize.toast('Email invalide', 6000);         return;    }
-    
+    /* FIN DE L'INUTILE */
 
     account = {
         'pseudo': pseudo,
@@ -103,9 +113,11 @@ function check_account(){
     socket.emit("CREATE_ACCOUNT_CHECK", account);
 }
 
+
 function create_account(){
     socket.emit("CREATE_ACCOUNT_SEND", account);
 }
+
 
 function next_step(){
     $("#tab-step-"+step).removeClass("tab-active");
@@ -126,7 +138,7 @@ function setSelectedStarter(id, color){
         $(id).css("border-radius", "2%");
         $(id).removeClass("transparent");
         $(id).addClass(color);
-       
+
         if(id == "#card_starter_HP")
             account.starter = "HP";
         else if(id == "#card_starter_MTBBWY")
@@ -148,7 +160,3 @@ function resetSelectedStarter(){
         $("#card_starter_YSNP").removeClass("blue");
         $("#card_starter_YSNP").addClass("transparent");
 }
-
-
-
-

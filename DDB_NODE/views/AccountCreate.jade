@@ -7,6 +7,7 @@ html
     head
         include templates/template_head.jade
         link(rel='stylesheet', href='web/css/account.css') 
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js")
         script(rel="text/javascript", src='web/js/account.js')
         // ajouter les scripts/css propres a cette Page
     body
@@ -15,20 +16,20 @@ html
         .container
             .col.l10.m12.s12.offset-l1
                 // Menu de navigations avec les onglets des etapes
-                ul#tabs-swipe-demo.tabs
-                    li#tab-step-1.tab.col.s3.tooltipped.tab-active(data-position='top', data-delay='0', data-tooltip='Créer mon compte')
+                ul#tabs-swipe-demo.tabs.row
+                    li#tab-step-1.tab.col.s3.m3.l3.tooltipped.tab-active(data-position='top', data-delay='0', data-tooltip='Créer mon compte')
                         a#tab-step-1-click.active(href='#test-swipe-1')
                             img(src='web/img/utils/btn_one_step.png')
                             .tab_arrow
-                    li#tab-step-2.tab.col.s3.tooltipped.disabled(data-position='top', data-delay='0', data-tooltip='Configurer mes options')
+                    li#tab-step-2.tab.col.s3.m3.l3.tooltipped.disabled(data-position='top', data-delay='0', data-tooltip='Configurer mes options')
                         a#tab-step-2-click(href='#test-swipe-2')
                             img(src='web/img/utils/btn_two_step.png')
                             .tab_arrow
-                    li#tab-step-3.tab.col.s3.tooltipped.disabled(data-position='top', data-delay='0', data-tooltip='Choisir mon starter')
+                    li#tab-step-3.tab.col.s3.m3.l3.tooltipped.disabled(data-position='top', data-delay='0', data-tooltip='Choisir mon starter')
                         a#tab-step-3-click(href='#test-swipe-3')
                             img(src='web/img/utils/btn_three_step.png')
                             .tab_arrow
-                    li#tab-step-4.tab.col.s3.tooltipped.disabled(data-position='top', data-delay='0', data-tooltip='Combattre !')
+                    li#tab-step-4.tab.col.s3.m3.l3.tooltipped.disabled(data-position='top', data-delay='0', data-tooltip='Combattre !')
                         a#tab-step-4-click(href='#test-swipe-4')
                             img(src='web/img/utils/btn_four_step.png')
 
@@ -54,7 +55,9 @@ html
                                 label(for='email') Email
                         .row
                             .col.s4.offset-s4.center-align
-                                input#btn-create.btn-large.waves-effect.waves-light.light-green(type='submit', value='Créer mon compte')
+                                button#btn-create.btn-large.waves-effect.waves-light.amber(type='submit')
+                                  div Créer mon compte
+                                
                
                
                 // 2eme Etape : Choisir les options du compte

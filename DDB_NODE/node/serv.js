@@ -285,6 +285,43 @@ socket.on('connection', function(socket){
     console.log(query);
     connection.query(query);
   });
+  socket.on('SWAP_DECK',function(obj){
+    var query = "UPDATE Deck SET estActif = 1 WHERE id_Deck LIKE "+connection.escape(obj.actif)+";";
+    connection.query(query);
+    query = "UPDATE Deck SET estActif = 0 WHERE id_Deck LIKE "+connection.escape(obj.disable)+";";
+    connection.query(query);
+
+  });
+  socket.on('CREATE_ACCOUNT_CHECK', function(account){
+
+
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+    if((account.mdp != account.mdp_confirm) || account.pseudo.length <= 0 || !re.test(account.email)){
+      socket.emit('CREATE_ACCOUNT_CHECK_FAIL_ALREADYEXIST');
+    }
+
+    var query = "SELECT Pseudo FROM CompteJoueur WHERE (mailCompte LIKE "+connection.escape(account.email)+");";
+
+    connection.query(query,function(err,rows,fields){
+      if(rows.length != 0){
+        socket.emit('CREATE_ACCOUNT_CHECK_FAIL_ALREADYEXIST');
+      }
+      else {
+        query = "SELECT Pseudo FROM CompteJoueur WHERE (Pseudo LIKE "+connection.escape(account.pseudo)+");";
+        connection.query(query, function(err,rows,fields){
+          if(rows.length != 0){
+            socket.emit('CREATE_ACCOUNT_CHECK_FAIL_ALREADYEXIST');
+          }
+          else {
+            socket.emit('CREATE_ACCOUNT_CHECK_SUCCESS');
+          }
+        });
+      }
+    });
+
+  });
 });
 
 
