@@ -147,8 +147,10 @@ var bodyParser = require('body-parser'); // for reading POSTed form data into `r
 var expressSession = require('express-session');
 var cookieParser = require('cookie-parser'); // the session is stored in a cookie, so we use this to parse it
 var path = require('path');
-
 var app = express();
+var server = require('http').Server(app);
+var socket = require('socket.io')(server);
+
 
 // must use cookieParser before expressSession
 app.use(cookieParser());
@@ -268,13 +270,24 @@ function recuperation_deck(req, res){
         }
       }
     }
-
-
     res.render('DeckManager',{'session':req.session, 'deck1': listeCarte1, 'deck2': listeCarte2, 'inventaire1': inventaire1, 'inventaire2': inventaire2});
 
   });
 
 }
 
+/* partie socket io */
 
+socket.on('connection', function(socket){
+  console.log('client connected !');
+  socket.on('SWAP_CARD',function(obj){
+    var query = "UPDATE JoueurCarteDeck SET id_Carte = "+obj.carte_inventaire+" WHERE (id_Carte = "+obj.carte_deck+" AND id_deck LIKE "+connection.escape(obj.deck)+");";
+    console.log(query);
+    connection.query(query);
+  });
+});
+
+
+/* only for socket.io purpose */
+server.listen(3000);
 app.listen(8080);

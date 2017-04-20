@@ -32,7 +32,7 @@
 }
 
 .deck2-out{
-  transform: translate(500px,0px) scale(0.4);
+  transform: translate(500px,0px) scale(0);
   opacity: 0;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .deck1-out{
-  transform: translate(-500px,0px) scale(0.4);
+  transform: translate(-500px,0px) scale(0);
   opacity: 0;
 }
 
@@ -102,7 +102,7 @@
   }
 }
 
-.carte-inventaire{
+.carte-inventaire-pop{
   animation-name: pop-card;
   animation-duration: 1s;
   animation-timing-function: ease;
