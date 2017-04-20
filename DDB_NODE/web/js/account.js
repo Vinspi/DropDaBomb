@@ -99,7 +99,7 @@ function check_account(){
     // if(email == "" || email == " " || email.indexOf('@') < 1){
     //     Materialize.toast('Email invalide', 6000);         return;    }
 
-    /* FIN DE L'INUTILE */
+    /* FIN */
 
     account = {
         'pseudo': pseudo,
