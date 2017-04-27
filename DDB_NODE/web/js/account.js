@@ -19,7 +19,6 @@ $(document).ready(function(){
         Materialize.toast("Un compte avec ce pseudo/email existe déjà", 4000);
     });
     socket.on("CREATE_ACCOUNT_CHECK_SUCCESS", function(obj){
-        console.log("check success");
         next_step();
     });
 

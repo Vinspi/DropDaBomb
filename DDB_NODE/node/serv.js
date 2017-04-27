@@ -152,6 +152,7 @@ var server = require('http').Server(app);
 var socket = require('socket.io')(server);
 
 
+
 // must use cookieParser before expressSession
 app.use(cookieParser());
 
@@ -185,6 +186,15 @@ app.get('/AccountCreate', function (req, res) {
      res.render('AccountCreate');
 });
 
+app.get('/Game', function(req, res){
+  if(req.session.account == null){
+    res.render('Account');
+  }
+  else {
+    res.render('LiveGame',req.session.account);
+  }
+});
+
 app.post('/Account', function (req, res) {
 
  authentification(req.param("signin_pseudo"), req.param("signin_password"),req,res);
@@ -212,7 +222,7 @@ function authentification(pseudo, password,req,res){
   connection.query(query, function(err, rows, fields){
     if (err) throw err;
     if(rows.length != 0){
-        req.session.account = {'pseudo' : req.param("signin_pseudo")};
+        req.session.account = {'pseudo' : req.param("signin_pseudo"), 'password' : req.param("signin_password")};
         req.session.save( (err) => {} );
         res.render('Account', req.session.account);
     }
