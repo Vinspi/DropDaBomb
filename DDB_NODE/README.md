@@ -2,12 +2,12 @@
 
 1. [Le jeu](#le-jeu)
 2. [Utilisation du site](#utilisation-du-site)
-3. [Les Regles](https://github.com/LucasL13/WORK-L3/tree/master/DDB/Documentation/LesRegles.md)
-4. [Les Cartes](https://github.com/LucasL13/WORK-L3/tree/master/DDB/Documentation/LesCartes.md)
-5. [L'interface](https://github.com/LucasL13/WORK-L3/tree/master/DDB/Documentation/Interface.md)
-6. [Les packages et technologies utilisés](https://github.com/LucasL13/WORK-L3/tree/master/DDB/Documentation/Packages.md)
-7. [Les aspects techniques](https://github.com/LucasL13/WORK-L3/tree/master/DDB/Documentation/Technique.md)
-8. [La gestion de projet](https://github.com/LucasL13/WORK-L3/tree/master/DDB/Documentation/GestionProjet.md)
+3. [Les Regles](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/DDB/Documentation/LesRegles.md)
+4. [Les Cartes](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/LesCartes.md)
+5. [L'interface](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/Interface.md)
+6. [Les packages et technologies utilisés](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/Packages.md)
+7. [Les aspects techniques](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/Technique.md)
+8. [La gestion de projet](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/GestionProjet.md)
 9. [Les fonctionnalités](#les-fonctionnalités)
 
 ## Le jeu
@@ -31,7 +31,7 @@ A plus long terme, les objectifs sont de développer une version « application 
 
 Si vous êtes un nouvel utilisateur, voici comment jouer en quelques étapes seulement : 
 
-1. Se connecter au site : [DDB](http://217.182.69.175:8080/Account)
+1. Se connecter au site : [DDB](http://217.182.69.175:8081/Account)
 2. Créer son compte 
 3. Jouer en cliquant sur le bouton "Jouer" de la barre de navigation
 
