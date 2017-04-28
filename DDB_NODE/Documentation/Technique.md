@@ -22,7 +22,7 @@ Le serveur est un serveur distant, adressé par une IP publique, qui repose sur 
 #### Dossier **node**
 
 Ce dossier contient le fichier *node_serv.js*. Il s'agit du serveur *principal* ; le serveur web chargé, entre autres, de servir les fichiers au client. Dans le détail, il s'agit d'un programme assez complexe, qui se charge de gérer les cookies, de faire le "rendering" des pages à renvoyer au client, .. 
----
+
 Voir la section [Les packages](Packages.md) pour plus d'informations. 
 
 #### Dossier **views**
@@ -30,7 +30,7 @@ Voir la section [Les packages](Packages.md) pour plus d'informations.
 Ce dossier contient les fichiers *.jade* qui seront utilisés par le moteur de rendering de **Jade** afin de servir le code HTML de chaque page au client. 
 
 Il possède un sous-dossier *Templates* qui contient les deux fichiers *.jade* utilisés par les autres fichiers "principaux" afin d'ajouter les lignes de code communes à toutes les pages HTML, comme le chargement des scripts ou des feuilles de style. 
----
+
 Voir la section [Les packages / Jade](Packages.md#jade) pour plus d'informations.
 
 
