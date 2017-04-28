@@ -44,6 +44,9 @@ Nous avons pour ce projet des ambitions qui sont au-delà des objectifs fixés d
 
 Les fonctionnalités implementées representent déjà une charge de travail et de compétences important, et la catégorie des fonctionnalités *"A venir"* ne sont pas à interpreter au sens "fonctionnalités que nous n'avons pas eu le temps de developper", mais bien au sens "fonctionnalités que nous visons à moyen et long terme pour aboutir à un site et un jeu d'une qualité quasi-professionnelle.
 
+Pour l'heure actuelle, nous avons un site qui permet de se connecter, de voir et modifier son deck et de lancer une partie. 
+Le client de jeu est fonctionnel et le jeu également. Des améliorations notamment au niveau du design et du coté "responsive" sont à venir, car il est évidemment que le jeu fait pour l'instant très "amateur". 
+
 ### Implementées
 
 - [x] Interface web de connexion
