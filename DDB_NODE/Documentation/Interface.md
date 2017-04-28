@@ -42,7 +42,7 @@ ton "Chat". Fonctionnalité pas encore implémentée.
 11. La poudre. Represente le montant de poudre disponible (la ressource utilisée pour jouer les cartes).
 
 <p align="center">
-    <img src="/Images/GUI_DEF.png" width="600px"/>
+    <img src="Images/GUI_DEF.png" width="600px"/>
 </p>
 
 Ci-dessus, une capture de l'interface qui apparait lorsqu'on pose une carte d'attaque directe. On choisit la cible de cette attaque.  
