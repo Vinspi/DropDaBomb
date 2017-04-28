@@ -2,11 +2,21 @@
 
 ## L'interface du jeu
 
+````
+
+
+
+````
+
 <p align="center">
     <img src="Images/GUI_DEF.png" width="600px"/>
 </p>
 
 
+````
+
+
+````
 
 1. La valeur actuelle de la barre. 150 au départ, puisqu'elle est placée au milieu.
     En violet (ici 0) est representée la valeur actuelle du bouclier qui protege le joueur des attaques directe. 
@@ -45,10 +55,10 @@
 
 
 ````
-=======
+
 
 <p align="center">
-    <img src="Images/GUI_DEF2.png" width="600px"/>
+    <img src="Images/GUI_DEF2.png" width="300px"/>
 </p>
 
 Ci-dessus, une capture de l'interface qui apparait lorsqu'on pose une carte d'attaque directe. On choisit la cible de cette attaque.  
