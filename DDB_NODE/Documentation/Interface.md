@@ -3,7 +3,7 @@
 ## L'interface du jeu
 
 <p align="center">
-    <img src="https://github.com/Vinspi/DropDaBomb/tree/master/DDB_NODE/Documentation/Images/GUI_DEF.png" width="600px"/>
+    <img src="DropDaBomb/DDB_NODE/Documentation/Images/GUI_DEF.png" width="600px"/>
 </p>
 
 
