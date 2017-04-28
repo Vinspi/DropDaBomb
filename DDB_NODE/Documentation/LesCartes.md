@@ -9,7 +9,7 @@
 ````
 
 <p align="center">
-    <img src="Images/CARDS_ALL.jpg" width="600px"/>
+    <img src="Images/LES_CARTES.jpg" width="600px"/>
 </p>
 
 ````
