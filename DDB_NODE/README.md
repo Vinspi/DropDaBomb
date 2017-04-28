@@ -11,7 +11,7 @@
 9. [Les fonctionnalités](#les-fonctionnalités)
 10. [La base de données](Documentation/BDD.md)
 
-## Le jeu
+## Le jeu 
 
 Drop Da Bomb est un jeu de plateau/cartes en ligne.
 Il se base sur un ensemble de cartes (Cartes) collectionnables (**Inventaire**) par un joueur (**Compte**) afin de composer une ou plusieurs « main de jeu » (**Deck**). 
