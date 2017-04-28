@@ -36,13 +36,19 @@
 9. Le bouton "Fin de tour" pour passer au tour de l'adversaire.
 
 
-10. Le bou
-ton "Chat". Fonctionnalité pas encore implémentée.
+10. Le bouton "Chat". Fonctionnalité pas encore implémentée.
 
 11. La poudre. Represente le montant de poudre disponible (la ressource utilisée pour jouer les cartes).
 
+````
+
+
+
+````
+=======
+
 <p align="center">
-    <img src="Images/GUI_DEF.png" width="600px"/>
+    <img src="Images/GUI_DEF2.png" width="600px"/>
 </p>
 
 Ci-dessus, une capture de l'interface qui apparait lorsqu'on pose une carte d'attaque directe. On choisit la cible de cette attaque.  
