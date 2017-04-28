@@ -9,7 +9,7 @@
 7. [Les aspects techniques](Documentation/Technique.md)
 8. [La gestion de projet](Documentation/GestionProjet.md)
 9. [Les fonctionnalités](#les-fonctionnalités)
-10. [La base de données](#Documentation/BDD.md)
+10. [La base de données](Documentation/BDD.md)
 
 ## Le jeu
 
