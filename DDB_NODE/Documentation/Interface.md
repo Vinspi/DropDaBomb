@@ -8,7 +8,7 @@
 
 
 
-1. La valeur actuelle de la barre. 150 au départ, puisqu'elle est placée au milieu.
+**1.** La valeur actuelle de la barre. 150 au départ, puisqu'elle est placée au milieu.
     En violet (ici 0) est representée la valeur actuelle du bouclier qui protege le joueur des attaques directe. 
 
 2. Le nom du joueur qui joue le tour en cours.
