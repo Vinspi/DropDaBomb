@@ -41,7 +41,8 @@ Si vous êtes un nouvel utilisateur, voici comment jouer en quelques étapes seu
 ## Les fonctionnalités 
 
 Nous avons pour ce projet des ambitions qui sont au-delà des objectifs fixés dans le cadre de projets scolaires. 
-Les fonctionnalités implementées representent déjà une charge de travail et de compétences important, et la catégorie des fonctionnalités **A venir** ne sont pas à interpreter au sens "fonctionnalités que nous n'avons pas eu le temps de developper", mais bien au sens "fonctionnalités que nous visons à moyen et long terme pour aboutir à un site et un jeu d'une qualité quasi-professionnelle.
+
+Les fonctionnalités implementées representent déjà une charge de travail et de compétences important, et la catégorie des fonctionnalités *"A venir"* ne sont pas à interpreter au sens "fonctionnalités que nous n'avons pas eu le temps de developper", mais bien au sens "fonctionnalités que nous visons à moyen et long terme pour aboutir à un site et un jeu d'une qualité quasi-professionnelle.
 
 ### Implementées
 
