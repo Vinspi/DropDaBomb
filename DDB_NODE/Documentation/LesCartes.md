@@ -21,3 +21,5 @@ Le bandeau supérieur contient les visuels de cartes "verso", c'est à dire les 
 Les cartes de jeu sont toutes represéntées en base de données et possèdent, notamment : un nom, un coût en poudre, une description, une rareté, etc..  
 
 >Une description détaillée de chaque carte est en cours d'élaboration et sera fournie dans les semaines à venir. 
+
+**Ces cartes ont étés entièrement créees par les membres du groupe et sont donc toutes uniques. Comme le reste du contenu, du code et des différents documents, elles sont la propriété exclusive de DROPDABOMB.**
