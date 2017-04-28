@@ -3,7 +3,7 @@
 ## L'interface du jeu
 
 <p align="center">
-    <img src="DropDaBomb/DDB_NODE/Documentation/Images/GUI_DEF.png" width="600px"/>
+    <img src="Images/GUI_DEF.png" width="600px"/>
 </p>
 
 
