@@ -2,7 +2,11 @@
 
 ## L'interface du jeu
 
-![alt-text](https://github.com/Vinspi/DropDaBomb/tree/master/DDB_NODE/Documentation/Images/GUI_DEF.png "GUI")
+<p align="center">
+    <img src="https://github.com/Vinspi/DropDaBomb/tree/master/DDB_NODE/Documentation/Images/GUI_DEF.png" width="600px"/>
+</p>
+
+
 
 1. La valeur actuelle de la barre. 150 au départ, puisqu'elle est placée au milieu.
     En violet (ici 0) est representée la valeur actuelle du bouclier qui protege le joueur des attaques directe. 
