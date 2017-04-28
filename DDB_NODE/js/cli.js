@@ -513,6 +513,7 @@ function dessineCarteCentre(carteJoue){
   });
 }
 
+
 function dessineCartesActives(etatJoueur,actifAdversaire){
 
   var id, src, duree;
@@ -695,6 +696,10 @@ socket.on("CLOCK_UPDATE", function(obj){
    //$("#zone_barre_timer_idjoueur").text();
 });
 
+
+function passe_tour(){
+  socket.emit('PASSE_TOUR', Joueur);
+}
 
 socket.on("FIN_TOUR", function(obj){
    modalSelectionHide();

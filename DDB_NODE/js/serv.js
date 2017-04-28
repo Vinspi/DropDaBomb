@@ -571,6 +571,34 @@ io.sockets.on('connection', function (socket){
 
   });
 
+  socket.on('PASSE_TOUR', function(pseudo){
+    //finDeTour(listSalons[socket.idRoom]);
+
+    var idRoom = socket.idRoom;
+    var etatM = listSalons[idRoom];
+
+    var etatJoueurEmetteur = etatM.joueur1.pseudo == pseudo ? etatM.joueur1 : etatM.joueur2;
+    var etatJoueurAdversaire = etatM.joueur1.pseudo == pseudo ? etatM.joueur2 : etatM.joueur1;
+
+    function verificationTourJoueur(){
+      /* soit tour joueur1 */
+      if(pseudo == etatM.joueur1.pseudo){
+        if(etatM.tour%2 == 0) return true;
+        else return false;
+      }
+      /* soit tour joueur 2 */
+      else {
+        if(etatM.tour%2 == 1) return true;
+        else return false;
+      }
+    }
+
+    if(verificationTourJoueur())
+      listSalons[socket.idRoom].timer = 1;
+
+
+  })
+
   socket.on('useCard', function(action){
 
     var idRoom = socket.idRoom;
@@ -876,7 +904,7 @@ io.sockets.on('connection', function (socket){
 
   });
 
-  //Fonction très très longue :
+
 });
 
 initListSalon();
