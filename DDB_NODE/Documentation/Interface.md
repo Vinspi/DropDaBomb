@@ -4,8 +4,6 @@
 
 ````
 
-
-
 ````
 
 <p align="center">
@@ -53,12 +51,11 @@
 ````
 
 
-
 ````
 
 
 <p align="center">
-    <img src="Images/GUI_DEF2.png" width="300px"/>
+    <img src="Images/GUI_DEF2.jpg" width="300px"/>
 </p>
 
 Ci-dessus, une capture de l'interface qui apparait lorsqu'on pose une carte d'attaque directe. On choisit la cible de cette attaque.  
