@@ -81,7 +81,7 @@ Il existe, à ce jour, deux types de cartes, divisés ensuite en sous-groupes :
 
 ### La zone de jeu
 
-Voir la section [L'interface](Interface.md) pour une description détaillée.
+Voir la section [Interface du jeu](Interface.md) pour une description détaillée.
 
 ### Les modes de jeu
 

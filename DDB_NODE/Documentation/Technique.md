@@ -2,7 +2,7 @@
 
 ## Les aspects techniques
 
-### La structure du projet
+### L'architecture du projet
 <p align="center">
     <img src="Images/structure.png" width="600px"/>
 </p>
@@ -13,4 +13,8 @@ Le serveur est un serveur distant, adressé par une IP publique, qui repose sur 
 
 *Dans un soucis de simplification, on parlera de **Serveur** pour le serveur Node.js et de **Base de données** ou **BDD** pour la partie serveur MySQL*
 
+### La structure du projet 
  
+<p align="center">
+    <img src="Images/STRUCTURE_DDB.jpg" width="600px"/>
+</p>
