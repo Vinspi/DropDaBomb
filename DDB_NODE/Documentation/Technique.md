@@ -1,4 +1,3 @@
-
 <h1 align="center"> DROP DA BOMB </h1>
 
 ## Les aspects techniques
