@@ -2,7 +2,7 @@
 
 1. [Le jeu](#le-jeu)
 2. [Utilisation du site](#utilisation-du-site)
-3. [Les Regles](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/DDB/Documentation/LesRegles.md)
+3. [Les Regles](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/LesRegles.md)
 4. [Les Cartes](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/LesCartes.md)
 5. [L'interface](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/Interface.md)
 6. [Les packages et technologies utilisés](https://github.com/Vinspi/DropDaBomb/blob/master/DDB_NODE/Documentation/Packages.md)
