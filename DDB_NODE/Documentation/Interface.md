@@ -23,4 +23,4 @@
     <img src="https://github.com/Vinspi/DropDaBomb/tree/master/DDB_NODE/Documentation/Images/GUI_DEF.png" width="600px"/>
 </p>
 
-Ci-dessus, une capture de l'interface qui apparait lorsqu'on pose une carte d'attaque directe. On choisit la cible de cette attaque. 
+Ci-dessus, une capture de l'interface qui apparait lorsqu'on pose une carte d'attaque directe. On choisit la cible de cette attaque.  
