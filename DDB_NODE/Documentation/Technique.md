@@ -4,7 +4,7 @@
 
 ### La structure du projet
 <p align="center">
-    <img src="https://github.com/Vinspi/DropDaBomb/tree/master/DDB_NODE/Documentation/Images/structure.png" width="600px"/>
+    <img src="Images/structure.png" width="600px"/>
 </p>
 
 Le projet DropDaBomb est basé sur une architecture Client-Serveur classique. 

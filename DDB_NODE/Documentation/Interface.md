@@ -29,7 +29,7 @@
 4. Le temps restant pour le tour en cours.
 
 
-5. La zone de jeu de l'adversaire. Les cinqs emplacements pour les cartes non directes (voir [Les regles](https://github.com/LucasL13/WORK-L3/blob/master/DDB/Documentation/LesRegles.md)). Le logo de carte verso par défaut (ici sur les 5 emplacements) signale un emplacement vide.
+5. La zone de jeu de l'adversaire. Les cinqs emplacements pour les cartes non directes (voir [Les regles](LesRegles.md)). Le logo de carte verso par défaut (ici sur les 5 emplacements) signale un emplacement vide.
 
 
 6. Le tas de carte de la partie. La carte representée est celle du dessus, c'est à dire la dernière posée.
