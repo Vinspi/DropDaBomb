@@ -45,13 +45,29 @@ Nom | Description | Membre | Temps (en h)
 ### Sprint 5
 Nom | Description | Membre | Temps (en h)
 --- | ------------| ------ | ------------
+**TEST1** | Phase de test de qualité et de robustesse de la base de donnée | Rémi | 5
 **TEST1** | Phase de test de qualité et de robustesse de l'architecture | Lucas | 5
 **TEST1** | Phase de test de qualité et de robustesse des structures | Pierre | 5
-**TEST1** | Phase de test de qualité et de robustesse de la base de donnée | Rémi | 5
+
 
 ### Sprint 6 
 Nom | Description | Membre | Temps (en h)
 --- | ------------| ------ | ------------
-**JEU2** | Développement du jeu - Intégration des aspects graphiques au jeu | Lucas | 8
-**JEU2** | Développement du jeu - Application des mécaniques de jeu | Rémi | 8
-**JEU2** | Développement du jeu - Gestion de la communication jeu/serveur | Pierre | 8
+**JEU2** | Développement du jeu - Intégration des aspects graphiques au jeu | Lucas | 12
+**JEU2** | Développement du jeu - Application des mécaniques de jeu | Rémi | 12
+**JEU2** | Développement du jeu - Gestion de la communication jeu/serveur | Pierre | 12
+
+### Sprint 7
+Nom | Description | Membre | Temps (en h)
+--- | ------------| ------ | ------------
+**WEB1** | Serveur web / site - Création de la page de visualisation/gestion des Decks | Pierre | 8
+**WEB1** | Serveur web / site - Création de la structure et des templates | Lucas | 8
+**WEB1** | Serveur web / site - Création de la page d'accueil des comptes et gestion de la connexion | Rémi | 8 
+
+### Sprint 8
+Nom | Description | Membre | Temps (en h)
+--- | ------------| ------ | ------------
+**WEB2** | Serveur web / site - Ajout de vérifications afin d'augmenter la sécurite du site | Rémi | 5 
+**WEB2** | Serveur web / site - Ajout de la persistance de la connexion sur l'ensemble du site | Lucas | 4
+**JEU3** | Développement du jeu - Ajout d'animations pour rendre le jeu plus "vivant" | Pierre | 5
+
