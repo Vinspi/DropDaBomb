@@ -54,9 +54,4 @@ Nom | Description | Membre | Temps (en h)
 --- | ------------| ------ | ------------
 **JEU2** | Développement du jeu - Intégration des aspects graphiques au jeu | Lucas | 8
 **JEU2** | Développement du jeu - Application des mécaniques de jeu | Rémi | 8
-**JEU2** | Développement du jeu - Gestion de la communication jeu/serveur | 8
-
-
-34
-35
-32
+**JEU2** | Développement du jeu - Gestion de la communication jeu/serveur | Pierre | 8
