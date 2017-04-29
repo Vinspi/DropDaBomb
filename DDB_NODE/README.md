@@ -31,6 +31,7 @@ A plus long terme, les objectifs sont de développer une version « application 
 ## Utilisation du site
 
 >Les deux serveurs (web & jeu) sont situés sur un serveur administré par l'un des membres du groupe. 
+
 > Cela permet un accès distant au site et un fonctionnement 24/24 7/7. 
 
 Si vous êtes un nouvel utilisateur, voici comment jouer en quelques étapes seulement : 

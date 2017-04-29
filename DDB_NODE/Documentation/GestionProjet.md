@@ -19,24 +19,44 @@ Nom | Description | Membre | Temps (en h)
 ### Sprint 2
 Nom | Description | Membre | Temps (en h)
 --- | ------------| ------ | ------------
-**SETUP** | Choix et mise en place de l'architecture | Lucas | 3
-**SETUP1** | Choix et création des structures adaptées | Pierre | 6
-**SETUP2** | Choix et mise au point des mécaniques de jeu | Rémi | 5
+**SETUP** | Choix et mise en place de l'architecture | Lucas | 7
+**SETUP1** | Choix et création des structures adaptées | Pierre | 8
+**SETUP2** | Choix et mise au point des mécaniques de jeu | Rémi | 7
 **SETUP3** | Choix et intégration des modules pour le serveur Node | Lucas | 3
 
 ### Sprint 3
 Nom | Description | Membre | Temps (en h)
 --- | ------------| ------ | ------------
-**RBDD1** | Création des différentes requetes en BDD utilisées dans tout le projet | Rémi | 4
+**RBDD1** | Création des différentes requetes en BDD utilisées dans tout le projet | Rémi | 5
 **BDD2**  | Modification et ajouts sur la BDD | Rémi | 4
-**RES1**  | Mise en place de la communication réseau Client/Serveur | Pierre | 6
-**WEB1**  | Configuration du serveur pour l'aspect serveur WEB | Lucas | 4
+**RES1**  | Mise en place de la communication réseau Client/Serveur | Pierre | 7
+**WEB1**  | Configuration du serveur pour l'aspect serveur WEB | Lucas | 7
 
 
 ### Sprint 4
 Nom | Description | Membre | Temps (en h)
 --- | ------------| ------ | ------------
 **CTN1** | Création de la premiere "vague" de contenus (cartes, backgrounds, etc..) | Lucas | 8
-**GUI1** | Mise au point d'une premiere ébauche d'interface pour le jeu | Lucas | 3
-**GUI2** | Mise au point d'une charte graphique pour le site | Pierre | 4
-**JEU1** | Développement du jeu  - utilisation et modification des structures liées au jeu | Rémi et Pierre | 5 
+**GUI1** | Mise au point d'une premiere ébauche d'interface pour le jeu | Lucas | 4
+**GUI2** | Mise au point d'une charte graphique pour le site | Pierre | 5
+**JEU1** | Développement du jeu  - utilisation et modification des structures liées au jeu | Rémi | 12
+**JEU1** | Développement du jeu  - utilisation et modification des structures liées au jeu | Pierre | 10 
+
+### Sprint 5
+Nom | Description | Membre | Temps (en h)
+--- | ------------| ------ | ------------
+**TEST1** | Phase de test de qualité et de robustesse de l'architecture | Lucas | 5
+**TEST1** | Phase de test de qualité et de robustesse des structures | Pierre | 5
+**TEST1** | Phase de test de qualité et de robustesse de la base de donnée | Rémi | 5
+
+### Sprint 6 
+Nom | Description | Membre | Temps (en h)
+--- | ------------| ------ | ------------
+**JEU2** | Développement du jeu - Intégration des aspects graphiques au jeu | Lucas | 8
+**JEU2** | Développement du jeu - Application des mécaniques de jeu | Rémi | 8
+**JEU2** | Développement du jeu - Gestion de la communication jeu/serveur | 8
+
+
+34
+35
+32
