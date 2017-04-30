@@ -11,12 +11,18 @@
 var mysql = require('mysql');
 // var c = require('./const');
 
-var connection = mysql.createConnection({
-  host : '217.182.69.175',
-  user : 'Vinspi',
-  password : 'vinspi13',
-  database : 'DropDaBomb',
-});
+
+var connection;
+
+
+function bdd_connect(){
+  connection = mysql.createConnection({
+    host : '217.182.69.175',
+    user : 'Vinspi',
+    password : 'vinspi13',
+    database : 'DropDaBomb',
+  });
+}
 
 // connection.connect();
 
@@ -219,6 +225,7 @@ app.get('/clear', function(req, res){
 function authentification(pseudo, password,req,res){
   var query = "SELECT Pseudo FROM CompteJoueur WHERE (Pseudo LIKE "+connection.escape(pseudo)+" AND mdpCompte LIKE "+connection.escape(password)+");";
 
+  bdd_connect();
   connection.query(query, function(err, rows, fields){
     if (err) throw err;
     if(rows.length != 0){
@@ -232,10 +239,13 @@ function authentification(pseudo, password,req,res){
         res.render('Account', req.session.account);
     }
   });
+  connection.end();
 
 }
 
 function recuperation_deck(req, res){
+
+  bdd_connect();
 
   var deck0 = req.session.account.pseudo+"0";
   var deck1 = req.session.account.pseudo+"1";
@@ -256,6 +266,7 @@ function recuperation_deck(req, res){
       inventaire2.push(rows[i]);
     }
   });
+
 
   connection.query(query1, function(err, rows, fields){
     if (err) throw err;
@@ -284,6 +295,8 @@ function recuperation_deck(req, res){
 
   });
 
+  connection.end();
+
 }
 
 /* partie socket io */
@@ -293,13 +306,17 @@ socket.on('connection', function(socket){
   socket.on('SWAP_CARD',function(obj){
     var query = "UPDATE JoueurCarteDeck SET id_Carte = "+obj.carte_inventaire+" WHERE (id_Carte = "+obj.carte_deck+" AND id_deck LIKE "+connection.escape(obj.deck)+");";
     console.log(query);
+    bdd_connect();
     connection.query(query);
+    connection.end();
   });
   socket.on('SWAP_DECK',function(obj){
     var query = "UPDATE Deck SET estActif = 1 WHERE id_Deck LIKE "+connection.escape(obj.actif)+";";
+    bdd_connect();
     connection.query(query);
     query = "UPDATE Deck SET estActif = 0 WHERE id_Deck LIKE "+connection.escape(obj.disable)+";";
     connection.query(query);
+    connection.end();
 
   });
   socket.on('CREATE_ACCOUNT_CHECK', function(account){
@@ -312,8 +329,8 @@ socket.on('connection', function(socket){
       socket.emit('CREATE_ACCOUNT_CHECK_FAIL_ALREADYEXIST');
     }
 
+    bdd_connect();
     var query = "SELECT Pseudo FROM CompteJoueur WHERE (mailCompte LIKE "+connection.escape(account.email)+");";
-
     connection.query(query,function(err,rows,fields){
       if(rows.length != 0){
         socket.emit('CREATE_ACCOUNT_CHECK_FAIL_ALREADYEXIST');
@@ -330,7 +347,7 @@ socket.on('connection', function(socket){
         });
       }
     });
-
+    connection.end();
   });
 });
 
