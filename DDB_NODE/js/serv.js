@@ -39,16 +39,14 @@ var retirerCarteMelange = true;
 
 var mysql = require('mysql');
 
-var connection;
+var connection = mysql.createConnection({
+  host : '217.182.69.175',
+  user : 'Vinspi',
+  password : 'vinspi13',
+  database : 'DropDaBomb',
+});
 
-function bdd_connect(){
-  connection = mysql.createConnection({
-    host : '217.182.69.175',
-    user : 'Vinspi',
-    password : 'vinspi13',
-    database : 'DropDaBomb',
-  });
-}
+connection.connect();
 
 
 /* ****** CLOCK DU SERVEUR (POUR UPDATE LES TIMERS DES PARTIES) **** */
@@ -197,7 +195,7 @@ function initMatch(pseudo1, pseudo2){
   var deck1 = [];
   var deck2 = [];
 
-  bdd_connect();
+
 
   connection.query(queryCartesJ1, function(err, rows, fields){
     if (err) throw err;
@@ -213,8 +211,6 @@ function initMatch(pseudo1, pseudo2){
       rows[i].level = 1;
       deck2.push(rows[i]);
     }
-
-    connection.end();
 
     var etatM = new etatMatch(pseudo1, pseudo2, deck1, deck2);
 
@@ -559,8 +555,6 @@ io.sockets.on('connection', function (socket){
 
     console.log("log request : "+pseudo+" : "+mdp);
 
-    bdd_connect();
-
     query = "SELECT Pseudo FROM CompteJoueur WHERE (Pseudo LIKE "+connection.escape(pseudo)+" AND mdpCompte LIKE "+connection.escape(mdp)+" );";
 
     connection.query(query, function(err, rows, fields){
@@ -573,8 +567,6 @@ io.sockets.on('connection', function (socket){
         chercherMatch(pseudo,socket);
       }
     });
-
-    connection.end();
 
 
   });
